@@ -1,5 +1,4 @@
 import React from 'react';
-import './sideMenu.css';
 import './summaryBar.css';
 class SummaryBar extends React.Component{
 

@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import Game from '../gameEngine/Game';
 import PlanetList from './components/PlanetList/PlanetList';
 import SummaryBar from './components/SummaryBar/SummaryBar';
+import PlanetDetails from './components/PlanetDetails/PlanetDetails';
 import 'bootstrap/dist/css/bootstrap.css';
 class MainView extends React.Component{
 
@@ -45,10 +46,9 @@ class MainView extends React.Component{
   }
 
   render(){
-    let planetName;
+    let planet = false;
     if(this.state.selectedEntity){
-      let ent = this.state.planetSection[this.state.selectedEntity];
-      planetName = ent.name;
+      planet = this.state.planetSection[this.state.selectedEntity];
     }
 
     return(
@@ -59,13 +59,7 @@ class MainView extends React.Component{
 
         <div className="row">
           <PlanetList onClick={this.selectPlanet} dispatchGameAction={this.game.dispatchAction} planets={this.state.planetSection}></PlanetList>
-          <div className="container-fluid">
-            <div className="row">
-              <h1>{planetName}</h1>
-              <br/>
-              <h3>Construction</h3>
-            </div>
-          </div>
+          <PlanetDetails planet={planet}></PlanetDetails>
         </div>
       </div>
     )
