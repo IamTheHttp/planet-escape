@@ -1,0 +1,30 @@
+{
+  "name": "lci-planet-escape",
+  "version": "0.0.0",
+  "description": "Planet escape! a game like no other",
+  "scripts": {
+    "init": "npm install && node node_modules/reusable-webpack-config/setup.js",
+    "start": "node node_modules/reusable-webpack-config/webpack/server.js --env=dev",
+    "build": "npm run verifyPackageName && npm run build:docs && npm run build:clean && npm run build:dist && npm run build:liveExample",
+    "build:dist": "webpack --config=node_modules/reusable-webpack-config/webpack/webpack.server.conf.js --env=dist",
+    "build:docs": "rimraf ./docs/** && jsdoc -c ./jsdocs.conf.json -u ./tutorials -t ./node_modules/ink-docstrap/template -R README.md -r ./src -d docs",
+    "build:clean": "rimraf ./dist/**",
+    "build:liveExample": "webpack --config=node_modules/reusable-webpack-config/webpack/webpack.server.conf.js --env=liveExample",
+    "analyze": "webpack --config=node_modules/reusable-webpack-config/webpack/webpack.server.conf.js --env=dist --profile --json | webpack-bundle-size-analyzer > stats.txt",
+    "test": "npm run verifyPackageName && jest --config=jestConfig.json --coverage",
+    "tdd": "jest --config=jestConfig.json --watch",
+    "releasePatch": "npm run verifyPackageName && release-it",
+    "releaseMinor": "npm run verifyPackageName && release-it minor",
+    "releaseMajor": "npm run verifyPackageName && release-it major",
+    "karma": "karma start",
+    "karma:watch": "karma start --autoWatch=true --singleRun=false",
+    "verifyPackageName": "node node_modules/reusable-webpack-config/verifyPackageName.js"
+  },
+  "devDependencies": {
+    "reusable-webpack-config": "https://IamHttP@bitbucket.org/patrickprivate/react-webpack-configuration.git"
+  },
+  "main": "dist",
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}

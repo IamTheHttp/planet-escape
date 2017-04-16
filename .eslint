@@ -1,0 +1,40 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "rules": {
+      "curly": 2,
+      "no-fallthrough": 2,
+      "no-redeclare": 2,
+      "no-undef" : 2,
+      "no-console" : 1,
+      "no-use-before-define" :1,
+      "no-array-constructor" : 2,
+      "no-new-wrappers" : 2,
+      "no-new-object" : 2,
+      "comma-dangle": 2,
+      "no-cond-assign": 0,
+      "no-debugger": 2,
+      "no-dupe-keys": 2,
+      "no-inner-declarations" : 2,
+      "complexity": 2,
+      "max-depth": [2, 3]
+    },
+    "globals" : {
+      "expect":true,
+      "it":true,
+      "describe" :true,
+      "beforeEach":true,
+      "jest" : true
+    }
+  }
