@@ -5,19 +5,20 @@
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 
-import PlanetList from 'ui/components/PlanetList';
-import EarthLike from 'gameEngine/planets/EarthLike';
+import PlanetList from 'ui/components/PlanetList/PlanetList';
+import EarthLike from 'gameEngine/ecs/entities/planets/EarthLike';
 describe('Tests a component', function () {
-  let wrapper,dispatchGameAction;
+  let wrapper,onClick;
 
   beforeEach(function () {
+    onClick = jest.fn();
+    let pl = new EarthLike();
       let planets = {
-        '1' : new EarthLike()
+        [pl.id] : pl
       };
-      dispatchGameAction = jest.fn();
       wrapper = mount(<PlanetList
-        dispatchGameAction={dispatchGameAction}
         planets={planets}
+        onClick={onClick}
       ></PlanetList>);
   });
 
@@ -27,7 +28,7 @@ describe('Tests a component', function () {
 
   it('dispatches proper actions',()=>{
     let entID = 1;
-    wrapper.instance().addPop(entID);
-    expect(dispatchGameAction.mock.calls[0][0].entities[0]).toBe(1);
+    wrapper.instance().handleClick(entID);
+    expect(onClick.mock.calls[0][0]).toBe(entID);
   })
 });

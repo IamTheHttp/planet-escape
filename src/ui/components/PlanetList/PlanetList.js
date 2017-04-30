@@ -1,6 +1,6 @@
 import React from 'react';
 import './sideMenu.css';
-import PlanetListItem from './PlanetListItem';
+import PlanetListItem from 'ui/components/PlanetList/PlanetListItem';
 class PlanetList extends React.Component{
 
   constructor(){

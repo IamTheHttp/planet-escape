@@ -1,3 +1,4 @@
+import {BUILDINGS_COMP} from 'gameEngine/constants';
 //store our actions, singleton
 let actions = [];
 
@@ -13,20 +14,16 @@ function userInputSystem(entities){
     //for each entity in the action, do the required logic
     action.entities.map((entityID) => {
       let ent = entities[entityID];
-
       switch(action.name){
-        case 'addPop':
-          if(ent.components['population']){
-            ent.components['population'].value++;
-          }
+        case 'build':
+          let toBuild = entities[action.entityID];
+          ent.components[BUILDINGS_COMP].inProgress.push(new toBuild.constructor());
           break;
         default:
           break;
       }
-
     })
   });
-
   //reset actions when we're done
   actions = [];
 }

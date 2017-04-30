@@ -7,32 +7,14 @@ import React from 'react';
 import userInputSystem from 'gameEngine/ecs/systems/userInputSystem'
 import {pushAction} from 'gameEngine/ecs/systems/userInputSystem'
 
+import EarthLike from 'gameEngine/ecs/entities/planets/EarthLike';
+import Farm from 'gameEngine/ecs/entities/planetBuildings/Farm';
+import {BUILDINGS_COMP} from 'gameEngine/constants';
 describe('Tests a component', function () {
 
-    beforeEach(function () {
-        //setup the test
-    });
-
-    it('tests the user input system', function () {
-
-      let ents = {
-        '1' : {
-          components : {
-            'population' : {
-              name : 'population',
-              value : 1
-            }
-          }
-        }
-      };
-
-      pushAction({
-        name : 'addPop',
-        entities : [1]
-      });
-      userInputSystem(ents);
-      expect(ents[1].components['population'].value).toBe(2);
-    });
+  beforeEach(function () {
+      //setup the test
+  });
 
   it('Tests an action without entities', function () {
     //pushing an action with no entities
@@ -43,7 +25,7 @@ describe('Tests a component', function () {
     //the success of this test is that nothing throws exceptions, since this function returns nothing
   });
 
-  it('Tests an inavlid action(no name)', function () {
+  it('Tests an invalid action(no name)', function () {
     //pushing an action with no entities
     pushAction({
       entities : [1]
@@ -52,19 +34,23 @@ describe('Tests a component', function () {
     //the success of this test is that nothing throws exceptions, since this function returns nothing
   });
 
-  it('Tests that an ent without populaiton is not affected', function () {
-
-    let ents = {
-      '1' : {
-        components : {
-        }
-      }
-    };
+  it('Tests the build action', function () {
 
     pushAction({
-      name : 'addPop',
-      entities : [1]
+      entities : [1], //on what entities to build
+      name : 'build', //action? (build)
+      entityID : 2 //what to build
     });
-    userInputSystem(ents);
+
+    let entities = {
+      1 : new EarthLike('foo',50),
+      2 : new Farm()
+    };
+
+
+    userInputSystem(entities); //the system doesn't even process it's input if there are no valid actions
+    expect(entities[1].components[BUILDINGS_COMP].inProgress.length).toBe(1);
+    expect(entities[1].components[BUILDINGS_COMP].inProgress[0].constructor).toBe(Farm);
   });
+
 });

@@ -5,7 +5,9 @@
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import popGrowthSystem from 'gameEngine/ecs/systems/popGrowthSystem';
+import EarthLike from 'gameEngine/ecs/entities/planets/EarthLike';
 
+import {POPULATION_COMP} from 'gameEngine/constants';
 describe('Tests a popGorwthSystem', function () {
 
     beforeEach(function () {
@@ -14,11 +16,9 @@ describe('Tests a popGorwthSystem', function () {
 
     it('test tick', function () {
       let ents = {
-        '1' : {
-          components : {population:{name:'population',value:1}}
-        }
+        '1' : new EarthLike('earth',1)
       };
       popGrowthSystem(ents);
-      expect(ents[1].components['population'].value).toEqual("0.95");
+      expect(ents[1].components[POPULATION_COMP].value).toEqual(1.005);
     });
 });

@@ -4,7 +4,9 @@
 /* global beforeEach */
 import {mount, shallow} from 'enzyme';
 import React from 'react';
-import EarthLike from 'gameEngine/planets/EarthLike';
+import EarthLike from 'gameEngine/ecs/entities/planets/EarthLike';
+import {POPULATION_COMP} from 'gameEngine/constants';
+
 describe('Tests a component', function () {
 
     beforeEach(function () {
@@ -13,6 +15,6 @@ describe('Tests a component', function () {
 
     it('init earth like', function () {
       let planet = new EarthLike();
-      expect(planet.components.population).not.toBeUndefined();
+      expect(planet.components[POPULATION_COMP]).not.toBeUndefined();
     });
 });

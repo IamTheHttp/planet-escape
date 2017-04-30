@@ -1,8 +1,10 @@
+/** @namespace entity.components.population */
+import {POPULATION_COMP} from 'gameEngine/constants';
 class PlanetResources{
   constructor(val = 10){
-    this.name = 'population';
+    this.name = POPULATION_COMP;
     this.value = val;
-    this.max = false;
+    this.maxPop = 0;
   }
 }
 
