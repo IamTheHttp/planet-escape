@@ -2,7 +2,7 @@ let tickCount = 0;
 import {
   POPULATION_COMP,
   TREASURY_COMP,
-  GOLD_COMP,
+  GOLD_RESOURCE,
   INCOME_COMP
 } from 'gameEngine/constants';
 
@@ -34,8 +34,8 @@ function treasuryUpdateSystem(entities){
       totalPop += +pop.value;
     }
 
-    if(entity.hasComponents([GOLD_COMP]) ){
-      let gold = entity.components[GOLD_COMP];
+    if(entity.hasComponents([GOLD_RESOURCE]) ){
+      let gold = entity.components[GOLD_RESOURCE];
       totalgold += +gold.value;
     }
   }
@@ -45,7 +45,7 @@ function treasuryUpdateSystem(entities){
     entity.components[INCOME_COMP].value = totalIncome;
 
     if(tickCount === 200){
-      entity.components[GOLD_COMP].value += totalIncome;
+      entity.components[GOLD_RESOURCE].value += totalIncome;
       tickCount =0;
     }
   });

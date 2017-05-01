@@ -23,7 +23,6 @@ class Game{
     new EarthLike('New Mars',1);
     new Treasury();
 
-
     this.t = setInterval(()=>{
       //userinput runs all the time, any modification to "user input" modifies stuff
       userInputSystem(Entity.entities);

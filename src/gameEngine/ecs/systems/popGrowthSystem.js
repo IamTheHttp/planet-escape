@@ -1,19 +1,21 @@
-import {POPULATION_COMP,PLANETSIZE_COMP} from 'gameEngine/constants';
+import {POPULATION_COMP,PLANETBONUS_COMP,FOOD_RESOURCE} from 'gameEngine/constants';
 
 function popGrowthSystem(entities){
   for(let entityID in entities){
     let entity = entities[entityID];
 
-    if(entity.components[POPULATION_COMP]){
-      let newPop = Math.max((+entity.components[POPULATION_COMP].value + 0.005),0);
 
-      if(entity.components[PLANETSIZE_COMP]){
-        //0.15M per planetSize.
-        let maxPop = entity.components[PLANETSIZE_COMP].value*0.1;
-        entity.components[POPULATION_COMP].maxPop = maxPop;
+    if(entity.components[POPULATION_COMP]){
+      let newPop = Math.max((+entity.components[POPULATION_COMP].value*1.005),1);
+
+      if(entity.components[PLANETBONUS_COMP]){
+        //1M per food!, min 1.
+        let maxPop = Math.max(entity[PLANETBONUS_COMP].mod[FOOD_RESOURCE] * 1,1);
+
+        entity[POPULATION_COMP].maxPop = maxPop;
 
         newPop = Math.min(maxPop,newPop);
-        entity.components[POPULATION_COMP].value = newPop;
+        entity[POPULATION_COMP].value = newPop;
       }
     }
   }

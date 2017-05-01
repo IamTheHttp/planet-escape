@@ -1,6 +1,6 @@
 import Entity from 'gameEngine/ecs/Entity'
 import UIComponent from 'gameEngine/ecs/components/UIComponent';
-import PlanetBonusComponent from 'gameEngine/ecs/components/PlanetBonusComponent';
+import ModifiesPlanetBonusComponent from 'gameEngine/ecs/components/ModifiesPlanetBonusComponent';
 import ConsumptionComponent from 'gameEngine/ecs/components/ConsumptionComponent';
 
 class Mine{
@@ -12,7 +12,7 @@ class Mine{
       ent.addComponent(new UIComponent('buildingOptions'));
     }
 
-    ent.addComponent(new PlanetBonusComponent());
+    ent.addComponent(new ModifiesPlanetBonusComponent());
     ent.addComponent(new ConsumptionComponent());
     return ent;
   }

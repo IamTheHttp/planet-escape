@@ -1,6 +1,6 @@
 import React from 'react';
 import './innerPage.css';
-import {LOCALBONUS_COMP} from 'gameEngine/constants';
+import {PLANETBONUS_COMP} from 'gameEngine/constants';
 class PlanetDetails extends React.Component{
 
   constructor(){
@@ -15,7 +15,7 @@ class PlanetDetails extends React.Component{
   }
 
   renderPlanetBonuses(){
-    let mod = this.props.planet.components[LOCALBONUS_COMP].mod;
+    let mod = this.props.planet.components[PLANETBONUS_COMP].mod;
 
     return Object.keys(mod).map((itemName)=>{
       let value = mod[itemName];

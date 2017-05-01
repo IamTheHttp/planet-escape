@@ -8,7 +8,7 @@ import planetBonusesSystem from 'gameEngine/ecs/systems/planetBonusesSystem';
 import EarthLike from 'gameEngine/ecs/entities/planets/EarthLike';
 import Farm from 'gameEngine/ecs/entities/planetBuildings/Farm';
 import Mine from 'gameEngine/ecs/entities/planetBuildings/Mine';
-import {LOCALBONUS_COMP,BUILDINGS_COMP,FOOD_COMP} from 'gameEngine/constants';
+import {PLANETBONUS_COMP,BUILDINGS_COMP,FOOD_RESOURCE} from 'gameEngine/constants';
 describe('Tests the construction system', function () {
 
   beforeEach(function () {
@@ -26,6 +26,6 @@ describe('Tests the construction system', function () {
     planetBonusesSystem(entities);
 
     //shouldn't be equal as bonuses were added in the farm
-    expect(planet[LOCALBONUS_COMP].mod[FOOD_COMP]).not.toEqual(planet[LOCALBONUS_COMP].base[FOOD_COMP]);
+    expect(planet[PLANETBONUS_COMP].mod[FOOD_RESOURCE]).not.toEqual(planet[PLANETBONUS_COMP].base[FOOD_RESOURCE]);
   });
 });

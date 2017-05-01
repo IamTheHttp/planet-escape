@@ -1,5 +1,5 @@
 import React from 'react';
-import {BUILDINGS_COMP,POPULATION_COMP,INCOME_COMP,GOLD_COMP,PLANETSIZE_COMP} from 'gameEngine/constants';
+import {BUILDINGS_COMP,POPULATION_COMP,INCOME_COMP,GOLD_RESOURCE,PLANETSIZE_COMP} from 'gameEngine/constants';
 
 
 class PlanetListItem extends React.Component{

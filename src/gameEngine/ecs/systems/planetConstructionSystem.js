@@ -11,8 +11,8 @@ export function canAfford(treasuryEntity,costsComponent,spend = false){
 
   for(let costName in costs){
     let costValue = costs[costName];
-    if(treasuryEntity.components[costName].value > costValue){
-      spend && (treasuryEntity.components[costName].value -= costValue);
+    if(treasuryEntity[TREASURY_COMP].items[costName] > costValue){
+      spend && (treasuryEntity[TREASURY_COMP].items[costName] -= costValue);
     }
     else{
       return false;

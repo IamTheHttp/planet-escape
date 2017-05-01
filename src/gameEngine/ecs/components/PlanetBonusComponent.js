@@ -1,10 +1,10 @@
-/** @namespace entity.components.planetBonus */
+/** @namespace entity.components.localBonus */
 import {PLANETBONUS_COMP} from 'gameEngine/constants';
-
 class PlanetBonusComponent{
-  constructor(val = {}){
+  constructor(){
     this.name = PLANETBONUS_COMP;
-    this.items = val;
+    this.bonuses = {};
+    this.mod = {};
   }
 }
 
