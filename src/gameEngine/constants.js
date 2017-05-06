@@ -12,6 +12,4 @@ export const PLANETSIZE_COMP = 'PLANES_SIZE';
 export const COSTS_COMP = 'COSTS';
 export const UI_COMP = 'UI';
 export const PLANETBONUS_COMP = 'PLANET_BONUS';
-
-
-
+export const PLAYERCONTROLLED_COMP = 'PLAYER_CONTROLLED';

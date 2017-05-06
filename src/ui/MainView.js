@@ -5,8 +5,8 @@ import PlanetList from 'ui/components/PlanetList/PlanetList';
 import SummaryBar from 'ui/components/SummaryBar/SummaryBar';
 import PlanetDetails from 'ui/components/PlanetDetails/PlanetDetails';
 import 'bootstrap/dist/css/bootstrap.css';
-import {POPULATION_COMP,INCOME_COMP,GOLD_COMP,UI_COMP} from 'gameEngine/constants';
-
+import {POPULATION_COMP,INCOME_COMP,GOLD_COMP,UI_COMP,PLAYERCONTROLLED_COMP} from 'gameEngine/constants';
+import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
 class MainView extends React.Component{
 
   constructor(){
@@ -32,16 +32,23 @@ class MainView extends React.Component{
     let totalIncome = 0;
     let gold = 0;
 
+    let entsToDraw = [];
+
     for(let id in gameEntities){
       let ent = gameEntities[id];
-      if(ent.components[UI_COMP].section === 'planets'){
+
+      if(ent[UI_COMP].section === 'canvas' && ent[PLAYERCONTROLLED_COMP]){
+        entsToDraw.push(ent);
+      }
+
+      if(ent[UI_COMP].section === 'planets'){
         planetSection[id] = ent;
       }
 
-      if(ent.components[UI_COMP].section === 'summary'){
-        totalPop = ent.components[POPULATION_COMP].value;
-        totalIncome = ent.components[INCOME_COMP].value;
-        gold = ent.components[GOLD_COMP].value;
+      if(ent[UI_COMP].section === 'summary'){
+        totalPop = ent[POPULATION_COMP].value;
+        totalIncome = ent[INCOME_COMP].value;
+        gold = ent[GOLD_COMP].value;
       }
 
       if(ent.components[UI_COMP].section === 'buildingOptions'){
@@ -49,6 +56,8 @@ class MainView extends React.Component{
       }
     }
     this.setState({planetSection,summary,totalIncome,totalPop,gold,buildingOptions});
+
+    this.canvasMap.update(entsToDraw);
   }
 
   selectPlanet(entityID){
@@ -85,7 +94,9 @@ class MainView extends React.Component{
           <PlanetList
             onClick={this.selectPlanet}
             dispatchGameAction={this.game.dispatchAction}
-            planets={this.state.planetSection}></PlanetList>
+            planets={this.state.planetSection}>
+          </PlanetList>
+
           {planet && <PlanetDetails
             buildingOptions={this.state.buildingOptions}
             planet={planet}
@@ -93,6 +104,11 @@ class MainView extends React.Component{
           >
 
           </PlanetDetails>}
+          {!planet && <CanvasMap
+            ref={(inst)=>{this.canvasMap = inst; }}
+            dispatch={this.game.dispatchAction}
+          >
+          </CanvasMap>}
         </div>
       </div>
     )

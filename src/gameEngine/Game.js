@@ -10,6 +10,7 @@ import planetConstructionSystem from './ecs/systems/planetConstructionSystem';
 
 import Farm from 'gameEngine/ecs/entities/planetBuildings/Farm';
 import Mine from 'gameEngine/ecs/entities/planetBuildings/Mine';
+import Mothership from 'gameEngine/ecs/entities/ships/Mothership';
 import {pushAction} from './ecs/systems/userInputSystem';
 import Treasury from './ecs/entities/Treasury';
 import {UI_COMP} from 'gameEngine/constants';
@@ -22,6 +23,7 @@ class Game{
     new EarthLike('Earth',3);
     new EarthLike('New Mars',1);
     new Treasury();
+    new Mothership();
 
 
     this.t = setInterval(()=>{
