@@ -12,7 +12,7 @@ class AvailableResources{
     ent.addComponent(new UIComponent('summary'));
     ent.addComponent({
       name:TREASURY_COMP,
-      items : {GOLD_RESOURCE:0}
+      items : {[GOLD_RESOURCE]:0}
     });
     return ent;
   }

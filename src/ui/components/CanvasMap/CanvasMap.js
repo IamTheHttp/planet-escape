@@ -11,6 +11,9 @@ class CanvasMap extends React.Component{
   update(entsToDraw){
     var ctx = this.canvas.getContext('2d');
 
+    if(!ctx){
+      return;
+    }
     entsToDraw.forEach((item)=>{
       let x = item[PLAYERCONTROLLED_COMP].x;
       let y = item[PLAYERCONTROLLED_COMP].y;

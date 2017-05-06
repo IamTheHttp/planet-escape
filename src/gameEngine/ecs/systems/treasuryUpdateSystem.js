@@ -25,27 +25,22 @@ function treasuryUpdateSystem(entities){
     }
 
     if(entity.hasComponents([INCOME_COMP])){
-      let income = entity.components[INCOME_COMP];
+      let income = entity[INCOME_COMP];
       totalIncome += +income.value;
     }
 
     if(entity.hasComponents([POPULATION_COMP]) ){
-      let pop = entity.components[POPULATION_COMP];
+      let pop = entity[POPULATION_COMP];
       totalPop += +pop.value;
-    }
-
-    if(entity.hasComponents([GOLD_RESOURCE]) ){
-      let gold = entity.components[GOLD_RESOURCE];
-      totalgold += +gold.value;
     }
   }
 
   hasSummary.forEach((entity) => {
-    entity.components[POPULATION_COMP].value = totalPop;
-    entity.components[INCOME_COMP].value = totalIncome;
+    entity[POPULATION_COMP].value = totalPop;
+    entity[INCOME_COMP].value = totalIncome;
 
     if(tickCount === 200){
-      entity.components[GOLD_RESOURCE] += totalIncome;
+      entity[TREASURY_COMP].items[GOLD_RESOURCE] += totalIncome;
       tickCount =0;
     }
   });
