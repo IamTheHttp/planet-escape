@@ -4,7 +4,7 @@ import IncomeComponent from 'gameEngine/ecs/components/IncomeComponent';
 import UIComponent from 'gameEngine/ecs/components/UIComponent';
 import PlanetSizeComponent from 'gameEngine/ecs/components/PlanetSizeComponent';
 import BuildingsComponent from 'gameEngine/ecs/components/BuildingsComponent';
-import LocalBonusComponent from 'gameEngine/ecs/components/LocalBonusComponent';
+import PlanetBonusComponent from 'gameEngine/ecs/components/PlanetBonusComponent';
 
 
 class EarthLike{
@@ -16,7 +16,7 @@ class EarthLike{
     ent.addComponent(new UIComponent('planets'));
     ent.addComponent(new PlanetSizeComponent(this.getRandomPlanetSize(80,120)));
     ent.addComponent(new BuildingsComponent);
-    ent.addComponent(new LocalBonusComponent());
+    ent.addComponent(new PlanetBonusComponent());
     ent.name = name;
     return ent;
   }

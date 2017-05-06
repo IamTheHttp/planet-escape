@@ -6,7 +6,7 @@ import {mount, shallow} from 'enzyme';
 import React from 'react';
 import PlanetDetails from 'ui/components/PlanetDetails/PlanetDetails';
 import EarthLike from 'gameEngine/ecs/entities/planets/EarthLike';
-import {LOCALBONUS_COMP} from 'gameEngine/constants';
+import {PLANETBONUS_COMP} from 'gameEngine/constants';
 describe('Tests a component', function () {
 
   beforeEach(function () {
@@ -28,7 +28,7 @@ describe('Tests a component', function () {
       planet : new EarthLike('p',1)
     };
 
-    props.planet[LOCALBONUS_COMP].mod = {
+    props.planet[PLANETBONUS_COMP].mod = {
       'blabla' : 1,
       'blabla2' : 2,
     };

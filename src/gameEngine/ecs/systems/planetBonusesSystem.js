@@ -1,4 +1,4 @@
-import {BUILDINGS_COMP,LOCALBONUS_COMP,FOOD_COMP,PLANETBONUS_COMP} from 'gameEngine/constants';
+import {BUILDINGS_COMP,PLANETBONUS_COMP,FOOD_RESOURCE,MODS_PLANET_BONUSES} from 'gameEngine/constants';
 
 
 function planetBonusesSystem(entities){
@@ -8,27 +8,27 @@ function planetBonusesSystem(entities){
     /*
      * Set the base bonuses for entities
      */
-    if(entity.hasComponents([LOCALBONUS_COMP])){
-      entity.components[LOCALBONUS_COMP].base = {
-        [FOOD_COMP]:2,
+    if(entity.hasComponents([PLANETBONUS_COMP])){
+      entity[PLANETBONUS_COMP].base = {
+        [FOOD_RESOURCE]:2,
         production:1
       };
-      //set the mod for this entity
-      entity.components[LOCALBONUS_COMP].mod = Object.assign({},entity.components[LOCALBONUS_COMP].base);
     }
 
     /*
      * Set the mod bonuses for entites
      */
-    let entHasMod = entity.hasComponents([LOCALBONUS_COMP,BUILDINGS_COMP]);
+    let entHasMod = entity.hasComponents([PLANETBONUS_COMP,BUILDINGS_COMP]);
     if(entHasMod){
 
-      let foodBonus = 0;
-      entity.components[BUILDINGS_COMP].built.forEach((childEntity)=>{
-        foodBonus += childEntity.components[PLANETBONUS_COMP].items[FOOD_COMP] || {amount:0};
+      let foodBonus = entity[PLANETBONUS_COMP].base[FOOD_RESOURCE];
+      entity[BUILDINGS_COMP].built.forEach((childEntity)=>{
+        if(childEntity[MODS_PLANET_BONUSES].items[FOOD_RESOURCE]){
+          foodBonus += childEntity[MODS_PLANET_BONUSES].items[FOOD_RESOURCE].amount || {amount:0};
+        }
       });
 
-      entity.components[LOCALBONUS_COMP].mod[FOOD_COMP] = foodBonus;
+      entity.components[PLANETBONUS_COMP].mod[FOOD_RESOURCE] = foodBonus;
     }
   }
 }

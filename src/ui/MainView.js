@@ -5,7 +5,7 @@ import PlanetList from 'ui/components/PlanetList/PlanetList';
 import SummaryBar from 'ui/components/SummaryBar/SummaryBar';
 import PlanetDetails from 'ui/components/PlanetDetails/PlanetDetails';
 import 'bootstrap/dist/css/bootstrap.css';
-import {POPULATION_COMP,INCOME_COMP,GOLD_COMP,UI_COMP,PLAYERCONTROLLED_COMP} from 'gameEngine/constants';
+import {POPULATION_COMP,INCOME_COMP,GOLD_RESOURCE,UI_COMP,PLAYERCONTROLLED_COMP,TREASURY_COMP} from 'gameEngine/constants';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
 class MainView extends React.Component{
 
@@ -46,9 +46,9 @@ class MainView extends React.Component{
       }
 
       if(ent[UI_COMP].section === 'summary'){
-        totalPop = ent[POPULATION_COMP].value;
-        totalIncome = ent[INCOME_COMP].value;
-        gold = ent[GOLD_COMP].value;
+        totalPop = ent.components[POPULATION_COMP].value;
+        totalIncome = ent.components[INCOME_COMP].value;
+        gold = ent[TREASURY_COMP].items[GOLD_RESOURCE];
       }
 
       if(ent.components[UI_COMP].section === 'buildingOptions'){

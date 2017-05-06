@@ -25,7 +25,6 @@ class Game{
     new Treasury();
     new Mothership();
 
-
     this.t = setInterval(()=>{
       //userinput runs all the time, any modification to "user input" modifies stuff
       userInputSystem(Entity.entities);

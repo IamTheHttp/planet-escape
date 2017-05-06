@@ -1,8 +1,8 @@
 import Entity from 'gameEngine/ecs/Entity'
 import UIComponent from 'gameEngine/ecs/components/UIComponent';
-import PlanetBonusComponent from 'gameEngine/ecs/components/PlanetBonusComponent';
+import ModifiesPlanetBonusComponent from 'gameEngine/ecs/components/ModifiesPlanetBonusComponent';
 import CostsComponent from 'gameEngine/ecs/components/CostsComponent';
-import {FARM_COMP,GOLD_COMP,FOOD_COMP} from 'gameEngine/constants';
+import {FARM_COMP,GOLD_RESOURCE,FOOD_RESOURCE} from 'gameEngine/constants';
 
 class Farm{
   constructor(isBuildable = false){
@@ -13,15 +13,15 @@ class Farm{
       ent.addComponent(new UIComponent('buildingOptions'));
     }
 
-    ent.addComponent(new PlanetBonusComponent({
-      [FOOD_COMP]:{
+    ent.addComponent(new ModifiesPlanetBonusComponent({
+      [FOOD_RESOURCE]:{
         'type':'flat',
         'amount': 2
       }
       })
     );
 
-    ent.addComponent(new CostsComponent({[GOLD_COMP]:50}));
+    ent.addComponent(new CostsComponent({[GOLD_RESOURCE]:50}));
     return ent;
   }
 }
