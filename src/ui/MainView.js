@@ -55,7 +55,6 @@ class MainView extends React.Component{
         buildingOptions[ent.id] = ent;
       }
     }
-    console.log(gold);
     this.setState({planetSection,summary,totalIncome,totalPop,gold,buildingOptions});
 
     this.canvasMap.update(entsToDraw);
