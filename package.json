@@ -25,6 +25,7 @@
   },
   "main": "dist",
   "dependencies": {
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "canvas-prebuilt": "^1.6.5-prerelease.1"
   }
 }
