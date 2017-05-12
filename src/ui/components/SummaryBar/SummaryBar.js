@@ -13,6 +13,7 @@ class SummaryBar extends React.Component{
   }
 }
 
+
 SummaryBar.defaultProps = {
   totalPop : 0,
   totalIncome : 0,
