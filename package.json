@@ -21,7 +21,7 @@
     "verifyPackageName": "node node_modules/reusable-webpack-config/verifyPackageName.js"
   },
   "devDependencies": {
-    "reusable-webpack-config": "https://IamHttP@bitbucket.org/patrickprivate/react-webpack-configuration.git"
+    "reusable-webpack-config": "git@bitbucket.org:IamHttP/planet-escape.git"
   },
   "main": "dist",
   "dependencies": {
