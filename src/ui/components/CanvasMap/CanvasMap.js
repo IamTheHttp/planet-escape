@@ -1,5 +1,5 @@
 import React from 'react';
-import {PLAYERCONTROLLED_COMP} from 'gameEngine/constants';
+import {POSITION_COMP} from 'gameEngine/constants';
 
 class CanvasMap extends React.Component{
 
@@ -12,11 +12,11 @@ class CanvasMap extends React.Component{
     var ctx = this.canvas.getContext('2d');
 
     entsToDraw.forEach((item)=>{
-      let x = item[PLAYERCONTROLLED_COMP].x;
-      let y = item[PLAYERCONTROLLED_COMP].y;
-      let rad = item[PLAYERCONTROLLED_COMP].radius;
+      let x = item[POSITION_COMP].x;
+      let y = item[POSITION_COMP].y;
+      let rad = item[POSITION_COMP].radius;
 
-      let isSelected = item[PLAYERCONTROLLED_COMP].selected;
+      let isSelected = item[POSITION_COMP].selected;
 
       ctx.moveTo(x,y);
       ctx.beginPath();

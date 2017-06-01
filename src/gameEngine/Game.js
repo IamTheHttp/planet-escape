@@ -18,12 +18,12 @@ class Game{
   constructor(cbNotification){
     this.dispatchAction = this.dispatchAction.bind(this);
     //setup some planets
-    new EarthLike('Braxis',1);
-    new EarthLike('Hehe',2);
-    new EarthLike('Earth',3);
-    new EarthLike('New Mars',1);
+    new EarthLike('Braxis',1,30,30);
+    new EarthLike('Hehe',2,90,90);
+    new EarthLike('Earth',3,150,100);
+    new EarthLike('New Mars',1,60,250);
     new Treasury();
-    new Mothership();
+    // new Mothership();
 
     this.t = setInterval(()=>{
       //userinput runs all the time, any modification to "user input" modifies stuff

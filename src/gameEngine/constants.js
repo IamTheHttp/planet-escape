@@ -13,3 +13,5 @@ export const COSTS_COMP = 'COSTS';
 export const UI_COMP = 'UI';
 export const MODS_PLANET_BONUSES = 'MODIFIES_PLANET_BONUSES';
 export const PLAYERCONTROLLED_COMP = 'PLAYER_CONTROLLED';
+export const POSITION_COMP = 'POSITION';
+

@@ -28,34 +28,28 @@ class PlanetDetails extends React.Component{
   render(){
     let planetName = this.props.planet.name;
 
-    if(!planetName){
-      return (<h1
-        className="container-fluid">Select a planet</h1>);
-    }
-    else{
-      return(
-        <div className="innerPage">
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-sm-12">
-                <h1>{planetName}</h1>
-                <br/>
-                <h3>Planet Bonuses</h3>
-                <div>
-                  {this.renderPlanetBonuses()}
-                </div>
-                <br/>
+    return(
+      <div className="innerPage">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-sm-12">
+              <div><h1>{planetName}</h1> -- <h4 onClick={this.props.onBackToMap}>Back to star map</h4></div>
+              <br/>
+              <h3>Planet Bonuses</h3>
+              <div>
+                {this.renderPlanetBonuses()}
+              </div>
+              <br/>
 
-                <h3>Construction</h3>
-                <div>
-                  {this.renderBuildOptions()}
-                </div>
+              <h3>Construction</h3>
+              <div>
+                {this.renderBuildOptions()}
               </div>
             </div>
           </div>
         </div>
-      )
-    }
+      </div>
+    )
   }
 }
 

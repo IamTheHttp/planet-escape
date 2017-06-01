@@ -1,6 +1,6 @@
 // Set node environment to testing
 process.env.NODE_ENV = 'test';
-var webpackCfg = require('reusable-webpack-config/webpack/config/test');
+var webpackCfg = require('webpack-configuration/webpack/config/test');
 
 // var preProPath = process.cwd() +'karmaTests/loadtests.js';
 // var coverageDir = process.cwd() + 'karmaCoverage';

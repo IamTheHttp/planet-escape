@@ -2,9 +2,12 @@
 import {UI_COMP} from 'gameEngine/constants';
 
 class UIComponent{
-  constructor(section){
+  constructor(sections){
+    if(!Array.isArray(sections)){
+      sections = [sections];
+    }
     this.name = UI_COMP;
-    this.section = section || '';
+    this.section = sections;
   }
 }
 

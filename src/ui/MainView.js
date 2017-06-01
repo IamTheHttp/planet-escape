@@ -5,7 +5,7 @@ import PlanetList from 'ui/components/PlanetList/PlanetList';
 import SummaryBar from 'ui/components/SummaryBar/SummaryBar';
 import PlanetDetails from 'ui/components/PlanetDetails/PlanetDetails';
 import 'bootstrap/dist/css/bootstrap.css';
-import {POPULATION_COMP,INCOME_COMP,GOLD_RESOURCE,UI_COMP,PLAYERCONTROLLED_COMP,TREASURY_COMP} from 'gameEngine/constants';
+import {POPULATION_COMP,INCOME_COMP,GOLD_RESOURCE,UI_COMP,POSITION_COMP,TREASURY_COMP} from 'gameEngine/constants';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
 class MainView extends React.Component{
 
@@ -18,6 +18,7 @@ class MainView extends React.Component{
     this.game = {};
     this.selectPlanet = this.selectPlanet.bind(this);
     this.buildBuilding = this.buildBuilding.bind(this);
+    this.handleBackToMap = this.handleBackToMap.bind(this);
   }
 
   componentDidMount(){
@@ -37,27 +38,29 @@ class MainView extends React.Component{
     for(let id in gameEntities){
       let ent = gameEntities[id];
 
-      if(ent[UI_COMP].section === 'canvas' && ent[PLAYERCONTROLLED_COMP]){
+      if(ent[UI_COMP].section.indexOf('canvas') > -1 && ent[POSITION_COMP]){
         entsToDraw.push(ent);
       }
 
-      if(ent[UI_COMP].section === 'planets'){
+      if(ent[UI_COMP].section.indexOf('planets') > -1){
         planetSection[id] = ent;
       }
 
-      if(ent[UI_COMP].section === 'summary'){
+      if(ent[UI_COMP].section.indexOf('summary') > -1){
         totalPop = ent.components[POPULATION_COMP].value;
         totalIncome = ent.components[INCOME_COMP].value;
         gold = ent[TREASURY_COMP].items[GOLD_RESOURCE];
       }
 
-      if(ent.components[UI_COMP].section === 'buildingOptions'){
+      if(ent.components[UI_COMP].section.indexOf('buildingOptions') > -1){
         buildingOptions[ent.id] = ent;
       }
     }
     this.setState({planetSection,summary,totalIncome,totalPop,gold,buildingOptions});
 
-    this.canvasMap.update(entsToDraw);
+    if(this.canvasMap){
+      this.canvasMap.update(entsToDraw);
+    }
   }
 
   selectPlanet(entityID){
@@ -73,9 +76,12 @@ class MainView extends React.Component{
     });
   }
 
+  handleBackToMap(){
+    this.setState({selectedEntity : false})
+  }
+
   render(){
     let planet = false;
-
     if(this.state.selectedEntity){
       planet = this.state.planetSection[this.state.selectedEntity];
     }
@@ -101,6 +107,7 @@ class MainView extends React.Component{
             buildingOptions={this.state.buildingOptions}
             planet={planet}
             onClick={this.buildBuilding}
+            onBackToMap={this.handleBackToMap}
           >
 
           </PlanetDetails>}
