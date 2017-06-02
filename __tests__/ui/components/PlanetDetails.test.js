@@ -19,7 +19,8 @@ describe('Tests a component', function () {
     };
 
     let wrapper = mount(<PlanetDetails {...props}></PlanetDetails>);
-    expect(wrapper.find('h1').html().toLowerCase().indexOf('select a planet')).toBeGreaterThan(-1);
+    expect(wrapper.find('h4').html().toLowerCase().indexOf('back to star map')).toBeGreaterThan(-1);
+
   });
 
   it('renders with a planet', function () {

@@ -57,5 +57,7 @@ class PlanetDetails extends React.Component {
     );
   }
 }
-
+PlanetDetails.defaultProps = {
+  buildingOptions : {}
+};
 export default PlanetDetails;
