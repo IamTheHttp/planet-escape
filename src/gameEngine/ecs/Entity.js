@@ -1,5 +1,5 @@
-class Entity{
-  constructor(classRef){
+class Entity {
+  constructor(classRef) {
     Entity.counter++;
     this.id = Entity.counter;
     this.constructor = classRef;
@@ -7,20 +7,20 @@ class Entity{
     Entity.entities[this.id] = this;
   }
 
-  addComponent(component){
+  addComponent(component) {
     this.components[component.name] = component;
     this[component.name] = component;
   }
 
-  removeComponent(componentName){
+  removeComponent(componentName) {
     delete this.components[componentName];
     delete this[componentName];
   }
 
-  hasComponents(components = []){
-    return components.reduce((agg,compName)=>{
-        return agg && !!this.components[compName];
-    },true)
+  hasComponents(components = []) {
+    return components.reduce((agg,compName) => {
+      return agg && !!this.components[compName];
+    },true);
   }
 }
 

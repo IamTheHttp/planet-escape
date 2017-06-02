@@ -1,13 +1,10 @@
 /** @namespace entity.components.ui */
 import {UI_COMP} from 'gameEngine/constants';
 
-class UIComponent{
-  constructor(sections){
-    if(!Array.isArray(sections)){
-      sections = [sections];
-    }
+class UIComponent {
+  constructor(sections) {
     this.name = UI_COMP;
-    this.section = sections;
+    this.section = Array.isArray(sections) ? sections : [sections];
   }
 }
 

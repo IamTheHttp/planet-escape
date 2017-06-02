@@ -1,18 +1,18 @@
-import Entity from 'gameEngine/ecs/Entity'
+import Entity from 'gameEngine/ecs/Entity';
 import UIComponent from 'gameEngine/ecs/components/UIComponent';
-import ModifiesPlanetBonusComponent from 'gameEngine/ecs/components/ModifiesPlanetBonusComponent';
+import ModsPlanetBonusComponent from 'gameEngine/ecs/components/ModsPlanetBonusComponent';
 import ConsumptionComponent from 'gameEngine/ecs/components/ConsumptionComponent';
 
-class Mine{
-  constructor(isBuildable = false){
+class Mine {
+  constructor(isBuildable = false) {
     let ent = new Entity(Mine);
     ent.name = 'Mine';
 
-    if(isBuildable){
+    if (isBuildable) {
       ent.addComponent(new UIComponent('buildingOptions'));
     }
 
-    ent.addComponent(new ModifiesPlanetBonusComponent());
+    ent.addComponent(new ModsPlanetBonusComponent());
     ent.addComponent(new ConsumptionComponent());
     return ent;
   }

@@ -4,7 +4,7 @@
 	"description": "Planet escape! a game like no other",
 	"scripts": {
 		"init": "npm install && node node_modules/webpack-configuration/setup.js",
-		"start": "node node_modules/webpack-configuration/webpack/server.js --env=dev",
+		"start": "npm run build:dll && node node_modules/webpack-configuration/webpack/server.js --env=dev",
 		"build": "npm run build:docs && npm run build:clean && npm run build:dist && npm run build:liveExample",
 		"build:dist": "webpack --config=node_modules/webpack-configuration/webpack/webpack.server.conf.js --env=dist",
 		"build:docs": "rimraf ./docs/** && jsdoc -c ./jsdocs.conf.json -u ./tutorials -t ./node_modules/ink-docstrap/template -R readme.md -r ./src -d docs",
@@ -17,10 +17,11 @@
 		"releaseMinor": "release-it minor",
 		"releaseMajor": "release-it major",
 		"karma": "karma start",
-		"karma:watch": "karma start --autoWatch=true --singleRun=false"
+		"karma:watch": "karma start --autoWatch=true --singleRun=false",
+		"build:dll": "webpack --config=node_modules/webpack-configuration/webpack/webpack.server.conf.js --env=dll"
 	},
 	"devDependencies": {
-		"webpack-configuration": "https://IamHttP@bitbucket.org/patrickprivate/react-webpack-configuration.git#8.0.0"
+		"webpack-configuration": "https://IamHttP@bitbucket.org/patrickprivate/react-webpack-configuration.git#9.0.0"
 	},
 	"main": "dist",
 	"dependencies": {

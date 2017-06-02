@@ -62,7 +62,7 @@
       "brace-style": [2, "1tbs"],
       "spaced-comment": 2,
       "semi": [2, "always"],
-      "id-length": [1, {"min": 2, "max": 25,  "exceptions": ["x", "y", "z", "i", "j","$","_"]}],
+      "id-length": [1, {"min": 2, "max": 25,  "exceptions": ["x", "y", "z", "i", "j","$","_","e"]}],
       "camelcase": 2,
       "no-underscore-dangle": 2,
       "indent": [2, 2],

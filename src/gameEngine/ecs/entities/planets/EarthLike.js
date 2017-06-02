@@ -1,4 +1,4 @@
-import Entity from 'gameEngine/ecs/Entity'
+import Entity from 'gameEngine/ecs/Entity';
 import PopulationComponent from 'gameEngine/ecs/components/PopulationComponent';
 import IncomeComponent from 'gameEngine/ecs/components/IncomeComponent';
 import UIComponent from 'gameEngine/ecs/components/UIComponent';
@@ -8,9 +8,9 @@ import PlanetBonusComponent from 'gameEngine/ecs/components/PlanetBonusComponent
 import PositionComponent from 'gameEngine/ecs/components/PositionComponent';
 
 
-class EarthLike{
-  constructor(name,basePop,xPos=50,yPos=50){
-    let pop = basePop || (Math.random()*10);
+class EarthLike {
+  constructor(name,basePop,xPos = 50,yPos = 50) {
+    let pop = basePop || (Math.random() * 10);
     let ent = new Entity();
     ent.addComponent(new PopulationComponent(pop));
     ent.addComponent(new IncomeComponent());
@@ -23,8 +23,8 @@ class EarthLike{
     return ent;
   }
 
-  getRandomPlanetSize(min,max){
-    return Math.floor(Math.random()*(max-min+1)+min);
+  getRandomPlanetSize(min,max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
   }
 }
 

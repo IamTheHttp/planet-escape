@@ -5,11 +5,18 @@ import PlanetList from 'ui/components/PlanetList/PlanetList';
 import SummaryBar from 'ui/components/SummaryBar/SummaryBar';
 import PlanetDetails from 'ui/components/PlanetDetails/PlanetDetails';
 import 'bootstrap/dist/css/bootstrap.css';
-import {POPULATION_COMP,INCOME_COMP,GOLD_RESOURCE,UI_COMP,POSITION_COMP,TREASURY_COMP} from 'gameEngine/constants';
+import {
+  POPULATION_COMP,
+  INCOME_COMP,
+  GOLD_RESOURCE,
+  UI_COMP,
+  POSITION_COMP,
+  TREASURY_COMP
+} from 'gameEngine/constants';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
-class MainView extends React.Component{
+class MainView extends React.Component {
 
-  constructor(){
+  constructor() {
     super();
     this.state = {
       selectedEntity : false,
@@ -21,11 +28,11 @@ class MainView extends React.Component{
     this.handleBackToMap = this.handleBackToMap.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.game = new Game(this.updateGameState.bind(this));
   }
 
-  updateGameState(gameEntities){
+  updateGameState(gameEntities) {
     let planetSection = {};
     let summary = {};
     let buildingOptions = {};
@@ -35,39 +42,39 @@ class MainView extends React.Component{
 
     let entsToDraw = [];
 
-    for(let id in gameEntities){
+    for (let id in gameEntities) {
       let ent = gameEntities[id];
 
-      if(ent[UI_COMP].section.indexOf('canvas') > -1 && ent[POSITION_COMP]){
+      if (ent[UI_COMP].section.indexOf('canvas') > -1 && ent[POSITION_COMP]) {
         entsToDraw.push(ent);
       }
 
-      if(ent[UI_COMP].section.indexOf('planets') > -1){
+      if (ent[UI_COMP].section.indexOf('planets') > -1) {
         planetSection[id] = ent;
       }
 
-      if(ent[UI_COMP].section.indexOf('summary') > -1){
+      if (ent[UI_COMP].section.indexOf('summary') > -1) {
         totalPop = ent.components[POPULATION_COMP].value;
         totalIncome = ent.components[INCOME_COMP].value;
         gold = ent[TREASURY_COMP].items[GOLD_RESOURCE];
       }
 
-      if(ent.components[UI_COMP].section.indexOf('buildingOptions') > -1){
+      if (ent.components[UI_COMP].section.indexOf('buildingOptions') > -1) {
         buildingOptions[ent.id] = ent;
       }
     }
     this.setState({planetSection,summary,totalIncome,totalPop,gold,buildingOptions});
 
-    if(this.canvasMap){
+    if (this.canvasMap) {
       this.canvasMap.update(entsToDraw);
     }
   }
 
-  selectPlanet(entityID){
-    this.setState({'selectedEntity': entityID});
+  selectPlanet(entityID) {
+    this.setState({selectedEntity: entityID});
   }
 
-  buildBuilding(entityID){
+  buildBuilding(entityID) {
     this.game.dispatchAction({
       name:'build',
       entityID,
@@ -76,17 +83,17 @@ class MainView extends React.Component{
     });
   }
 
-  handleBackToMap(){
-    this.setState({selectedEntity : false})
+  handleBackToMap() {
+    this.setState({selectedEntity : false});
   }
 
-  render(){
+  render() {
     let planet = false;
-    if(this.state.selectedEntity){
+    if (this.state.selectedEntity) {
       planet = this.state.planetSection[this.state.selectedEntity];
     }
 
-    return(
+    return (
       <div className="container-fluid">
         <div className="row">
           <SummaryBar
@@ -112,13 +119,15 @@ class MainView extends React.Component{
 
           </PlanetDetails>}
           {!planet && <CanvasMap
-            ref={(inst)=>{this.canvasMap = inst; }}
+            ref={(inst) => {
+              this.canvasMap = inst;
+            }}
             dispatch={this.game.dispatchAction}
           >
           </CanvasMap>}
         </div>
       </div>
-    )
+    );
   }
 }
 
