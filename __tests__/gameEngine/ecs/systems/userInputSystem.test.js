@@ -9,8 +9,11 @@ import {pushAction} from 'gameEngine/ecs/systems/userInputSystem'
 
 import EarthLike from 'gameEngine/ecs/entities/planets/EarthLike';
 import Farm from 'gameEngine/ecs/entities/planetBuildings/Farm';
-import {BUILDINGS_COMP,PLAYERCONTROLLED_COMP} from 'gameEngine/constants';
-import PlayerControlledComponent from 'gameEngine/ecs/components/PlayerControlledComponent';
+import {
+  BUILDINGS_COMP,
+  PLAYERCONTROLLED_COMP,
+  POSITION_COMP
+} from 'gameEngine/constants';
 describe('Tests a component', function () {
 
   beforeEach(function () {
@@ -36,10 +39,7 @@ describe('Tests a component', function () {
   });
 
   it('Tests the build action', function () {
-
-
-
-    let planet = new EarthLike('foo',50);
+    let planet = new EarthLike('foo',50,100,100);
     let building = new Farm();
 
     let entities = {
@@ -59,18 +59,14 @@ describe('Tests a component', function () {
   });
 
   it('Tests that an entity can be selected', function () {
-    let planet = new EarthLike('foo',50);
-    planet.addComponent(new PlayerControlledComponent());
-
-    planet[PLAYERCONTROLLED_COMP].x = 100;
-    planet[PLAYERCONTROLLED_COMP].y = 100;
-    planet[PLAYERCONTROLLED_COMP].radius = 5;
+    let planet = new EarthLike('foo',50,100,100);
 
     let entities = {
       [planet.id] : planet,
     };
 
     pushAction({
+      name:'select',
       x : 500,
       y : 500,
     });
@@ -78,6 +74,7 @@ describe('Tests a component', function () {
     expect(planet[PLAYERCONTROLLED_COMP].selected).toBe(false);
 
     pushAction({
+      name:'select',
       x : 100,
       y : 104.99,
     });
@@ -85,10 +82,30 @@ describe('Tests a component', function () {
     expect(planet[PLAYERCONTROLLED_COMP].selected).toBe(true);
 
     pushAction({
+      name:'select',
       x : 104.99,
       y : 100,
     });
     userInputSystem(entities);
     expect(planet[PLAYERCONTROLLED_COMP].selected).toBe(true);
+  });
+
+  it('Tests that an entity can be selected', function () {
+    let planet = new EarthLike('foo',50,100,100);
+
+    let entities = {
+      [planet.id] : planet,
+    };
+
+    // set as selected
+    planet[PLAYERCONTROLLED_COMP].selected = true;
+    pushAction({
+      name:'move',
+      x : 105,
+      y : 100,
+    });
+    userInputSystem(entities);
+    expect(planet[POSITION_COMP].destY).toBe(100);
+    expect(planet[POSITION_COMP].destX).toBe(105);
   });
 });

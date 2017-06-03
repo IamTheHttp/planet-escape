@@ -1,39 +1,26 @@
 import React from 'react';
-import {POSITION_COMP} from 'gameEngine/constants';
-
+import drawCircleEntities from './utils/drawCircleEntities';
+import dispatchMove from './utils/dispatchMove';
+import updateCursorPosition from './utils/updateCursorPosition';
 class CanvasMap extends React.Component {
-  update(entsToDraw) {
-    let ctx = this.canvas.getContext('2d');
-
-    entsToDraw.forEach((item) => {
-      let x = item[POSITION_COMP].x;
-      let y = item[POSITION_COMP].y;
-      let radius = item[POSITION_COMP].radius;
-
-      let isSelected = item[POSITION_COMP].selected;
-
-      ctx.moveTo(x,y);
-      ctx.beginPath();
-      if (isSelected) {
-        ctx.strokeStyle = '#FF0000';
-      } else {
-        ctx.strokeStyle = '#000000';
-      }
-      ctx.arc(x,y,radius,0,Math.PI * 2);
-      ctx.stroke();
-      ctx.closePath();
-    });
+  componentDidMount() {
+    this.x = 0;
+    this.y = 0;
+    document.addEventListener('keyup',dispatchMove(this));
+    document.addEventListener('mousemove', updateCursorPosition(this));
   }
 
-  handleClick(e) {
-    let rect = this.canvas.getBoundingClientRect();
-    let x = e.clientX - rect.left;
-    let y = e.clientY - rect.top;
+  update(entsToDraw) {
+    let ctx = this.canvas.getContext('2d');
+    ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+    entsToDraw.forEach(drawCircleEntities(ctx));
+  }
 
+  handleClick() {
     this.props.dispatch({
-      action:'click',
-      x,
-      y
+      name:'select',
+      x: this.x,
+      y: this.y
     });
   }
 

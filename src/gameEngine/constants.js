@@ -14,4 +14,14 @@ export const UI_COMP = 'UI';
 export const MODS_PLANET_BONUSES = 'MODIFIES_PLANET_BONUSES';
 export const PLAYERCONTROLLED_COMP = 'PLAYER_CONTROLLED';
 export const POSITION_COMP = 'POSITION';
+export const MOVEMENT_COMP = 'MOVE';
 
+
+// UI comps sections
+export const CANVAS = 'canvas';
+export const PLANETS = 'planets';
+export const SUMMARY = 'summary';
+export const BUILDING_OPTIONS = 'buildingOptions';
+
+// shapes
+export const CIRCLE = 'circle';

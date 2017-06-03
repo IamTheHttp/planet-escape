@@ -2,9 +2,33 @@
 import {UI_COMP} from 'gameEngine/constants';
 
 class UIComponent {
+  /**
+   * @param sections mixed - String, Array of Strings, object, array of objects
+   */
   constructor(sections) {
     this.name = UI_COMP;
-    this.section = Array.isArray(sections) ? sections : [sections];
+
+    let sectionsArray = Array.isArray(sections) ? sections : [sections];
+
+    this.sections = sectionsArray.map((section) => {
+      // if it's an object, great, we're done.
+      if (typeof section === 'object') {
+        // if it doesn't have our expected fields, throw..
+        if (!section.name) {
+          throw ('Missing field "name" for section in UIComponent');
+        }
+        return {
+          name : section.name,
+          data : section.data
+        };
+      } else {
+        // if it's a string, make it an object..
+        return {
+          name : section,
+          data : {}
+        };
+      }
+    });
   }
 }
 

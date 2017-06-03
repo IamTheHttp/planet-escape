@@ -7,6 +7,7 @@ import incomeSystem from './ecs/systems/incomeSystem';
 import planetBonusesSystem from './ecs/systems/planetBonusesSystem';
 import treasuryUpdateSystem from './ecs/systems/treasuryUpdateSystem';
 import planetConstructionSystem from './ecs/systems/planetConstructionSystem';
+import moveSystem from './ecs/systems/moveSystem';
 
 import Farm from 'gameEngine/ecs/entities/planetBuildings/Farm';
 import Mine from 'gameEngine/ecs/entities/planetBuildings/Mine';
@@ -22,11 +23,12 @@ class Game {
     new EarthLike('Earth',3,150,100);
     new EarthLike('New Mars',1,60,250);
     new Treasury();
-    // new Mothership();
+    new Mothership(300,300);
 
     this.loopID = setInterval(() => {
       // userinput runs all the time, any modification to "user input" modifies stuff
       userInputSystem(Entity.entities);
+      moveSystem(Entity.entities);
       planetBonusesSystem(Entity.entities);
       popGrowthSystem(Entity.entities);
       incomeSystem(Entity.entities);

@@ -6,7 +6,7 @@ import PlanetSizeComponent from 'gameEngine/ecs/components/PlanetSizeComponent';
 import BuildingsComponent from 'gameEngine/ecs/components/BuildingsComponent';
 import PlanetBonusComponent from 'gameEngine/ecs/components/PlanetBonusComponent';
 import PositionComponent from 'gameEngine/ecs/components/PositionComponent';
-
+import PlayerControlledComponent from 'gameEngine/ecs/components/PlayerControlledComponent';
 
 class EarthLike {
   constructor(name,basePop,xPos = 50,yPos = 50) {
@@ -19,6 +19,7 @@ class EarthLike {
     ent.addComponent(new BuildingsComponent);
     ent.addComponent(new PlanetBonusComponent());
     ent.addComponent(new PositionComponent(xPos,yPos));
+    ent.addComponent(new PlayerControlledComponent());
     ent.name = name;
     return ent;
   }

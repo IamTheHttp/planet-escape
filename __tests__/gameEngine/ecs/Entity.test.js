@@ -28,9 +28,9 @@ describe('Tests for entities', function () {
     let comp2 = {name:'test2',foo:'bar'};
     e.addComponent(comp2);
 
-
     expect(e.hasComponents(['test1'])).toBe(true);
     expect(e.hasComponents(['test1','test2'])).toBe(true);
     expect(e.hasComponents(['anotherComp'])).toBe(false);
+    expect(e.hasComponents()).toBe(true);
   });
 });

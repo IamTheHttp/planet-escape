@@ -11,9 +11,20 @@ import {
   GOLD_RESOURCE,
   UI_COMP,
   POSITION_COMP,
-  TREASURY_COMP
+  TREASURY_COMP,
+  CANVAS,
+  PLANETS,
+  SUMMARY,
+  BUILDING_OPTIONS
 } from 'gameEngine/constants';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
+
+function byKey(key,value) {
+  return (obj) => {
+    return obj[key] === value;
+  };
+}
+
 class MainView extends React.Component {
 
   constructor() {
@@ -45,21 +56,21 @@ class MainView extends React.Component {
     for (let id in gameEntities) {
       let ent = gameEntities[id];
 
-      if (ent[UI_COMP].section.indexOf('canvas') > -1 && ent[POSITION_COMP]) {
+      if (ent[UI_COMP].sections.find(byKey('name',CANVAS)) && ent[POSITION_COMP]) {
         entsToDraw.push(ent);
       }
 
-      if (ent[UI_COMP].section.indexOf('planets') > -1) {
+      if (ent[UI_COMP].sections.find(byKey('name',PLANETS))) {
         planetSection[id] = ent;
       }
 
-      if (ent[UI_COMP].section.indexOf('summary') > -1) {
+      if (ent[UI_COMP].sections.find(byKey('name',SUMMARY))) {
         totalPop = ent.components[POPULATION_COMP].value;
         totalIncome = ent.components[INCOME_COMP].value;
         gold = ent[TREASURY_COMP].items[GOLD_RESOURCE];
       }
 
-      if (ent.components[UI_COMP].section.indexOf('buildingOptions') > -1) {
+      if (ent[UI_COMP].sections.find(byKey('name',BUILDING_OPTIONS))) {
         buildingOptions[ent.id] = ent;
       }
     }
@@ -132,3 +143,4 @@ class MainView extends React.Component {
 }
 
 export default MainView;
+
