@@ -12,12 +12,12 @@ function planetBonusesSystem(entities) {
     /*
      * Set the base bonuses for entities
      */
-    if (entity.hasComponents([PLANETBONUS_COMP])) {
+    entity.hasComponents(PLANETBONUS_COMP,() => {
       entity[PLANETBONUS_COMP].base = {
         [FOOD_RESOURCE]:2,
         production:1
       };
-    }
+    });
 
     /*
      * Set the mod bonuses for entites

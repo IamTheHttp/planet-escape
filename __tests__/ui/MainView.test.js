@@ -18,7 +18,7 @@ describe('Tests a component', function () {
   it('renders the main view and bootstraps the game', function () {
       let wrapper = mount(<MainView></MainView>);
       jest.runOnlyPendingTimers();
-      expect(Object.keys(wrapper.state().planetSection).length > 0).toBe(true);
+      expect(Object.keys(wrapper.state().planetSection).length).toBe(1);
 
       wrapper.instance().selectPlanet(5);
       expect(wrapper.state().selectedEntity).toBe(5);

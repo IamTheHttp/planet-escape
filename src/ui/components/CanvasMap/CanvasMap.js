@@ -1,27 +1,46 @@
 import React from 'react';
 import drawCircleEntities from './utils/drawCircleEntities';
-import dispatchMove from './utils/dispatchMove';
+import onKeyUp from './utils/onKeyUp';
 import updateCursorPosition from './utils/updateCursorPosition';
+import {
+  SELECT,
+  MOVE,
+  COLONIZE
+} from 'gameEngine/constants';
+
+
 class CanvasMap extends React.Component {
+  // high order function
+  dispatch(name) {
+    return () => {
+      return this.props.dispatch({
+        name,
+        x: this.x,
+        y: this.y
+      });
+    };
+  }
+
   componentDidMount() {
     this.x = 0;
     this.y = 0;
-    document.addEventListener('keyup',dispatchMove(this));
+
+    // this might be tracked somewhere else, it has nothing to do with the canvas itself!
+    onKeyUp('m',this.dispatch(MOVE));
+    onKeyUp('c',this.dispatch(COLONIZE));
     document.addEventListener('mousemove', updateCursorPosition(this));
   }
 
   update(entsToDraw) {
-    let ctx = this.canvas.getContext('2d');
-    ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-    entsToDraw.forEach(drawCircleEntities(ctx));
+    let ctx = this.canvas.getContext('2d','foo');
+    if (ctx) {
+      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      entsToDraw.forEach(drawCircleEntities(ctx));
+    }
   }
 
   handleClick() {
-    this.props.dispatch({
-      name:'select',
-      x: this.x,
-      y: this.y
-    });
+    this.dispatch(SELECT)();
   }
 
   render() {

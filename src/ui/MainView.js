@@ -15,7 +15,9 @@ import {
   CANVAS,
   PLANETS,
   SUMMARY,
-  BUILDING_OPTIONS
+  BUILDING_OPTIONS,
+  OWNER_COMPONENT,
+  PLAYER_1
 } from 'gameEngine/constants';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
 
@@ -61,7 +63,9 @@ class MainView extends React.Component {
       }
 
       if (ent[UI_COMP].sections.find(byKey('name',PLANETS))) {
-        planetSection[id] = ent;
+        if (ent[OWNER_COMPONENT] && ent[OWNER_COMPONENT].player === PLAYER_1) {
+          planetSection[id] = ent;
+        }
       }
 
       if (ent[UI_COMP].sections.find(byKey('name',SUMMARY))) {

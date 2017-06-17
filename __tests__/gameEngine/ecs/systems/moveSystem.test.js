@@ -52,6 +52,4 @@ describe('Tests a component', function () {
     expect(ship[POSITION_COMP].x).toBeLessThan(START_POS_X);
     expect(ship[POSITION_COMP].y).toBeLessThan(START_POS_Y);
   });
-
-  it('tests that we do not overshoot the destination');
 });

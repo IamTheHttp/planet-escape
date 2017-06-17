@@ -1,6 +1,9 @@
 export default (reactComponent) => {
   return (e) => {
     let canvas = reactComponent.canvas;
+    if (!canvas) {
+      return null;
+    }
     let rect = canvas.getBoundingClientRect();
     // base position
     let x = e.clientX - rect.left;

@@ -4,15 +4,15 @@ import IncomeComponent from 'gameEngine/ecs/components/IncomeComponent';
 import UIComponent from 'gameEngine/ecs/components/UIComponent';
 import TreasuryComponent from 'gameEngine/ecs/components/TreasuryComponent';
 
-class AvailableResources {
+class Player {
   constructor() {
     let ent = new Entity();
     ent.addComponent(new PopulationComponent());
     ent.addComponent(new IncomeComponent());
-    ent.addComponent(new UIComponent('summary'));
     ent.addComponent(new TreasuryComponent());
+    // ent.addComponent(new UIComponent('summary'));
     return ent;
   }
 }
 
-export default AvailableResources;
+export default Player;

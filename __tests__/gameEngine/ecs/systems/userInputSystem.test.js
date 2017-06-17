@@ -8,11 +8,18 @@ import userInputSystem from 'gameEngine/ecs/systems/userInputSystem'
 import {pushAction} from 'gameEngine/ecs/systems/userInputSystem'
 
 import EarthLike from 'gameEngine/ecs/entities/planets/EarthLike';
+import Mothership from 'gameEngine/ecs/entities/ships/Mothership';
 import Farm from 'gameEngine/ecs/entities/planetBuildings/Farm';
 import {
   BUILDINGS_COMP,
   PLAYERCONTROLLED_COMP,
-  POSITION_COMP
+  POSITION_COMP,
+  OWNER_COMPONENT,
+  MOVE,
+  SELECT,
+  COLONIZE,
+  PLAYER_0,
+  PLAYER_1
 } from 'gameEngine/constants';
 describe('Tests a component', function () {
 
@@ -66,7 +73,7 @@ describe('Tests a component', function () {
     };
 
     pushAction({
-      name:'select',
+      name:SELECT,
       x : 500,
       y : 500,
     });
@@ -74,7 +81,7 @@ describe('Tests a component', function () {
     expect(planet[PLAYERCONTROLLED_COMP].selected).toBe(false);
 
     pushAction({
-      name:'select',
+      name:SELECT,
       x : 100,
       y : 104.99,
     });
@@ -90,7 +97,7 @@ describe('Tests a component', function () {
     expect(planet[PLAYERCONTROLLED_COMP].selected).toBe(true);
   });
 
-  it('Tests that an entity can be selected', function () {
+  it('Tests that an entity can be moved', function () {
     let planet = new EarthLike('foo',50,100,100);
 
     let entities = {
@@ -100,12 +107,67 @@ describe('Tests a component', function () {
     // set as selected
     planet[PLAYERCONTROLLED_COMP].selected = true;
     pushAction({
-      name:'move',
+      name:MOVE,
       x : 105,
       y : 100,
     });
     userInputSystem(entities);
     expect(planet[POSITION_COMP].destY).toBe(100);
     expect(planet[POSITION_COMP].destX).toBe(105);
+  });
+
+  it('Tests that an entity can be colonized', function () {
+    let planet = new EarthLike('foo',50,100,100,PLAYER_0);
+    let ship = new Mothership(50,50, PLAYER_1);
+    // set as selected
+
+    let entities = {
+      [planet.id] : planet,
+      [ship.id] : ship
+    };
+
+    // planet[PLAYERCONTROLLED_COMP].selected = true;
+    pushAction({
+      name:COLONIZE,
+      x : 105,
+      y : 100,
+    });
+    expect(planet[OWNER_COMPONENT].player).toBe(PLAYER_0);
+    userInputSystem(entities);
+    // since nothing is selected, we can't colonize!
+    expect(planet[OWNER_COMPONENT].player).toBe(PLAYER_0);
+
+    // set as selected
+    ship[PLAYERCONTROLLED_COMP].selected = true;
+    pushAction({
+      name:COLONIZE,
+      x : 105,
+      y : 100,
+    });
+    expect(planet[OWNER_COMPONENT].player).toBe(PLAYER_0);
+    userInputSystem(entities);
+    expect(planet[OWNER_COMPONENT].player).toBe(PLAYER_1);
+  });
+
+  it('Colonization must be in range', function () {
+    let planet = new EarthLike('foo',50,100,100,PLAYER_0);
+    let ship = new Mothership(600,600, PLAYER_1);
+    // set as selected
+
+    let entities = {
+      [planet.id] : planet,
+      [ship.id] : ship
+    };
+
+    pushAction({
+      name:COLONIZE,
+      x : 105,
+      y : 100,
+    });
+    ship[PLAYERCONTROLLED_COMP].selected = true;
+    expect(planet[OWNER_COMPONENT].player).toBe(PLAYER_0);
+    userInputSystem(entities);
+    // since we're out of range
+    expect(planet[OWNER_COMPONENT].player).toBe(PLAYER_0);
   });
 });

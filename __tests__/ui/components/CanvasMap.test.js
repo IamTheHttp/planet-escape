@@ -5,7 +5,6 @@
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap'
-
 describe('Tests a component', function () {
 
   beforeEach(function () {

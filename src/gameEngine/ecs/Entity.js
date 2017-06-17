@@ -17,10 +17,17 @@ class Entity {
     delete this[componentName];
   }
 
-  hasComponents(components = []) {
-    return components.reduce((agg,compName) => {
+  hasComponents(components = [],fn = () => {}) {
+    let compArray = components.reduce ? components : [components];
+
+    let hasComp = compArray.reduce((agg,compName) => {
       return agg && !!this.components[compName];
     },true);
+
+    if (hasComp) {
+      fn();
+    }
+    return hasComp;
   }
 }
 

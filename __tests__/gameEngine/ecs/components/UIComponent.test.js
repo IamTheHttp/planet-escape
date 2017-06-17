@@ -31,4 +31,12 @@ describe('Tests a component', function () {
     let comp = new UIComponent([{name:'foo',data:{bar:true}}]);
     expect(comp.sections.length).toBe(1);
   });
+
+  it('inits the component - array of objects without a name', function () {
+    try {
+      new UIComponent([{data:{bar:true}}]);
+    } catch (e) {
+      expect(e).not.toBeUndefined();
+    }
+  });
 });

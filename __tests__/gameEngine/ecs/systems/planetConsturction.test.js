@@ -9,7 +9,7 @@ import {canAfford,buildQueue} from 'gameEngine/ecs/systems/planetConstructionSys
 import EarthLike from 'gameEngine/ecs/entities/planets/EarthLike';
 import Farm from 'gameEngine/ecs/entities/planetBuildings/Farm';
 import CostsComponent from 'gameEngine/ecs/components/CostsComponent'
-import Treasury from 'gameEngine/ecs/entities/Treasury';
+import Player from 'gameEngine/ecs/entities/Player';
 import {GOLD_RESOURCE,BUILDINGS_COMP,TREASURY_COMP} from 'gameEngine/constants';
 describe('Tests the construction system', function () {
 
@@ -18,50 +18,50 @@ describe('Tests the construction system', function () {
   });
 
   it('test no costs components - means we can afford it', function () {
-    let treasury = new Treasury();
+    let player = new Player();
 
-    let canAff = canAfford(treasury);
+    let canAff = canAfford(player);
     expect(canAff).toBe(true);
   });
 
   it('test canAfford', function () {
-    let treasury = new Treasury();
+    let player = new Player();
 
     let costs = new CostsComponent({[GOLD_RESOURCE]:5});
-    treasury[TREASURY_COMP].items[GOLD_RESOURCE] = 10;
+    player[TREASURY_COMP].items[GOLD_RESOURCE] = 10;
 
-    let canAff = canAfford(treasury,costs);
+    let canAff = canAfford(player,costs);
     expect(canAff).toBe(true);
 
-    canAff = canAfford(treasury,costs,true);//spend == true
-    expect(treasury[TREASURY_COMP].items[GOLD_RESOURCE]).toBe(5);
+    canAff = canAfford(player,costs,true);//spend == true
+    expect(player[TREASURY_COMP].items[GOLD_RESOURCE]).toBe(5);
     expect(canAff).toBe(true);
   });
 
   it('tests cannot afford', function () {
-    let treasury = new Treasury();
+    let player = new Player();
 
     let costs = new CostsComponent({[GOLD_RESOURCE]:10});
-    treasury[TREASURY_COMP].items[GOLD_RESOURCE] = 5;
+    player[TREASURY_COMP].items[GOLD_RESOURCE] = 5;
 
 
-    let canAff = canAfford(treasury,costs);
+    let canAff = canAfford(player,costs);
     expect(canAff).toBe(false);
 
-    canAff = canAfford(treasury,costs,true);//spend == true
-    expect(treasury[TREASURY_COMP].items[GOLD_RESOURCE]).toBe(5); //no change, since we can't afford
+    canAff = canAfford(player,costs,true);//spend == true
+    expect(player[TREASURY_COMP].items[GOLD_RESOURCE]).toBe(5); //no change, since we can't afford
     expect(canAff).toBe(false);
   });
 
   it('tests planetConstructionSystem',function(){
-    let treasury = new Treasury();
+    let player = new Player();
     let planet = new EarthLike('p',1);
 
-    treasury[TREASURY_COMP].items[GOLD_RESOURCE] = 9999999999;
+    player[TREASURY_COMP].items[GOLD_RESOURCE] = 9999999999;
     planet.components[BUILDINGS_COMP].inProgress.push(new Farm());
 
     let entities = {
-      0 : treasury,
+      0 : player,
       1 : planet
     };
 
@@ -71,14 +71,14 @@ describe('Tests the construction system', function () {
   });
 
   it('tests planetConstructionSystem',function(){
-    let treasury = new Treasury();
+    let player = new Player();
     let planet = new EarthLike('p',1);
 
-    treasury[TREASURY_COMP].items[GOLD_RESOURCE] = 0;
+    player[TREASURY_COMP].items[GOLD_RESOURCE] = 0;
     planet.components[BUILDINGS_COMP].inProgress.push(new Farm());
 
     let entities = {
-      0 : treasury,
+      0 : player,
       1 : planet
     };
 

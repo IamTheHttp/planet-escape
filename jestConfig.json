@@ -7,7 +7,7 @@
 	"collectCoverageFrom": [
 		"src/**/*.{js,jsx}",
 		"!src/develop.js",
-    "!src/.dll/*"
+		"!src/.dll/*"
 	],
 	"coverageThreshold": {
 		"global": {
