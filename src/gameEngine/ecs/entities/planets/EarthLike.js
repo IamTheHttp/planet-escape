@@ -16,7 +16,7 @@ import {
 class EarthLike {
   constructor(name,basePop,xPos = 50,yPos = 50,player = PLAYER_0) {
     let pop = basePop || (Math.random() * 10);
-    let ent = new Entity();
+    let ent = new Entity(EarthLike);
     ent.addComponent(new PopulationComponent(pop));
     ent.addComponent(new IncomeComponent());
     ent.addComponent(new UIComponent(['planets','canvas']));

@@ -14,17 +14,48 @@ import Farm from 'gameEngine/ecs/entities/planetBuildings/Farm';
 import Mine from 'gameEngine/ecs/entities/planetBuildings/Mine';
 import Mothership from 'gameEngine/ecs/entities/ships/Mothership';
 import Player from './ecs/entities/Player';
-import {UI_COMP, PLAYER_1} from 'gameEngine/constants';
+import {
+  UI_COMP,
+  PLAYER_1,
+  CANVAS_X,
+  CANVAS_Y
+} from 'gameEngine/constants';
+
+export function generateMap(planetCount = 30) {
+  let planetsToGenerate = planetCount;
+  if (planetsToGenerate <= 0) {
+    planetsToGenerate = 30;
+  }
+  new Player(PLAYER_1);
+  // 1200 x 1200 .. min distance is 45, heigt
+  // trivial solution - divide map to of 50, put planet in each grid.
+  let x = 30;
+  let y = 30;
+  let spacing = 200;
+  let count = 0;
+  while (count < planetsToGenerate) {
+    if (x > CANVAS_X - 100) {
+      y += spacing;
+      x = 30;
+    }
+
+    if (y > CANVAS_Y - 100) {
+      break;
+    }
+
+    new EarthLike('Braxis', 1, x, y);
+    x += spacing;
+    count++;
+  }
+
+  new Mothership(300,300,PLAYER_1);
+}
+
 class Game {
   constructor(cbNotification) {
     this.dispatchAction = this.dispatchAction.bind(this);
     // setup some planets
-    new Player(PLAYER_1);
-    new EarthLike('Braxis',1,30,30,PLAYER_1);
-    new EarthLike('Hehe',2,90,90);
-    new EarthLike('Earth',3,150,100);
-    new EarthLike('New Mars',1,60,250);
-    new Mothership(300,300,PLAYER_1);
+    generateMap(36);
 
     this.loopID = setInterval(() => {
       // userinput runs all the time, any modification to "user input" modifies stuff

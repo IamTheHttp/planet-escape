@@ -109,7 +109,18 @@ describe('Tests a component', function () {
     expect(mockCtx.setLineDash.mock.calls[1][0]).toEqual([]);
     expect(mockCtx.stroke.mock.calls.length).toBe(1);
     expect(mockCtx.closePath.mock.calls.length).toBe(1);
-
   });
 
+  it('does nothing if nothing is selected', () => {
+    let mockCtx = getMock();
+    let XPOS = 100;
+    let YPOS = 120;
+    let entity = new Mothership(XPOS,YPOS,PLAYER_0);
+    entity[PLAYERCONTROLLED_COMP].selected = false;
+    let RAD = entity[POSITION_COMP].radius;
+    let dist = entity[CAN_COLONIZE_COMP].distance;
+
+    colorActionRange(entity,mockCtx);
+    expect(mockCtx.moveTo.mock.calls.length).toBe(0);
+  });
 });

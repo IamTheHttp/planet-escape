@@ -5,7 +5,9 @@ import updateCursorPosition from './utils/updateCursorPosition';
 import {
   SELECT,
   MOVE,
-  COLONIZE
+  COLONIZE,
+  CANVAS_X,
+  CANVAS_Y
 } from 'gameEngine/constants';
 
 
@@ -49,8 +51,8 @@ class CanvasMap extends React.Component {
         ref={(elm) => {
           this.canvas = elm;
         }}
-        height='1200'
-        width='1200'
+        height={CANVAS_Y}
+        width={CANVAS_X}
         style={{width:'calc(100% - 200px)', border:'1px solid black'}}
         onClick={(e) => {
           this.handleClick(e);

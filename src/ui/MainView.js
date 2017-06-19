@@ -68,11 +68,11 @@ class MainView extends React.Component {
         }
       }
 
-      if (ent[UI_COMP].sections.find(byKey('name',SUMMARY))) {
-        totalPop = ent.components[POPULATION_COMP].value;
-        totalIncome = ent.components[INCOME_COMP].value;
-        gold = ent[TREASURY_COMP].items[GOLD_RESOURCE];
-      }
+      // if (ent[UI_COMP].sections.find(byKey('name',SUMMARY))) {
+      //   totalPop = ent.components[POPULATION_COMP].value;
+      //   totalIncome = ent.components[INCOME_COMP].value;
+      //   gold = ent[TREASURY_COMP].items[GOLD_RESOURCE];
+      // }
 
       if (ent[UI_COMP].sections.find(byKey('name',BUILDING_OPTIONS))) {
         buildingOptions[ent.id] = ent;

@@ -2,7 +2,7 @@ export const GOLD_RESOURCE = 'GOLD';
 export const FARM_COMP = 'FARM';
 export const FOOD_RESOURCE = 'FOOD';
 
-export const BUILDINGS_COMP = 'buildings';
+export const BUILDINGS_COMP = 'BUILDINGS';
 export const OWNER_COMPONENT = 'owner';
 export const CONSUMPTION_COMP = 'consumption';
 export const INCOME_COMP = 'INCOME';
@@ -49,3 +49,5 @@ export const COLORS = {
 
 // config of stuff...
 export const BASE_POP = 1;
+export const CANVAS_X = 1200;
+export const CANVAS_Y = 1200;

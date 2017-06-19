@@ -15,10 +15,10 @@ describe('Tests a component', function () {
 
   jest.useFakeTimers();
 
-  it('renders the main view and bootstraps the game', function () {
+  it('expects by default that the player hsa no planets', function () {
       let wrapper = mount(<MainView></MainView>);
       jest.runOnlyPendingTimers();
-      expect(Object.keys(wrapper.state().planetSection).length).toBe(1);
+      expect(Object.keys(wrapper.state().planetSection).length).toBe(0);
 
       wrapper.instance().selectPlanet(5);
       expect(wrapper.state().selectedEntity).toBe(5);
