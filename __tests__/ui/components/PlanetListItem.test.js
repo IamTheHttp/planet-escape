@@ -6,9 +6,8 @@ import {mount, shallow} from 'enzyme';
 import React from 'react';
 
 import PlanetListItem from 'ui/components/PlanetList/PlanetListItem';
-import EarthLike from 'gameEngine/ecs/entities/planets/EarthLike';
-describe('Tests a component', function () {
-
+import EarthLike from 'gameEngine/entities/planets/EarthLike';
+describe('Tests a component', () => {
   it('renders the Item',() => {
     let props = {
       planet : new EarthLike('p',1),

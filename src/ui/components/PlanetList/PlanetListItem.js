@@ -4,19 +4,23 @@ import {
   POPULATION_COMP,
   INCOME_COMP,
   GOLD_RESOURCE,
-  PLANETSIZE_COMP
+  PLANETSIZE_COMP,
+  HAS_FIGHTERS,
+  IS_DOCKED
 } from 'gameEngine/constants';
 
 
 class PlanetListItem extends React.Component {
   render() {
     let planet = this.props.planet;
-    let curPop = planet.components[POPULATION_COMP].value;
-    let maxPop = planet.components[POPULATION_COMP].maxPop;
-    let income = planet.components[INCOME_COMP].value;
-    let size   = planet.components[PLANETSIZE_COMP].value;
-    let buildings   = planet.components[BUILDINGS_COMP].built;
-
+    let curPop = planet[POPULATION_COMP].value;
+    let maxPop = planet[POPULATION_COMP].maxPop;
+    let income = planet[INCOME_COMP].value;
+    let size   = planet[PLANETSIZE_COMP].value;
+    let buildings   = planet[BUILDINGS_COMP].built;
+    let fighters   = planet[HAS_FIGHTERS].fighters.filter((fighter) => {
+      return fighter[IS_DOCKED].isDocked;
+    });
 
     return (
       <div
@@ -31,6 +35,7 @@ class PlanetListItem extends React.Component {
         <div>Income: {income.toFixed(0)}</div>
         <div>Planet Size: {size.toFixed(0)}</div>
         <div>Buildings: {buildings.length}</div>
+        <div>Fighters: {fighters.length}</div>
       </div>
     );
   }

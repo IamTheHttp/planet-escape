@@ -4,13 +4,15 @@ import Game from 'gameEngine/Game';
 import PlanetList from 'ui/components/PlanetList/PlanetList';
 import SummaryBar from 'ui/components/SummaryBar/SummaryBar';
 import PlanetDetails from 'ui/components/PlanetDetails/PlanetDetails';
+
+import {getOwner,hasOwner} from 'gameEngine/components/OwnerComponent';
 import 'bootstrap/dist/css/bootstrap.css';
 import {
   POPULATION_COMP,
   INCOME_COMP,
   GOLD_RESOURCE,
   UI_COMP,
-  POSITION_COMP,
+  POSITION,
   TREASURY_COMP,
   CANVAS,
   PLANETS,
@@ -28,7 +30,6 @@ function byKey(key,value) {
 }
 
 class MainView extends React.Component {
-
   constructor() {
     super();
     this.state = {
@@ -58,12 +59,12 @@ class MainView extends React.Component {
     for (let id in gameEntities) {
       let ent = gameEntities[id];
 
-      if (ent[UI_COMP].sections.find(byKey('name',CANVAS)) && ent[POSITION_COMP]) {
+      if (ent[UI_COMP].sections.find(byKey('name',CANVAS)) && ent[POSITION]) {
         entsToDraw.push(ent);
       }
 
       if (ent[UI_COMP].sections.find(byKey('name',PLANETS))) {
-        if (ent[OWNER_COMPONENT] && ent[OWNER_COMPONENT].player === PLAYER_1) {
+        if (hasOwner(ent) && getOwner(ent) === PLAYER_1) {
           planetSection[id] = ent;
         }
       }
@@ -78,6 +79,7 @@ class MainView extends React.Component {
         buildingOptions[ent.id] = ent;
       }
     }
+
     this.setState({planetSection,summary,totalIncome,totalPop,gold,buildingOptions});
 
     if (this.canvasMap) {

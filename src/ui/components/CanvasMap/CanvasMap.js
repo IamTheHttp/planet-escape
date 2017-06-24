@@ -7,7 +7,8 @@ import {
   MOVE,
   COLONIZE,
   CANVAS_X,
-  CANVAS_Y
+  CANVAS_Y,
+  ATTACK
 } from 'gameEngine/constants';
 
 
@@ -30,6 +31,7 @@ class CanvasMap extends React.Component {
     // this might be tracked somewhere else, it has nothing to do with the canvas itself!
     onKeyUp('m',this.dispatch(MOVE));
     onKeyUp('c',this.dispatch(COLONIZE));
+    onKeyUp('a',this.dispatch(ATTACK));
     document.addEventListener('mousemove', updateCursorPosition(this));
   }
 
@@ -53,7 +55,7 @@ class CanvasMap extends React.Component {
         }}
         height={CANVAS_Y}
         width={CANVAS_X}
-        style={{width:'calc(100% - 200px)', border:'1px solid black'}}
+        style={{backgroundColor : 'black', width:'calc(100% - 200px)', border:'1px solid black'}}
         onClick={(e) => {
           this.handleClick(e);
         }}

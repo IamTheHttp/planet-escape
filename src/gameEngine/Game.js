@@ -1,24 +1,33 @@
-import EarthLike from './ecs/entities/planets/EarthLike';
-import Entity from './ecs/Entity';
+import EarthLike from './entities/planets/EarthLike';
+import Entity from './Entity';
 
-import userInputSystem, {pushAction} from './ecs/systems/userInputSystem';
-import growPop from './ecs/systems/growPop';
-import incomeSystem from './ecs/systems/incomeSystem';
-import planetBonusesSystem from './ecs/systems/planetBonusesSystem';
-import treasuryUpdateSystem from './ecs/systems/treasuryUpdateSystem';
-import planetConstructionSystem from './ecs/systems/planetConstructionSystem';
-import moveSystem from './ecs/systems/moveSystem';
-import colonizationSystem from './ecs/systems/colonizationSystem';
+import userInputSystem, {pushAction} from './systems/userInputSystem';
+import growPop from './systems/growPop';
+import incomeSystem from './systems/incomeSystem';
+import planetBonusesSystem from './systems/planetBonusesSystem';
+import treasuryUpdateSystem from './systems/treasuryUpdateSystem';
+import planetConstructionSystem from './systems/planetConstructionSystem';
+import moveSystem from './systems/moveSystem';
+import colonizationSystem from './systems/colonizationSystem';
+import fighterAttacks from './systems/fighterAttacks';
+import buildFighters from './systems/buildFighters';
+import entityLoop from 'gameEngine/systems/utils/entityLoop';
 
-import Farm from 'gameEngine/ecs/entities/planetBuildings/Farm';
-import Mine from 'gameEngine/ecs/entities/planetBuildings/Mine';
-import Mothership from 'gameEngine/ecs/entities/ships/Mothership';
-import Player from './ecs/entities/Player';
+import Farm from 'gameEngine/entities/planetBuildings/Farm';
+import Mine from 'gameEngine/entities/planetBuildings/Mine';
+import Mothership from 'gameEngine/entities/Ships/Mothership';
+import 'polyfill/rAF.js';
+import 'polyfill/perf.js';
+import Player from './entities/Player';
 import {
   UI_COMP,
+  NEUTRAL,
   PLAYER_1,
+  PLAYER_2,
   CANVAS_X,
-  CANVAS_Y
+  CANVAS_Y,
+  IS_DOCKED,
+  FIGHTER_BUILD_RATE
 } from 'gameEngine/constants';
 
 export function generateMap(planetCount = 30) {
@@ -43,7 +52,8 @@ export function generateMap(planetCount = 30) {
       break;
     }
 
-    new EarthLike('Braxis', 1, x, y);
+    let player = count % 2 === 0 ? PLAYER_1 : PLAYER_2;
+    new EarthLike('Braxis', 1, x, y,player);
     x += spacing;
     count++;
   }
@@ -55,10 +65,13 @@ class Game {
   constructor(cbNotification) {
     this.dispatchAction = this.dispatchAction.bind(this);
     // setup some planets
-    generateMap(36);
+    generateMap(30);
+    let count = 0;
 
-    this.loopID = setInterval(() => {
+    let loop = () => {
       // userinput runs all the time, any modification to "user input" modifies stuff
+      // window.log && console.log('PERF START');
+      let start = performance.now();
       userInputSystem(Entity.entities);
       moveSystem(Entity.entities);
       planetBonusesSystem(Entity.entities);
@@ -67,19 +80,23 @@ class Game {
       treasuryUpdateSystem(Entity.entities);
       planetConstructionSystem(Entity.entities);
       colonizationSystem(Entity.entities);
-
-      // how do we know what to update? what entities actually changed?
-      // let's force "all entities changed" thing.
-
-      let uiEnts = {};
-      for (let id in Entity.entities) {
-        let ent = Entity.entities[id];
-        if (ent.components[UI_COMP]) {
-          uiEnts[id] = ent;
-        }
+      fighterAttacks(Entity.entities);
+      if (count % FIGHTER_BUILD_RATE === 0) {
+        buildFighters(Entity.entities);
       }
-      cbNotification(JSON.parse(JSON.stringify(uiEnts)));
-    },16); // 16 = 60fps
+      let uiEnts = {};
+      entityLoop(Entity.entities, (entity) => {
+        let isDocked = entity[IS_DOCKED] && entity[IS_DOCKED].isDocked;
+        if (!isDocked && entity.hasComponents(UI_COMP)) {
+          uiEnts[entity.id] = entity;
+        }
+      });
+      cbNotification(uiEnts);
+      // window.log && console.log('PERF END', performance.now() - start);
+      count++;
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
   }
 
   // stopGame() {

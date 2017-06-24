@@ -1,10 +1,10 @@
 import {
-  POSITION_COMP,
-  PLAYERCONTROLLED_COMP,
+  POSITION,
+  PLAYER_CONTROLLED,
   CAN_COLONIZE_COMP,
   COLORS,
   COLONIZE_RANGE,
-  PLAYER_0,
+  NEUTRAL,
   SELECT,
   DEFAULT,
   CANVAS,
@@ -14,8 +14,8 @@ import {
 } from 'gameEngine/constants';
 
 export function drawEntity(entity,ctx) {
-  let {x,y,radius} = entity[POSITION_COMP];
-  let isSelected = entity[PLAYERCONTROLLED_COMP].selected;
+  let {x,y,radius} = entity[POSITION];
+  let isSelected = entity[PLAYER_CONTROLLED] && entity[PLAYER_CONTROLLED].selected;
 
   ctx.moveTo(x,y);
   ctx.beginPath();
@@ -38,8 +38,9 @@ export function colorByPlayer(entity,ctx) {
 }
 
 export function colorActionRange(entity,ctx) {
-  let {x,y,radius} = entity[POSITION_COMP];
-  let isSelected = entity[PLAYERCONTROLLED_COMP].selected;
+  let {x,y,radius} = entity[POSITION];
+
+  let isSelected = entity[PLAYER_CONTROLLED] && entity[PLAYER_CONTROLLED].selected;
   if (isSelected && entity[CAN_COLONIZE_COMP]) {
     ctx.moveTo(x,y);
     ctx.beginPath();

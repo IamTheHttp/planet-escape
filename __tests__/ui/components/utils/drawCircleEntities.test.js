@@ -9,18 +9,17 @@ import {
   colorByPlayer,
   colorActionRange
 } from 'ui/components/CanvasMap/utils/drawCircleEntities.js';
-import EarthLike from 'gameEngine/ecs/entities/planets/EarthLike';
-import Mothership from 'gameEngine/ecs/entities/ships/Mothership';
+import EarthLike from 'gameEngine/entities/planets/EarthLike';
+import Mothership from 'gameEngine/entities/Ships/Mothership';
 
 import {
-  PLAYER_0,
+  NEUTRAL,
   PLAYER_1,
   CAN_COLONIZE_COMP,
-  POSITION_COMP,
-  PLAYERCONTROLLED_COMP
+  POSITION,
+  PLAYER_CONTROLLED
 } from 'gameEngine/constants';
-describe('Tests a component', function () {
-
+describe('Tests a component', () => {
   let getMock = () => {
     return {
       moveTo : jest.fn(),
@@ -33,16 +32,16 @@ describe('Tests a component', function () {
     };
   };
 
-  beforeEach(function () {
-      //setup the test
+  beforeEach(() => {
+      // setup the test
   });
 
-  it('draws the entity', function () {
+  it('draws the entity', () => {
     let XPOS = 100;
     let YPOS = 120;
-    let entity = new EarthLike('bar',50,XPOS,YPOS,PLAYER_0);
+    let entity = new EarthLike('bar',50,XPOS,YPOS,NEUTRAL);
 
-    let RAD = entity[POSITION_COMP].radius;
+    let RAD = entity[POSITION].radius;
 
     let mockCtx = getMock();
     drawEntity(entity, mockCtx);
@@ -65,7 +64,7 @@ describe('Tests a component', function () {
 
     mockCtx = getMock();
 
-    entity[PLAYERCONTROLLED_COMP].selected = true;
+    entity[PLAYER_CONTROLLED].selected = true;
     drawEntity(entity, mockCtx);
     expect(mockCtx.strokeStyle).not.toBe(firstColor);
   });
@@ -74,7 +73,7 @@ describe('Tests a component', function () {
     let mockCtx = getMock();
     let XPOS = 100;
     let YPOS = 120;
-    let entity = new EarthLike('bar',50,XPOS,YPOS,PLAYER_0);
+    let entity = new EarthLike('bar',50,XPOS,YPOS,NEUTRAL);
     colorByPlayer({},mockCtx); // this should do nothing
     colorByPlayer(entity,mockCtx);
     let color = mockCtx.fillStyle;
@@ -88,9 +87,9 @@ describe('Tests a component', function () {
     let mockCtx = getMock();
     let XPOS = 100;
     let YPOS = 120;
-    let entity = new Mothership(XPOS,YPOS,PLAYER_0);
-    entity[PLAYERCONTROLLED_COMP].selected = true;
-    let RAD = entity[POSITION_COMP].radius;
+    let entity = new Mothership(XPOS,YPOS,NEUTRAL);
+    entity[PLAYER_CONTROLLED].selected = true;
+    let RAD = entity[POSITION].radius;
     let dist = entity[CAN_COLONIZE_COMP].distance;
 
     colorActionRange(entity,mockCtx);
@@ -115,9 +114,9 @@ describe('Tests a component', function () {
     let mockCtx = getMock();
     let XPOS = 100;
     let YPOS = 120;
-    let entity = new Mothership(XPOS,YPOS,PLAYER_0);
-    entity[PLAYERCONTROLLED_COMP].selected = false;
-    let RAD = entity[POSITION_COMP].radius;
+    let entity = new Mothership(XPOS,YPOS,NEUTRAL);
+    entity[PLAYER_CONTROLLED].selected = false;
+    let RAD = entity[POSITION].radius;
     let dist = entity[CAN_COLONIZE_COMP].distance;
 
     colorActionRange(entity,mockCtx);
