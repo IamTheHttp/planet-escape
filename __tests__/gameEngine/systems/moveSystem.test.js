@@ -22,12 +22,10 @@ describe('Tests a component', () => {
 
     let ship = new Mothership(START_POS_X,START_POS_Y);
 
-    let entities = {
-      [ship.id] : ship
-    };
     ship[POSITION].destX = DEST_POS_X;
     ship[POSITION].destY = DEST_POS_Y;
-    moveSystem(entities);
+    moveSystem();
+
 
     expect(ship[POSITION].x).toBeGreaterThan(START_POS_X);
     expect(ship[POSITION].y).toBeGreaterThan(START_POS_Y);
@@ -41,12 +39,9 @@ describe('Tests a component', () => {
 
     let ship = new Mothership(START_POS_X,START_POS_Y);
 
-    let entities = {
-      [ship.id] : ship
-    };
     ship[POSITION].destX = DEST_POS_X;
     ship[POSITION].destY = DEST_POS_Y;
-    moveSystem(entities);
+    moveSystem();
 
     expect(ship[POSITION].x).toBeLessThan(START_POS_X);
     expect(ship[POSITION].y).toBeLessThan(START_POS_Y);
@@ -60,12 +55,9 @@ describe('Tests a component', () => {
 
     let ship = new Mothership(START_POS_X,START_POS_Y);
 
-    let entities = {
-      [ship.id] : ship
-    };
     ship[POSITION].destX = DEST_POS_X;
     ship[POSITION].destY = DEST_POS_Y;
-    moveSystem(entities);
+    moveSystem();
 
     expect(ship[POSITION].x).toBe(START_POS_X);
     expect(ship[POSITION].y).toBe(START_POS_Y);

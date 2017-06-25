@@ -10,9 +10,9 @@ import entityLoop from 'gameEngine/systems/utils/entityLoop.js';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import {
   HAS_FIGHTERS,
-  FIGHTER_BUILD_RATE
+  FIGHTER_BUILD_RATE,
+  PLAYER_1
 } from 'gameEngine/constants';
-
 
 function getEntityOfType(className) {
   let resp = [];
@@ -59,7 +59,6 @@ describe('Tests a component', () => {
     });
     expect(fighters).toBe(hasFighters * 2);
   });
-
 
   it('generates a map with a correct number of planets', () => {
     Entity.entities = {};

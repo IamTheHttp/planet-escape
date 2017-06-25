@@ -10,7 +10,8 @@ import {
   OWNER_COMPONENT,
   PLAYER_1,
   ATTACK,
-  IS_DOCKED
+  IS_DOCKED,
+  NEUTRAL
 } from 'gameEngine/constants';
 
 import {getOwner, setOwner, diffPlayers} from 'gameEngine/components/OwnerComponent';
@@ -55,11 +56,10 @@ function colonize(entities, action) {
   let targetEntity = getEntityAtPos(entities,action.x,action.y);
   selectedEntity.hasComponents([CAN_COLONIZE_COMP,OWNER_COMPONENT], () => {
     targetEntity.hasComponents(OWNER_COMPONENT, () => {
-      let diffPlayers = getOwner(selectedEntity) !== getOwner(targetEntity);
       let dist = calcDistance(selectedEntity, targetEntity);
 
       let inRange = dist < getColonizeDistance(selectedEntity);
-      if (inRange && diffPlayers) {
+      if (inRange && getOwner(targetEntity) === NEUTRAL) {
         setOwner(targetEntity,PLAYER_1);
         targetEntity[OWNER_COMPONENT].playerChangeTime = +(new Date());
       }

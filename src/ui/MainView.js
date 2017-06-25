@@ -46,7 +46,8 @@ class MainView extends React.Component {
     this.game = new Game(this.updateGameState.bind(this));
   }
 
-  updateGameState(gameEntities) {
+  updateGameState(gameEntities, msFrame) {
+    console.log('MS frame : ',msFrame);
     let planetSection = {};
     let summary = {};
     let buildingOptions = {};

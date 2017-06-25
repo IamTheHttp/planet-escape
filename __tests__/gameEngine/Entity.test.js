@@ -33,4 +33,35 @@ describe('Tests for entities', () => {
     expect(e.hasComponents(['anotherComp'])).toBe(false);
     expect(e.hasComponents()).toBe(true);
   });
+
+  it.only('Test the getByComp static method', () => {
+    let e = new Entity();
+
+    let comp1 = {name:'test1',foo:'bar'};
+    e.addComponent(comp1);
+    let comp2 = {name:'test2',foo:'bar'};
+    e.addComponent(comp2);
+
+    let e2 = new Entity();
+
+    e2.addComponent(comp1);
+    let resp;
+    resp = Entity.getByComps('test1');
+    expect(resp[e.id]).toBe(e);
+    expect(resp[e2.id]).toBe(e2);
+    // //
+    resp = Entity.getByComps(['test1']);
+    expect(resp[e.id]).toBe(e);
+    expect(resp[e2.id]).toBe(e2);
+
+    // only the first entity has both of them
+    resp = Entity.getByComps(['test1','test2']);
+
+    expect(resp[e.id]).toBe(e);
+    expect(resp[e2.id]).toBeUndefined();
+    //
+    // // none of them have these components
+    resp = Entity.getByComps(['test1','test2','nonExistant']);
+    expect(resp).toEqual({});
+  });
 });

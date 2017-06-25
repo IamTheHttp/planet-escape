@@ -6,29 +6,20 @@ import {
   BASE_POP,
   HAS_FIGHTERS
 } from 'gameEngine/constants';
+import Entity from 'gameEngine/Entity';
+function colonizationSystem() {
+  let entities = {};
+  entities = Entity.getByComps([OWNER_COMPONENT,BUILDINGS_COMP,POPULATION_COMP]);
 
-import {destroyFighter, getFighters} from 'gameEngine/components/HasFighters';
-function colonizationSystem(entities) {
-  entityLoop(entities,(ent) => {
-    ent.hasComponents(OWNER_COMPONENT,() => {
-      if (ent[OWNER_COMPONENT].playerChangeTime === false) {
-        return null;
-      }
-      ent[OWNER_COMPONENT].playerChangeTime = false;
+  entityLoop(entities, (ent) => {
+    if (ent[OWNER_COMPONENT].playerChangeTime === false) {
+      return null;
+    }
+    ent[OWNER_COMPONENT].playerChangeTime = false;
 
-      ent.hasComponents(BUILDINGS_COMP,() => {
-        ent[BUILDINGS_COMP].built = [];
-        ent[BUILDINGS_COMP].inProgress = [];
-      });
-
-      ent.hasComponents(POPULATION_COMP, () => {
-        ent[POPULATION_COMP].value = BASE_POP;
-      });
-
-      ent.hasComponents(HAS_FIGHTERS, () => {
-
-      });
-    });
+    ent[BUILDINGS_COMP].built = [];
+    ent[BUILDINGS_COMP].inProgress = [];
+    ent[POPULATION_COMP].value = BASE_POP;
   });
 }
 

@@ -70,15 +70,15 @@ class Game {
 
     let loop = () => {
       // userinput runs all the time, any modification to "user input" modifies stuff
-      // window.log && console.log('PERF START');
+
       let start = performance.now();
       userInputSystem(Entity.entities);
-      moveSystem(Entity.entities);
-      planetBonusesSystem(Entity.entities);
-      growPop(Entity.entities);
-      incomeSystem(Entity.entities);
-      treasuryUpdateSystem(Entity.entities);
-      planetConstructionSystem(Entity.entities);
+      moveSystem();
+      // planetBonusesSystem(Entity.entities);
+      // growPop(Entity.entities);
+      // incomeSystem(Entity.entities);
+      // treasuryUpdateSystem(Entity.entities);
+      // planetConstructionSystem(Entity.entities);
       colonizationSystem(Entity.entities);
       fighterAttacks(Entity.entities);
       if (count % FIGHTER_BUILD_RATE === 0) {
@@ -91,8 +91,7 @@ class Game {
           uiEnts[entity.id] = entity;
         }
       });
-      cbNotification(uiEnts);
-      // window.log && console.log('PERF END', performance.now() - start);
+      cbNotification(uiEnts, performance.now() - start);
       count++;
       requestAnimationFrame(loop);
     };

@@ -1,4 +1,5 @@
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
+import Entity from 'gameEngine/Entity';
 import {
   POSITION,
   MOVEMENT_COMP
@@ -9,6 +10,7 @@ function moveEntity(entity) {
   if (destReached(entity)) {
     return;
   }
+
   let curX = getPos(entity).x;
   let curY = getPos(entity).y;
   let destX = getDest(entity).x;
@@ -35,15 +37,16 @@ function moveEntity(entity) {
     curY = Math.max(curY - speed , destY);
   }
 
+  // console.log(entity);
   entity[POSITION].x = curX;
   entity[POSITION].y = curY;
 }
 
-function moveSystem(entities) {
+function moveSystem() {
+  let entities = Entity.getByComps([MOVEMENT_COMP,POSITION]);
+
   entityLoop(entities,(entity) => {
-    if (entity.hasComponents([MOVEMENT_COMP,POSITION])) {
-      moveEntity(entity);
-    }
+    moveEntity(entity);
   });
 }
 
