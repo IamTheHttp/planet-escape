@@ -91,6 +91,7 @@ Entity.reset = () => {
   entityLoop(Entity.entities, (entity) => {
     entity.destroy();
   });
+  Group.reset();
 };
 
 Entity.counter = 0;

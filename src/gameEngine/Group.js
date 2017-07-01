@@ -2,7 +2,7 @@ import entityLoop from 'gameEngine/systems/utils/entityLoop';
 
 
 class Group {
-  constructor(components = [], entities = {}) {
+  constructor(components, entities = {}) {
     this.components = components;
     this.entities = entities;
   }
@@ -14,7 +14,7 @@ Group.reset = () => {
   Group.groups = {};
 };
 
-Group.createGroupKey = (components) => {
+Group.generateGroupKey = (components) => {
   let names = [];
   for (let count = 0; count < components.length; count++) {
     let name = components[count];
@@ -30,15 +30,15 @@ Group.createGroupKey = (components) => {
 };
 
 Group.getGroup = (components) => {
-  let key = Group.createGroupKey(components);
+  let key = Group.generateGroupKey(components);
   return Group.groups[key] || {};
 };
 
 // this will create a new index group for the provided components.
-Group.indexGroup = (components = [],entities) => {
+Group.indexGroup = (components, entities) => {
   let compArray = components.reduce ? components : [components];
 
-  let key = Group.createGroupKey(compArray);
+  let key = Group.generateGroupKey(compArray);
 
   let group = {};
   if (Group.groups[key]) {

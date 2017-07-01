@@ -46,10 +46,6 @@ describe('Tests a component', () => {
     let planetA = new EarthLike('foo',50,100,100);
     let planetB = new EarthLike('bar',50,100,100);
 
-    let entities = {
-      [planetA.id] : planetA,
-      [planetB.id] : planetB
-    };
     planetA[PLAYER_CONTROLLED].selected = true;
 
     setEntityDest(planetA,{x:50,y:100});
@@ -79,16 +75,13 @@ describe('Tests a component', () => {
   it('selectEntity', () => {
     let planetA = new EarthLike('foo',50,100,100);
 
-    let entities = {
-      [planetA.id] : planetA
-    };
     expect(planetA[PLAYER_CONTROLLED].selected).toBe(false);
-    selectEntity(entities,{x:110,y:110});
+    selectEntity({x:110,y:110});
     expect(planetA[PLAYER_CONTROLLED].selected).toBe(true);
 
     // remove the playercontrolled comp, ensure nothingbreaks
     planetA.removeComponent(PLAYER_CONTROLLED);
-    selectEntity(entities,{x:110,y:110});
+    selectEntity({x:110,y:110});
     expect(planetA[PLAYER_CONTROLLED]).toBeUndefined();
   });
 });

@@ -2,11 +2,6 @@ import EarthLike from './entities/planets/EarthLike';
 import Entity from './Entity';
 
 import userInputSystem, {pushAction} from './systems/userInputSystem';
-import growPop from './systems/growPop';
-import incomeSystem from './systems/incomeSystem';
-import planetBonusesSystem from './systems/planetBonusesSystem';
-import treasuryUpdateSystem from './systems/treasuryUpdateSystem';
-import planetConstructionSystem from './systems/planetConstructionSystem';
 import moveSystem from './systems/moveSystem';
 import colonizationSystem from './systems/colonizationSystem';
 import fighterAttacks from './systems/fighterAttacks';
@@ -74,11 +69,6 @@ class Game {
       let start = performance.now();
       userInputSystem();
       moveSystem();
-      // planetBonusesSystem(Entity.entities);
-      // growPop(Entity.entities);
-      // incomeSystem(Entity.entities);
-      // treasuryUpdateSystem(Entity.entities);
-      // planetConstructionSystem(Entity.entities);
       colonizationSystem();
       fighterAttacks();
       if (count % FIGHTER_BUILD_RATE === 0) {

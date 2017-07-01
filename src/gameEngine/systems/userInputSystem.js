@@ -35,7 +35,7 @@ function userInputSystem() {
       });
     } else {
       if (action.name === SELECT) {
-        selectEntity(entities,action);
+        selectEntity(action);
       }
 
       if (action.name === MOVE) {

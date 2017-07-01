@@ -12,16 +12,15 @@ export function isPosInsideCircle(x,y,centerX,centerY,radius) {
   return Math.pow((x - centerX),2) + Math.pow((y - centerY),2) < Math.pow(radius,2);
 }
 
-export function selectEntity(entities,action) {
+export function selectEntity(action) {
+  let entities = Entity.getByComps([POSITION,PLAYER_CONTROLLED]);
   entityLoop(entities,(ent) => {
-    if (ent[PLAYER_CONTROLLED]) {
-      let x = action.x;
-      let y = action.y;
-      let centerX = ent[POSITION].x;
-      let centerY = ent[POSITION].y;
-      let radius = ent[POSITION].radius;
-      ent[PLAYER_CONTROLLED].selected = isPosInsideCircle(x,y,centerX,centerY,radius);
-    }
+    let x = action.x;
+    let y = action.y;
+    let centerX = ent[POSITION].x;
+    let centerY = ent[POSITION].y;
+    let radius = ent[POSITION].radius;
+    ent[PLAYER_CONTROLLED].selected = isPosInsideCircle(x,y,centerX,centerY,radius);
   });
 }
 
