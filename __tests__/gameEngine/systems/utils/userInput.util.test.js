@@ -1,3 +1,5 @@
+import Entity from 'gameEngine/Entity';
+
 /* global describe */
 /* global it */
 /* global expect */
@@ -19,7 +21,7 @@ import {
 
 describe('Tests a component', () => {
   beforeEach(() => {
-      // setup the test
+    Entity.reset();
   });
 
   it('getSelectedEntity', () => {
@@ -58,13 +60,7 @@ describe('Tests a component', () => {
   it('getEntityAtPos', () => {
     let planetA = new EarthLike('foo',50,100,100);
     let planetB = new EarthLike('bar',50,500,500);
-
-    let entities = {
-      [planetA.id] : planetA,
-      [planetB.id] : planetB
-    };
-
-    let ent = getEntityAtPos(entities,110,110);
+    let ent = getEntityAtPos(110,110);
     expect(ent).toBe(planetA);
   });
 
@@ -94,6 +90,5 @@ describe('Tests a component', () => {
     planetA.removeComponent(PLAYER_CONTROLLED);
     selectEntity(entities,{x:110,y:110});
     expect(planetA[PLAYER_CONTROLLED]).toBeUndefined();
-    // expect(ent).toBe(planetA);
   });
 });

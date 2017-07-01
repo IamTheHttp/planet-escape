@@ -62,29 +62,31 @@ export function generateMap(planetCount = 30) {
 }
 
 class Game {
-  constructor(cbNotification) {
+  constructor(cbNotification,planets = 5) {
     this.dispatchAction = this.dispatchAction.bind(this);
     // setup some planets
-    generateMap(30);
+    generateMap(planets);
     let count = 0;
 
     let loop = () => {
       // userinput runs all the time, any modification to "user input" modifies stuff
 
       let start = performance.now();
-      userInputSystem(Entity.entities);
+      userInputSystem();
       moveSystem();
       // planetBonusesSystem(Entity.entities);
       // growPop(Entity.entities);
       // incomeSystem(Entity.entities);
       // treasuryUpdateSystem(Entity.entities);
       // planetConstructionSystem(Entity.entities);
-      colonizationSystem(Entity.entities);
-      fighterAttacks(Entity.entities);
+      colonizationSystem();
+      fighterAttacks();
       if (count % FIGHTER_BUILD_RATE === 0) {
-        buildFighters(Entity.entities);
+        buildFighters();
       }
       let uiEnts = {};
+
+
       entityLoop(Entity.entities, (entity) => {
         let isDocked = entity[IS_DOCKED] && entity[IS_DOCKED].isDocked;
         if (!isDocked && entity.hasComponents(UI_COMP)) {

@@ -4,6 +4,7 @@
 /* global beforeEach */
 import {mount, shallow} from 'enzyme';
 import React from 'react';
+import Entity from 'gameEngine/Entity';
 import userInputSystem, {pushAction, attack} from 'gameEngine/systems/userInputSystem';
 import {getFighters} from 'gameEngine/components/HasFighters';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
@@ -20,11 +21,13 @@ import {
   COLONIZE,
   NEUTRAL,
   PLAYER_1,
+  PLAYER_2,
   ATTACK
 } from 'gameEngine/constants';
 describe('Tests a component', () => {
   beforeEach(() => {
       // setup the test
+    Entity.reset();
   });
 
   it('Tests an action without entities', () => {
@@ -51,35 +54,26 @@ describe('Tests a component', () => {
     let planet = new EarthLike('foo',50,100,100);
     let building = new Farm();
 
-    let entities = {
-      [planet.id] : planet,
-      [building.id] : building
-    };
-
     pushAction({
-      entities : [planet.id], // on what entities to build
+      entities : {[planet.id] : planet}, // on what entities to build
       name : 'build', // action? (build)
       entityID : building.id // what to build
     });
 
-    userInputSystem(entities);
-    expect(entities[planet.id][BUILDINGS_COMP].inProgress.length).toBe(1);
-    expect(entities[planet.id][BUILDINGS_COMP].inProgress[0].constructor).toBe(Farm);
+    userInputSystem();
+    expect(Entity.entities[planet.id][BUILDINGS_COMP].inProgress.length).toBe(1);
+    expect(Entity.entities[planet.id][BUILDINGS_COMP].inProgress[0].constructor).toBe(Farm);
   });
 
   it('Tests that an entity can be selected', () => {
     let planet = new EarthLike('foo',50,100,100);
-
-    let entities = {
-      [planet.id] : planet
-    };
 
     pushAction({
       name:SELECT,
       x : 500,
       y : 500
     });
-    userInputSystem(entities);
+    userInputSystem();
     expect(planet[PLAYER_CONTROLLED].selected).toBe(false);
 
     pushAction({
@@ -87,7 +81,7 @@ describe('Tests a component', () => {
       x : 100,
       y : 104.99
     });
-    userInputSystem(entities);
+    userInputSystem();
     expect(planet[PLAYER_CONTROLLED].selected).toBe(true);
 
     pushAction({
@@ -95,16 +89,12 @@ describe('Tests a component', () => {
       x : 104.99,
       y : 100
     });
-    userInputSystem(entities);
+    userInputSystem();
     expect(planet[PLAYER_CONTROLLED].selected).toBe(true);
   });
 
   it('Tests that an entity can be moved', () => {
     let planet = new EarthLike('foo',50,100,100);
-
-    let entities = {
-      [planet.id] : planet
-    };
 
     // set as selected
     planet[PLAYER_CONTROLLED].selected = true;
@@ -113,7 +103,7 @@ describe('Tests a component', () => {
       x : 105,
       y : 100
     });
-    userInputSystem(entities);
+    userInputSystem();
     expect(planet[POSITION].destY).toBe(100);
     expect(planet[POSITION].destX).toBe(105);
   });
@@ -123,11 +113,6 @@ describe('Tests a component', () => {
     let ship = new Mothership(50,50, PLAYER_1);
     // set as selected
 
-    let entities = {
-      [planet.id] : planet,
-      [ship.id] : ship
-    };
-
     // planet[PLAYER_CONTROLLED].selected = true;
     pushAction({
       name:COLONIZE,
@@ -135,7 +120,7 @@ describe('Tests a component', () => {
       y : 100
     });
     expect(planet[OWNER_COMPONENT].player).toBe(NEUTRAL);
-    userInputSystem(entities);
+    userInputSystem();
     // since nothing is selected, we can't colonize!
     expect(planet[OWNER_COMPONENT].player).toBe(NEUTRAL);
 
@@ -147,7 +132,7 @@ describe('Tests a component', () => {
       y : 100
     });
     expect(planet[OWNER_COMPONENT].player).toBe(NEUTRAL);
-    userInputSystem(entities);
+    userInputSystem();
     expect(planet[OWNER_COMPONENT].player).toBe(PLAYER_1);
   });
 
@@ -156,11 +141,6 @@ describe('Tests a component', () => {
     let ship = new Mothership(600,600, PLAYER_1);
     // set as selected
 
-    let entities = {
-      [planet.id] : planet,
-      [ship.id] : ship
-    };
-
     pushAction({
       name:COLONIZE,
       x : 105,
@@ -168,7 +148,7 @@ describe('Tests a component', () => {
     });
     ship[PLAYER_CONTROLLED].selected = true;
     expect(planet[OWNER_COMPONENT].player).toBe(NEUTRAL);
-    userInputSystem(entities);
+    userInputSystem();
     // since we're out of range
     expect(planet[OWNER_COMPONENT].player).toBe(NEUTRAL);
   });
@@ -176,7 +156,7 @@ describe('Tests a component', () => {
   it('Attacking action will set destination of fighters', () => {
     let attackingPlanet = new EarthLike('foo',50,200,200,PLAYER_1);
     attackingPlanet[PLAYER_CONTROLLED].selected = true;
-    let defendingPlanet = new EarthLike('foo',50,100,100,NEUTRAL);
+    let defendingPlanet = new EarthLike('foo',50,100,100,PLAYER_2);
     let attackFighter = new Fighter(attackingPlanet);
 
     expect(getFighters(attackingPlanet).length).toBeGreaterThan(0);
@@ -187,13 +167,7 @@ describe('Tests a component', () => {
       y : 100
     });
 
-    let entities = {
-      [attackingPlanet.id] : attackingPlanet,
-      [attackFighter.id]   : attackFighter,
-      [defendingPlanet.id] : defendingPlanet
-    };
-
-    userInputSystem(entities); // this sets the attack, but does not
+    userInputSystem(); // this sets the attack, but does not
     expect(attackFighter[POSITION].destX).toBe(100);
     expect(attackFighter[POSITION].destY).toBe(100);
   });

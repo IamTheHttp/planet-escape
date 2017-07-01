@@ -1,3 +1,5 @@
+import Entity from 'gameEngine/Entity';
+
 import {
   BUILDINGS_COMP,
   PLAYER_CONTROLLED,
@@ -23,16 +25,14 @@ export function selectEntity(entities,action) {
   });
 }
 
-export function getSelectedEntity(entities) {
+export function getSelectedEntity() {
   let entity = false;
-  // console.log(entities);
+  let entities = Entity.getByComps(PLAYER_CONTROLLED);
   entityLoop(entities,(ent) => {
-    ent.hasComponents(PLAYER_CONTROLLED,() => {
-      // this assumes only one item can ever be selected.
-      if (ent[PLAYER_CONTROLLED].selected) {
-        entity = ent;
-      }
-    });
+    // this assumes only one item can ever be selected.
+    if (ent[PLAYER_CONTROLLED].selected) {
+      entity = ent;
+    }
   });
   return entity || new NullEntity();
 }
@@ -42,17 +42,16 @@ export function setEntityDest(entity,action) {
   entity[POSITION].destY = action.y;
 }
 
-export function getEntityAtPos(entities, x, y) {
+export function getEntityAtPos(x, y) {
   let entity = false;
+  let entities = Entity.getByComps(POSITION);
   entityLoop(entities,(ent) => {
-    ent.hasComponents(POSITION, () => {
-      let centerX = ent[POSITION].x;
-      let centerY = ent[POSITION].y;
-      let radius = ent[POSITION].radius;
-      if (isPosInsideCircle(x,y,centerX,centerY,radius)) {
-        entity = ent;
-      }
-    });
+    let centerX = ent[POSITION].x;
+    let centerY = ent[POSITION].y;
+    let radius = ent[POSITION].radius;
+    if (isPosInsideCircle(x,y,centerX,centerY,radius)) {
+      entity = ent;
+    }
   });
   return entity || new NullEntity();
   // this works since base radius is the same for all entities

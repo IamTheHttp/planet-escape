@@ -10,10 +10,14 @@ class Group {
 
 Group.groups = {};
 
+Group.reset = () => {
+  Group.groups = {};
+};
+
 Group.createGroupKey = (components) => {
   let names = [];
-  for (let n = 0; n < components.length; n++) {
-    let name = components[n];
+  for (let count = 0; count < components.length; count++) {
+    let name = components[count];
     names.push(name);
   }
 

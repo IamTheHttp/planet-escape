@@ -6,6 +6,9 @@ import {mount, shallow} from 'enzyme';
 import React from 'react';
 import Entity from 'gameEngine/Entity';
 describe('Tests for entities', () => {
+  beforeEach(() => {
+    Entity.reset();
+  });
   it('Creates a new entity', () => {
     let e = new Entity();
     expect(e.id).not.toBeUndefined();
@@ -17,7 +20,7 @@ describe('Tests for entities', () => {
     let comp = {name:'test',foo:'bar'};
     e.addComponent(comp);
     expect(e.components.test).toBe(comp);
-    e.removeComponent('test');
+    e.removeComponent(comp);
     expect(e.components.test).toBeUndefined();
   });
 
@@ -34,7 +37,7 @@ describe('Tests for entities', () => {
     expect(e.hasComponents()).toBe(true);
   });
 
-  it.only('Test the getByComp static method', () => {
+  it('Test the getByComp static method', () => {
     let e = new Entity();
 
     let comp1 = {name:'test1',foo:'bar'};
@@ -63,5 +66,16 @@ describe('Tests for entities', () => {
     // // none of them have these components
     resp = Entity.getByComps(['test1','test2','nonExistant']);
     expect(resp).toEqual({});
+  });
+
+  it('Entity can destroy itself', () => {
+    let e = new Entity();
+    let comp1 = {name:'test1',foo:'bar'};
+    e.addComponent(comp1);
+    e.destroy();
+    expect(Entity.entities[e.id]).toBeUndefined();
+
+    let resp = Entity.getByComps(['test1']);
+    expect(resp[e.id]).toBeUndefined();
   });
 });

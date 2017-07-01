@@ -24,7 +24,8 @@ export function destroyFighter(fighter) {
   let idx = fighters.indexOf(fighter);
   fighters.splice(idx,1);
   ownerPlanet[HAS_FIGHTERS].fighters = fighters;
-  delete Entity.entities[fighter.id];
+  fighter.destroy();
+  // delete Entity.entities[fighter.id];
 }
 
 // when we attack, we reset the array of the fighters.. great right?

@@ -24,7 +24,7 @@ function getEntityOfType(className) {
 describe('Tests a component', () => {
   let planets;
   beforeEach(() => {
-      // setup the test
+    Entity.reset();
   });
 
   it('should only pass UI comps to the callback', () => {
@@ -40,8 +40,8 @@ describe('Tests a component', () => {
   it('Build fighters only runs every 15 iterations', () => {
     jest.useFakeTimers();
     let cbMock = jest.fn();
-    let sampleID = (new Entity()).id; // no UI_COMP here
-    Entity.entities = {};
+    // let sampleID = (new Entity()).id; // no UI_COMP here
+
     new Game(cbMock);
     let int = 0;
     while (int < FIGHTER_BUILD_RATE) {
@@ -61,22 +61,22 @@ describe('Tests a component', () => {
   });
 
   it('generates a map with a correct number of planets', () => {
-    Entity.entities = {};
+    Entity.reset();
     generateMap();
     planets = getEntityOfType(EarthLike);
     expect(planets.length).toBe(30);
 
-    Entity.entities = {};
+    Entity.reset();
     generateMap(20);
     planets = getEntityOfType(EarthLike);
     expect(planets.length).toBe(20);
 
-    Entity.entities = {};
+    Entity.reset();
     generateMap(20000);
     planets = getEntityOfType(EarthLike);
     expect(planets.length).toBe(36);
 
-    Entity.entities = {};
+    Entity.reset();
     generateMap(-5);
     planets = getEntityOfType(EarthLike);
     // default is 30 if invalid argument is passed

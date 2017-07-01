@@ -1,4 +1,5 @@
 import Group from 'gameEngine/Group';
+import entityLoop from 'gameEngine/systems/utils/entityLoop';
 class Entity {
   constructor(classRef) {
     Entity.counter++;
@@ -15,7 +16,6 @@ class Entity {
     Group.indexGroup(Object.keys(this.components),Entity.entities);
 
     // we need to see if we need to add entity into other components.
-
     for (let groupKey in Group.groups) {
       let group = Group.groups[groupKey];
       // if the ent is in this group, skip.
@@ -32,12 +32,36 @@ class Entity {
         group.entities[this.id] = this;
       });
     }
-    // loop over all groups, see if this component exists in a key..
   }
 
-  removeComponent(compName) {
+
+  // mixed, an actual component or just component name
+  removeComponent(comp) {
+    let component = this.components[comp] || comp;
+    let compName = component.name;
+    // we need to see if we need to add entity into other components.
+    for (let groupKey in Group.groups) {
+      let group = Group.groups[groupKey];
+      // if the ent is in this group, skip.
+
+      let entInGroup = typeof group.entities[this.id] !== 'undefined';
+      let compInGroup = group.components.indexOf(component.name) > -1;
+      let entHasReqComps =  this.hasComponents(group.components);
+
+      // if this ent does not have all the other comps, skip..
+      if (entInGroup && compInGroup && entHasReqComps) {
+        delete group.entities[this.id];
+      }
+    }
     delete this.components[compName];
     delete this[compName];
+  }
+
+  destroy() {
+    Object.keys(this.components).forEach((compName) => {
+      this.removeComponent(this.components[compName]);
+    });
+    delete Entity.entities[this.id];
   }
 
   hasComponents(components = [],fn = () => {}) {
@@ -63,6 +87,11 @@ Entity.getByComps = (components = []) => {
   return group.entities || {};
 };
 
+Entity.reset = () => {
+  entityLoop(Entity.entities, (entity) => {
+    entity.destroy();
+  });
+};
 
 Entity.counter = 0;
 

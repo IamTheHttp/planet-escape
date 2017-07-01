@@ -11,21 +11,23 @@ import {
   IS_DOCKED
 } from 'gameEngine/constants';
 
-function fighterAttacks(entities) {
+function fighterAttacks() {
   let hits = [];
   let planets = [];
 
-  entityLoop(entities,(ent) => {
-    ent.hasComponents([OWNER_COMPONENT,CAN_ATTACK_PLANETS,IS_DOCKED],() => {
-      // get all fighters that have reached their pos...
-      if (!ent[IS_DOCKED].isDocked && destReached(ent)) {
-        hits.push(ent);
-      }
-    });
+  let fighterEnts = Entity.getByComps([OWNER_COMPONENT,CAN_ATTACK_PLANETS,IS_DOCKED]);
+  let planetEnts = Entity.getByComps(HAS_FIGHTERS);
 
-    ent.hasComponents(HAS_FIGHTERS, () => {
-      planets.push(ent);
-    });
+  entityLoop(fighterEnts,(ent) => {
+    // get all fighters that have reached their pos...
+    if (!ent[IS_DOCKED].isDocked && destReached(ent)) {
+      hits.push(ent);
+    }
+  });
+
+  //  turning it into an array..
+  entityLoop(planetEnts,(ent) => {
+    planets.push(ent);
   });
 
   hits.forEach((attacker) => {

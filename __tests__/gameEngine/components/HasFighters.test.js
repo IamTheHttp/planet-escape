@@ -17,8 +17,6 @@ describe('Tests a component',() => {
   });
 
   it('renders',() => {
-    Entity.entities = {};
-
     let planet = new EarthLike(20,50,300,300,PLAYER_1);
     new Fighter(planet);
     let fighters = getFighters(planet);

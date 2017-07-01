@@ -4,6 +4,7 @@
 /* global beforeEach */
 import {mount , shallow} from 'enzyme';
 import React from 'react';
+import {getOwner} from 'gameEngine/components/OwnerComponent';
 import fighterAttacks from 'gameEngine/systems/fighterAttacks';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import Fighter from 'gameEngine/entities/Ships/Fighter';
@@ -19,6 +20,7 @@ import {
 describe('Tests a component',() => {
   beforeEach(() => {
     // setup the test
+    Entity.reset();
   });
 
   it('Attack/Defense are removed from the Entity hash as well from the planets',() => {
@@ -27,6 +29,7 @@ describe('Tests a component',() => {
 
     let attackerFighter = new Fighter(attackingPlanet);
     let defFighter = new Fighter(defendingPlanet);
+    new Fighter(defendingPlanet); // 2nd defender
 
 
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
@@ -35,7 +38,7 @@ describe('Tests a component',() => {
 
     let defCount = getFighters(defendingPlanet).length;
     let attackCount = getFighters(attackingPlanet).length;
-    fighterAttacks(Entity.entities);
+    fighterAttacks();
     // expect the attackerFighter entity to be removed from the entity list...
     expect(Entity.entities[attackerFighter.id]).toBeUndefined();
     expect(Entity.entities[defFighter.id]).toBeUndefined();
@@ -43,6 +46,7 @@ describe('Tests a component',() => {
     // the planets should lose one fighter
     expect(getFighters(defendingPlanet).length).toBe(defCount - 1);
     expect(getFighters(attackingPlanet).length).toBe(attackCount - 1);
+    expect(getOwner(defendingPlanet)).toBe(PLAYER_2);
   });
 
   it('TODO - A fighter from another player is at a planet with no defender');
