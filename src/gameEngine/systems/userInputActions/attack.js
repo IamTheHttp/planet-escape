@@ -16,14 +16,14 @@ import {
 
 export function attack(action) {
   let attackingPlanet = getSelectedEntity();
-  let defendingPlanet = getEntityAtPos(action.x,action.y);
+  let defendingPlanet = getEntityAtPos(action.x, action.y);
 
 
-  attackingPlanet.hasComponents([HAS_FIGHTERS,OWNER_COMPONENT], () => {
+  attackingPlanet.hasComponents([HAS_FIGHTERS, OWNER_COMPONENT], () => {
     defendingPlanet.hasComponents(OWNER_COMPONENT, () => {
-      if (diffPlayers(attackingPlanet,defendingPlanet)) {
+      if (diffPlayers(attackingPlanet, defendingPlanet)) {
         getFighters(attackingPlanet).forEach((fighterEnt) => {
-          setDest(fighterEnt,defendingPlanet);
+          setDest(fighterEnt, defendingPlanet);
           fighterEnt[IS_DOCKED].isDocked = false;
         });
         // attackingPlanet[HAS_FIGHTERS].fighters = []; //  empty the fighters...

@@ -51,7 +51,7 @@ describe('Tests a component', () => {
   });
 
   it('Tests the build action', () => {
-    let planet = new EarthLike('foo',50,100,100);
+    let planet = new EarthLike('foo', 50, 100, 100);
     let building = new Farm();
 
     pushAction({
@@ -66,7 +66,7 @@ describe('Tests a component', () => {
   });
 
   it('Tests that an entity can be selected', () => {
-    let planet = new EarthLike('foo',50,100,100);
+    let planet = new EarthLike('foo', 50, 100, 100);
 
     pushAction({
       name:SELECT,
@@ -94,7 +94,7 @@ describe('Tests a component', () => {
   });
 
   it('Tests that an entity can be moved', () => {
-    let planet = new EarthLike('foo',50,100,100);
+    let planet = new EarthLike('foo', 50, 100, 100);
 
     // set as selected
     planet[PLAYER_CONTROLLED].selected = true;
@@ -109,8 +109,8 @@ describe('Tests a component', () => {
   });
 
   it('Tests that an entity can be colonized', () => {
-    let planet = new EarthLike('foo',50,100,100,NEUTRAL);
-    let ship = new Mothership(50,50, PLAYER_1);
+    let planet = new EarthLike('foo', 50, 100, 100, NEUTRAL);
+    let ship = new Mothership(50, 50, PLAYER_1);
     // set as selected
 
     // planet[PLAYER_CONTROLLED].selected = true;
@@ -137,8 +137,8 @@ describe('Tests a component', () => {
   });
 
   it('Colonization only works when in range', () => {
-    let planet = new EarthLike('foo',50,100,100,NEUTRAL);
-    let ship = new Mothership(600,600, PLAYER_1);
+    let planet = new EarthLike('foo', 50, 100, 100, NEUTRAL);
+    let ship = new Mothership(600, 600, PLAYER_1);
     // set as selected
 
     pushAction({
@@ -154,9 +154,9 @@ describe('Tests a component', () => {
   });
 
   it('Attacking action will set destination of fighters', () => {
-    let attackingPlanet = new EarthLike('foo',50,200,200,PLAYER_1);
+    let attackingPlanet = new EarthLike('foo', 50, 200, 200, PLAYER_1);
     attackingPlanet[PLAYER_CONTROLLED].selected = true;
-    let defendingPlanet = new EarthLike('foo',50,100,100,PLAYER_2);
+    let defendingPlanet = new EarthLike('foo', 50, 100, 100, PLAYER_2);
     let attackFighter = new Fighter(attackingPlanet);
 
     expect(getFighters(attackingPlanet).length).toBeGreaterThan(0);

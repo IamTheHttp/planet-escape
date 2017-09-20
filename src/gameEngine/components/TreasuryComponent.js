@@ -1,5 +1,5 @@
 /** @namespace entity.components.localBonus */
-import {TREASURY_COMP,GOLD_RESOURCE} from 'gameEngine/constants';
+import {TREASURY_COMP, GOLD_RESOURCE} from 'gameEngine/constants';
 class TreasuryComponent {
   constructor() {
     this.name = TREASURY_COMP;

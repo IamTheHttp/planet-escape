@@ -22,12 +22,12 @@ describe('Tests a component', () => {
   });
 
   it('inits the component - object', () => {
-    let comp = new UIComponent({name:'foo',data:{bar:true}});
+    let comp = new UIComponent({name:'foo', data:{bar:true}});
     expect(comp.sections.length).toBe(1);
   });
 
   it('inits the component - array of objects', () => {
-    let comp = new UIComponent([{name:'foo',data:{bar:true}}]);
+    let comp = new UIComponent([{name:'foo', data:{bar:true}}]);
     expect(comp.sections.length).toBe(1);
   });
 

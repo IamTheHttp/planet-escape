@@ -23,11 +23,11 @@ describe('Tests a component', () => {
       ></PlanetList>);
   });
 
-  it('renders the planets',() => {
+  it('renders the planets', () => {
     expect(wrapper.find('.planet').length).toBe(1);
   });
 
-  it('dispatches proper actions',() => {
+  it('dispatches proper actions', () => {
     let entID = 1;
     wrapper.instance().handleClick(entID);
     expect(onClick.mock.calls[0][0]).toBe(entID);

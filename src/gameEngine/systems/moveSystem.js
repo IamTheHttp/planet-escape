@@ -5,7 +5,7 @@ import {
   MOVEMENT_COMP
 } from 'gameEngine/constants';
 
-import {getPos,getDest,destReached} from 'gameEngine/components/PositionComponent';
+import {getPos, getDest, destReached} from 'gameEngine/components/PositionComponent';
 function moveEntity(entity) {
   if (destReached(entity)) {
     return;
@@ -22,19 +22,19 @@ function moveEntity(entity) {
   // if distance is positive, we need to add to the component's position
 
   if (distanceX > 0) {
-    curX = Math.min(curX + speed , destX);
+    curX = Math.min(curX + speed, destX);
   }
 
   if (distanceX < 0) {
-    curX = Math.max(curX - speed , destX);
+    curX = Math.max(curX - speed, destX);
   }
 
   if (distanceY > 0) {
-    curY = Math.min(curY + speed , destY);
+    curY = Math.min(curY + speed, destY);
   }
 
   if (distanceY < 0) {
-    curY = Math.max(curY - speed , destY);
+    curY = Math.max(curY - speed, destY);
   }
 
   // console.log(entity);
@@ -43,9 +43,9 @@ function moveEntity(entity) {
 }
 
 function moveSystem() {
-  let entities = Entity.getByComps([MOVEMENT_COMP,POSITION]);
+  let entities = Entity.getByComps([MOVEMENT_COMP, POSITION]);
 
-  entityLoop(entities,(entity) => {
+  entityLoop(entities, (entity) => {
     moveEntity(entity);
   });
 }

@@ -14,7 +14,7 @@ describe('Tests a component', () => {
 
   it('renders with an empty name', () => {
     let props = {
-      planet : new EarthLike('',1)
+      planet : new EarthLike('', 1)
     };
 
     let wrapper = mount(<PlanetDetails {...props}></PlanetDetails>);
@@ -24,7 +24,7 @@ describe('Tests a component', () => {
   it('renders with a planet', () => {
     let props = {
       buildingOptions : {},
-      planet : new EarthLike('p',1)
+      planet : new EarthLike('p', 1)
     };
 
     props.planet[PLANETBONUS_COMP].mod = {
@@ -43,7 +43,7 @@ describe('Tests a component', () => {
           name : 'tmp_name'
         }
       },
-      planet : new EarthLike('p',1),
+      planet : new EarthLike('p', 1),
       onClick : jest.fn()
     };
 

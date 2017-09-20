@@ -11,7 +11,7 @@ import {
   NEUTRAL
 } from 'gameEngine/constants.js';
 class Mothership {
-  constructor(x,y,player = NEUTRAL) {
+  constructor(x, y, player = NEUTRAL) {
     let ent = new Entity();
     ent.addComponent(new PlayerControlled());
     ent.addComponent(new UIComponent({
@@ -20,7 +20,7 @@ class Mothership {
         shape : CIRCLE
       }
     }));
-    ent.addComponent(new PositionComponent(x,y));
+    ent.addComponent(new PositionComponent(x, y));
     ent.addComponent(new MoveComponent());
     ent.addComponent(new CanColonize());
     ent.addComponent(new OwnerComponent(player));

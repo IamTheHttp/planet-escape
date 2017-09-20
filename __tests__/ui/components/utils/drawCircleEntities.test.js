@@ -39,7 +39,7 @@ describe('Tests a component', () => {
   it('draws the entity', () => {
     let XPOS = 100;
     let YPOS = 120;
-    let entity = new EarthLike('bar',50,XPOS,YPOS,NEUTRAL);
+    let entity = new EarthLike('bar', 50, XPOS, YPOS, NEUTRAL);
 
     let RAD = entity[POSITION].radius;
 
@@ -73,12 +73,12 @@ describe('Tests a component', () => {
     let mockCtx = getMock();
     let XPOS = 100;
     let YPOS = 120;
-    let entity = new EarthLike('bar',50,XPOS,YPOS,NEUTRAL);
-    colorByPlayer({},mockCtx); // this should do nothing
-    colorByPlayer(entity,mockCtx);
+    let entity = new EarthLike('bar', 50, XPOS, YPOS, NEUTRAL);
+    colorByPlayer({}, mockCtx); // this should do nothing
+    colorByPlayer(entity, mockCtx);
     let color = mockCtx.fillStyle;
-    entity = new EarthLike('bar',50,XPOS,YPOS,PLAYER_1);
-    colorByPlayer(entity,mockCtx);
+    entity = new EarthLike('bar', 50, XPOS, YPOS, PLAYER_1);
+    colorByPlayer(entity, mockCtx);
     expect(mockCtx.fillStyle).not.toBe(color);
     expect(mockCtx.fill.mock.calls.length).toBe(2);
   });
@@ -87,17 +87,17 @@ describe('Tests a component', () => {
     let mockCtx = getMock();
     let XPOS = 100;
     let YPOS = 120;
-    let entity = new Mothership(XPOS,YPOS,NEUTRAL);
+    let entity = new Mothership(XPOS, YPOS, NEUTRAL);
     entity[PLAYER_CONTROLLED].selected = true;
     let RAD = entity[POSITION].radius;
     let dist = entity[CAN_COLONIZE_COMP].distance;
 
-    colorActionRange(entity,mockCtx);
+    colorActionRange(entity, mockCtx);
 
     expect(mockCtx.moveTo.mock.calls[0][0]).toBe(XPOS);
     expect(mockCtx.moveTo.mock.calls[0][1]).toBe(YPOS);
     expect(mockCtx.beginPath.mock.calls.length).toBe(1);
-    expect(mockCtx.setLineDash.mock.calls[0][0]).toEqual([10,15]);
+    expect(mockCtx.setLineDash.mock.calls[0][0]).toEqual([10, 15]);
 
     expect(mockCtx.arc.mock.calls[0][0]).toBe(XPOS);
     expect(mockCtx.arc.mock.calls[0][1]).toBe(YPOS);
@@ -110,16 +110,13 @@ describe('Tests a component', () => {
     expect(mockCtx.closePath.mock.calls.length).toBe(1);
   });
 
-  it('does nothing if nothing is selected', () => {
+  it('Draws a faded line if nothing is selected', () => {
     let mockCtx = getMock();
     let XPOS = 100;
     let YPOS = 120;
-    let entity = new Mothership(XPOS,YPOS,NEUTRAL);
+    let entity = new Mothership(XPOS, YPOS, NEUTRAL);
     entity[PLAYER_CONTROLLED].selected = false;
-    let RAD = entity[POSITION].radius;
-    let dist = entity[CAN_COLONIZE_COMP].distance;
-
-    colorActionRange(entity,mockCtx);
-    expect(mockCtx.moveTo.mock.calls.length).toBe(0);
+    colorActionRange(entity, mockCtx);
+    expect(mockCtx.moveTo.mock.calls.length).toBe(1);
   });
 });

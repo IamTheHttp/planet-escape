@@ -15,10 +15,10 @@ function fighterAttacks() {
   let hits = [];
   let planets = [];
 
-  let fighterEnts = Entity.getByComps([OWNER_COMPONENT,CAN_ATTACK_PLANETS,IS_DOCKED]);
+  let fighterEnts = Entity.getByComps([OWNER_COMPONENT, CAN_ATTACK_PLANETS, IS_DOCKED]);
   let planetEnts = Entity.getByComps(HAS_FIGHTERS);
 
-  entityLoop(fighterEnts,(ent) => {
+  entityLoop(fighterEnts, (ent) => {
     // get all fighters that have reached their pos...
     if (!ent[IS_DOCKED].isDocked && destReached(ent)) {
       hits.push(ent);
@@ -26,13 +26,13 @@ function fighterAttacks() {
   });
 
   //  turning it into an array..
-  entityLoop(planetEnts,(ent) => {
+  entityLoop(planetEnts, (ent) => {
     planets.push(ent);
   });
 
   hits.forEach((attacker) => {
     let foundPlanet = planets.find((planet) => {
-      return isSamePos(planet,attacker);
+      return isSamePos(planet, attacker);
     });
 
     // there must be a planet here.. always.. let's leave this comment for the future :)

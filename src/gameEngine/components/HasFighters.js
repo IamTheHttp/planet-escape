@@ -14,7 +14,7 @@ export function getFighters(ent) {
   return ent[HAS_FIGHTERS].fighters;
 }
 
-export function addFighter(ent,fighter) {
+export function addFighter(ent, fighter) {
   return ent[HAS_FIGHTERS].fighters.push(fighter);
 }
 
@@ -22,7 +22,7 @@ export function destroyFighter(fighter) {
   let ownerPlanet = Entity.entities[fighter.planetID];
   let fighters = getFighters(ownerPlanet);
   let idx = fighters.indexOf(fighter);
-  fighters.splice(idx,1);
+  fighters.splice(idx, 1);
   ownerPlanet[HAS_FIGHTERS].fighters = fighters;
   fighter.destroy();
   // delete Entity.entities[fighter.id];

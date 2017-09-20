@@ -1,3 +1,4 @@
+import logger from 'shared/logger';
 import React from 'react';
 import {render} from 'react-dom';
 import Game from 'gameEngine/Game';
@@ -5,7 +6,7 @@ import PlanetList from 'ui/components/PlanetList/PlanetList';
 import SummaryBar from 'ui/components/SummaryBar/SummaryBar';
 import PlanetDetails from 'ui/components/PlanetDetails/PlanetDetails';
 
-import {getOwner,hasOwner} from 'gameEngine/components/OwnerComponent';
+import {getOwner, hasOwner} from 'gameEngine/components/OwnerComponent';
 import 'bootstrap/dist/css/bootstrap.css';
 import {
   POPULATION_COMP,
@@ -23,7 +24,7 @@ import {
 } from 'gameEngine/constants';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
 
-function byKey(key,value) {
+function byKey(key, value) {
   return (obj) => {
     return obj[key] === value;
   };
@@ -40,14 +41,19 @@ class MainView extends React.Component {
     this.selectPlanet = this.selectPlanet.bind(this);
     this.buildBuilding = this.buildBuilding.bind(this);
     this.handleBackToMap = this.handleBackToMap.bind(this);
+    this.counter = 0;
   }
 
   componentDidMount() {
-    this.game = new Game(this.updateGameState.bind(this));
+    this.game = new Game(this.updateGameState.bind(this), 16);
   }
 
   updateGameState(gameEntities, msFrame) {
-    console.log('MS frame : ',msFrame);
+    /* istanbul ignore else  */
+    if (this.counter % 300 === 0) {
+      logger.info(`Frame Duration ${msFrame.toPrecision(3)}`);
+    }
+    this.counter++;
     let planetSection = {};
     let summary = {};
     let buildingOptions = {};
@@ -60,11 +66,11 @@ class MainView extends React.Component {
     for (let id in gameEntities) {
       let ent = gameEntities[id];
 
-      if (ent[UI_COMP].sections.find(byKey('name',CANVAS)) && ent[POSITION]) {
+      if (ent[UI_COMP].sections.find(byKey('name', CANVAS)) && ent[POSITION]) {
         entsToDraw.push(ent);
       }
 
-      if (ent[UI_COMP].sections.find(byKey('name',PLANETS))) {
+      if (ent[UI_COMP].sections.find(byKey('name', PLANETS))) {
         if (hasOwner(ent) && getOwner(ent) === PLAYER_1) {
           planetSection[id] = ent;
         }
@@ -76,12 +82,12 @@ class MainView extends React.Component {
       //   gold = ent[TREASURY_COMP].items[GOLD_RESOURCE];
       // }
 
-      if (ent[UI_COMP].sections.find(byKey('name',BUILDING_OPTIONS))) {
+      if (ent[UI_COMP].sections.find(byKey('name', BUILDING_OPTIONS))) {
         buildingOptions[ent.id] = ent;
       }
     }
 
-    this.setState({planetSection,summary,totalIncome,totalPop,gold,buildingOptions});
+    this.setState({planetSection, summary, totalIncome, totalPop, gold, buildingOptions});
 
     if (this.canvasMap) {
       this.canvasMap.update(entsToDraw);

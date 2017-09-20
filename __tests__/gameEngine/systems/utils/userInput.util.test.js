@@ -25,8 +25,8 @@ describe('Tests a component', () => {
   });
 
   it('getSelectedEntity', () => {
-    let planetA = new EarthLike('foo',50,100,100);
-    let planetB = new EarthLike('bar',50,100,100);
+    let planetA = new EarthLike('foo', 50, 100, 100);
+    let planetB = new EarthLike('bar', 50, 100, 100);
 
     let entities = {
       [planetA.id] : planetA,
@@ -43,45 +43,45 @@ describe('Tests a component', () => {
   });
 
   it('setEntityDest', () => {
-    let planetA = new EarthLike('foo',50,100,100);
-    let planetB = new EarthLike('bar',50,100,100);
+    let planetA = new EarthLike('foo', 50, 100, 100);
+    let planetB = new EarthLike('bar', 50, 100, 100);
 
     planetA[PLAYER_CONTROLLED].selected = true;
 
-    setEntityDest(planetA,{x:50,y:100});
+    setEntityDest(planetA, {x:50, y:100});
     expect(planetA[POSITION].destX).toBe(50);
     expect(planetA[POSITION].destY).toBe(100);
   });
 
   it('getEntityAtPos', () => {
-    let planetA = new EarthLike('foo',50,100,100);
-    let planetB = new EarthLike('bar',50,500,500);
-    let ent = getEntityAtPos(110,110);
+    let planetA = new EarthLike('foo', 50, 100, 100);
+    let planetB = new EarthLike('bar', 50, 500, 500);
+    let ent = getEntityAtPos(110, 110);
     expect(ent).toBe(planetA);
   });
 
   it('getEntityAtPos - without POS location', () => {
-    let planetA = new EarthLike('foo',50,100,100);
+    let planetA = new EarthLike('foo', 50, 100, 100);
     planetA.removeComponent(POSITION);
     let entities = {
       [planetA.id] : planetA
     };
 
-    let ent = getEntityAtPos(entities,110,110);
+    let ent = getEntityAtPos(entities, 110, 110);
     expect(ent).toBe(new NullEntity());
   });
 
 
   it('selectEntity', () => {
-    let planetA = new EarthLike('foo',50,100,100);
+    let planetA = new EarthLike('foo', 50, 100, 100);
 
     expect(planetA[PLAYER_CONTROLLED].selected).toBe(false);
-    selectEntity({x:110,y:110});
+    selectEntity({x:110, y:110});
     expect(planetA[PLAYER_CONTROLLED].selected).toBe(true);
 
     // remove the playercontrolled comp, ensure nothingbreaks
     planetA.removeComponent(PLAYER_CONTROLLED);
-    selectEntity({x:110,y:110});
+    selectEntity({x:110, y:110});
     expect(planetA[PLAYER_CONTROLLED]).toBeUndefined();
   });
 });

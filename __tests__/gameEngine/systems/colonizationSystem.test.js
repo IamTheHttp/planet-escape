@@ -20,7 +20,7 @@ describe('Tests a component', () => {
   });
 
   it('colonization empties buildings, resets pop and removes last colonized time', () => {
-    let planet = new EarthLike('planet',10);
+    let planet = new EarthLike('planet', 10);
     planet[OWNER_COMPONENT].playerChangeTime = +(new Date());
 
     let entities = {

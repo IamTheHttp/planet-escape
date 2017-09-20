@@ -13,6 +13,7 @@
       }
     },
     "rules": {
+      "comma-spacing": 2,
       "curly": 2,
       "no-fallthrough": 2,
       "no-redeclare": 2,
@@ -62,22 +63,25 @@
       "brace-style": [2, "1tbs"],
       "spaced-comment": 2,
       "semi": [2, "always"],
-      "id-length": [1, {"min": 2, "max": 25,  "exceptions": ["x", "y", "z", "i", "j","$","_","e"]}],
+      "id-length": [1, {"min": 2, "max": 30,  "exceptions": ["e", "x", "y", "z", "i", "j", "$", "_"]}],
       "camelcase": 2,
       "no-underscore-dangle": 2,
-      "indent": [2, 2],
+      "indent": [2, 2, { "SwitchCase": 1 }],
       "keyword-spacing": 2,
       "space-infix-ops": 2,
       "padded-blocks": [2, "never"],
       "space-in-parens": [2, "never"],
       "array-bracket-spacing": [2, "never"],
-      "max-len": [1, 100]
+      "max-len": [1, 120]
     },
     "globals" : {
       "expect":true,
       "it":true,
       "describe" :true,
       "beforeEach":true,
-      "jest" : true
+      "afterEach": true,
+      "jest" : true,
+      "beforeAll" : true,
+      "afterAll" : true
     }
   }

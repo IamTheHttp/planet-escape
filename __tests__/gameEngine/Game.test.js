@@ -72,9 +72,9 @@ describe('Tests a component', () => {
     expect(planets.length).toBe(20);
 
     Entity.reset();
-    generateMap(20000);
+    generateMap(30);
     planets = getEntityOfType(EarthLike);
-    expect(planets.length).toBe(36);
+    expect(planets.length).toBe(30);
 
     Entity.reset();
     generateMap(-5);

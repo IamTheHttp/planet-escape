@@ -2,7 +2,7 @@
 /* global it */
 /* global expect */
 /* global beforeEach */
-import {mount , shallow} from 'enzyme';
+import {mount, shallow} from 'enzyme';
 import React from 'react';
 import Entity from 'gameEngine/Entity';
 import {destroyFighter, getFighters} from 'gameEngine/components/HasFighters';
@@ -11,13 +11,13 @@ import Fighter from 'gameEngine/entities/Ships/Fighter';
 import {
   PLAYER_1
 } from 'gameEngine/constants';
-describe('Tests a component',() => {
+describe('Tests a component', () => {
   beforeEach(() => {
     // setup the test
   });
 
-  it('renders',() => {
-    let planet = new EarthLike(20,50,300,300,PLAYER_1);
+  it('renders', () => {
+    let planet = new EarthLike(20, 50, 300, 300, PLAYER_1);
     new Fighter(planet);
     let fighters = getFighters(planet);
     let len = fighters.length;

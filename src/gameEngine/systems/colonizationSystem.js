@@ -8,7 +8,7 @@ import {
 } from 'gameEngine/constants';
 import Entity from 'gameEngine/Entity';
 function colonizationSystem() {
-  let entities = Entity.getByComps([OWNER_COMPONENT,BUILDINGS_COMP,POPULATION_COMP]);
+  let entities = Entity.getByComps([OWNER_COMPONENT, BUILDINGS_COMP, POPULATION_COMP]);
 
   entityLoop(entities, (ent) => {
     if (ent[OWNER_COMPONENT].playerChangeTime === false) {

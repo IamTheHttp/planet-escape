@@ -13,7 +13,7 @@ class Entity {
     this.components[component.name] = component;
     this[component.name] = component;
     // creates an index group if it does not exist..
-    Group.indexGroup(Object.keys(this.components),Entity.entities);
+    Group.indexGroup(Object.keys(this.components), Entity.entities);
 
     // we need to see if we need to add entity into other components.
     for (let groupKey in Group.groups) {
@@ -28,7 +28,7 @@ class Entity {
       }
 
       // if this ent does not have all the other comps, skip..
-      this.hasComponents(group.components,() => {
+      this.hasComponents(group.components, () => {
         group.entities[this.id] = this;
       });
     }
@@ -64,12 +64,12 @@ class Entity {
     delete Entity.entities[this.id];
   }
 
-  hasComponents(components = [],fn = () => {}) {
+  hasComponents(components = [], fn = () => {}) {
     let compNames = components.reduce ? components : [components];
 
-    let hasComp = compNames.reduce((agg,compName) => {
+    let hasComp = compNames.reduce((agg, compName) => {
       return agg && !!this.components[compName];
-    },true);
+    }, true);
 
     if (hasComp) {
       fn();
@@ -82,7 +82,7 @@ Entity.entities = {};
 
 Entity.getByComps = (components = []) => {
   let compNames = components.reduce ? components : [components];
-  Group.indexGroup(components,Entity.entities);
+  Group.indexGroup(components, Entity.entities);
   let group = Group.getGroup(compNames);
   return group.entities || {};
 };

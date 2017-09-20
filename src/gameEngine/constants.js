@@ -43,6 +43,7 @@ export const PLAYER_2 = 'PLAYER_2';
 export const PLAYER_3 = 'PLAYER_3';
 export const DEFAULT = 'default_color';
 export const COLONIZE_RANGE = 'colonize_range';
+export const COLONIZE_RANGE_FADED = 'colonize_range_faded';
 export const COLORS = {
   [NEUTRAL] : 'grey',
   [PLAYER_1] : 'rgba(0, 255, 0, 0.21)',
@@ -50,7 +51,8 @@ export const COLORS = {
   [PLAYER_3] : 'rgba(0, 0, 255, 0.21)',
   [SELECT]   : 'red',
   [DEFAULT]  : 'black',
-  [COLONIZE_RANGE] : 'rgba(255, 70, 50, 0.8)'
+  [COLONIZE_RANGE] : 'rgba(255, 70, 50, 0.8)',
+  [COLONIZE_RANGE_FADED] : 'rgba(255, 70, 50, 0.3)'
 };
 
 // config of stuff...

@@ -18,16 +18,16 @@ import {
 } from 'gameEngine/constants';
 
 class EarthLike {
-  constructor(name,basePop,xPos = 50,yPos = 50,player = NEUTRAL) {
+  constructor(name, basePop, xPos = 50, yPos = 50, player = NEUTRAL) {
     let pop = basePop || (Math.random() * 10);
     let ent = new Entity(EarthLike);
     ent.addComponent(new PopulationComponent(pop));
     ent.addComponent(new IncomeComponent());
-    ent.addComponent(new UIComponent(['planets','canvas']));
-    ent.addComponent(new PlanetSizeComponent(this.getRandomPlanetSize(80,120)));
+    ent.addComponent(new UIComponent(['planets', 'canvas']));
+    ent.addComponent(new PlanetSizeComponent(this.getRandomPlanetSize(80, 120)));
     ent.addComponent(new BuildingsComponent);
     ent.addComponent(new PlanetBonusComponent());
-    ent.addComponent(new PositionComponent(xPos,yPos));
+    ent.addComponent(new PositionComponent(xPos, yPos));
     ent.addComponent(new PlayerControlledComponent());
     ent.addComponent(new OwnerComponent(player));
     ent.addComponent(new HasFighters());
@@ -40,7 +40,7 @@ class EarthLike {
     return ent;
   }
 
-  getRandomPlanetSize(min,max) {
+  getRandomPlanetSize(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 }

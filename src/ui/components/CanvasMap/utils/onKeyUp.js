@@ -1,10 +1,9 @@
 class OnKeyUp {
   constructor() {
     this.callbacks = {};
-    document.addEventListener('keyup',(e) => {
-      // console.log(e);
-      this.getCallbacks(e.key).forEach((fn) => {
-        fn(e);
+    document.addEventListener('keyup', (event) => {
+      this.getCallbacks(event.key).forEach((cb) => {
+        cb(event);
       });
     });
   }
@@ -13,7 +12,7 @@ class OnKeyUp {
     return this.callbacks[key] || [];
   }
 
-  onKeyUp(key,fn) {
+  onKeyUp(key, fn) {
     if (!this.callbacks[key]) {
       this.callbacks[key] = [];
     }

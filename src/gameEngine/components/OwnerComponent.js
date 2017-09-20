@@ -17,11 +17,11 @@ export function hasOwner(ent) {
   return ent[OWNER_COMPONENT] && ent[OWNER_COMPONENT].player;
 }
 
-export function setOwner(ent,player) {
+export function setOwner(ent, player) {
   return ent[OWNER_COMPONENT].player = player;
 }
 
-export function diffPlayers(ent1,ent2) {
+export function diffPlayers(ent1, ent2) {
   return ent1[OWNER_COMPONENT].player !== ent2[OWNER_COMPONENT].player;
 }
 

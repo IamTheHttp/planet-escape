@@ -7,5 +7,13 @@ module.exports = function(jestConfig){
   //let's prevent Jest from collecting code coverage from the examples directory - we don't plan on testing it anyway.
   jestConfig.collectCoverageFrom.push("!src/polyfill/*.*");
   jestConfig.collectCoverageFrom.push("!src/liveExample.js");
+  jestConfig.collectCoverageFrom.push("!src/index.js");
+
+  jestConfig.coverageThreshold.global = {
+    "branches": 90,
+    "functions": 90,
+    "lines": 90,
+    "statements": 90
+  };
   return jestConfig;
 };

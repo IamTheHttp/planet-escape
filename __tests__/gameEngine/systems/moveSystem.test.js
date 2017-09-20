@@ -20,7 +20,7 @@ describe('Tests a component', () => {
     const DEST_POS_X = 200;
     const DEST_POS_Y = 200;
 
-    let ship = new Mothership(START_POS_X,START_POS_Y);
+    let ship = new Mothership(START_POS_X, START_POS_Y);
 
     ship[POSITION].destX = DEST_POS_X;
     ship[POSITION].destY = DEST_POS_Y;
@@ -37,7 +37,7 @@ describe('Tests a component', () => {
     const DEST_POS_X = 50;
     const DEST_POS_Y = 50;
 
-    let ship = new Mothership(START_POS_X,START_POS_Y);
+    let ship = new Mothership(START_POS_X, START_POS_Y);
 
     ship[POSITION].destX = DEST_POS_X;
     ship[POSITION].destY = DEST_POS_Y;
@@ -53,7 +53,7 @@ describe('Tests a component', () => {
     const DEST_POS_X = 100;
     const DEST_POS_Y = 100;
 
-    let ship = new Mothership(START_POS_X,START_POS_Y);
+    let ship = new Mothership(START_POS_X, START_POS_Y);
 
     ship[POSITION].destX = DEST_POS_X;
     ship[POSITION].destY = DEST_POS_Y;

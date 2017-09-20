@@ -11,11 +11,11 @@ class PlanetBonusComponent {
 
 export default PlanetBonusComponent;
 
-export const getMod = (ent,item) => {
+export const getMod = (ent, item) => {
   return ent[PLANETBONUS_COMP].mod[item];
 };
 
-export const getBase = (ent,item) => {
+export const getBase = (ent, item) => {
   return ent[PLANETBONUS_COMP].base[item];
 };
 

@@ -13,7 +13,7 @@ describe('Tests a component', () => {
   });
 
   it('Ensures a ship has position', () => {
-    let ship = new Mothership(200,300);
+    let ship = new Mothership(200, 300);
     expect(ship[POSITION].x).toBe(200);
     expect(ship[POSITION].y).toBe(300);
   });

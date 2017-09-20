@@ -2,7 +2,7 @@
 /* global it */
 /* global expect */
 /* global beforeEach */
-import {mount , shallow} from 'enzyme';
+import {mount, shallow} from 'enzyme';
 import React from 'react';
 import {getOwner} from 'gameEngine/components/OwnerComponent';
 import fighterAttacks from 'gameEngine/systems/fighterAttacks';
@@ -13,19 +13,20 @@ import {getFighters} from 'gameEngine/components/HasFighters';
 import {
   PLAYER_1,
   PLAYER_2,
+  NEUTRAL,
   POSITION,
   IS_DOCKED
 } from 'gameEngine/constants';
 
-describe('Tests a component',() => {
+describe('Tests a the fighter attacks system', () => {
   beforeEach(() => {
     // setup the test
     Entity.reset();
   });
 
-  it('Attack/Defense are removed from the Entity hash as well from the planets',() => {
-    let attackingPlanet = new EarthLike('source',50,200,200,PLAYER_1);
-    let defendingPlanet = new EarthLike('target',50,500,500,PLAYER_2);
+  it('Attack/Defense are removed from the Entity hash as well from the planets', () => {
+    let attackingPlanet = new EarthLike('source', 50, 200, 200, PLAYER_1);
+    let defendingPlanet = new EarthLike('target', 50, 500, 500, PLAYER_2);
 
     let attackerFighter = new Fighter(attackingPlanet);
     let defFighter = new Fighter(defendingPlanet);
@@ -49,5 +50,21 @@ describe('Tests a component',() => {
     expect(getOwner(defendingPlanet)).toBe(PLAYER_2);
   });
 
-  it('TODO - A fighter from another player is at a planet with no defender');
+  it('A fighter is attacking a planet with no defenders', () => {
+    let attackingPlanet = new EarthLike('source', 50, 200, 200, PLAYER_1);
+    let defendingPlanet = new EarthLike('target', 50, 500, 500, PLAYER_2);
+
+    let attackerFighter = new Fighter(attackingPlanet);
+    attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
+    attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
+    attackerFighter[IS_DOCKED].isDocked = false;
+
+    let attackCount = getFighters(attackingPlanet).length;
+    fighterAttacks();
+    // expect the attackerFighter entity to be removed from the entity list...
+    expect(Entity.entities[attackerFighter.id]).toBeUndefined();
+    // the planets should lose one fighter
+    expect(getFighters(attackingPlanet).length).toBe(attackCount - 1);
+    expect(getOwner(defendingPlanet)).toBe(NEUTRAL);
+  });
 });

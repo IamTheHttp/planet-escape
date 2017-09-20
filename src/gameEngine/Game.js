@@ -19,45 +19,45 @@ import {
   NEUTRAL,
   PLAYER_1,
   PLAYER_2,
+  PLAYER_3,
   CANVAS_X,
   CANVAS_Y,
   IS_DOCKED,
   FIGHTER_BUILD_RATE
 } from 'gameEngine/constants';
 
-export function generateMap(planetCount = 30) {
-  let planetsToGenerate = planetCount;
-  if (planetsToGenerate <= 0) {
-    planetsToGenerate = 30;
-  }
+import {
+  getGridBlockFromPos,
+  createGrid,
+  entityPlacer
+} from 'placementUtil';
+
+export function generateMap(planetCount) {
+  let planetsToGenerate = planetCount >= 0 ? planetCount : 30;
   new Player(PLAYER_1);
   // 1200 x 1200 .. min distance is 45, heigt
-  // trivial solution - divide map to of 50, put planet in each grid.
-  let x = 30;
-  let y = 30;
-  let spacing = 200;
   let count = 0;
+  let planets = {};
   while (count < planetsToGenerate) {
-    if (x > CANVAS_X - 100) {
-      y += spacing;
-      x = 30;
-    }
-
-    if (y > CANVAS_Y - 100) {
-      break;
-    }
-
     let player = count % 2 === 0 ? PLAYER_1 : PLAYER_2;
-    new EarthLike('Braxis', 1, x, y,player);
-    x += spacing;
+    let planet = new EarthLike('Braxis', 1, null, null, player);
+    planets[planet.id] = planet;
     count++;
   }
 
-  new Mothership(300,300,PLAYER_1);
+  let area = {
+    topLeftAreaX : 0,
+    topLeftAreaY : 0,
+    bottomRightAreaX: 1200,
+    bottomRightAreaY : 1200
+  };
+  let motherShip = new Mothership(null, null, PLAYER_1);
+  planets[motherShip.id] = motherShip;
+  entityPlacer(planets, area);
 }
 
 class Game {
-  constructor(cbNotification,planets = 5) {
+  constructor(cbNotification, planets = 30) {
     this.dispatchAction = this.dispatchAction.bind(this);
     // setup some planets
     generateMap(planets);

@@ -40,7 +40,7 @@ function userInputSystem() {
 
       if (action.name === MOVE) {
         let selectedEntity = getSelectedEntity();
-        !selectedEntity.isNull && setEntityDest(selectedEntity,action);
+        !selectedEntity.isNull && setEntityDest(selectedEntity, action);
       }
 
       if (action.name === COLONIZE) {
