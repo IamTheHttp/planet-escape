@@ -59,12 +59,12 @@ let createGrid = (area, squaresInLine) => {
 };
 
 let entityPlacer = (entities, area) => {
-  let count = 0;
   let {topLeftAreaX, topLeftAreaY, bottomRightAreaX, bottomRightAreaY} = area;
   let squaresInLine = 100;
   let grid = createGrid(area, squaresInLine); // squares in line
 
   entityLoop(entities, (ent) => {
+    let count = 0;
     let pos = ent[POSITION];
     let startGridBlock = null;
     let endGridBlock = null;
