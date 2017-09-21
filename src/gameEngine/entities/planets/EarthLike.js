@@ -9,6 +9,7 @@ import PositionComponent from 'gameEngine/components/PositionComponent';
 import PlayerControlledComponent from 'gameEngine/components/PlayerControlledComponent';
 import OwnerComponent from 'gameEngine/components/OwnerComponent';
 import HasFighters from 'gameEngine/components/HasFighters';
+import Attackable from 'gameEngine/components/Attackable';
 
 import Fighter from 'gameEngine/entities/Ships/Fighter';
 
@@ -31,7 +32,7 @@ class EarthLike {
     ent.addComponent(new PlayerControlledComponent());
     ent.addComponent(new OwnerComponent(player));
     ent.addComponent(new HasFighters());
-
+    ent.addComponent(new Attackable(true));
     // not for neutral player...
     // if (player !== NEUTRAL) {
     //   new Fighter(ent);

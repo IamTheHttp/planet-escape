@@ -36,6 +36,7 @@ export const SELECT = 'select';
 export const MOVE = 'move';
 export const COLONIZE = 'colonize';
 export const ATTACK = 'attack';
+export const ATTACKABLE = 'attackable';
 // players
 export const NEUTRAL = 'NEUTRAL';
 export const PLAYER_1 = 'PLAYER_1';

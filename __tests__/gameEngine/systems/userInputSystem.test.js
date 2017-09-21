@@ -167,7 +167,7 @@ describe('Tests a component', () => {
       y : 100
     });
 
-    userInputSystem(); // this sets the attack, but does not
+    userInputSystem(); // this sets the attack, but does not execute it
     expect(attackFighter[POSITION].destX).toBe(100);
     expect(attackFighter[POSITION].destY).toBe(100);
   });
