@@ -42,7 +42,7 @@ export function colorByPlayer(entity, ctx) {
 
 export function colorActionRange(entity, ctx) {
   let {x, y, radius} = entity[POSITION];
-
+  // TODO - Clean up duplicate code
   let isSelected = entity[PLAYER_CONTROLLED] && entity[PLAYER_CONTROLLED].selected;
   if (isSelected && entity[CAN_COLONIZE_COMP]) {
     ctx.moveTo(x, y);
@@ -64,7 +64,6 @@ export function colorActionRange(entity, ctx) {
     ctx.strokeStyle = COLORS[COLONIZE_RANGE_FADED];
     ctx.arc(x, y, entity[CAN_COLONIZE_COMP].distance - radius, 0, Math.PI * 2);
     ctx.stroke();
-    ctx.closePath();
     ctx.setLineDash([]);
   }
 }

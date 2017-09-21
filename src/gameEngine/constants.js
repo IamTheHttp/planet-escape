@@ -50,7 +50,7 @@ export const COLORS = {
   [PLAYER_1] : 'rgba(0, 255, 0, 0.21)',
   [PLAYER_2] : 'rgba(255, 0, 0, 0.21)',
   [PLAYER_3] : 'rgba(0, 0, 255, 0.21)',
-  [SELECT]   : 'red',
+  [SELECT]   : 'white',
   [DEFAULT]  : 'black',
   [COLONIZE_RANGE] : 'rgba(255, 70, 50, 0.8)',
   [COLONIZE_RANGE_FADED] : 'rgba(255, 70, 50, 0.3)'

@@ -1,5 +1,6 @@
 import React from 'react';
 import drawCircleEntities from './utils/drawCircleEntities';
+import {drawMouseSelection} from './utils/drawMouseSelection';
 import onKeyUp from './utils/onKeyUp';
 import updateCursorPosition from './utils/updateCursorPosition';
 import {
@@ -13,6 +14,12 @@ import {
 
 
 class CanvasMap extends React.Component {
+  constructor() {
+    super();
+    this.onMouseMove = this.onMouseMove.bind(this);
+    this.onMouseDown = this.onMouseDown.bind(this);
+    this.onMouseUp = this.onMouseUp.bind(this);
+  }
   // high order function
   dispatch(name) {
     return () => {
@@ -25,8 +32,11 @@ class CanvasMap extends React.Component {
   }
 
   componentDidMount() {
+    // TODO - Can this state be moved outside?
     this.x = 0;
     this.y = 0;
+    this.isMouseDown = false;
+    this.selectedBox = {}; // TODO, don't generate a new object every time
 
     // this might be tracked somewhere else, it has nothing to do with the canvas itself!
     onKeyUp('m', this.dispatch(MOVE));
@@ -40,12 +50,41 @@ class CanvasMap extends React.Component {
     /* istanbul ignore else  */
     if (ctx) {
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      ctx.strokeStyle = '#000'; // defaults
       entsToDraw.forEach(drawCircleEntities(ctx));
+      if (this.isMouseDown) {
+        drawMouseSelection(ctx, this.selectedBox);
+      }
     }
   }
 
   handleClick() {
     this.dispatch(SELECT)();
+  }
+
+  onMouseDown() {
+    this.isMouseDown = true;
+    this.selectedBox = {
+      start: {
+        x: this.x,
+        y: this.y
+      },
+      end: {
+        x: this.x,
+        y: this.y
+      }
+    };
+  }
+  onMouseMove() {
+    if (this.isMouseDown) {
+      this.selectedBox.end = {
+        x : this.x,
+        y : this.y
+      };
+    }
+  }
+  onMouseUp() {
+    this.isMouseDown = false;
   }
 
   render() {
@@ -60,6 +99,9 @@ class CanvasMap extends React.Component {
         onClick={(event) => {
           this.handleClick(event);
         }}
+        onMouseDown={this.onMouseDown}
+        onMouseMove={this.onMouseMove}
+        onMouseUp={this.onMouseUp}
       ></canvas>
     );
   }
