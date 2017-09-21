@@ -2,6 +2,7 @@ import Entity from 'gameEngine/Entity';
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
 import {getFighters, destroyFighter} from 'gameEngine/components/HasFighters';
 import {hasDest, isSamePos, destReached} from 'gameEngine/components/PositionComponent';
+import {diffPlayers} from 'gameEngine/components/OwnerComponent';
 import {
   OWNER_COMPONENT,
   CAN_ATTACK_PLANETS,
@@ -32,8 +33,14 @@ function fighterAttacks() {
 
   hits.forEach((attacker) => {
     let foundPlanet = planets.find((planet) => {
-      return isSamePos(planet, attacker);
+      return isSamePos(planet, attacker) && diffPlayers(planet, attacker) ;
     });
+
+    if (!foundPlanet) {
+      // destroy the fighter
+      destroyFighter(attacker);
+      return;
+    }
 
     // there must be a planet here.. always.. let's leave this comment for the future :)
     let defender = getFighters(foundPlanet).find((defFighter) => {
@@ -42,7 +49,7 @@ function fighterAttacks() {
       // get the first fighter that has no position...
     });
     // defender can be undefined.. if the planet is out of defenders
-    attacker && destroyFighter(attacker);
+    destroyFighter(attacker);
     defender && destroyFighter(defender);
 
     if (getFighters(foundPlanet).length === 0) {

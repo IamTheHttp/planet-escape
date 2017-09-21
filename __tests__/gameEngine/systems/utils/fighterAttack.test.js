@@ -67,4 +67,25 @@ describe('Tests a the fighter attacks system', () => {
     expect(getFighters(attackingPlanet).length).toBe(attackCount - 1);
     expect(getOwner(defendingPlanet)).toBe(NEUTRAL);
   });
+
+  /**
+   * This situation can happen when there's a fighter in route when the ownership already changed
+   */
+  it('A fighter attacking a friendly planet with no defenders', () => {
+    let attackingPlanet = new EarthLike('source', 50, 200, 200, PLAYER_1);
+    let defendingPlanet = new EarthLike('target', 50, 500, 500, PLAYER_1);
+
+    let attackerFighter = new Fighter(attackingPlanet);
+    attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
+    attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
+    attackerFighter[IS_DOCKED].isDocked = false;
+
+    let attackCount = getFighters(attackingPlanet).length;
+    fighterAttacks();
+    // expect the attackerFighter entity to be removed from the entity list...
+    expect(Entity.entities[attackerFighter.id]).toBeUndefined();
+    // the planets should lose one fighter
+    expect(getFighters(attackingPlanet).length).toBe(attackCount - 1);
+    expect(getOwner(defendingPlanet)).toBe(PLAYER_1);
+  });
 });
