@@ -94,7 +94,7 @@ class CanvasMap extends React.Component {
         }}
         height={CANVAS_Y}
         width={CANVAS_X}
-        style={{backgroundColor : 'black', width:'calc(100% - 200px)', border:'1px solid black'}}
+        style={{backgroundColor : 'black', height:'100%', border:'1px solid black'}}
         onMouseDown={this.onMouseDown}
         onMouseMove={this.onMouseMove}
         onMouseUp={this.onMouseUp}

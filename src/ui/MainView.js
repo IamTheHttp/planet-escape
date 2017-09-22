@@ -116,7 +116,7 @@ class MainView extends React.Component {
     if (this.state.selectedEntity) {
       planet = this.state.planetSection[this.state.selectedEntity];
     }
-
+    // TODO - This 21px might need to be moved to a config
     return (
       <div className="container-fluid">
         <div className="row">
@@ -127,7 +127,7 @@ class MainView extends React.Component {
           ></SummaryBar>
         </div>
 
-        <div className="row">
+        <div className="row" style={{height:'calc(100% - 21px)'}}>
           <PlanetList
             onClick={this.selectPlanet}
             dispatchGameAction={this.game.dispatchAction}

@@ -6,8 +6,9 @@ body{
 .sideMenu{
   width:200px;
   float:left;
-  height: 100vh;
+  height: 100%;
   border-right: 1px solid black;
+  overflow:scroll;
 }
 
 .sideMenu .planet{
