@@ -42,6 +42,12 @@ function fighterAttacks() {
       return;
     }
 
+    if (getFighters(foundPlanet).length === 0) {
+      destroyFighter(attacker);
+      foundPlanet[OWNER_COMPONENT].player = NEUTRAL;
+      return ;
+    }
+
     // there must be a planet here.. always.. let's leave this comment for the future :)
     let defender = getFighters(foundPlanet).find((defFighter) => {
       // kill only 'docked' fighters without destination
@@ -51,10 +57,6 @@ function fighterAttacks() {
     // defender can be undefined.. if the planet is out of defenders
     destroyFighter(attacker);
     defender && destroyFighter(defender);
-
-    if (getFighters(foundPlanet).length === 0) {
-      foundPlanet[OWNER_COMPONENT].player = NEUTRAL;
-    }
   });
 }
 
