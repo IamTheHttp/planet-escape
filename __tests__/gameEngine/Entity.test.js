@@ -66,6 +66,11 @@ describe('Tests for entities', () => {
     // // none of them have these components
     resp = Entity.getByComps(['test1', 'test2', 'nonExistant']);
     expect(resp).toEqual({});
+
+    // no components provided.. which means return all?
+    resp = Entity.getByComps();
+    expect(resp[e.id]).toBe(e);
+    expect(resp[e2.id]).toBe(e2);
   });
 
   it('Entity can destroy itself', () => {

@@ -2,6 +2,7 @@ import Entity from 'gameEngine/Entity';
 import {
   CAN_COLONIZE_COMP,
   OWNER_COMPONENT,
+  ATTACKABLE,
   PLAYER_1,
   NEUTRAL
 } from 'gameEngine/constants';
@@ -11,15 +12,19 @@ import {getColonizeDistance} from 'gameEngine/components/CanColonize';
 import {calcDistance} from 'gameEngine/components/PositionComponent';
 
 import {
-  getSelectedEntity,
-  getEntityAtPos
+  getSelectedEntities,
+  getEntitiesAtPos
 } from 'gameEngine/systems/utils/userInput.util';
 
 function colonize(action) {
-  let selectedEntity = getSelectedEntity();
-  let targetEntity = getEntityAtPos(action.x, action.y);
+  let selectedEntities = getSelectedEntities().filter((selectedEntity) => {
+    return selectedEntity.hasComponents([CAN_COLONIZE_COMP, OWNER_COMPONENT]);
+  });
+  let targetEntity = getEntitiesAtPos(action.x, action.y).filter((targetEntity) => {
+    return targetEntity.hasComponents([OWNER_COMPONENT, ATTACKABLE]);
+  })[0];
 
-  selectedEntity.hasComponents([CAN_COLONIZE_COMP, OWNER_COMPONENT], () => {
+  selectedEntities.forEach((selectedEntity) => {
     targetEntity.hasComponents(OWNER_COMPONENT, () => {
       let dist = calcDistance(selectedEntity, targetEntity);
 

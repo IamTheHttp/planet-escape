@@ -11,12 +11,13 @@ import {
 
 import colonize from 'gameEngine/systems/userInputActions/colonize';
 import attack from 'gameEngine/systems/userInputActions/attack';
+import select from 'gameEngine/systems/userInputActions/select';
 // store our actions, singleton
 let actions = [];
 
 import {
   selectEntity,
-  getSelectedEntity,
+  getSelectedEntities,
   setEntityDest
 } from 'gameEngine/systems/utils/userInput.util';
 
@@ -35,12 +36,14 @@ function userInputSystem() {
       });
     } else {
       if (action.name === SELECT) {
-        selectEntity(action);
+        select(action);
       }
 
       if (action.name === MOVE) {
-        let selectedEntity = getSelectedEntity();
-        !selectedEntity.isNull && setEntityDest(selectedEntity, action);
+        let ents = getSelectedEntities();
+        ents.forEach((selectedEntity) => {
+          setEntityDest(selectedEntity, action);
+        });
       }
 
       if (action.name === COLONIZE) {

@@ -84,7 +84,7 @@ Entity.getByComps = (components = []) => {
   let compNames = components.reduce ? components : [components];
   Group.indexGroup(components, Entity.entities);
   let group = Group.getGroup(compNames);
-  return group.entities || {};
+  return group.entities;
 };
 
 Entity.reset = () => {

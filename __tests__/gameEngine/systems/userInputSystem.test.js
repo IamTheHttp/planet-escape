@@ -24,7 +24,22 @@ import {
   PLAYER_2,
   ATTACK
 } from 'gameEngine/constants';
-describe('Tests a component', () => {
+
+
+function getSelectedBox(x, y) {
+  return {
+    start : {
+      x,
+      y
+    },
+    end : {
+      x,
+      y
+    }
+  };
+}
+
+describe('Tests the user input system', () => {
   beforeEach(() => {
       // setup the test
     Entity.reset();
@@ -66,12 +81,13 @@ describe('Tests a component', () => {
   });
 
   it('Tests that an entity can be selected', () => {
-    let planet = new EarthLike('foo', 50, 100, 100);
+    let planet = new EarthLike('foo', 50, 100, 100, PLAYER_1);
 
     pushAction({
       name:SELECT,
       x : 500,
-      y : 500
+      y : 500,
+      selectedBox : getSelectedBox(500, 500)
     });
     userInputSystem();
     expect(planet[PLAYER_CONTROLLED].selected).toBe(false);
@@ -79,7 +95,8 @@ describe('Tests a component', () => {
     pushAction({
       name:SELECT,
       x : 100,
-      y : 104.99
+      y : 104.99,
+      selectedBox : getSelectedBox(100, 104.99)
     });
     userInputSystem();
     expect(planet[PLAYER_CONTROLLED].selected).toBe(true);
@@ -87,7 +104,8 @@ describe('Tests a component', () => {
     pushAction({
       name:'select',
       x : 104.99,
-      y : 100
+      y : 100,
+      selectedBox : getSelectedBox(104.99, 100)
     });
     userInputSystem();
     expect(planet[PLAYER_CONTROLLED].selected).toBe(true);

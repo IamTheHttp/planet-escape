@@ -19,7 +19,8 @@ export const MOVEMENT_COMP = 'MOVE';
 export const CAN_COLONIZE_COMP = 'COLONIZE';
 export const HAS_FIGHTERS = 'HAS_FIGHTERS';
 export const IS_DOCKED = 'IS_DOCKED';
-export const CAN_ATTACK_PLANETS = 'CAN_ATTACK';
+export const CAN_ATTACK_PLANETS = 'CAN_ATTACK_PLANETS';
+export const ATTACKABLE = 'ATTACKABLE';
 
 // UI comps sections
 export const CANVAS = 'canvas';
@@ -36,7 +37,6 @@ export const SELECT = 'select';
 export const MOVE = 'move';
 export const COLONIZE = 'colonize';
 export const ATTACK = 'attack';
-export const ATTACKABLE = 'attackable';
 // players
 export const NEUTRAL = 'NEUTRAL';
 export const PLAYER_1 = 'PLAYER_1';

@@ -2,38 +2,29 @@ import Entity from 'gameEngine/Entity';
 
 import {
   BUILDINGS_COMP,
+  HAS_FIGHTERS,
   PLAYER_CONTROLLED,
+  OWNER_COMPONENT,
+  PLAYER_1,
   POSITION
 } from 'gameEngine/constants';
+import {getOwner} from 'gameEngine/components/OwnerComponent';
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
-import NullEntity from 'gameEngine/entities/NullEntity';
 
 export function isPosInsideCircle(x, y, centerX, centerY, radius) {
   return Math.pow((x - centerX), 2) + Math.pow((y - centerY), 2) < Math.pow(radius, 2);
 }
 
-export function selectEntity(action) {
-  let entities = Entity.getByComps([POSITION, PLAYER_CONTROLLED]);
-  entityLoop(entities, (ent) => {
-    let x = action.x;
-    let y = action.y;
-    let centerX = ent[POSITION].x;
-    let centerY = ent[POSITION].y;
-    let radius = ent[POSITION].radius;
-    ent[PLAYER_CONTROLLED].selected = isPosInsideCircle(x, y, centerX, centerY, radius);
-  });
-}
-
-export function getSelectedEntity() {
+export function getSelectedEntities() {
   let entity = false;
   let entities = Entity.getByComps(PLAYER_CONTROLLED);
-  entityLoop(entities, (ent) => {
+  return entityLoop(entities, (ent) => {
     // this assumes only one item can ever be selected.
     if (ent[PLAYER_CONTROLLED].selected) {
       entity = ent;
+      return true;
     }
   });
-  return entity || new NullEntity();
 }
 
 export function setEntityDest(entity, action) {
@@ -41,17 +32,73 @@ export function setEntityDest(entity, action) {
   entity[POSITION].destY = action.y;
 }
 
-export function getEntityAtPos(x, y) {
-  let entity = false;
+export function getEntitiesAtPos(x, y) {
   let entities = Entity.getByComps(POSITION);
-  entityLoop(entities, (ent) => {
+  return entityLoop(entities, (ent) => {
     let centerX = ent[POSITION].x;
     let centerY = ent[POSITION].y;
     let radius = ent[POSITION].radius;
     if (isPosInsideCircle(x, y, centerX, centerY, radius)) {
-      entity = ent;
+      return true;
     }
   });
-  return entity || new NullEntity();
-  // this works since base radius is the same for all entities
+}
+
+
+export function selectEntity({x, y}) {
+  let entities = Entity.getByComps([POSITION, PLAYER_CONTROLLED, OWNER_COMPONENT]);
+  entityLoop(entities, (ent) => {
+    let centerX = ent[POSITION].x;
+    let centerY = ent[POSITION].y;
+    let radius = ent[POSITION].radius;
+    // TODO - This PLAYER_1 is really needed?
+    let ownedByPlayer = getOwner(ent) === PLAYER_1;
+    ent[PLAYER_CONTROLLED].selected = ownedByPlayer && isPosInsideCircle(x, y, centerX, centerY, radius);
+  });
+}
+
+export function getEntitiesInSelectedBox(selectedBox) {
+  let entities = Entity.getByComps([POSITION, HAS_FIGHTERS, OWNER_COMPONENT, PLAYER_CONTROLLED]);
+  // entity's X/Y needs to be within the rectangle
+
+  let minX = Math.min(selectedBox.start.x, selectedBox.end.x);
+  let maxX = Math.max(selectedBox.start.x, selectedBox.end.x);
+  let minY = Math.min(selectedBox.start.y, selectedBox.end.y);
+  let maxY = Math.max(selectedBox.start.y, selectedBox.end.y);
+
+  return entityLoop(entities, (ent) => {
+    let centerX = ent[POSITION].x;
+    let centerY = ent[POSITION].y;
+
+    let ownedByPlayer = getOwner(ent) === PLAYER_1;
+    if (ownedByPlayer && centerX >= minX && centerX <= maxX && centerY >= minY && centerY <= maxY) {
+      return true;
+    }
+  });
+}
+
+/**
+ * Unselects all entities, returns an array of affected entities
+ * @returns {Array}
+ */
+export function unSelectAllEntities() {
+  let entities = Entity.getByComps(PLAYER_CONTROLLED);
+  return entityLoop(entities, (ent) => {
+    if (ent[PLAYER_CONTROLLED].selected) {
+      ent[PLAYER_CONTROLLED].selected = false;
+      return true;
+    }
+  });
+}
+
+export function selectEntitiesInSelectedBox(selectedBox) {
+  let entities = getEntitiesInSelectedBox(selectedBox);
+  entities.forEach((ent) => {
+    ent[PLAYER_CONTROLLED].selected = true;
+  });
+
+  // this means that it was just a click, without any rect area
+  if (selectedBox.end.x === selectedBox.start.x) {
+    selectEntity(selectedBox.start);
+  }
 }

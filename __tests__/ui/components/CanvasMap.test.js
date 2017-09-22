@@ -10,13 +10,14 @@ describe('Tests a component', () => {
       // setup the test
   });
 
-  it('should dispatch an action when click happens', () => {
+  it('should dispatch an action when mouseUp happens', () => {
     let dispatch = jest.fn();
     let wrapper = mount(<CanvasMap
       dispatch={dispatch}
     ></CanvasMap>);
 
-    wrapper.find('canvas').simulate('click');
+    wrapper.find('canvas').simulate('mouseDown');
+    wrapper.find('canvas').simulate('mouseUp');
     expect(dispatch.mock.calls.length).toBeGreaterThan(0);
   });
 

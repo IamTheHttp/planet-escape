@@ -10,34 +10,36 @@ import {setDest} from 'gameEngine/components/PositionComponent';
 import {getFighters} from 'gameEngine/components/HasFighters';
 import {isAttackable} from 'gameEngine/components/Attackable';
 import {
-  getSelectedEntity,
-  getEntityAtPos
+  getSelectedEntities,
+  getEntitiesAtPos
 } from 'gameEngine/systems/utils/userInput.util';
 
+/**
+ * Returns the number of successful hits
+ * @param action
+ */
 export function attack(action) {
-  return new Promise((resolve, reject) => {
-    let attackingPlanet = getSelectedEntity();
-    let defendingPlanet = getEntityAtPos(action.x, action.y);
+  let launchedFighters = 0;
+  let attackingPlanets = getSelectedEntities().filter((attackingPlanet) => {
+    return attackingPlanet.hasComponents([HAS_FIGHTERS, OWNER_COMPONENT]);
+  });
+  let defendingPlanets = getEntitiesAtPos(action.x, action.y).filter((ent) => {
+    return isAttackable(ent);
+  });
 
-    if (!isAttackable(defendingPlanet)) {
-      resolve(false);
-      return;
-      // return;
-    }
-    attackingPlanet.hasComponents([HAS_FIGHTERS, OWNER_COMPONENT], () => {
-      defendingPlanet.hasComponents(OWNER_COMPONENT, () => {
-        if (diffPlayers(attackingPlanet, defendingPlanet)) {
-          getFighters(attackingPlanet).forEach((fighterEnt) => {
-            setDest(fighterEnt, defendingPlanet);
-            fighterEnt[IS_DOCKED].isDocked = false;
-            resolve(true);
-            return;
-          });
-          // attackingPlanet[HAS_FIGHTERS].fighters = []; //  empty the fighters...
-        }
-      });
+  attackingPlanets.forEach((attackingPlanet) => {
+    // TODO - This makes no sense as there's only one defending planet at a time
+    defendingPlanets.forEach((defendingPlanet) => {
+      if (diffPlayers(attackingPlanet, defendingPlanet)) {
+        getFighters(attackingPlanet).forEach((fighterEnt) => {
+          setDest(fighterEnt, defendingPlanet);
+          fighterEnt[IS_DOCKED].isDocked = false;
+          launchedFighters++;
+        });
+      }
     });
   });
+  return launchedFighters;
 }
 
 export default attack;

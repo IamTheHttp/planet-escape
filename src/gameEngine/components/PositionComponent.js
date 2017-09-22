@@ -6,7 +6,6 @@ class PositionComponent {
     this.x = x;
     this.y = y;
     this.radius = radius;
-    this.selected = false;
     // this.destX = null;
     // this.destY = null;
   }

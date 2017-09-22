@@ -1,3 +1,12 @@
-/**
- * Created by patrik.tolosa on 30/06/2017.
- */
+
+import {
+  selectEntitiesInSelectedBox,
+  unSelectAllEntities
+} from 'gameEngine/systems/utils/userInput.util';
+
+export function select(action) {
+  unSelectAllEntities();
+  selectEntitiesInSelectedBox(action.selectedBox);
+}
+
+export default select;

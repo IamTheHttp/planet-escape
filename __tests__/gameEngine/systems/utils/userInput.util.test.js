@@ -8,23 +8,24 @@ import {mount, shallow} from 'enzyme';
 import React from 'react';
 import {
   selectEntity,
-  getSelectedEntity,
+  getSelectedEntities,
   setEntityDest,
-  getEntityAtPos
+  getEntitiesAtPos,
+  selectEntitiesInSelectedBox
 } from 'gameEngine/systems/utils/userInput.util';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import NullEntity from 'gameEngine/entities/NullEntity';
 import {
   PLAYER_CONTROLLED,
-  POSITION
+  POSITION,
+  PLAYER_1
 } from 'gameEngine/constants';
 
-describe('Tests a component', () => {
+describe('Tests the user input utils', () => {
   beforeEach(() => {
     Entity.reset();
   });
 
-  it('getSelectedEntity', () => {
+  it('getSelectedEntities', () => {
     let planetA = new EarthLike('foo', 50, 100, 100);
     let planetB = new EarthLike('bar', 50, 100, 100);
 
@@ -34,12 +35,12 @@ describe('Tests a component', () => {
     };
 
     planetA[PLAYER_CONTROLLED].selected = true;
-    let ent = getSelectedEntity(entities);
-    expect(ent).toBe(planetA);
+    let ents = getSelectedEntities(entities);
+    expect(ents[0]).toBe(planetA);
 
     planetA[PLAYER_CONTROLLED].selected = false;
-    ent = getSelectedEntity(entities);
-    expect(ent).toBe(new NullEntity());
+    ents = getSelectedEntities(entities);
+    expect(ents.length).toBe(0);
   });
 
   it('setEntityDest', () => {
@@ -53,35 +54,58 @@ describe('Tests a component', () => {
     expect(planetA[POSITION].destY).toBe(100);
   });
 
-  it('getEntityAtPos', () => {
+  it('getEntitiesAtPos', () => {
     let planetA = new EarthLike('foo', 50, 100, 100);
     let planetB = new EarthLike('bar', 50, 500, 500);
-    let ent = getEntityAtPos(110, 110);
-    expect(ent).toBe(planetA);
+    let ents = getEntitiesAtPos(110, 110);
+    expect(ents[0]).toBe(planetA);
   });
 
-  it('getEntityAtPos - without POS location', () => {
+  it('getEntitiesAtPos - without POS location', () => {
     let planetA = new EarthLike('foo', 50, 100, 100);
     planetA.removeComponent(POSITION);
     let entities = {
       [planetA.id] : planetA
     };
 
-    let ent = getEntityAtPos(entities, 110, 110);
-    expect(ent).toBe(new NullEntity());
+    let ents = getEntitiesAtPos(entities, 110, 110);
+    expect(ents.length).toBe(0);
   });
 
 
   it('selectEntity', () => {
-    let planetA = new EarthLike('foo', 50, 100, 100);
+    let planetA = new EarthLike('foo', 50, 100, 100, PLAYER_1);
 
     expect(planetA[PLAYER_CONTROLLED].selected).toBe(false);
     selectEntity({x:110, y:110});
     expect(planetA[PLAYER_CONTROLLED].selected).toBe(true);
 
-    // remove the playercontrolled comp, ensure nothingbreaks
+    // remove the playercontrolled comp, ensure nothing breaks
     planetA.removeComponent(PLAYER_CONTROLLED);
     selectEntity({x:110, y:110});
     expect(planetA[PLAYER_CONTROLLED]).toBeUndefined();
+  });
+
+  it('selectEntitiesInSelectedBox', () => {
+    let planetA = new EarthLike('foo', 50, 100, 100, PLAYER_1);
+    expect(planetA[PLAYER_CONTROLLED].selected).toBe(false);
+
+    let selectBox = {
+      start : {
+        x: 0,
+        y : 0
+      },
+      end : {
+        x: 10000,
+        y : 10000
+      }
+    };
+    selectEntitiesInSelectedBox(selectBox);
+    expect(planetA[PLAYER_CONTROLLED].selected).toBe(true);
+
+    // // remove the playercontrolled comp, ensure nothing breaks
+    // planetA.removeComponent(PLAYER_CONTROLLED);
+    // selectEntity({x:110, y:110});
+    // expect(planetA[PLAYER_CONTROLLED]).toBeUndefined();
   });
 });

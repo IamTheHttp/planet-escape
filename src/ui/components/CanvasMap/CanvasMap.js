@@ -26,7 +26,9 @@ class CanvasMap extends React.Component {
       return this.props.dispatch({
         name,
         x: this.x,
-        y: this.y
+        y: this.y,
+        selectedBox: this.selectedBox,
+        isMouseDown : this.isMouseDown
       });
     };
   }
@@ -39,7 +41,7 @@ class CanvasMap extends React.Component {
     this.selectedBox = {}; // TODO, don't generate a new object every time
 
     // this might be tracked somewhere else, it has nothing to do with the canvas itself!
-    onKeyUp('m', this.dispatch(MOVE));
+    onKeyUp('e', this.dispatch(MOVE));
     onKeyUp('c', this.dispatch(COLONIZE));
     onKeyUp('a', this.dispatch(ATTACK));
     document.addEventListener('mousemove', updateCursorPosition(this));
@@ -56,10 +58,6 @@ class CanvasMap extends React.Component {
         drawMouseSelection(ctx, this.selectedBox);
       }
     }
-  }
-
-  handleClick() {
-    this.dispatch(SELECT)();
   }
 
   onMouseDown() {
@@ -85,6 +83,7 @@ class CanvasMap extends React.Component {
   }
   onMouseUp() {
     this.isMouseDown = false;
+    this.dispatch(SELECT)();
   }
 
   render() {
@@ -96,12 +95,14 @@ class CanvasMap extends React.Component {
         height={CANVAS_Y}
         width={CANVAS_X}
         style={{backgroundColor : 'black', width:'calc(100% - 200px)', border:'1px solid black'}}
-        onClick={(event) => {
-          this.handleClick(event);
-        }}
         onMouseDown={this.onMouseDown}
         onMouseMove={this.onMouseMove}
         onMouseUp={this.onMouseUp}
+        onMouseLeave={() => {
+          if (this.isMouseDown) {
+            this.onMouseUp();
+          }
+        }}
       ></canvas>
     );
   }
