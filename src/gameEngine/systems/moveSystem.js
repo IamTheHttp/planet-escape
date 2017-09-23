@@ -7,39 +7,41 @@ import {
 
 import {getPos, getDest, destReached} from 'gameEngine/components/PositionComponent';
 function moveEntity(entity) {
+  let destX = getDest(entity).x;
+  let destY = getDest(entity).y;
   if (destReached(entity)) {
     return;
   }
 
-  let curX = getPos(entity).x;
-  let curY = getPos(entity).y;
-  let destX = getDest(entity).x;
-  let destY = getDest(entity).y;
-  let speed = entity[MOVEMENT_COMP].speed;
+  let LINEAR = true;
+  if (LINEAR && destX && destY) {
+    let curX = getPos(entity).x;
+    let curY = getPos(entity).y;
+    let gradient = (destY - curY) / (destX - curX);
+    let speed = entity[MOVEMENT_COMP].speed;
+    let distanceX = destX - curX;
+    let newX = null;
 
-  let distanceX = destX - curX;
-  let distanceY = destY - curY;
-  // if distance is positive, we need to add to the component's position
+    //  if gradient === Infinity we only move on Y axis..
+    if (gradient === Infinity || gradient === -Infinity) {
+      if (gradient >= 0) {
+        entity[POSITION].y = Math.min(entity[POSITION].y + speed, destY);
+      } else {
+        entity[POSITION].y = Math.max(entity[POSITION].y - speed, destY);
+      }
+      return;
+    }
 
-  if (distanceX > 0) {
-    curX = Math.min(curX + speed, destX);
+    if (distanceX > 0) {
+      newX = Math.min(curX + Math.sqrt(Math.pow(speed, 2) / (Math.pow(gradient, 2) + 1)), destX);
+    }
+    //
+    if (distanceX < 0) {
+      newX = Math.max(curX - Math.sqrt(Math.pow(speed, 2) / (Math.pow(gradient, 2) + 1)), destX);
+    }
+    entity[POSITION].x = newX;
+    entity[POSITION].y = gradient * (newX - curX) + curY;
   }
-
-  if (distanceX < 0) {
-    curX = Math.max(curX - speed, destX);
-  }
-
-  if (distanceY > 0) {
-    curY = Math.min(curY + speed, destY);
-  }
-
-  if (distanceY < 0) {
-    curY = Math.max(curY - speed, destY);
-  }
-
-  // console.log(entity);
-  entity[POSITION].x = curX;
-  entity[POSITION].y = curY;
 }
 
 function moveSystem() {
