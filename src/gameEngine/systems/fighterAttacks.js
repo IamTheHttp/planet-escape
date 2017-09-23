@@ -52,7 +52,6 @@ function fighterAttacks() {
     let defender = getFighters(foundPlanet).find((defFighter) => {
       // kill only 'docked' fighters without destination
       return defFighter[IS_DOCKED].isDocked;
-      // get the first fighter that has no position...
     });
     // defender can be undefined.. if the planet is out of defenders
     destroyFighter(attacker);

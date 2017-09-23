@@ -6,6 +6,8 @@ import {
   COLORS,
   COLONIZE_RANGE,
   COLONIZE_RANGE_FADED,
+  HAS_FIGHTERS,
+  IS_DOCKED,
   NEUTRAL,
   SELECT,
   DEFAULT,
@@ -14,6 +16,7 @@ import {
   OWNER_COMPONENT
 } from 'gameEngine/constants';
 
+import {getFighters} from 'gameEngine/components/HasFighters';
 export function drawEntity(entity, ctx) {
   let {x, y, radius} = entity[POSITION];
   let isSelected = entity[PLAYER_CONTROLLED] && entity[PLAYER_CONTROLLED].selected;
@@ -68,6 +71,26 @@ export function colorActionRange(entity, ctx) {
   }
 }
 
+function writeFighteCount(entity, ctx) {
+  entity.hasComponents(HAS_FIGHTERS, () => {
+    let dockedFighters = getFighters(entity).filter((fighter) => {
+      return fighter[IS_DOCKED].isDocked;
+    }).length;
+    let {x, y, radius} = entity[POSITION];
+    ctx.font = '18px serif';
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = 'white';
+
+    if (dockedFighters > 9) {
+      x = x - 5;
+    }
+    if (dockedFighters > 99) {
+      x = x - 5;
+    }
+    ctx.fillText(dockedFighters, x - radius / 4, y - radius / 2);
+  });
+}
+
 export default (ctx) => {
   return (entity) => {
     let {x, y, radius} = entity[POSITION];
@@ -76,6 +99,7 @@ export default (ctx) => {
     }
     drawEntity(entity, ctx);
     colorByPlayer(entity, ctx);
+    writeFighteCount(entity, ctx);
     colorActionRange(entity, ctx);
   };
 };

@@ -20,19 +20,20 @@ function colonize(action) {
   let selectedEntities = getSelectedEntities().filter((selectedEntity) => {
     return selectedEntity.hasComponents([CAN_COLONIZE_COMP, OWNER_COMPONENT]);
   });
-  let targetEntity = getEntitiesAtPos(action.x, action.y).filter((targetEntity) => {
+  let targetEntities = getEntitiesAtPos(action.x, action.y).filter((targetEntity) => {
     return targetEntity.hasComponents([OWNER_COMPONENT, ATTACKABLE]);
-  })[0];
+  });
 
   selectedEntities.forEach((selectedEntity) => {
-    targetEntity.hasComponents(OWNER_COMPONENT, () => {
-      let dist = calcDistance(selectedEntity, targetEntity);
-
-      let inRange = dist < getColonizeDistance(selectedEntity);
-      if (inRange && getOwner(targetEntity) === NEUTRAL) {
-        setOwner(targetEntity, PLAYER_1);
-        targetEntity[OWNER_COMPONENT].playerChangeTime = +(new Date());
-      }
+    targetEntities.forEach((targetEntity) => {
+      targetEntity.hasComponents(OWNER_COMPONENT, () => {
+        let dist = calcDistance(selectedEntity, targetEntity);
+        let inRange = dist < getColonizeDistance(selectedEntity);
+        if (inRange && getOwner(targetEntity) === NEUTRAL) {
+          setOwner(targetEntity, PLAYER_1);
+          targetEntity[OWNER_COMPONENT].playerChangeTime = +(new Date());
+        }
+      });
     });
   });
 }
