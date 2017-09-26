@@ -45,7 +45,11 @@ class MainView extends React.Component {
   }
 
   componentDidMount() {
-    this.game = new Game(this.updateGameState.bind(this), 16);
+    let onWin = () => {
+      window.cancelAnimationFrame(this.game.frameReqID);
+      alert('Game won...');
+    };
+    this.game = new Game(this.updateGameState.bind(this), 4, onWin);
   }
 
   updateGameState(gameEntities, msFrame) {

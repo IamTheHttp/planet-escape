@@ -44,7 +44,6 @@ export function getEntitiesAtPos(x, y) {
   });
 }
 
-
 export function selectEntity({x, y}) {
   let entities = Entity.getByComps([POSITION, PLAYER_CONTROLLED, OWNER_COMPONENT]);
   entityLoop(entities, (ent) => {

@@ -6,6 +6,7 @@ import moveSystem from './systems/moveSystem';
 import colonizationSystem from './systems/colonizationSystem';
 import fighterAttacks from './systems/fighterAttacks';
 import buildFighters from './systems/buildFighters';
+import calcWinner from './systems/calcWinner';
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
 
 import Farm from 'gameEngine/entities/planetBuildings/Farm';
@@ -57,7 +58,7 @@ export function generateMap(planetCount) {
 }
 
 class Game {
-  constructor(cbNotification, planets = 30) {
+  constructor(cbNotification, planets = 30, onWinNotification) {
     this.dispatchAction = this.dispatchAction.bind(this);
     // setup some planets
     generateMap(planets);
@@ -77,17 +78,30 @@ class Game {
       let uiEnts = {};
 
 
+
       entityLoop(Entity.entities, (entity) => {
         let isDocked = entity[IS_DOCKED] && entity[IS_DOCKED].isDocked;
         if (!isDocked && entity.hasComponents(UI_COMP)) {
           uiEnts[entity.id] = entity;
         }
       });
+
+      // true game won,
+      // false game lost,
+      // -1 still going
+      let result = calcWinner();
+
+      // TODO - Implement game lost
+      if (result === true) {
+        onWinNotification(true);
+        return;
+      }
+
       cbNotification(uiEnts, performance.now() - start);
       count++;
-      requestAnimationFrame(loop);
+      this.frameReqID = requestAnimationFrame(loop);
     };
-    requestAnimationFrame(loop);
+    this.frameReqID = requestAnimationFrame(loop);
   }
 
   // stopGame() {
