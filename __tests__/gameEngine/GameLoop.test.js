@@ -35,17 +35,13 @@ describe('Tests a component', () => {
     let sampleID = (new Entity()).id; // no UI_COMP here
     new GameLoop(cbMock);
     jest.runOnlyPendingTimers();
-    expect(cbMock.mock.calls[0])
     expect(cbMock.mock.calls[0][0][sampleID]).toBeUndefined();
     jest.runOnlyPendingTimers();
   });
 
   it('Build fighters only runs every 15 iterations', () => {
-
     jest.useFakeTimers();
     let cbMock = jest.fn();
-    // let sampleID = (new Entity()).id; // no UI_COMP here
-    //
     new GameLoop(cbMock);
     let int = 0;
     while (int < FIGHTER_BUILD_RATE) {
@@ -53,37 +49,36 @@ describe('Tests a component', () => {
       int++;
     }
     //
-    // let fighters = 0;
-    // let hasFighters = 0;
-    // entityLoop(Entity.entities, (ent) => {
-    //   if (ent[HAS_FIGHTERS]) {
-    //     fighters += ent[HAS_FIGHTERS].fighters.length;
-    //     hasFighters++;
-    //   }
-    // });
-    // expect(fighters).toBe(hasFighters);
+    let fighters = 0;
+    let hasFighters = 0;
+    entityLoop(Entity.entities, (ent) => {
+      if (ent[HAS_FIGHTERS]) {
+        fighters += ent[HAS_FIGHTERS].fighters.length;
+        hasFighters++;
+      }
+    });
+    expect(fighters).toBe(hasFighters);
   });
 
-  // it('generates a map with a correct number of planets', () => {
-  //   Entity.reset();
-  //   generateMap();
-  //   planets = getEntityOfType(EarthLike);
-  //   expect(planets.length).toBe(30);
-  //
-  //   Entity.reset();
-  //   generateMap(20);
-  //   planets = getEntityOfType(EarthLike);
-  //   expect(planets.length).toBe(20);
-  //
-  //   Entity.reset();
-  //   generateMap(30);
-  //   planets = getEntityOfType(EarthLike);
-  //   expect(planets.length).toBe(30);
-  //
-  //   Entity.reset();
-  //   generateMap(-5);
-  //   planets = getEntityOfType(EarthLike);
-  //   // default is 30 if invalid argument is passed
-  //   expect(planets.length).toBe(30);
-  // });
+  it('generates a map with a correct number of planets', () => {
+    generateMap();
+    planets = getEntityOfType(EarthLike);
+    expect(planets.length).toBe(30);
+
+    Entity.reset();
+    generateMap(20);
+    planets = getEntityOfType(EarthLike);
+    expect(planets.length).toBe(20);
+
+    Entity.reset();
+    generateMap(30);
+    planets = getEntityOfType(EarthLike);
+    expect(planets.length).toBe(30);
+
+    Entity.reset();
+    generateMap(-5);
+    planets = getEntityOfType(EarthLike);
+    // default is 30 if invalid argument is passed
+    expect(planets.length).toBe(30);
+  });
 });

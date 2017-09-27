@@ -31,7 +31,6 @@ class GameLoop {
     let count = 0;
 
     let loop = () => {
-      console.log(currentGame);
       let start = performance.now();
       userInputSystem();
       moveSystem();
@@ -49,9 +48,10 @@ class GameLoop {
         }
       });
 
-
-      currentGame[GAME_STATE].frameID = requestAnimationFrame(loop);
-      currentGame[GAME_STATE].status = calcWinner();
+      if (currentGame[GAME_STATE]) {
+        currentGame[GAME_STATE].frameID = requestAnimationFrame(loop);
+        currentGame[GAME_STATE].status = calcWinner();
+      }
 
       uiEnts[currentGame.id] = currentGame;
       cbNotification(uiEnts, performance.now() - start);
