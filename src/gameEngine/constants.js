@@ -21,6 +21,14 @@ export const HAS_FIGHTERS = 'HAS_FIGHTERS';
 export const IS_DOCKED = 'IS_DOCKED';
 export const CAN_ATTACK_PLANETS = 'CAN_ATTACK_PLANETS';
 export const ATTACKABLE = 'ATTACKABLE';
+export const GAME_STATE = 'GAME_STATE';
+export const GAME = 'GAME';
+
+export const IN_PROGRESS = 'IN_PROGRESS';
+export const GAME_WON = 'GAME_WON';
+export const GAME_LOST = 'GAME_LOST';
+
+
 
 // UI comps sections
 export const CANVAS = 'canvas';

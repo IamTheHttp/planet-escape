@@ -1,7 +1,7 @@
 import Entity from 'gameEngine/Entity';
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
 
-import {OWNER_COMPONENT, PLAYER_1, NEUTRAL} from 'gameEngine/constants';
+import {OWNER_COMPONENT, PLAYER_1, NEUTRAL, GAME_WON} from 'gameEngine/constants';
 function calcWinner() {
   let entities = Entity.getByComps([OWNER_COMPONENT]);
 
@@ -17,7 +17,7 @@ function calcWinner() {
   // Simple lose algorithem - if no enemy entities left, we win.
   // TODO - Can this run less than every frame?git st
   if (enemyEntitiesLeft === 0) {
-    return true;
+    return GAME_WON;
   }
 }
 

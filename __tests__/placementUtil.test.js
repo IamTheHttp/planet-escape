@@ -21,7 +21,7 @@ import {
   getGridBlockFromPos,
   createGrid,
   entityPlacer
-} from 'placementUtil';
+} from '../src/shared/placementUtil';
 
 describe('Tests position', () => {
   let area = {

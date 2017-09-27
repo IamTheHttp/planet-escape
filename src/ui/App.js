@@ -1,11 +1,13 @@
+import 'polyfill/rAF.js';
+import 'polyfill/perf.js';
 import logger from 'shared/logger';
 import React from 'react';
 import {render} from 'react-dom';
-import Game from 'gameEngine/Game';
+import GameLoop from 'gameEngine/GameLoop';
 import PlanetList from 'ui/components/PlanetList/PlanetList';
 import SummaryBar from 'ui/components/SummaryBar/SummaryBar';
 import PlanetDetails from 'ui/components/PlanetDetails/PlanetDetails';
-
+import Modal from 'ui/components/Modal/Modal';
 import {getOwner, hasOwner} from 'gameEngine/components/OwnerComponent';
 import 'bootstrap/dist/css/bootstrap.css';
 import {
@@ -15,9 +17,13 @@ import {
   UI_COMP,
   POSITION,
   TREASURY_COMP,
+  GAME_STATE,
   CANVAS,
   PLANETS,
   SUMMARY,
+  GAME_WON,
+  GAME_LOST,
+  IN_PROGRESS,
   BUILDING_OPTIONS,
   OWNER_COMPONENT,
   PLAYER_1
@@ -30,12 +36,17 @@ function byKey(key, value) {
   };
 }
 
-class MainView extends React.Component {
+class App extends React.Component {
   constructor() {
     super();
     this.state = {
       selectedEntity : false,
-      buildingOptions : {}
+      buildingOptions : {},
+      gameEnt : {
+        [GAME_STATE] : {
+          status : null
+        }
+      }
     };
     this.game = {};
     this.selectPlanet = this.selectPlanet.bind(this);
@@ -45,11 +56,7 @@ class MainView extends React.Component {
   }
 
   componentDidMount() {
-    let onWin = () => {
-      window.cancelAnimationFrame(this.game.frameReqID);
-      alert('Game won...');
-    };
-    this.game = new Game(this.updateGameState.bind(this), 4, onWin);
+    this.game = new GameLoop(this.updateGameState.bind(this), 4);
   }
 
   updateGameState(gameEntities, msFrame) {
@@ -59,6 +66,7 @@ class MainView extends React.Component {
     }
     this.counter++;
     let planetSection = {};
+    let gameEnt = null;
     let summary = {};
     let buildingOptions = {};
     let totalPop = 0;
@@ -70,6 +78,10 @@ class MainView extends React.Component {
     for (let id in gameEntities) {
       let ent = gameEntities[id];
 
+      if (ent.hasComponents(GAME_STATE)) {
+        gameEnt = ent;
+        continue; // TODO , this loop expects all entities to be UI entities
+      }
       if (ent[UI_COMP].sections.find(byKey('name', CANVAS)) && ent[POSITION]) {
         entsToDraw.push(ent);
       }
@@ -80,18 +92,12 @@ class MainView extends React.Component {
         }
       }
 
-      // if (ent[UI_COMP].sections.find(byKey('name',SUMMARY))) {
-      //   totalPop = ent.components[POPULATION_COMP].value;
-      //   totalIncome = ent.components[INCOME_COMP].value;
-      //   gold = ent[TREASURY_COMP].items[GOLD_RESOURCE];
-      // }
-
       if (ent[UI_COMP].sections.find(byKey('name', BUILDING_OPTIONS))) {
         buildingOptions[ent.id] = ent;
       }
     }
 
-    this.setState({planetSection, summary, totalIncome, totalPop, gold, buildingOptions});
+    this.setState({gameEnt, planetSection, summary, totalIncome, totalPop, gold, buildingOptions});
 
     if (this.canvasMap) {
       this.canvasMap.update(entsToDraw);
@@ -117,47 +123,61 @@ class MainView extends React.Component {
 
   render() {
     let planet = false;
+    let popUp = null;
     if (this.state.selectedEntity) {
       planet = this.state.planetSection[this.state.selectedEntity];
     }
+
+    if (this.state.gameEnt[GAME_STATE].status === GAME_WON) {
+      window.cancelAnimationFrame(this.state.gameEnt[GAME_STATE].frameID);
+      popUp = (<Modal
+        onClick={() => {
+          this.game = new GameLoop(this.updateGameState.bind(this), 4);
+        }}
+      ></Modal>);
+    }
+
     // TODO - This 21px might need to be moved to a config
     return (
-      <div className="container-fluid">
-        <div className="row">
-          <SummaryBar
-            totalPop={this.state.totalPop}
-            totalIncome={this.state.totalIncome}
-            gold={this.state.gold}
-          ></SummaryBar>
+      <div>
+        <div className="container-fluid">
+          <div className="row">
+            <SummaryBar
+              totalPop={this.state.totalPop}
+              totalIncome={this.state.totalIncome}
+              gold={this.state.gold}
+            ></SummaryBar>
+          </div>
+
+          <div className="row" style={{height:'calc(100% - 21px)'}}>
+            <PlanetList
+              onClick={this.selectPlanet}
+              dispatchGameAction={this.game.dispatchAction}
+              planets={this.state.planetSection}>
+            </PlanetList>
+
+            {planet && <PlanetDetails
+              buildingOptions={this.state.buildingOptions}
+              planet={planet}
+              onClick={this.buildBuilding}
+              onBackToMap={this.handleBackToMap}
+            >
+
+            </PlanetDetails>}
+            {!planet && <CanvasMap
+              ref={(inst) => {
+                this.canvasMap = inst;
+              }}
+              dispatch={this.game.dispatchAction}
+            >
+            </CanvasMap>}
+          </div>
         </div>
-
-        <div className="row" style={{height:'calc(100% - 21px)'}}>
-          <PlanetList
-            onClick={this.selectPlanet}
-            dispatchGameAction={this.game.dispatchAction}
-            planets={this.state.planetSection}>
-          </PlanetList>
-
-          {planet && <PlanetDetails
-            buildingOptions={this.state.buildingOptions}
-            planet={planet}
-            onClick={this.buildBuilding}
-            onBackToMap={this.handleBackToMap}
-          >
-
-          </PlanetDetails>}
-          {!planet && <CanvasMap
-            ref={(inst) => {
-              this.canvasMap = inst;
-            }}
-            dispatch={this.game.dispatchAction}
-          >
-          </CanvasMap>}
-        </div>
+        {popUp}
       </div>
     );
   }
 }
 
-export default MainView;
+export default App;
 
