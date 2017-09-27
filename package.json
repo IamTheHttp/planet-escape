@@ -12,7 +12,7 @@
 		"build:clean": "rimraf ./dist/**",
 		"build:liveExample": "NODE_ENV=liveExample RAW_FILE=1 ASSETS_PATH=/liveExample/ webpack --config=node_modules/webpack-configuration/webpack/webpackConfig.js",
 		"analyze": "NODE_ENV=production webpack --config=node_modules/webpack-configuration/webpack/webpackConfig.js --profile --json | webpack-bundle-size-analyzer > stats.txt",
-		"test": "npm run lint && jest --config=jestConfig.json --coverage",
+		"test": "npm run lint && jest --config=jestConfig.json --coverage --no-cache",
 		"tdd": "npm run lint && jest --config=jestConfig.json --watch",
 		"releasePatch": " && release-it",
 		"releaseMinor": " && release-it minor",

@@ -12,7 +12,6 @@ import entityLoop from 'gameEngine/systems/utils/entityLoop';
 global.Math.random = () => {
   return 0;
 };
-
 import PositionComponent from 'gameEngine/components/PositionComponent';
 import {
   POSITION
@@ -21,7 +20,7 @@ import {
   getGridBlockFromPos,
   createGrid,
   entityPlacer
-} from '../src/shared/placementUtil';
+} from 'shared/placementUtil';
 
 describe('Tests position', () => {
   let area = {
@@ -44,7 +43,6 @@ describe('Tests position', () => {
     expect(grid[99][99].topLeftX).toBe(990);
     expect(grid[98][99].topLeftY).toBe(980);
   });
-
 
   it('Gets back a gridBlock from a grid given a position', () => {
     // each block is 10x10 pixels in this example...
