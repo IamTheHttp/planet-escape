@@ -38,3 +38,10 @@ export function generateMap(planetCount) {
   planets[motherShip.id] = motherShip;
   entityPlacer(planets, area);
 }
+
+
+export function byKey(key, value) {
+  return (obj) => {
+    return obj[key] === value;
+  };
+}

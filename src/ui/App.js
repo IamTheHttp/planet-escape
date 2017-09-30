@@ -30,11 +30,7 @@ import {
 } from 'gameEngine/constants';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
 
-function byKey(key, value) {
-  return (obj) => {
-    return obj[key] === value;
-  };
-}
+import {byKey} from 'shared/utils';
 
 class App extends React.Component {
   constructor() {
@@ -50,21 +46,27 @@ class App extends React.Component {
     };
     this.game = {};
     this.selectPlanet = this.selectPlanet.bind(this);
-    this.buildBuilding = this.buildBuilding.bind(this);
-    this.handleBackToMap = this.handleBackToMap.bind(this);
-    this.counter = 0;
+    this.frameCount = 0;
+  }
+
+  startGame() {
+    return new GameLoop(this.updateGameState.bind(this), 4);
+  }
+
+  stopGame() {
+    window.cancelAnimationFrame(this.state.gameEnt[GAME_STATE].frameID);
   }
 
   componentDidMount() {
-    this.game = new GameLoop(this.updateGameState.bind(this), 4);
+    this.game = this.startGame();
   }
 
   updateGameState(gameEntities, msFrame) {
     /* istanbul ignore else  */
-    if (this.counter % 300 === 0) {
+    if (this.frameCount % 300 === 0) {
       logger.info(`Frame Duration ${msFrame.toPrecision(3)}`);
     }
-    this.counter++;
+    this.frameCount++;
     let planetSection = {};
     let gameEnt = null;
     let summary = {};
@@ -108,31 +110,24 @@ class App extends React.Component {
     this.setState({selectedEntity: entityID});
   }
 
-  buildBuilding(entityID) {
-    this.game.dispatchAction({
-      name:'build',
-      entityID,
-      entities:[this.state.selectedEntity],
-      amount:1
-    });
-  }
-
-  handleBackToMap() {
-    this.setState({selectedEntity : false});
-  }
+  // TODO - Not currently implemented
+  // buildBuilding(entityID) {
+  //   this.game.dispatchAction({
+  //     name:'build',
+  //     entityID,
+  //     entities:[this.state.selectedEntity],
+  //     amount:1
+  //   });
+  // }
 
   render() {
-    let planet = false;
     let popUp = null;
-    if (this.state.selectedEntity) {
-      planet = this.state.planetSection[this.state.selectedEntity];
-    }
 
     if (this.state.gameEnt[GAME_STATE].status === GAME_WON) {
-      window.cancelAnimationFrame(this.state.gameEnt[GAME_STATE].frameID);
+      this.stopGame();
       popUp = (<Modal
         onClick={() => {
-          this.game = new GameLoop(this.updateGameState.bind(this), 4);
+          this.game = this.startGame();
         }}
       ></Modal>);
     }
@@ -155,22 +150,13 @@ class App extends React.Component {
               dispatchGameAction={this.game.dispatchAction}
               planets={this.state.planetSection}>
             </PlanetList>
-
-            {planet && <PlanetDetails
-              buildingOptions={this.state.buildingOptions}
-              planet={planet}
-              onClick={this.buildBuilding}
-              onBackToMap={this.handleBackToMap}
-            >
-
-            </PlanetDetails>}
-            {!planet && <CanvasMap
+            <CanvasMap
               ref={(inst) => {
                 this.canvasMap = inst;
               }}
               dispatch={this.game.dispatchAction}
             >
-            </CanvasMap>}
+            </CanvasMap>
           </div>
         </div>
         {popUp}
