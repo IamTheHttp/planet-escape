@@ -12,6 +12,7 @@ import HasFighters from 'gameEngine/components/HasFighters';
 import Attackable from 'gameEngine/components/Attackable';
 import Sprite from 'gameEngine/components/Sprite';
 
+// TODO move to assets list or something..
 import planets from 'assets/planets.png';
 let planetsImage = new Image();
 planetsImage.src = planets;

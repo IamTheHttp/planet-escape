@@ -4,11 +4,9 @@ import React from 'react';
 import {render} from 'react-dom';
 import App from './ui/App';
 import planets from 'assets/planets.png';
+import fighter from 'assets/fighter.png';
+import {loadImages} from 'shared/utils';
 
-let planetsImage = new Image();
-planetsImage.onload = () => {
+loadImages([planets, fighter], () => {
   render(<App></App>, document.getElementById('app'));
-};
-planetsImage.src = planets;
-
-
+});

@@ -45,3 +45,26 @@ export function byKey(key, value) {
     return obj[key] === value;
   };
 }
+
+
+
+export function loadImages(imagePaths, callback) {
+  let imagesToLoad = imagePaths;
+  let imagesLoaded = 0;
+
+  function renderOnReady() {
+    if (imagesLoaded === imagesToLoad.length) {
+      callback();
+    }
+  }
+
+  imagesToLoad.forEach((imagePath) => {
+    let img = new Image();
+    img.onload = () => {
+      imagesLoaded++;
+      renderOnReady();
+    };
+    img.src = imagePath;
+  });
+}
+
