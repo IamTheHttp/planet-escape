@@ -96,6 +96,7 @@ Entity.reset = () => {
 
 Entity.counter = 0;
 
+window.Entity = Entity;
 export default Entity;
 
 

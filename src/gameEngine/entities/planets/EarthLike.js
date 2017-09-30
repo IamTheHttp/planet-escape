@@ -10,6 +10,11 @@ import PlayerControlledComponent from 'gameEngine/components/PlayerControlledCom
 import OwnerComponent from 'gameEngine/components/OwnerComponent';
 import HasFighters from 'gameEngine/components/HasFighters';
 import Attackable from 'gameEngine/components/Attackable';
+import Sprite from 'gameEngine/components/Sprite';
+
+import planets from 'assets/planets.png';
+let planetsImage = new Image();
+planetsImage.src = planets;
 
 import Fighter from 'gameEngine/entities/Ships/Fighter';
 
@@ -28,15 +33,12 @@ class EarthLike {
     ent.addComponent(new PlanetSizeComponent(this.getRandomPlanetSize(80, 120)));
     ent.addComponent(new BuildingsComponent);
     ent.addComponent(new PlanetBonusComponent());
-    ent.addComponent(new PositionComponent(xPos, yPos));
+    ent.addComponent(new PositionComponent(xPos, yPos, 25));
     ent.addComponent(new PlayerControlledComponent());
     ent.addComponent(new OwnerComponent(player));
     ent.addComponent(new HasFighters());
     ent.addComponent(new Attackable(true));
-    // not for neutral player...
-    // if (player !== NEUTRAL) {
-    //   new Fighter(ent);
-    // }
+    ent.addComponent(new Sprite(planetsImage, [510, 380, 300, 300])); // sprite args
     ent.name = name;
     return ent;
   }

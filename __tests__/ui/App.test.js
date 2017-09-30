@@ -18,9 +18,4 @@ describe('Tests a component', () => {
     let wrapper = mount(<App></App>);
     jest.runOnlyPendingTimers();
   });
-
-  it('Expects to run without issues', () => {
-    let wrapper = mount(<App></App>);
-    jest.runOnlyPendingTimers();
-  });
 });

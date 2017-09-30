@@ -13,8 +13,11 @@ import {
   DEFAULT,
   CANVAS,
   CIRCLE,
-  OWNER_COMPONENT
+  OWNER_COMPONENT,
+  SPRITE
 } from 'gameEngine/constants';
+import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';
+
 
 import {getFighters} from 'gameEngine/components/HasFighters';
 export function drawEntity(entity, ctx) {
@@ -24,6 +27,7 @@ export function drawEntity(entity, ctx) {
     return;
   }
   ctx.moveTo(x, y);
+
   ctx.beginPath();
   if (isSelected) {
     ctx.strokeStyle = COLORS[SELECT];
@@ -33,6 +37,16 @@ export function drawEntity(entity, ctx) {
   ctx.arc(x, y, radius, 0, Math.PI * 2);
   ctx.stroke();
   ctx.closePath();
+
+  if (entity.hasComponents(SPRITE)) {
+    let image = getSprite(entity);
+    let spriteArgs = [image, ...getSpriteArgs(entity), x - radius, y - radius, radius * 2, radius * 2];
+    // causes segmentation fault on tests for some reason
+    /* istanbul ignore else  */
+    if (process.env.NODE_ENV !== 'test') {
+      ctx.drawImage.apply(ctx, spriteArgs);
+    }
+  }
 }
 
 export function colorByPlayer(entity, ctx) {

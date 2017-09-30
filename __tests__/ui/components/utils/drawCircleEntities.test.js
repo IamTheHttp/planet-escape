@@ -28,7 +28,8 @@ describe('Tests a component', () => {
       stroke : jest.fn(),
       fill : jest.fn(),
       closePath : jest.fn(),
-      setLineDash : jest.fn()
+      setLineDash : jest.fn(),
+      drawImage : jest.fn()
     };
   };
 

@@ -11,6 +11,7 @@ export const POPULATION_COMP = 'POPULATION';
 export const PLANETBONUS_COMP = 'PLANET_BONUS';
 export const PLANETSIZE_COMP = 'PLANES_SIZE';
 export const COSTS_COMP = 'COSTS';
+export const SPRITE = 'SPRITE';
 export const UI_COMP = 'UI';
 export const MODS_PLANET_BONUSES = 'MODIFIES_PLANET_BONUSES';
 export const PLAYER_CONTROLLED = 'PLAYER_CONTROLLED';
@@ -54,10 +55,10 @@ export const DEFAULT = 'default_color';
 export const COLONIZE_RANGE = 'colonize_range';
 export const COLONIZE_RANGE_FADED = 'colonize_range_faded';
 export const COLORS = {
-  [NEUTRAL] : 'grey',
-  [PLAYER_1] : 'rgba(0, 255, 0, 0.21)',
-  [PLAYER_2] : 'rgba(255, 0, 0, 0.21)',
-  [PLAYER_3] : 'rgba(0, 0, 255, 0.21)',
+  [NEUTRAL] : 'rgba(128, 128, 128, 0.15)',
+  [PLAYER_1] : 'rgba(0, 255, 0, 0.15)',
+  [PLAYER_2] : 'rgba(255, 0, 0, 0.15)',
+  [PLAYER_3] : 'rgba(0, 0, 255, 0.15)',
   [SELECT]   : 'white',
   [DEFAULT]  : 'black',
   [COLONIZE_RANGE] : 'rgba(255, 70, 50, 0.8)',
