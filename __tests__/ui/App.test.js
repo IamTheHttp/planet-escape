@@ -14,12 +14,13 @@ describe('Tests a component', () => {
 
   jest.useFakeTimers();
 
-  it('expects by default that the player has no planets', () => {
+  it('Expects to run without issues', () => {
     let wrapper = mount(<App></App>);
     jest.runOnlyPendingTimers();
-    // expect(Object.keys(wrapper.state().planetSection).length).toBeGreaterThan(0);
-    //
-    // wrapper.instance().selectPlanet(5);
-    // expect(wrapper.state().selectedEntity).toBe(5);
+  });
+
+  it('Expects to run without issues', () => {
+    let wrapper = mount(<App></App>);
+    jest.runOnlyPendingTimers();
   });
 });

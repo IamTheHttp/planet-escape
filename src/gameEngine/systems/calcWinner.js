@@ -6,6 +6,7 @@ function calcWinner() {
   let entities = Entity.getByComps([OWNER_COMPONENT]);
 
   let enemyEntitiesLeft = 0;
+  // TODO - PERF -  This should be cached somehow, no reason to go over it all the time
   entityLoop(entities, (ent) => {
     let owner = ent[OWNER_COMPONENT].player;
     let friendlies = [PLAYER_1, NEUTRAL];

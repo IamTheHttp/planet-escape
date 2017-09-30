@@ -97,13 +97,15 @@ class App extends React.Component {
         }
       }
 
-      if (ent[UI_COMP].sections.find(byKey('name', BUILDING_OPTIONS))) {
-        buildingOptions[ent.id] = ent;
-      }
+      // not used for now
+      // if (ent[UI_COMP].sections.find(byKey('name', BUILDING_OPTIONS))) {
+      //   buildingOptions[ent.id] = ent;
+      // }
     }
 
     this.setState({gameEnt, planetSection, summary, totalIncome, buildingOptions});
 
+    /* istanbul ignore else  */
     if (this.canvasMap) {
       this.canvasMap.update(entsToDraw);
     }

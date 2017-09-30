@@ -34,4 +34,9 @@ describe('Tests a component', () => {
     expect(obj.x).toBe(20);
     expect(obj.y).toBe(50);
   });
+
+  it('returns null of canvas is not defined', () => {
+    let fn = updateCursorPosition({});
+    expect(fn()).toBe(null);
+  });
 });

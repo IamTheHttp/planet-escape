@@ -21,6 +21,17 @@ describe('Tests a component', () => {
     expect(dispatch.mock.calls.length).toBeGreaterThan(0);
   });
 
+  it('Tests nothing happens on mouseMove without mouseDown', () => {
+    let dispatch = jest.fn();
+    let wrapper = mount(<CanvasMap
+      dispatch={dispatch}
+    ></CanvasMap>);
+
+    wrapper.find('canvas').simulate('mouseMove');
+    expect(wrapper.instance().onMouseMove()).toBe(false);
+  });
+
+
   it('should calculate the select box properly', () => {
     let wrapper = mount(<CanvasMap
       dispatch={() => {
@@ -51,6 +62,39 @@ describe('Tests a component', () => {
     expect(selectBox.end.y).toBe(25);
 
     instance.onMouseUp();
+    expect(instance.isMouseDown).toBe(false);
+  });
+
+  it('should calculate the select box properly', () => {
+    let wrapper = mount(<CanvasMap
+      dispatch={() => {
+
+      }}
+    ></CanvasMap>);
+
+    let instance = wrapper.instance();
+    instance.x = 200;
+    instance.y = 500;
+    instance.onMouseDown();
+
+    expect(instance.isMouseDown).toBe(true);
+    let selectBox = instance.selectedBox;
+    expect(selectBox.start.x).toBe(200);
+    expect(selectBox.start.y).toBe(500);
+    expect(selectBox.end.x).toBe(200);
+    expect(selectBox.end.y).toBe(500);
+
+    instance.x = 55;
+    instance.y = 25;
+
+    instance.onMouseMove();
+    expect(instance.isMouseDown).toBe(true);
+    expect(selectBox.start.x).toBe(200);
+    expect(selectBox.start.y).toBe(500);
+    expect(selectBox.end.x).toBe(55);
+    expect(selectBox.end.y).toBe(25);
+
+    instance.onMouseLeave();
     expect(instance.isMouseDown).toBe(false);
   });
 });
