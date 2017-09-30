@@ -45,7 +45,7 @@ class App extends React.Component {
       }
     };
     this.game = {};
-    this.selectPlanet = this.selectPlanet.bind(this);
+    this.getGameEndModal = this.getGameEndModal.bind(this);
     this.frameCount = 0;
   }
 
@@ -61,19 +61,21 @@ class App extends React.Component {
     this.game = this.startGame();
   }
 
-  updateGameState(gameEntities, msFrame) {
+  logFrame(msFrame) {
     /* istanbul ignore else  */
     if (this.frameCount % 300 === 0) {
       logger.info(`Frame Duration ${msFrame.toPrecision(3)}`);
     }
+  }
+
+  updateGameState(gameEntities, msFrame) {
+    this.logFrame(msFrame);
     this.frameCount++;
     let planetSection = {};
     let gameEnt = null;
     let summary = {};
     let buildingOptions = {};
-    let totalPop = 0;
     let totalIncome = 0;
-    let gold = 0;
 
     let entsToDraw = [];
 
@@ -84,6 +86,7 @@ class App extends React.Component {
         gameEnt = ent;
         continue; // TODO , this loop expects all entities to be UI entities
       }
+
       if (ent[UI_COMP].sections.find(byKey('name', CANVAS)) && ent[POSITION]) {
         entsToDraw.push(ent);
       }
@@ -99,15 +102,11 @@ class App extends React.Component {
       }
     }
 
-    this.setState({gameEnt, planetSection, summary, totalIncome, totalPop, gold, buildingOptions});
+    this.setState({gameEnt, planetSection, summary, totalIncome, buildingOptions});
 
     if (this.canvasMap) {
       this.canvasMap.update(entsToDraw);
     }
-  }
-
-  selectPlanet(entityID) {
-    this.setState({selectedEntity: entityID});
   }
 
   // TODO - Not currently implemented
@@ -120,9 +119,8 @@ class App extends React.Component {
   //   });
   // }
 
-  render() {
+  getGameEndModal() {
     let popUp = null;
-
     if (this.state.gameEnt[GAME_STATE].status === GAME_WON) {
       this.stopGame();
       popUp = (<Modal
@@ -131,22 +129,15 @@ class App extends React.Component {
         }}
       ></Modal>);
     }
+    return popUp;
+  }
 
-    // TODO - This 21px might need to be moved to a config
+  render() {
     return (
       <div>
         <div className="container-fluid">
-          <div className="row">
-            <SummaryBar
-              totalPop={this.state.totalPop}
-              totalIncome={this.state.totalIncome}
-              gold={this.state.gold}
-            ></SummaryBar>
-          </div>
-
-          <div className="row" style={{height:'calc(100% - 21px)'}}>
+          <div className="row" style={{height:'calc(100%)'}}>
             <PlanetList
-              onClick={this.selectPlanet}
               dispatchGameAction={this.game.dispatchAction}
               planets={this.state.planetSection}>
             </PlanetList>
@@ -159,7 +150,7 @@ class App extends React.Component {
             </CanvasMap>
           </div>
         </div>
-        {popUp}
+        {this.getGameEndModal()}
       </div>
     );
   }
