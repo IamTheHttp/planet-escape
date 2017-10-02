@@ -77,11 +77,11 @@ describe('Tests a component', () => {
     let entity = new EarthLike('bar', 50, XPOS, YPOS, NEUTRAL);
     colorByPlayer({}, mockCtx); // this should do nothing
     colorByPlayer(entity, mockCtx);
-    let color = mockCtx.fillStyle;
+    let color = mockCtx.strokeStyle;
     entity = new EarthLike('bar', 50, XPOS, YPOS, PLAYER_1);
     colorByPlayer(entity, mockCtx);
-    expect(mockCtx.fillStyle).not.toBe(color);
-    expect(mockCtx.fill.mock.calls.length).toBe(2);
+    expect(mockCtx.strokeStyle).not.toBe(color);
+    expect(mockCtx.arc.mock.calls.length).toBe(2);
   });
 
   it('colors player actions', () => {
