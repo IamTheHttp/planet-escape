@@ -21,7 +21,7 @@ import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';
 
 import {getFighters} from 'gameEngine/components/HasFighters';
 export function drawEntity(entity, ctx) {
-  let {x, y, radius} = entity[POSITION];
+  let {x, y, radius, angle} = entity[POSITION];
   let isSelected = entity[PLAYER_CONTROLLED] && entity[PLAYER_CONTROLLED].selected;
   if (x === null || y === null) {
     return;
@@ -40,20 +40,56 @@ export function drawEntity(entity, ctx) {
 
   if (entity.hasComponents(SPRITE)) {
     let image = getSprite(entity);
-    let spriteArgs = [image, ...getSpriteArgs(entity), x - radius, y - radius, radius * 2, radius * 2];
+    // let spriteArgs = [image, ...getSpriteArgs(entity), x - radius, y - radius, radius * 2, radius * 2];
     // causes segmentation fault on tests for some reason
     /* istanbul ignore else  */
     if (process.env.NODE_ENV !== 'test') {
-      ctx.drawImage.apply(ctx, spriteArgs);
+      let [cropStart, cropEnd, cropWidth, cropHeight] = getSpriteArgs(entity);
+      drawImage(
+        ctx,
+        image,
+        x - radius, y - radius,
+        radius * 2, radius * 2,
+        cropStart, cropEnd, cropWidth, cropHeight,
+        entity[POSITION].angle + (90 * Math.PI / 180) // we add 90 degrees..
+      );
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
   }
 }
 
+function drawImage(
+  ctx,
+  image,
+  x, y, // pos for x,y..
+  height, width,
+  cropStartX, cropStartY, cropSizeX, cropSizeY,
+  rotation, // in radians
+) {
+  ctx.translate(x + width / 2, y + height / 2); // will rotate around new position
+  ctx.rotate(rotation);
+
+  ctx.drawImage(image,
+    cropStartX, cropStartY, cropSizeX, cropSizeY,
+    -width / 2, -height / 2,  // pos in canvas // at the top left of the canvas
+    width, height); // size in canvas
+}
+
+
+
+
 export function colorByPlayer(entity, ctx) {
   if (entity[OWNER_COMPONENT]) {
     let player = entity[OWNER_COMPONENT].player;
-    ctx.fillStyle = COLORS[player];
-    ctx.fill();
+    let {x, y, radius} = entity[POSITION];
+    // ctx.fillStyle = COLORS[player];
+    // ctx.fill();
+    ctx.moveTo(x, y);
+    ctx.beginPath();
+    ctx.strokeStyle = COLORS[player];
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.closePath();
   }
 }
 
@@ -117,3 +153,5 @@ export default (ctx) => {
     colorActionRange(entity, ctx);
   };
 };
+
+

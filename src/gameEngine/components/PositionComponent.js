@@ -6,8 +6,7 @@ class PositionComponent {
     this.x = x;
     this.y = y;
     this.radius = radius;
-    // this.destX = null;
-    // this.destY = null;
+    this.angle = 0;
   }
 }
 
@@ -30,6 +29,17 @@ export function getDest(ent) {
 export function setDest(ent, target) {
   ent[POSITION].destX = target[POSITION].x;
   ent[POSITION].destY = target[POSITION].y;
+
+  // Set movement angle
+  let deltaY = ent[POSITION].destY - ent[POSITION].y;
+  let deltaX = ent[POSITION].destX - ent[POSITION].x;
+
+  // if we go backwards, rotate half a circle
+  if (deltaX < 0) {
+    ent[POSITION].angle = (180 * Math.PI / 180) +  Math.atan(deltaY / deltaX);
+  } else {
+    ent[POSITION].angle = Math.atan(deltaY / deltaX);
+  }
 }
 
 export function destReached(ent) {

@@ -35,11 +35,11 @@ class Fighter {
     let x = planet[POSITION].x;
     let y = planet[POSITION].y;
     ent.addComponent(new PositionComponent(x, y, 15));
-    ent.addComponent(new MoveComponent(5));
+    ent.addComponent(new MoveComponent(2));
     ent.addComponent(new OwnerComponent(player));
     ent.addComponent({ name:CAN_ATTACK_PLANETS});
     ent.addComponent(new IsDocked(true));
-    ent.addComponent(new Sprite(fighterImage, [0, 0, 100, 100])); // sprite args
+    ent.addComponent(new Sprite(fighterImage, [0, 0, 95, 95])); // sprite args
 
     ent.planetID = planet.id;
     addFighter(planet, ent);

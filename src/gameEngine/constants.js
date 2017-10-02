@@ -55,10 +55,10 @@ export const DEFAULT = 'default_color';
 export const COLONIZE_RANGE = 'colonize_range';
 export const COLONIZE_RANGE_FADED = 'colonize_range_faded';
 export const COLORS = {
-  [NEUTRAL] : 'rgba(128, 128, 128, 0.15)',
-  [PLAYER_1] : 'rgba(0, 255, 0, 0.15)',
-  [PLAYER_2] : 'rgba(255, 0, 0, 0.15)',
-  [PLAYER_3] : 'rgba(0, 0, 255, 0.15)',
+  [NEUTRAL] : 'rgba(128, 128, 128, 1)',
+  [PLAYER_1] : 'rgba(0, 255, 0, 1)',
+  [PLAYER_2] : 'rgba(255, 0, 0, 1)',
+  [PLAYER_3] : 'rgba(0, 0, 255, 1)',
   [SELECT]   : 'white',
   [DEFAULT]  : 'black',
   [COLONIZE_RANGE] : 'rgba(255, 70, 50, 0.8)',
