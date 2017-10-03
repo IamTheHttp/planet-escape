@@ -4,7 +4,9 @@ import EarthLike from 'gameEngine/entities/planets/EarthLike';
 
 import {
   PLAYER_1,
-  PLAYER_2
+  PLAYER_2,
+  CANVAS_X,
+  CANVAS_Y
 } from 'gameEngine/constants';
 
 import {
@@ -12,13 +14,13 @@ import {
 } from 'shared/placementUtil';
 
 export function randFromRange(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
+  return Math.floor(Math.random() * (max - min) + min);
 }
 
-export function generateMap(planetCount) {
+export function generateMap(planetCount, buffer = 1) {
   let planetsToGenerate = planetCount >= 0 ? planetCount : 30;
   new Player(PLAYER_1);
-  // 1200 x 1200 .. min distance is 45, heigt
+
   let count = 0;
   let planets = {};
   while (count < planetsToGenerate) {
@@ -31,12 +33,12 @@ export function generateMap(planetCount) {
   let area = {
     topLeftAreaX : 0,
     topLeftAreaY : 0,
-    bottomRightAreaX: 1200,
-    bottomRightAreaY : 1200
+    bottomRightAreaX: CANVAS_X,
+    bottomRightAreaY : CANVAS_Y
   };
   // let motherShip = new Mothership(null, null, PLAYER_1);
   // planets[motherShip.id] = motherShip;
-  entityPlacer(planets, area);
+  entityPlacer(planets, area, buffer);
 }
 
 

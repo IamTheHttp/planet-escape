@@ -9,6 +9,7 @@ import React from 'react';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
 
+let rand = global.Math.random;
 global.Math.random = () => {
   return 0;
 };
@@ -57,6 +58,9 @@ describe('Tests position', () => {
   });
 
   it('Place entity inside an entire grid block', () => {
+    global.Math.random = () => {
+      return 0;
+    };
     let ent = new Entity();
     ent.addComponent(new PositionComponent(null, null, 1));
     let entities = {
@@ -65,13 +69,16 @@ describe('Tests position', () => {
     let pos = ent[POSITION];
     // random is always 0 in this test
     // so the POS is always top left
-    let grid = entityPlacer(entities, area);
+    let {grid} = entityPlacer(entities, area);
     expect(pos.x).toBe(1);
     expect(pos.y).toBe(1);
     expect(grid[0][0].occupied).toBe(true);
   });
 
   it('Place entity so it takes four gridBlocks', () => {
+    global.Math.random = () => {
+      return 0;
+    };
     let ent = new Entity();
     ent.addComponent(new PositionComponent(null, null, 50));
     let entities = {
@@ -80,7 +87,7 @@ describe('Tests position', () => {
     let pos = ent[POSITION];
     // random is always 0 in this test
     // so the POS is always top left
-    let grid = entityPlacer(entities, area);
+    let {grid} = entityPlacer(entities, area);
     expect(pos.x).toBe(50);
     expect(pos.y).toBe(50);
     expect(grid[0][0].occupied).toBe(true);
@@ -109,5 +116,32 @@ describe('Tests position', () => {
     let grid = entityPlacer(entities, area);
     expect(pos.x).toBe(null);
     expect(pos.y).toBe(null);
+  });
+
+  it('ensures we can place a set amount of objects in area', () => {
+    global.Math.random = rand;
+    let radius = 25;
+    let availableArea = 1000 * 1000;
+    let targetRatio = 0.02; // we can support safely up to 2% of the canvas space
+    let shapeSize = radius * radius;
+    let testCount = 0;
+    let buffer = 2; // we test with 1.5 times buffer
+
+    while (testCount < 50) { // change from 50 to 2000 to test robustness
+      Entity.reset();
+      let entities = {};
+      let shapeArea = 0;
+      let i = 0;
+      while ((shapeArea / availableArea) < targetRatio) {
+        let ent = new Entity();
+        ent.addComponent(new PositionComponent(null, null, radius));
+        entities[ent.id] = ent;
+        shapeArea += shapeSize;
+        i++;
+      }
+      let {placedEntities} = entityPlacer(entities, area, buffer);
+      expect(placedEntities.length).toEqual(i);
+      testCount++;
+    }
   });
 });

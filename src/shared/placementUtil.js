@@ -5,6 +5,22 @@ import {
   POSITION
 } from 'gameEngine/constants.js';
 
+function getBlocks(startGridBlock, endGridBlock, grid) {
+  let allFree = true;
+  let blocks = [];
+  let row = startGridBlock.row;
+  while (row < endGridBlock.row) {
+    let col = startGridBlock.col;
+    while (col < endGridBlock.col) {
+      blocks.push(grid[row][col]);
+      allFree = allFree && !grid[row][col].occupied;
+      col++;
+    }
+    row++;
+  }
+  return allFree ? blocks : [];
+}
+
 let getGridBlockFromPos = (grid, topLeftX, topLeftY) => {
   let topLeftAreaY = grid[0][0].topLeftY;
   let topLeftAreaX = grid[0][0].topLeftX;
@@ -58,71 +74,77 @@ let createGrid = (area, squaresInLine) => {
   return grid;
 };
 
-let entityPlacer = (entities, area) => {
+// TODO - Add some safety checks here to alert that inappropriate sizes were selected
+// we know we can only accomodate set percent...
+let entityPlacer = (entities, area, buffer = 1) => {
   let {topLeftAreaX, topLeftAreaY, bottomRightAreaX, bottomRightAreaY} = area;
   let squaresInLine = 100;
   let grid = createGrid(area, squaresInLine); // squares in line
 
-  entityLoop(entities, (ent) => {
-    let count = 0;
+  let placedEntities = entityLoop(entities, (ent) => {
     let pos = ent[POSITION];
+    let count = 0;
     let startGridBlock = null;
     let endGridBlock = null;
     let topLeftX = false;
     let topLeftY = false;
     let bottomRightX = false;
     let bottomRightY = false;
-    while (!endGridBlock) {
+
+    // so we want a loop to run until this entity is placed..
+    while (pos.x === null) {
+      endGridBlock = false; // reset it..
       count++;
-      if (count === 10) {
-        logger.error('bail out from search loop');
-        return;
+      if (count === 1000) {
+        // console.log(count);
+        logger.error('ERROR PLACING ENTITY - Still no pos');
+        return false;
       }
-      // potential x and y for top left squares
-      topLeftX = randFromRange(topLeftAreaX, bottomRightAreaX);
-      topLeftY = randFromRange(topLeftAreaY, bottomRightAreaY);
-      bottomRightX = topLeftX + pos.radius * 2 ;
-      bottomRightY = topLeftY + pos.radius * 2 ;
-      startGridBlock = getGridBlockFromPos(grid, topLeftX, topLeftY);
-      endGridBlock = getGridBlockFromPos(grid, bottomRightX, bottomRightY);
-    }
-    // if start and end grids are the same, it's the same block.
-    // the entity will be inside the square
-    // we'll also check if this grid is occupied
-    if (startGridBlock === endGridBlock && !startGridBlock.occupied) {
-      pos.x = topLeftX + pos.radius;
-      pos.y = topLeftY + pos.radius;
-      startGridBlock.occupied = true;
-    } else {
-      // we'll need to occupy all columns from start to end in each row.
-      let allFree = true;
-      let blocks = [];
-      let row = startGridBlock.row;
-      while (row < endGridBlock.row) {
-        let col = startGridBlock.col;
-        while (col < endGridBlock.col) {
-          blocks.push(grid[row][col]);
-          allFree = allFree && !grid[row][col].occupied;
-          col++;
+
+      while (!endGridBlock) {
+        count++;
+        if (count === 1000) {
+          logger.error('ERROR PLACING ENTITY - cannot find free grids');
+          break;
         }
-        row++;
+        // potential x and y for top left squares
+        topLeftX = randFromRange(topLeftAreaX, bottomRightAreaX);
+        topLeftY = randFromRange(topLeftAreaY, bottomRightAreaY);
+        bottomRightX = topLeftX + pos.radius * 2 * buffer ; // 2 for scatter
+        bottomRightY = topLeftY + pos.radius * 2 * buffer ; // 2 for scatter
+        startGridBlock = getGridBlockFromPos(grid, topLeftX, topLeftY);
+        endGridBlock = getGridBlockFromPos(grid, bottomRightX, bottomRightY);
       }
-      if (allFree) {
-        // mark all blocks as occupied.
-        blocks.forEach((block) => {
-          block.occupied = true;
-        });
-        // position the entity.
+
+      if (!endGridBlock) {
+        break;
+      }
+      // if start and end grids are the same, it's the same block.
+      // the entity will be inside the square
+      // we'll also check if this grid is occupied
+      if (startGridBlock === endGridBlock && !startGridBlock.occupied) {
         pos.x = topLeftX + pos.radius;
         pos.y = topLeftY + pos.radius;
+        startGridBlock.occupied = true;
+      } else {
+        // we'll need to occupy all columns from start to end in each row.
+        let blocks = getBlocks(startGridBlock, endGridBlock, grid);
+
+        if (blocks.length > 0) {
+          // mark all blocks as occupied.
+          blocks.forEach((block) => {
+            block.occupied = true;
+          });
+          // position the entity.
+          pos.x = topLeftX + pos.radius;
+          pos.y = topLeftY + pos.radius;
+          return true;
+        }
       }
     }
   });
-
-  return grid;
+  return {grid, placedEntities};
 };
-
-
 
 export {
   entityPlacer,

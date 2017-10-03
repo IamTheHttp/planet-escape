@@ -50,7 +50,7 @@ class App extends React.Component {
   }
 
   startGame() {
-    return new GameLoop(this.updateGameState.bind(this), 4);
+    return new GameLoop(this.updateGameState.bind(this), 16);
   }
 
   stopGame() {

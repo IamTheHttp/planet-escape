@@ -49,7 +49,7 @@ class CanvasMap extends React.Component {
   }
 
   update(entsToDraw) {
-    let ctx = this.canvas.getContext('2d', 'foo');
+    let ctx = this.canvas.getContext('2d');
     /* istanbul ignore else  */
     if (ctx) {
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
