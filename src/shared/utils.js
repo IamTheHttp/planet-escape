@@ -34,8 +34,8 @@ export function generateMap(planetCount) {
     bottomRightAreaX: 1200,
     bottomRightAreaY : 1200
   };
-  let motherShip = new Mothership(null, null, PLAYER_1);
-  planets[motherShip.id] = motherShip;
+  // let motherShip = new Mothership(null, null, PLAYER_1);
+  // planets[motherShip.id] = motherShip;
   entityPlacer(planets, area);
 }
 
