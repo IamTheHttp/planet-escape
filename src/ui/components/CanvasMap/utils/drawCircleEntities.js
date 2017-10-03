@@ -17,9 +17,25 @@ import {
   SPRITE
 } from 'gameEngine/constants';
 import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';
-
-
 import {getFighters} from 'gameEngine/components/HasFighters';
+
+function drawImage(
+  ctx,
+  image,
+  x, y, // pos for x,y..
+  height, width,
+  cropStartX, cropStartY, cropSizeX, cropSizeY,
+  rotation, // in radians
+) {
+  ctx.translate(x + width / 2, y + height / 2); // will rotate around new position
+  ctx.rotate(rotation);
+
+  ctx.drawImage(image,
+    cropStartX, cropStartY, cropSizeX, cropSizeY,
+    -width / 2, -height / 2,  // pos in canvas // at the top left of the canvas
+    width, height); // size in canvas
+}
+
 export function drawEntity(entity, ctx) {
   let {x, y, radius, angle} = entity[POSITION];
   let isSelected = entity[PLAYER_CONTROLLED] && entity[PLAYER_CONTROLLED].selected;
@@ -57,26 +73,6 @@ export function drawEntity(entity, ctx) {
     }
   }
 }
-
-function drawImage(
-  ctx,
-  image,
-  x, y, // pos for x,y..
-  height, width,
-  cropStartX, cropStartY, cropSizeX, cropSizeY,
-  rotation, // in radians
-) {
-  ctx.translate(x + width / 2, y + height / 2); // will rotate around new position
-  ctx.rotate(rotation);
-
-  ctx.drawImage(image,
-    cropStartX, cropStartY, cropSizeX, cropSizeY,
-    -width / 2, -height / 2,  // pos in canvas // at the top left of the canvas
-    width, height); // size in canvas
-}
-
-
-
 
 export function colorByPlayer(entity, ctx) {
   if (entity[OWNER_COMPONENT]) {
