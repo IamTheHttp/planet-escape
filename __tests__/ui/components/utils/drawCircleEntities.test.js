@@ -41,33 +41,8 @@ describe('Tests a component', () => {
     let XPOS = 100;
     let YPOS = 120;
     let entity = new EarthLike('bar', 50, XPOS, YPOS, NEUTRAL);
-
-    let RAD = entity[POSITION].radius;
-
     let mockCtx = getMock();
     drawEntity(entity, mockCtx);
-
-    expect(mockCtx.moveTo.mock.calls[0][0]).toBe(XPOS);
-    expect(mockCtx.moveTo.mock.calls[0][1]).toBe(YPOS);
-
-    expect(mockCtx.beginPath.mock.calls.length).toBe(1);
-    expect(mockCtx.strokeStyle).not.toBeUndefined();
-    let firstColor = mockCtx.strokeStyle;
-
-    expect(mockCtx.arc.mock.calls[0][0]).toBe(XPOS);
-    expect(mockCtx.arc.mock.calls[0][1]).toBe(YPOS);
-    expect(mockCtx.arc.mock.calls[0][2]).toBe(RAD);
-    expect(mockCtx.arc.mock.calls[0][3]).toBe(0);
-    expect(mockCtx.arc.mock.calls[0][4]).toBe(Math.PI * 2); // so it's a circle
-
-    expect(mockCtx.stroke.mock.calls.length).toBe(1);
-    expect(mockCtx.closePath.mock.calls.length).toBe(1);
-
-    mockCtx = getMock();
-
-    entity[PLAYER_CONTROLLED].selected = true;
-    drawEntity(entity, mockCtx);
-    expect(mockCtx.strokeStyle).not.toBe(firstColor);
   });
 
   it('colors by player defaults', () => {

@@ -18,7 +18,7 @@ import {
 } from 'gameEngine/constants';
 import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';
 import {getFighters} from 'gameEngine/components/HasFighters';
-
+import {isSelected} from 'gameEngine/components/PlayerControlledComponent';
 function drawImage(
   ctx,
   image,
@@ -38,21 +38,9 @@ function drawImage(
 
 export function drawEntity(entity, ctx) {
   let {x, y, radius, angle} = entity[POSITION];
-  let isSelected = entity[PLAYER_CONTROLLED] && entity[PLAYER_CONTROLLED].selected;
   if (x === null || y === null) {
     return;
   }
-  ctx.moveTo(x, y);
-
-  ctx.beginPath();
-  if (isSelected) {
-    ctx.strokeStyle = COLORS[SELECT];
-  } else {
-    ctx.strokeStyle = COLORS[DEFAULT];
-  }
-  ctx.arc(x, y, radius, 0, Math.PI * 2);
-  ctx.stroke();
-  ctx.closePath();
 
   if (entity.hasComponents(SPRITE)) {
     let image = getSprite(entity);
@@ -67,7 +55,7 @@ export function drawEntity(entity, ctx) {
         x - radius, y - radius,
         radius * 2, radius * 2,
         cropStart, cropEnd, cropWidth, cropHeight,
-        entity[POSITION].angle + (90 * Math.PI / 180) // we add 90 degrees..
+        angle + (90 * Math.PI / 180) // we add 90 degrees..
       );
       ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
@@ -82,6 +70,11 @@ export function colorByPlayer(entity, ctx) {
     // ctx.fill();
     ctx.moveTo(x, y);
     ctx.beginPath();
+    ctx.lineWidth = 1;
+    if (isSelected(entity)) {
+      ctx.lineWidth = 3;
+    }
+
     ctx.strokeStyle = COLORS[player];
     ctx.arc(x, y, radius, 0, Math.PI * 2);
     ctx.stroke();
@@ -92,8 +85,7 @@ export function colorByPlayer(entity, ctx) {
 export function colorActionRange(entity, ctx) {
   let {x, y, radius} = entity[POSITION];
   // TODO - Clean up duplicate code
-  let isSelected = entity[PLAYER_CONTROLLED] && entity[PLAYER_CONTROLLED].selected;
-  if (isSelected && entity[CAN_COLONIZE_COMP]) {
+  if (isSelected(entity) && entity[CAN_COLONIZE_COMP]) {
     ctx.moveTo(x, y);
     ctx.beginPath();
     ctx.setLineDash([10, 15]);
