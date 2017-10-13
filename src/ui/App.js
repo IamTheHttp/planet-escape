@@ -126,6 +126,15 @@ class App extends React.Component {
     if (this.state.gameEnt[GAME_STATE].status === GAME_WON) {
       this.stopGame();
       popUp = (<Modal
+        text={'Game Won!'}
+        onClick={() => {
+          this.game = this.startGame();
+        }}
+      ></Modal>);
+    } else if (this.state.gameEnt[GAME_STATE].status === GAME_LOST) {
+      this.stopGame();
+      popUp = (<Modal
+        text={'Game Lost!'}
         onClick={() => {
           this.game = this.startGame();
         }}

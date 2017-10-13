@@ -117,15 +117,17 @@ function writeFighteCount(entity, ctx) {
     let {x, y, radius} = entity[POSITION];
     ctx.font = '18px serif';
     ctx.textBaseline = 'top';
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = 'yellow';
 
-    if (dockedFighters > 9) {
-      x = x - 5;
+    if (dockedFighters > 0) {
+      if (dockedFighters > 9) {
+        x = x - 5;
+      }
+      if (dockedFighters > 99) {
+        x = x - 5;
+      }
+      ctx.fillText(dockedFighters, 25 + x - radius / 4, 25 + y - radius / 2);
     }
-    if (dockedFighters > 99) {
-      x = x - 5;
-    }
-    ctx.fillText(dockedFighters, x - radius / 4, y - radius / 2);
   });
 }
 

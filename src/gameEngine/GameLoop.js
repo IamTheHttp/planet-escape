@@ -6,9 +6,11 @@ import moveSystem from './systems/moveSystem';
 import colonizationSystem from './systems/colonizationSystem';
 import fighterAttacks from './systems/fighterAttacks';
 import buildFighters from './systems/buildFighters';
+import aiAttacks from './systems/aiAttacks';
+
 import calcWinner from './systems/calcWinner';
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
-import {generateMap} from 'shared/utils';
+import {generateMap, oneOutOf} from 'shared/utils';
 import Farm from 'gameEngine/entities/planetBuildings/Farm';
 import Mine from 'gameEngine/entities/planetBuildings/Mine';
 import Game from 'gameEngine/entities/Game';
@@ -33,9 +35,15 @@ class GameLoop {
     let loop = () => {
       let start = performance.now();
       userInputSystem();
+      // we skip this system, based on difficulty!
+      // TODO - this is how we set difficulty?
+      if (count % 60 === 0) {
+        aiAttacks();
+      }
       moveSystem();
       colonizationSystem();
       fighterAttacks();
+
       if (count % FIGHTER_BUILD_RATE === 0) {
         buildFighters();
       }

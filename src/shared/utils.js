@@ -17,6 +17,10 @@ export function randFromRange(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
+export function randFromArray(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
 export function generateMap(planetCount, buffer = 1) {
   let planetsToGenerate = planetCount >= 0 ? planetCount : 30;
   new Player(PLAYER_1);
@@ -48,7 +52,14 @@ export function byKey(key, value) {
   };
 }
 
-
+/**
+ * Runs the callback one out of X tries, this is a statistical function used in a loop
+ */
+export function oneOutOf(chance, cb) {
+  if (randFromRange(0, chance) === chance - 1) {
+    cb();
+  } // chance === 5, this picks a number between 0 and 5.
+}
 
 export function loadImages(imagePaths, callback) {
   let imagesToLoad = imagePaths;

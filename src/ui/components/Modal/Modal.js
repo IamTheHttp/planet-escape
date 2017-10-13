@@ -5,7 +5,7 @@ class Modal extends React.Component {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            Game Won!
+            {this.props.text}
           </div>
           <div className="modal-body">
             <button onClick={this.props.onClick} className="btn btn-primary">restart</button>

@@ -1,6 +1,6 @@
 import Entity from 'gameEngine/Entity';
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
-import {getFighters, destroyFighter} from 'gameEngine/components/HasFighters';
+import {getFighters, destroyFighter, getDockedFighters} from 'gameEngine/components/HasFighters';
 import {hasDest, isSamePos, destReached} from 'gameEngine/components/PositionComponent';
 import {diffPlayers} from 'gameEngine/components/OwnerComponent';
 import {
@@ -36,13 +36,16 @@ function fighterAttacks() {
       return isSamePos(planet, attacker) && diffPlayers(planet, attacker) ;
     });
 
+    // if we reached a destination without a planet, boohoo, kill the fighter
     if (!foundPlanet) {
       // destroy the fighter
       destroyFighter(attacker);
       return;
     }
 
-    if (getFighters(foundPlanet).length === 0) {
+    // if the defending planet has no fighters left, we got it..
+    // this needs to be fixed - no fighters DOCKED.
+    if (getDockedFighters(foundPlanet).length === 0) {
       destroyFighter(attacker);
       foundPlanet[OWNER_COMPONENT].player = NEUTRAL;
       return ;

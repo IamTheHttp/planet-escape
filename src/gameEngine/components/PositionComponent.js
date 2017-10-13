@@ -42,6 +42,15 @@ export function setDest(ent, target) {
   }
 }
 
+/**
+ * Checks the dest of the first entity is the pos of the 2nd entity
+ */
+export function destIsPos(destEnt, posEnt) {
+  let {pX, pY} = getPos(posEnt);
+  let {dX, dY} = getDest(destEnt);
+  return pX === dX && pY === dY;
+}
+
 export function destReached(ent) {
   let xReached = getPos(ent).x === getDest(ent).x;
   let yReached = getPos(ent).y === getDest(ent).y;

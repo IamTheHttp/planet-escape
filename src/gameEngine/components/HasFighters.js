@@ -1,6 +1,7 @@
 import Entity from 'gameEngine/Entity';
 import {
-  HAS_FIGHTERS
+  HAS_FIGHTERS,
+  IS_DOCKED
 } from 'gameEngine/constants';
 class HasFighters {
   constructor() {
@@ -16,6 +17,12 @@ export function getFighters(ent) {
   return ent[HAS_FIGHTERS].fighters;
 }
 
+export function getDockedFighters(entity) {
+  return getFighters(entity).filter((fighter) => {
+    return fighter[IS_DOCKED].isDocked;
+  });
+}
+
 export function addFighter(ent, fighter) {
   return ent[HAS_FIGHTERS].fighters.push(fighter);
 }
@@ -29,6 +36,8 @@ export function destroyFighter(fighter) {
   fighter.destroy();
   // delete Entity.entities[fighter.id];
 }
+
+
 
 // when we attack, we reset the array of the fighters.. great right?
 // when we reach our target, we splice the index from the new built fighters instead of the old ones
