@@ -1,6 +1,7 @@
 import React from 'react';
 import './mainMenu.scss';
 
+// TODO - we'll obviously won't use these hard coded strings..
 let options = ['start', 'help - TODO', 'about - TODO', 'exit - TODO'];
 class MainMenu extends React.Component {
   render() {
