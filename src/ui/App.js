@@ -33,7 +33,7 @@ class App extends React.Component {
       isMenuOpen : true
     };
     this.game = {};
-    this.getGameEndModal = this.getGameEndModal.bind(this);
+    // this.getGameEndModal = this.getGameEndModal.bind(this);
     this.frameCount = 0;
   }
 
