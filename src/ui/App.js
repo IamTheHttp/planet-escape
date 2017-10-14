@@ -30,7 +30,7 @@ class App extends React.Component {
           status : null
         }
       },
-      waitingForMenu : true
+      isMenuOpen : true
     };
     this.game = {};
     this.getGameEndModal = this.getGameEndModal.bind(this);
@@ -134,7 +134,7 @@ class App extends React.Component {
         if (item === 'start') {
           this.game = this.startGame();
           this.setState({
-            waitingForMenu : false
+            isMenuOpen : false
           });
         }
       }}
@@ -156,7 +156,7 @@ class App extends React.Component {
           </div>
         </div>
         {this.getGameEndModal()}
-        {this.state.waitingForMenu && this.getMainMenuModal()}
+        {this.state.isMenuOpen && this.getMainMenuModal()}
       </div>
     );
   }

@@ -34,7 +34,7 @@ describe('Tests a component', () => {
           status : GAME_LOST
         }
       },
-      waitingForMenu : false
+      isMenuOpen : false
     });
 
     let inst = wrapper.instance();
@@ -49,7 +49,7 @@ describe('Tests a component', () => {
           status : GAME_WON
         }
       },
-      waitingForMenu : false
+      isMenuOpen : false
     });
 
     let inst = wrapper.instance();
