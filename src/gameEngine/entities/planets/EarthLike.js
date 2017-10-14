@@ -34,7 +34,7 @@ class EarthLike {
     ent.addComponent(new PlanetSizeComponent(this.getRandomPlanetSize(80, 120)));
     ent.addComponent(new BuildingsComponent);
     ent.addComponent(new PlanetBonusComponent());
-    ent.addComponent(new PositionComponent(xPos, yPos, 25));
+    ent.addComponent(new PositionComponent(xPos, yPos, 15));
     ent.addComponent(new PlayerControlledComponent());
     ent.addComponent(new OwnerComponent(player));
     ent.addComponent(new HasFighters());

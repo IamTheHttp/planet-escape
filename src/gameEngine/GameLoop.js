@@ -28,7 +28,7 @@ class GameLoop {
     Entity.reset();
     this.dispatchAction = this.dispatchAction.bind(this);
     // setup some planets
-    generateMap(planets, 2); // buffer
+    generateMap(planets, 4); // buffer
     let currentGame = new Game(IN_PROGRESS);
     let count = 0;
 

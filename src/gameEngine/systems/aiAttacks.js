@@ -18,7 +18,7 @@ function aiAttacks() {
   // so each player needs to do things
   // TODO - how do we support more players?
   let attackers = entityLoop(entities, (ent) => {
-    return getOwner(ent) !== PLAYER_1;
+    return getOwner(ent) !== PLAYER_1 && notNeutral(ent);
   });
 
   let defenders = entityLoop(entities, (ent) => {

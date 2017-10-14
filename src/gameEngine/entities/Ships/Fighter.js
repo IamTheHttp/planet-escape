@@ -13,7 +13,9 @@ import {
   CAN_ATTACK_PLANETS,
   OWNER_COMPONENT,
   POSITION,
-  HAS_FIGHTERS
+  HAS_FIGHTERS,
+  FIGHTER_RADIUS,
+  FIGHTER_SPEED
 } from 'gameEngine/constants.js';
 
 // TODO move to assets list or something..
@@ -34,8 +36,8 @@ class Fighter {
     let player = getOwner(planet);
     let x = planet[POSITION].x;
     let y = planet[POSITION].y;
-    ent.addComponent(new PositionComponent(x, y, 15));
-    ent.addComponent(new MoveComponent(2));
+    ent.addComponent(new PositionComponent(x, y, FIGHTER_RADIUS));
+    ent.addComponent(new MoveComponent(FIGHTER_SPEED));
     ent.addComponent(new OwnerComponent(player));
     ent.addComponent({ name:CAN_ATTACK_PLANETS});
     ent.addComponent(new IsDocked(true));

@@ -2,7 +2,9 @@ import Entity from 'gameEngine/Entity';
 import {
   HAS_FIGHTERS,
   OWNER_COMPONENT,
-  IS_DOCKED
+  IS_DOCKED,
+  POSITION,
+  MOVEMENT_COMP
 } from 'gameEngine/constants';
 
 import { diffPlayers} from 'gameEngine/components/OwnerComponent';
@@ -21,6 +23,7 @@ import {
  * @param redirectFighters
  */
 export function attack(action, entities = getSelectedEntities(), redirectFighters = true) {
+  let directedFighters = 0;
   let launchedFighters = 0;
 
   let attackingPlanets = entities.filter((attackingPlanet) => {
@@ -30,6 +33,7 @@ export function attack(action, entities = getSelectedEntities(), redirectFighter
     return isAttackable(ent);
   });
 
+  let fightersInFleet = [];
   attackingPlanets.forEach((attackingPlanet) => {
     // TODO - This makes no sense as there's only one defending planet at a time
     defendingPlanets.forEach((defendingPlanet) => {
@@ -38,14 +42,26 @@ export function attack(action, entities = getSelectedEntities(), redirectFighter
           // if fighter already has a destination, we do not force a redirect..
           if ((getDest(fighterEnt).x && redirectFighters) || !getDest(fighterEnt).x) {
             setDest(fighterEnt, defendingPlanet);
-            fighterEnt[IS_DOCKED].isDocked = false;
-            launchedFighters++;
+            if (fighterEnt[IS_DOCKED].isDocked) {
+              fighterEnt[IS_DOCKED].isDocked = false;
+              launchedFighters++;
+              fightersInFleet.push(fighterEnt);
+            }
+            directedFighters++;
           }
         });
       }
     });
   });
-  return launchedFighters;
+
+  // we resize the radius of the fighters in the fleet represent the fleet size
+  fightersInFleet.forEach((fighter) => {
+    let speed = fighter[MOVEMENT_COMP].speed;
+    fighter[POSITION].radius += launchedFighters;
+    fighter[MOVEMENT_COMP].speed = Math.max(speed - launchedFighters * 0.07, 0.5); // slow down
+  });
+
+  return directedFighters;
 }
 
 export default attack;
