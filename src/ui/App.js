@@ -8,7 +8,9 @@ import PlanetList from 'ui/components/PlanetList/PlanetList';
 import SummaryBar from 'ui/components/SummaryBar/SummaryBar';
 import PlanetDetails from 'ui/components/PlanetDetails/PlanetDetails';
 import Modal from 'ui/components/Modal/Modal';
+import MainMenu from 'ui/components/MainMenu/MainMenu';
 import {getOwner, hasOwner} from 'gameEngine/components/OwnerComponent';
+import './global.scss';
 import 'bootstrap/dist/css/bootstrap.css';
 import {
   POPULATION_COMP,
@@ -42,7 +44,8 @@ class App extends React.Component {
         [GAME_STATE] : {
           status : null
         }
-      }
+      },
+      waitingForMenu : true
     };
     this.game = {};
     this.getGameEndModal = this.getGameEndModal.bind(this);
@@ -55,10 +58,6 @@ class App extends React.Component {
 
   stopGame() {
     window.cancelAnimationFrame(this.state.gameEnt[GAME_STATE].frameID);
-  }
-
-  componentDidMount() {
-    this.game = this.startGame();
   }
 
   logFrame(msFrame) {
@@ -144,15 +143,24 @@ class App extends React.Component {
     return popUp;
   }
 
+  getMainMenuModal() {
+    return (<MainMenu
+      onClick={(item) => {
+        if (item === 'start') {
+          this.game = this.startGame();
+          this.setState({
+            waitingForMenu : false
+          });
+        }
+      }}
+    ></MainMenu>);
+  }
+
   render() {
     return (
       <div>
-        <div className="container-fluid">
+        <div className="container-fluid app">
           <div className="row" style={{height:'calc(100%)'}}>
-            <PlanetList
-              dispatchGameAction={this.game.dispatchAction}
-              planets={this.state.planetSection}>
-            </PlanetList>
             <CanvasMap
               ref={(inst) => {
                 this.canvasMap = inst;
@@ -163,6 +171,7 @@ class App extends React.Component {
           </div>
         </div>
         {this.getGameEndModal()}
+        {this.state.waitingForMenu && this.getMainMenuModal()}
       </div>
     );
   }
