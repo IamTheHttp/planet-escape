@@ -7,6 +7,8 @@ class PositionComponent {
     this.y = y;
     this.radius = radius;
     this.angle = 0;
+    this.destY = null;
+    this.destX = null;
   }
 }
 
@@ -40,15 +42,6 @@ export function setDest(ent, target) {
   } else {
     ent[POSITION].angle = Math.atan(deltaY / deltaX);
   }
-}
-
-/**
- * Checks the dest of the first entity is the pos of the 2nd entity
- */
-export function destIsPos(destEnt, posEnt) {
-  let {pX, pY} = getPos(posEnt);
-  let {dX, dY} = getDest(destEnt);
-  return pX === dX && pY === dY;
 }
 
 export function destReached(ent) {

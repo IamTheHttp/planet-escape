@@ -91,11 +91,12 @@ class App extends React.Component {
         entsToDraw.push(ent);
       }
 
-      if (ent[UI_COMP].sections.find(byKey('name', PLANETS))) {
-        if (hasOwner(ent) && getOwner(ent) === PLAYER_1) {
-          planetSection[id] = ent;
-        }
-      }
+      // legacy, when we had a planet section
+      // if (ent[UI_COMP].sections.find(byKey('name', PLANETS))) {
+      //   if (hasOwner(ent) && getOwner(ent) === PLAYER_1) {
+      //     planetSection[id] = ent;
+      //   }
+      // }
 
       // not used for now
       // if (ent[UI_COMP].sections.find(byKey('name', BUILDING_OPTIONS))) {

@@ -56,9 +56,13 @@ export function byKey(key, value) {
  * Runs the callback one out of X tries, this is a statistical function used in a loop
  */
 export function oneOutOf(chance, cb) {
+  // the -1 here is because the max range will only happen if Math.random outputs 1 - very unlikely
   if (randFromRange(0, chance) === chance - 1) {
     cb();
-  } // chance === 5, this picks a number between 0 and 5.
+    return true;
+  } else {  // chance === 5, this picks a number between 0 and 5.
+    return false;
+  }
 }
 
 export function loadImages(imagePaths, callback) {

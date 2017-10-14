@@ -6,7 +6,7 @@ import {
 } from 'gameEngine/constants';
 
 import { diffPlayers} from 'gameEngine/components/OwnerComponent';
-import {setDest, getDest, getPos, destIsPos} from 'gameEngine/components/PositionComponent';
+import {setDest, getDest, getPos} from 'gameEngine/components/PositionComponent';
 import {getFighters} from 'gameEngine/components/HasFighters';
 import {isAttackable} from 'gameEngine/components/Attackable';
 import {
@@ -16,7 +16,7 @@ import {
 
 /**
  * Returns the number of successful hits
- * @param action {x,y}
+ * @param action {} {x , y}
  * @param entities Array list of entities that are attacking
  * @param redirectFighters
  */

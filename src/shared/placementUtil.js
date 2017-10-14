@@ -95,6 +95,7 @@ let entityPlacer = (entities, area, buffer = 1) => {
     while (pos.x === null) {
       endGridBlock = false; // reset it..
       count++;
+      /* istanbul ignore if */
       if (count === 1000) {
         // console.log(count);
         logger.error('ERROR PLACING ENTITY - Still no pos');
@@ -103,6 +104,7 @@ let entityPlacer = (entities, area, buffer = 1) => {
 
       while (!endGridBlock) {
         count++;
+        /* istanbul ignore if */
         if (count === 1000) {
           logger.error('ERROR PLACING ENTITY - cannot find free grids');
           break;

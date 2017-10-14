@@ -126,6 +126,8 @@ function writeFighteCount(entity, ctx) {
       if (dockedFighters > 99) {
         x = x - 5;
       }
+
+      // TODO - if planet size changes, the number might not be placed correctly
       ctx.fillText(dockedFighters, 25 + x - radius / 4, 25 + y - radius / 2);
     }
   });
