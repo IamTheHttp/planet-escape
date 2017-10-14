@@ -37,7 +37,7 @@ class GameLoop {
       userInputSystem();
       // we skip this system, based on difficulty!
       // TODO - this is how we set difficulty?
-      if (count % 60 === 0) {
+      if (count % 120 === 0) {
         aiAttacks();
       }
       moveSystem();

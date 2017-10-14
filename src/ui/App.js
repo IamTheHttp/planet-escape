@@ -135,7 +135,7 @@ class App extends React.Component {
     } else if (this.state.gameEnt[GAME_STATE].status === GAME_LOST) {
       this.stopGame();
       popUp = (<Modal
-        text={'Game Lost!'}
+        text={'Game Over!'}
         onClick={() => {
           this.game = this.startGame();
         }}

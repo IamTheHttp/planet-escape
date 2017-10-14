@@ -5,6 +5,7 @@ import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import {
   PLAYER_1,
   PLAYER_2,
+  NEUTRAL,
   CANVAS_X,
   CANVAS_Y
 } from 'gameEngine/constants';
@@ -28,7 +29,7 @@ export function generateMap(planetCount, buffer = 1) {
   let count = 0;
   let planets = {};
   while (count < planetsToGenerate) {
-    let player = count % 2 === 0 ? PLAYER_1 : PLAYER_2;
+    let player = NEUTRAL;
     let planet = new EarthLike('Braxis', 1, null, null, player);
     planets[planet.id] = planet;
     count++;
@@ -43,6 +44,9 @@ export function generateMap(planetCount, buffer = 1) {
   // let motherShip = new Mothership(null, null, PLAYER_1);
   // planets[motherShip.id] = motherShip;
   entityPlacer(planets, area, buffer);
+  // TODO - Fix the hardcoded numbers, also possible planet overlapping as we do it manually here
+  new EarthLike('Braxis', 1, 50, 50, PLAYER_1);
+  new EarthLike('Braxis', 1, CANVAS_X - 50, CANVAS_Y - 50, PLAYER_2);
 }
 
 
