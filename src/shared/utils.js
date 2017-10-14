@@ -23,7 +23,8 @@ export function randFromArray(array) {
 }
 
 export function generateMap(planetCount, buffer = 1) {
-  let planetsToGenerate = planetCount >= 0 ? planetCount : 30;
+  // TODO -2 because we generate manually two more planets at the end
+  let planetsToGenerate = planetCount >= 0 ? planetCount - 2 : 30 - 2;
   new Player(PLAYER_1);
 
   let count = 0;

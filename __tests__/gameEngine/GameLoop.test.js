@@ -9,6 +9,7 @@ import {generateMap} from 'shared/utils';
 import Entity from 'gameEngine/Entity';
 import entityLoop from 'gameEngine/systems/utils/entityLoop.js';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
+import {notNeutral} from 'gameEngine/components/OwnerComponent';
 import {
   HAS_FIGHTERS,
   FIGHTER_BUILD_RATE,
@@ -52,7 +53,7 @@ describe('Tests a component', () => {
     let fighters = 0;
     let hasFighters = 0;
     entityLoop(Entity.entities, (ent) => {
-      if (ent[HAS_FIGHTERS]) {
+      if (ent[HAS_FIGHTERS] && notNeutral(ent)) {
         fighters += ent[HAS_FIGHTERS].fighters.length;
         hasFighters++;
       }

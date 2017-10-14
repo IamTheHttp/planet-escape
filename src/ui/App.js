@@ -4,34 +4,19 @@ import logger from 'shared/logger';
 import React from 'react';
 import {render} from 'react-dom';
 import GameLoop from 'gameEngine/GameLoop';
-import PlanetList from 'ui/components/PlanetList/PlanetList';
-import SummaryBar from 'ui/components/SummaryBar/SummaryBar';
-import PlanetDetails from 'ui/components/PlanetDetails/PlanetDetails';
 import Modal from 'ui/components/Modal/Modal';
 import MainMenu from 'ui/components/MainMenu/MainMenu';
-import {getOwner, hasOwner} from 'gameEngine/components/OwnerComponent';
 import './global.scss';
 import 'bootstrap/dist/css/bootstrap.css';
 import {
-  POPULATION_COMP,
-  INCOME_COMP,
-  GOLD_RESOURCE,
   UI_COMP,
   POSITION,
-  TREASURY_COMP,
   GAME_STATE,
   CANVAS,
-  PLANETS,
-  SUMMARY,
   GAME_WON,
-  GAME_LOST,
-  IN_PROGRESS,
-  BUILDING_OPTIONS,
-  OWNER_COMPONENT,
-  PLAYER_1
+  GAME_LOST
 } from 'gameEngine/constants';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
-
 import {byKey} from 'shared/utils';
 
 class App extends React.Component {

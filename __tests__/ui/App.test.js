@@ -22,9 +22,9 @@ describe('Tests a component', () => {
 
   it('Expects to run without issues', () => {
     let wrapper = mount(<App></App>);
+    wrapper.instance().startGame();
     jest.runOnlyPendingTimers();
   });
-
 
   it('Expects the popup to open as the game is lost..', () => {
     let wrapper = mount(<App></App>);
@@ -33,7 +33,8 @@ describe('Tests a component', () => {
         [GAME_STATE] : {
           status : GAME_LOST
         }
-      }
+      },
+      waitingForMenu : false
     });
 
     let inst = wrapper.instance();
@@ -47,7 +48,8 @@ describe('Tests a component', () => {
         [GAME_STATE] : {
           status : GAME_WON
         }
-      }
+      },
+      waitingForMenu : false
     });
 
     let inst = wrapper.instance();
