@@ -43,10 +43,10 @@ class Fighter {
     ent.addComponent(new IsDocked(true));
     ent.addComponent(new Sprite(fighterImage, [0, 0, 95, 95])); // sprite args
 
-    ent.planetID = planet.id;
     addFighter(planet, ent);
     return ent;
   }
 }
 
 export default Fighter;
+

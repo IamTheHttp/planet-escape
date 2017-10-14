@@ -22,6 +22,8 @@ import {
  * @param entities Array list of entities that are attacking
  * @param redirectFighters
  */
+
+// TODO - This is now a moveFighters, and not just attack - same code is used to attack and move
 export function attack(action, entities = getSelectedEntities(), redirectFighters = true) {
   let directedFighters = 0;
   let launchedFighters = 0;
@@ -30,27 +32,26 @@ export function attack(action, entities = getSelectedEntities(), redirectFighter
     return attackingPlanet.hasComponents([HAS_FIGHTERS, OWNER_COMPONENT]);
   });
   let defendingPlanets = getEntitiesAtPos(action.x, action.y).filter((ent) => {
-    return isAttackable(ent);
+    return isAttackable(ent); // just attackable entities can have fighters.. really?
   });
 
   let fightersInFleet = [];
   attackingPlanets.forEach((attackingPlanet) => {
+    launchedFighters = 0;
     // TODO - This makes no sense as there's only one defending planet at a time
     defendingPlanets.forEach((defendingPlanet) => {
-      if (diffPlayers(attackingPlanet, defendingPlanet)) {
-        getFighters(attackingPlanet).forEach((fighterEnt) => {
-          // if fighter already has a destination, we do not force a redirect..
-          if ((getDest(fighterEnt).x && redirectFighters) || !getDest(fighterEnt).x) {
-            setDest(fighterEnt, defendingPlanet);
-            if (fighterEnt[IS_DOCKED].isDocked) {
-              fighterEnt[IS_DOCKED].isDocked = false;
-              launchedFighters++;
-              fightersInFleet.push(fighterEnt);
-            }
-            directedFighters++;
+      getFighters(attackingPlanet).forEach((fighterEnt) => {
+        // if fighter already has a destination, we do not force a redirect..
+        if ((getDest(fighterEnt).x && redirectFighters) || !getDest(fighterEnt).x) {
+          setDest(fighterEnt, defendingPlanet);
+          if (fighterEnt[IS_DOCKED].isDocked) {
+            fighterEnt[IS_DOCKED].isDocked = false;
+            launchedFighters++;
+            fightersInFleet.push(fighterEnt);
           }
-        });
-      }
+          directedFighters++;
+        }
+      });
     });
   });
 

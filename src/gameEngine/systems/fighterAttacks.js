@@ -2,7 +2,9 @@ import Entity from 'gameEngine/Entity';
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
 import {getFighters, destroyFighter, getDockedFighters} from 'gameEngine/components/HasFighters';
 import {hasDest, isSamePos, destReached} from 'gameEngine/components/PositionComponent';
-import {diffPlayers} from 'gameEngine/components/OwnerComponent';
+import {diffPlayers, setOwner} from 'gameEngine/components/OwnerComponent';
+import Fighter from 'gameEngine/entities/Ships/Fighter';
+
 import {
   OWNER_COMPONENT,
   CAN_ATTACK_PLANETS,
@@ -32,6 +34,22 @@ function fighterAttacks() {
   });
 
   hits.forEach((attacker) => {
+    // first lets detect if we just 'hit' a friendly planet
+    let friendlyPlanet = planets.find((planet) => {
+      return isSamePos(planet, attacker) && !diffPlayers(planet, attacker) ;
+    });
+
+    // if we reached a friendly planet
+    // let's join that planet!
+    if (friendlyPlanet) {
+      // destroy this fighter, and create a new one..
+      // this prevents us from needing to remove the fighter from it's current list..
+      // though it might be 'better', this is much easier.
+      new Fighter(friendlyPlanet);
+      destroyFighter(attacker);
+      return;
+    }
+
     let foundPlanet = planets.find((planet) => {
       return isSamePos(planet, attacker) && diffPlayers(planet, attacker) ;
     });

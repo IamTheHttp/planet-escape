@@ -30,7 +30,7 @@ export function generateMap(planetCount, buffer = 1) {
   let planets = {};
   while (count < planetsToGenerate) {
     let player = NEUTRAL;
-    let planet = new EarthLike('Braxis', 1, null, null, player);
+    let planet = new EarthLike('Braxis', 1, null, null, NEUTRAL);
     planets[planet.id] = planet;
     count++;
   }

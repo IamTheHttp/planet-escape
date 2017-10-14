@@ -24,6 +24,7 @@ export function getDockedFighters(entity) {
 }
 
 export function addFighter(ent, fighter) {
+  fighter.planetID = ent.id;
   return ent[HAS_FIGHTERS].fighters.push(fighter);
 }
 
