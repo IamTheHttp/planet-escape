@@ -55,13 +55,6 @@ function fighterAttacks() {
       return isSamePos(planet, attacker) && diffPlayers(planet, attacker) ;
     });
 
-    // if we reached a destination without a planet, boohoo, kill the fighter
-    if (!foundPlanet) {
-      // destroy the fighter
-      destroyFighter(attacker);
-      return;
-    }
-
     // if the defending planet has no fighters left, we got it..
     // this needs to be fixed - no fighters DOCKED.
     if (getDockedFighters(foundPlanet).length === 0) {

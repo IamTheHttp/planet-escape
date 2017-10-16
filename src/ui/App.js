@@ -145,7 +145,7 @@ class App extends React.Component {
     return (
       <div>
         <div className="container-fluid app">
-          <div className="row" style={{height:'calc(100%)'}}>
+          <div className="row">
             <CanvasMap
               ref={(inst) => {
                 this.canvasMap = inst;

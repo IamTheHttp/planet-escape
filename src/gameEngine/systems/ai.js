@@ -13,8 +13,36 @@ import {
   NEUTRAL
 } from 'gameEngine/constants';
 
-// take the frame count so we can add more probabilities to AI actions
-function ai(frameCount) {
+
+function aiAttack(attacker) {
+  let entities = Entity.getByComps([OWNER_COMPONENT, HAS_FIGHTERS]);
+  let defenders = entityLoop(entities, (ent) => {
+    return getOwner(ent) === PLAYER_1;
+  });
+
+  // TODO - another potential AI strategy is to attack the closest planets first
+  let defenderPos = getPos(randFromArray(defenders));
+  attack(defenderPos, [attacker], false); // redirect false, do not change dest of fighters
+}
+
+function aiExpand(expander) {
+  let entities = Entity.getByComps([OWNER_COMPONENT, HAS_FIGHTERS]);
+  let neutrals = entityLoop(entities, (ent) => {
+    return getOwner(ent) === NEUTRAL;
+  });
+
+  let cd = calcDistance;
+  if (neutrals.length > 0) {
+    // get the one closest to us..
+    let expandToPlanet = neutrals.reduce((lastPlanet, currentPlanet) => {
+      return cd(expander, lastPlanet) < cd(expander, currentPlanet) ? lastPlanet : currentPlanet;
+    });
+
+    attack(getPos(expandToPlanet), [expander], false); // redirect false, do not change dest of fighters
+  }
+}
+
+function ai() {
   let entities = Entity.getByComps([OWNER_COMPONENT, HAS_FIGHTERS]);
   // let targetCandidates = Entity.getByComps([OWNER_COMPONENT, HAS_FIGHTERS])
 
@@ -39,39 +67,12 @@ function ai(frameCount) {
   if (decider) {
     // expand first, once all neutrals are taken, attack!
     aiExpand(decider); // TODO - AI should check if they can take the neutral
-    aiAttack(decider); // TODO AI should check if they have enough to attack..
-    // TODO - reinforce
+    aiAttack(decider); // TODO - AI should check if they have enough to attack..
+    // TODO - reinforce strategy
+  } else {
+    return false;
   }
 }
-
-function aiAttack(attacker) {
-  let entities = Entity.getByComps([OWNER_COMPONENT, HAS_FIGHTERS]);
-  let defenders = entityLoop(entities, (ent) => {
-    return getOwner(ent) === PLAYER_1;
-  });
-
-  // TODO - another potential AI strategy is to attack the closest planets first
-  let defenderPos = getPos(randFromArray(defenders));
-  attack(defenderPos, [attacker], false); // redirect false, do not change dest of fighters
-}
-
-function aiExpand(expandingPlanet) {
-  let entities = Entity.getByComps([OWNER_COMPONENT, HAS_FIGHTERS]);
-  let neutrals = entityLoop(entities, (ent) => {
-    return getOwner(ent) === NEUTRAL;
-  });
-
-  if (neutrals.length > 0) {
-    // get the one closest to us..
-    let expandToPlanet = neutrals.reduce((lastPlanet, currentPlanet) => {
-      return calcDistance(expandingPlanet, lastPlanet) < calcDistance(expandingPlanet, currentPlanet) ? lastPlanet : currentPlanet;
-    });
-
-    attack(getPos(expandToPlanet), [expandingPlanet], false); // redirect false, do not change dest of fighters
-  }
-}
-
-
 
 
 

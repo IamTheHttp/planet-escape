@@ -10,12 +10,12 @@ class PlanetBonusComponent {
 }
 
 export default PlanetBonusComponent;
-
-export const getMod = (ent, item) => {
-  return ent[PLANETBONUS_COMP].mod[item];
-};
-
-export const getBase = (ent, item) => {
-  return ent[PLANETBONUS_COMP].base[item];
-};
+// TODO - REMOVE THIS COMPONENT
+// export const getMod = (ent, item) => {
+//   return ent[PLANETBONUS_COMP].mod[item];
+// };
+//
+// export const getBase = (ent, item) => {
+//   return ent[PLANETBONUS_COMP].base[item];
+// };
 

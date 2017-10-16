@@ -13,10 +13,6 @@ export function getOwner(ent) {
   return ent[OWNER_COMPONENT].player;
 }
 
-export function hasOwner(ent) {
-  return ent[OWNER_COMPONENT] && ent[OWNER_COMPONENT].player;
-}
-
 export function setOwner(ent, player) {
   return ent[OWNER_COMPONENT].player = player;
 }

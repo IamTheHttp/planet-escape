@@ -28,6 +28,7 @@ let getGridBlockFromPos = (grid, topLeftX, topLeftY) => {
   // get the grid row/col for this X/Y pos..
   let distFromTop = topLeftY - topLeftAreaY;
   let distFromLeft = topLeftX - topLeftAreaX;
+
   let row = Math.floor(distFromTop / grid.squareY);
   let col = Math.floor(distFromLeft / grid.squareY);
   let gridExists = grid[row] && grid[row][col];
@@ -38,25 +39,24 @@ let createGrid = (area, squaresInLine) => {
   let {topLeftAreaX, topLeftAreaY, bottomRightAreaX, bottomRightAreaY} = area;
   let grid = [];
 
-  let xLen = bottomRightAreaX - topLeftAreaX;
-  let yLen = bottomRightAreaY - topLeftAreaY;
+  let xLen = bottomRightAreaX - topLeftAreaX; // 1920
+  let yLen = bottomRightAreaY - topLeftAreaY; // 1080
 
-  let squareX = xLen / squaresInLine;
-  let squareY = yLen / squaresInLine;
+  let squareLength = Math.floor(xLen / squaresInLine); // 1920 / 192 = 10
 
   let row = 0;
-  let remainingX = xLen;
+  let remainingY = yLen;
 
-  while (remainingX !== 0) {
+  while (remainingY >= squareLength) {
     grid[row] = [];
     let col = 0;
-    let remainingY = yLen;
+    let remainingX = xLen;
 
-    while (remainingY !== 0) {
-      remainingY -= squareY;
+    while (remainingX >= squareLength) {
+      remainingX -= squareLength;
       grid[row][col] = {
-        topLeftX : topLeftAreaX + squareX * col,
-        topLeftY : topLeftAreaY + squareY * row,
+        topLeftX : topLeftAreaX + squareLength * col,
+        topLeftY : topLeftAreaY + squareLength * row,
         row,
         col,
         occupied : false
@@ -64,13 +64,14 @@ let createGrid = (area, squaresInLine) => {
       col++;
     }
     row++;
-    remainingX -= squareX;
+    remainingY -= squareLength;
   }
 
-  grid.squareX = squareX;
-  grid.squareY = squareY;
+  grid.squareX = squareLength;
+  grid.squareY = squareLength;
   grid.xLen = xLen;
   grid.yLen = yLen;
+
   return grid;
 };
 
@@ -78,7 +79,8 @@ let createGrid = (area, squaresInLine) => {
 // we know we can only accomodate set percent...
 let entityPlacer = (entities, area, buffer = 1) => {
   let {topLeftAreaX, topLeftAreaY, bottomRightAreaX, bottomRightAreaY} = area;
-  let squaresInLine = 100;
+
+  let squaresInLine = Math.floor((bottomRightAreaX - topLeftAreaX) / 10);
   let grid = createGrid(area, squaresInLine); // squares in line
 
   let placedEntities = entityLoop(entities, (ent) => {

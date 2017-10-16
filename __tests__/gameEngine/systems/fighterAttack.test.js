@@ -65,7 +65,7 @@ describe('Tests a the fighter attacks system', () => {
     expect(Entity.entities[attackerFighter.id]).toBeUndefined();
     // the planets should lose one fighter
     expect(getFighters(attackingPlanet).length).toBe(attackCount - 1);
-    expect(getOwner(defendingPlanet)).toBe(NEUTRAL);
+    expect(getOwner(defendingPlanet)).toBe(getOwner(attackingPlanet));
   });
 
   /**

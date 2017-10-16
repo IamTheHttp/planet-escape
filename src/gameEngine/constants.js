@@ -67,8 +67,8 @@ export const COLORS = {
 
 // config of stuff...
 export const BASE_POP = 1;
-export const CANVAS_X = 1200;
-export const CANVAS_Y = 1200;
+export const CANVAS_X = 1920;
+export const CANVAS_Y = 1080;
 export const FIGHTER_BUILD_RATE = 60;
 export const FIGHTER_RADIUS = 5;
 export const FIGHTER_SPEED = 2;
