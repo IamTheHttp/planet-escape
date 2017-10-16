@@ -1,8 +1,9 @@
 import Entity from 'gameEngine/Entity';
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
 import {getFighters, destroyFighter, getDockedFighters} from 'gameEngine/components/HasFighters';
+import {unSelect} from 'gameEngine/components/PlayerControlledComponent';
 import {hasDest, isSamePos, destReached} from 'gameEngine/components/PositionComponent';
-import {diffPlayers, setOwner} from 'gameEngine/components/OwnerComponent';
+import {diffPlayers, setOwner, getOwner} from 'gameEngine/components/OwnerComponent';
 import Fighter from 'gameEngine/entities/Ships/Fighter';
 
 import {
@@ -64,8 +65,9 @@ function fighterAttacks() {
     // if the defending planet has no fighters left, we got it..
     // this needs to be fixed - no fighters DOCKED.
     if (getDockedFighters(foundPlanet).length === 0) {
+      foundPlanet[OWNER_COMPONENT].player = getOwner(attacker);
+      unSelect(foundPlanet);
       destroyFighter(attacker);
-      foundPlanet[OWNER_COMPONENT].player = NEUTRAL;
       return ;
     }
 

@@ -12,3 +12,9 @@ export default PlayerControlledComponent;
 export function isSelected(entity) {
   return entity[PLAYER_CONTROLLED] && entity[PLAYER_CONTROLLED].selected;
 };
+
+export function unSelect(entity) {
+  if (entity[PLAYER_CONTROLLED]) {
+    entity[PLAYER_CONTROLLED].selected = false;
+  }
+}

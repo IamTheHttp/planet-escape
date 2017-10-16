@@ -6,7 +6,7 @@ import moveSystem from './systems/moveSystem';
 import colonizationSystem from './systems/colonizationSystem';
 import fighterAttacks from './systems/fighterAttacks';
 import buildFighters from './systems/buildFighters';
-import aiAttacks from './systems/aiAttacks';
+import ai from './systems/ai';
 
 import calcWinner from './systems/calcWinner';
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
@@ -35,10 +35,10 @@ class GameLoop {
     let loop = () => {
       let start = performance.now();
       userInputSystem();
-      // we skip this system, based on difficulty!
+      // throttle the AI decision making
       // TODO - this is how we set difficulty?
       if (count % 120 === 0) {
-        aiAttacks();
+        ai(count);
       }
       moveSystem();
       colonizationSystem();

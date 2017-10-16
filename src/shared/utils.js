@@ -1,13 +1,15 @@
 import Mothership from 'gameEngine/entities/Ships/Mothership';
 import Player from 'gameEngine/entities/Player';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-
+import Fighter from 'gameEngine/entities/Ships/Fighter';
+import {getFighters} from 'gameEngine/components/HasFighters';
 import {
   PLAYER_1,
   PLAYER_2,
   NEUTRAL,
   CANVAS_X,
-  CANVAS_Y
+  CANVAS_Y,
+  HAS_FIGHTERS
 } from 'gameEngine/constants';
 
 import {
@@ -30,9 +32,13 @@ export function generateMap(planetCount, buffer = 1) {
   let count = 0;
   let planets = {};
   while (count < planetsToGenerate) {
-    let player = NEUTRAL;
     let planet = new EarthLike('Braxis', 1, null, null, NEUTRAL);
     planets[planet.id] = planet;
+    // TODO remove hardcoded 10, default number for neutral planets
+    while (getFighters(planet).length < 10) {
+      new Fighter(planet);
+    }
+
     count++;
   }
 
