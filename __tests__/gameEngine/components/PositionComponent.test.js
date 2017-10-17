@@ -19,14 +19,14 @@ describe('Tests a component', () => {
   });
 
   it('init new component', () => {
-    let planet = new EarthLike('foo', 6, 100, 100, PLAYER_1);
+    let planet = new EarthLike(100, 100, PLAYER_1);
     expect(hasDest(planet)).toBe(false);
   });
 
   it('init new component', () => {
-    let planet = new EarthLike('foo', 6, 100, 100, PLAYER_1);
+    let planet = new EarthLike(100, 100, PLAYER_1);
 
-    let targetPlanet = new EarthLike('foo', 6, 300, 300, PLAYER_1);
+    let targetPlanet = new EarthLike(300, 300, PLAYER_1);
     setDest(planet, targetPlanet);
     expect(hasDest(planet)).toBe(true);
   });

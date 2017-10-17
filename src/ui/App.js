@@ -14,10 +14,17 @@ import {
   GAME_STATE,
   CANVAS,
   GAME_WON,
-  GAME_LOST
+  GAME_LOST,
+  MAP_SIZE,
+  TINY,
+  SMALL,
+  MEDIUM,
+  LARGE
 } from 'gameEngine/constants';
+import gameConfig from 'gameEngine/config';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
 import {byKey} from 'shared/utils';
+let mapSize = gameConfig[MAP_SIZE][LARGE];
 
 class App extends React.Component {
   constructor() {
@@ -38,7 +45,7 @@ class App extends React.Component {
   }
 
   startGame() {
-    return new GameLoop(this.updateGameState.bind(this), 12);
+    return new GameLoop(this.updateGameState.bind(this), mapSize);
   }
 
   stopGame() {
@@ -150,6 +157,7 @@ class App extends React.Component {
               ref={(inst) => {
                 this.canvasMap = inst;
               }}
+              mapSize={mapSize}
               dispatch={this.game.dispatchAction}
             >
             </CanvasMap>

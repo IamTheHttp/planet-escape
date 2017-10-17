@@ -1,4 +1,3 @@
-import Mothership from 'gameEngine/entities/Ships/Mothership';
 import Player from 'gameEngine/entities/Player';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import Fighter from 'gameEngine/entities/Ships/Fighter';
@@ -9,9 +8,13 @@ import {
   NEUTRAL,
   CANVAS_X,
   CANVAS_Y,
-  HAS_FIGHTERS
+  HAS_FIGHTERS,
+  MAP_SIZE,
+  PLANETS_IN_MAP,
+  PLANET_BUFFER,
+  DEFAULT_FIGHTER_COUNT
 } from 'gameEngine/constants';
-
+import gameConfig from 'gameEngine/config';
 import {
   entityPlacer
 } from 'shared/placementUtil';
@@ -24,18 +27,18 @@ export function randFromArray(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-export function generateMap(planetCount, buffer = 1) {
+export function generateMap(mapSize) {
   // TODO -2 because we generate manually two more planets at the end
-  let planetsToGenerate = planetCount >= 0 ? planetCount - 2 : 30 - 2;
+  let planetsToGenerate = mapSize[PLANETS_IN_MAP] - 2;
+  let buffer = mapSize[PLANET_BUFFER];
   new Player(PLAYER_1);
 
   let count = 0;
   let planets = {};
   while (count < planetsToGenerate) {
-    let planet = new EarthLike('Braxis', 1, null, null, NEUTRAL);
+    let planet = new EarthLike(null, null, NEUTRAL);
     planets[planet.id] = planet;
-    // TODO remove hardcoded 10, default number for neutral planets
-    while (getFighters(planet).length < 10) {
+    while (getFighters(planet).length < gameConfig[DEFAULT_FIGHTER_COUNT]) {
       new Fighter(planet);
     }
 
@@ -45,15 +48,13 @@ export function generateMap(planetCount, buffer = 1) {
   let area = {
     topLeftAreaX : 0,
     topLeftAreaY : 0,
-    bottomRightAreaX: CANVAS_X,
-    bottomRightAreaY : CANVAS_Y
+    bottomRightAreaX : mapSize[CANVAS_X],
+    bottomRightAreaY : mapSize[CANVAS_Y]
   };
-  // let motherShip = new Mothership(null, null, PLAYER_1);
-  // planets[motherShip.id] = motherShip;
   entityPlacer(planets, area, buffer);
   // TODO - Fix the hardcoded numbers, also possible planet overlapping as we do it manually here
-  new EarthLike('Braxis', 1, 50, 50, PLAYER_1);
-  new EarthLike('Braxis', 1, CANVAS_X - 50, CANVAS_Y - 50, PLAYER_2);
+  new EarthLike(50, 50, PLAYER_1);
+  new EarthLike(mapSize[CANVAS_X] - 50, mapSize[CANVAS_Y] - 50, PLAYER_2);
 }
 
 

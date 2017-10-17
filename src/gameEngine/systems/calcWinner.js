@@ -25,7 +25,7 @@ function calcWinner() {
   });
 
   // Simple lose algorithem - if no enemy entities left, we win.
-  // TODO - Can this run less than every frame?
+  // TODO - PERF - Can this run less than every frame?
   if (enemyEntitiesLeft === 0) {
     return GAME_WON;
   }

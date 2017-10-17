@@ -5,11 +5,9 @@ import {
   BUILDINGS_COMP,
   SELECT,
   MOVE,
-  COLONIZE,
   ATTACK
 } from 'gameEngine/constants';
 
-import colonize from 'gameEngine/systems/userInputActions/colonize';
 import attack from 'gameEngine/systems/userInputActions/attack';
 import select from 'gameEngine/systems/userInputActions/select';
 // store our actions, singleton
@@ -44,10 +42,6 @@ function userInputSystem() {
         ents.forEach((selectedEntity) => {
           setEntityDest(selectedEntity, action);
         });
-      }
-
-      if (action.name === COLONIZE) {
-        colonize(action);
       }
 
       if (action.name === ATTACK) {

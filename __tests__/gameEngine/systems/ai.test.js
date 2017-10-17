@@ -25,15 +25,15 @@ describe('Tests a component', () => {
   });
 
   it('Tests that without enough fighters, the enemy planet does nothing', () => {
-    let attacker = new EarthLike(1, 1, 80, 80, PLAYER_2);
+    let attacker = new EarthLike(80, 80, PLAYER_2);
     new Fighter(attacker);
     expect(ai()).toBe(false);
   });
 
   it('Tests that with enough fighters, the enemy planet tries to expand', () => {
-    new EarthLike(1, 1, 100, 100, NEUTRAL);
-    new EarthLike(1, 1, 50, 50, PLAYER_1);
-    let attacker = new EarthLike(1, 1, 80, 80, PLAYER_2);
+    new EarthLike(100, 100, NEUTRAL);
+    new EarthLike(50, 50, PLAYER_1);
+    let attacker = new EarthLike(80, 80, PLAYER_2);
 
     let fighter1 = new Fighter(attacker);
     let fighter2 = new Fighter(attacker);
@@ -49,8 +49,8 @@ describe('Tests a component', () => {
   });
 
   it('Tests that with enough fighters and no neutrals, the enemy attacks', () => {
-    new EarthLike(1, 1, 50, 50, PLAYER_1);
-    let attacker = new EarthLike(1, 1, 80, 80, PLAYER_2);
+    new EarthLike(50, 50, PLAYER_1);
+    let attacker = new EarthLike(80, 80, PLAYER_2);
 
     let fighter1 = new Fighter(attacker);
     let fighter2 = new Fighter(attacker);
@@ -64,12 +64,12 @@ describe('Tests a component', () => {
   });
 
   it('Tests that with enough fighters and two neutrals, enemy expands to closest', () => {
-    new EarthLike(1, 1, 50, 50, PLAYER_1);
+    new EarthLike(50, 50, PLAYER_1);
 
-    new EarthLike(1, 1, 0, 0, NEUTRAL);
-    new EarthLike(1, 1, 100, 100, NEUTRAL);
-    new EarthLike(1, 1, 1000, 1000, NEUTRAL);
-    let attacker = new EarthLike(1, 1, 80, 80, PLAYER_2);
+    new EarthLike(0, 0, NEUTRAL);
+    new EarthLike(100, 100, NEUTRAL);
+    new EarthLike(1000, 1000, NEUTRAL);
+    let attacker = new EarthLike(80, 80, PLAYER_2);
 
     let fighter1 = new Fighter(attacker);
     let fighter2 = new Fighter(attacker);

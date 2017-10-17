@@ -3,7 +3,6 @@ import 'polyfill/rAF.js';
 import 'polyfill/perf.js';
 import userInputSystem, {pushAction} from './systems/userInputSystem';
 import moveSystem from './systems/moveSystem';
-import colonizationSystem from './systems/colonizationSystem';
 import fighterAttacks from './systems/fighterAttacks';
 import buildFighters from './systems/buildFighters';
 import ai from './systems/ai';
@@ -11,8 +10,6 @@ import ai from './systems/ai';
 import calcWinner from './systems/calcWinner';
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
 import {generateMap, oneOutOf} from 'shared/utils';
-import Farm from 'gameEngine/entities/planetBuildings/Farm';
-import Mine from 'gameEngine/entities/planetBuildings/Mine';
 import Game from 'gameEngine/entities/Game';
 
 import {
@@ -24,11 +21,11 @@ import {
 } from 'gameEngine/constants';
 
 class GameLoop {
-  constructor(cbNotification, planets = 30) {
+  constructor(cbNotification, mapSize) {
     Entity.reset();
     this.dispatchAction = this.dispatchAction.bind(this);
     // setup some planets
-    generateMap(planets, 4); // buffer
+    generateMap(mapSize);
     let currentGame = new Game(IN_PROGRESS);
     let count = 0;
 
@@ -36,12 +33,10 @@ class GameLoop {
       let start = performance.now();
       userInputSystem();
       // throttle the AI decision making
-      // TODO - this is how we set difficulty?
       if (count % 120 === 0) {
         ai(count);
       }
       moveSystem();
-      colonizationSystem();
       fighterAttacks();
 
       if (count % FIGHTER_BUILD_RATE === 0) {

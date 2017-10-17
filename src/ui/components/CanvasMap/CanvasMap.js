@@ -6,7 +6,6 @@ import updateCursorPosition from './utils/updateCursorPosition';
 import {
   SELECT,
   MOVE,
-  COLONIZE,
   CANVAS_X,
   CANVAS_Y,
   ATTACK
@@ -43,7 +42,6 @@ class CanvasMap extends React.Component {
 
     // this might be tracked somewhere else, it has nothing to do with the canvas itself!
     onKeyUp('e', this.dispatch(MOVE));
-    onKeyUp('c', this.dispatch(COLONIZE));
     onKeyUp('a', this.dispatch(ATTACK));
     document.addEventListener('mousemove', updateCursorPosition(this));
   }
@@ -102,8 +100,8 @@ class CanvasMap extends React.Component {
         ref={(elm) => {
           this.canvas = elm;
         }}
-        height={CANVAS_Y}
-        width={CANVAS_X}
+        height={this.props.mapSize[CANVAS_Y]}
+        width={this.props.mapSize[CANVAS_X]}
         style={{backgroundColor : 'black', border:'1px solid black'}}
         onMouseDown={this.onMouseDown}
         onMouseMove={this.onMouseMove}

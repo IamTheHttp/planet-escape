@@ -14,7 +14,7 @@ describe('Tests a component', () => {
   });
 
   it('Ensures a fighter has position', () =>  {
-    let planet = new EarthLike('foo', 50, 200, 300);
+    let planet = new EarthLike(200, 300);
     let ship = new Fighter(planet);
     expect(ship[POSITION].x).toBe(200);
     expect(ship[POSITION].y).toBe(300);

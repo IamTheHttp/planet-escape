@@ -25,7 +25,7 @@ describe('Tests the attack action', () => {
   });
 
   it('Cannot attack a non attackable!', () => {
-    let earth = new EarthLike(50, 50, 200, 200, PLAYER_1);
+    let earth = new EarthLike(200, 200, PLAYER_1);
     let ship = new Mothership(200, 300, PLAYER_2);
 
     earth[PLAYER_CONTROLLED].selected = true;
@@ -33,30 +33,30 @@ describe('Tests the attack action', () => {
   });
 
   it('Cannot attack own attackables', () => {
-    let attacker = new EarthLike(50, 50, 200, 200, PLAYER_1);
+    let attacker = new EarthLike(200, 200, PLAYER_1);
     attacker[PLAYER_CONTROLLED].selected = true;
-    let defender = new EarthLike(50, 50, 300, 300, PLAYER_1);
+    let defender = new EarthLike(300, 300, PLAYER_1);
 
     expect(attack({x:200, y:200})).toBe(0);
   });
 
   it('Attack should direct fighters to target', () => {
-    let attacker = new EarthLike(50, 50, 200, 200, PLAYER_1);
+    let attacker = new EarthLike(200, 200, PLAYER_1);
     attacker[PLAYER_CONTROLLED].selected = true;
     new Fighter(attacker);
-    let defender = new EarthLike(50, 50, 300, 300, PLAYER_2);
+    let defender = new EarthLike(300, 300, PLAYER_2);
 
     expect(attack({x:300, y:300})).toBe(1);
   });
 
   it('Attack should NOT redirect fighters to target', () => {
-    let attacker = new EarthLike(50, 50, 200, 200, PLAYER_1);
+    let attacker = new EarthLike(200, 200, PLAYER_1);
     attacker[PLAYER_CONTROLLED].selected = true;
     new Fighter(attacker);
     let fighterWithDest = new Fighter(attacker);
 
-    let defender = new EarthLike(50, 50, 300, 300, PLAYER_2);
-    let defender2 = new EarthLike(50, 50, 500, 500, PLAYER_2);
+    let defender = new EarthLike(300, 300, PLAYER_2);
+    let defender2 = new EarthLike(500, 500, PLAYER_2);
     setDest(fighterWithDest, defender2);
 
     // even though the attacker has two fighters, since we passed in 'false', we redirect just one

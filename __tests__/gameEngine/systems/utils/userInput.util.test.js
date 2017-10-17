@@ -26,8 +26,8 @@ describe('Tests the user input utils', () => {
   });
 
   it('getSelectedEntities', () => {
-    let planetA = new EarthLike('foo', 50, 100, 100);
-    let planetB = new EarthLike('bar', 50, 100, 100);
+    let planetA = new EarthLike(100, 100);
+    let planetB = new EarthLike(100, 100);
 
     let entities = {
       [planetA.id] : planetA,
@@ -44,8 +44,8 @@ describe('Tests the user input utils', () => {
   });
 
   it('setEntityDest', () => {
-    let planetA = new EarthLike('foo', 50, 100, 100);
-    let planetB = new EarthLike('bar', 50, 100, 100);
+    let planetA = new EarthLike(100, 100);
+    let planetB = new EarthLike(100, 100);
 
     planetA[PLAYER_CONTROLLED].selected = true;
 
@@ -55,14 +55,14 @@ describe('Tests the user input utils', () => {
   });
 
   it('getEntitiesAtPos', () => {
-    let planetA = new EarthLike('foo', 50, 100, 100);
-    let planetB = new EarthLike('bar', 50, 500, 500);
+    let planetA = new EarthLike(100, 100);
+    let planetB = new EarthLike(500, 500);
     let ents = getEntitiesAtPos(110, 110);
     expect(ents[0]).toBe(planetA);
   });
 
   it('getEntitiesAtPos - without POS location', () => {
-    let planetA = new EarthLike('foo', 50, 100, 100);
+    let planetA = new EarthLike(100, 100);
     planetA.removeComponent(POSITION);
     let entities = {
       [planetA.id] : planetA
@@ -74,7 +74,7 @@ describe('Tests the user input utils', () => {
 
 
   it('selectEntity', () => {
-    let planetA = new EarthLike('foo', 50, 100, 100, PLAYER_1);
+    let planetA = new EarthLike(100, 100, PLAYER_1);
 
     expect(planetA[PLAYER_CONTROLLED].selected).toBe(false);
     selectEntity({x:110, y:110});
@@ -87,7 +87,7 @@ describe('Tests the user input utils', () => {
   });
 
   it('selectEntitiesInSelectedBox', () => {
-    let planetA = new EarthLike('foo', 50, 100, 100, PLAYER_1);
+    let planetA = new EarthLike(100, 100, PLAYER_1);
     expect(planetA[PLAYER_CONTROLLED].selected).toBe(false);
 
     let selectBox = {

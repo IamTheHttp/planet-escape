@@ -23,14 +23,14 @@ describe('Tests a component', () => {
   it('Calcs the winner based on entities - game won', () => {
     const START_POS_X = 100;
     const START_POS_Y = 100;
-    new EarthLike('foo', 15, START_POS_X, START_POS_Y, PLAYER_1);
+    new EarthLike(START_POS_X, START_POS_Y, PLAYER_1);
     expect(calcWinner()).toBe(GAME_WON);
   });
 
   it('Calcs the winner based on entities - game lost', () => {
     const START_POS_X = 100;
     const START_POS_Y = 100;
-    new EarthLike('foo', 15, START_POS_X, START_POS_Y, PLAYER_2);
+    new EarthLike(START_POS_X, START_POS_Y, PLAYER_2);
     expect(calcWinner()).toBe(GAME_LOST);
   });
 });

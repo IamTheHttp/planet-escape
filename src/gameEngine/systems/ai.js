@@ -10,9 +10,11 @@ import {
   OWNER_COMPONENT,
   HAS_FIGHTERS,
   PLAYER_1,
-  NEUTRAL
+  NEUTRAL,
+  AI_MIN_FIGHTERS
 } from 'gameEngine/constants';
 
+import gameConfig from 'gameEngine/config';
 
 function aiAttack(attacker) {
   let entities = Entity.getByComps([OWNER_COMPONENT, HAS_FIGHTERS]);
@@ -20,7 +22,6 @@ function aiAttack(attacker) {
     return getOwner(ent) === PLAYER_1;
   });
 
-  // TODO - another potential AI strategy is to attack the closest planets first
   let defenderPos = getPos(randFromArray(defenders));
   attack(defenderPos, [attacker], false); // redirect false, do not change dest of fighters
 }
@@ -55,9 +56,8 @@ function ai() {
   // only planets with at least 10 fighters do stuff..
   // only ONE planet makes decisions per turn..
   // TODO - number of planets that make decision might also be part of difficulty
-  // TODO - why 10 fighters? this is hardcoded..
   let decider = decisionMakers.find((planet) => {
-    return getDockedFighters(planet).length > 5;
+    return getDockedFighters(planet).length > gameConfig[AI_MIN_FIGHTERS];
   });
 
   // we can attack.

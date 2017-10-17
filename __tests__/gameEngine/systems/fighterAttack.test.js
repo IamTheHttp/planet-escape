@@ -25,8 +25,8 @@ describe('Tests a the fighter attacks system', () => {
   });
 
   it('Attack/Defense are removed from the Entity hash as well from the planets', () => {
-    let attackingPlanet = new EarthLike('source', 50, 200, 200, PLAYER_1);
-    let defendingPlanet = new EarthLike('target', 50, 500, 500, PLAYER_2);
+    let attackingPlanet = new EarthLike(200, 200, PLAYER_1);
+    let defendingPlanet = new EarthLike(500, 500, PLAYER_2);
 
     let attackerFighter = new Fighter(attackingPlanet);
     let defFighter = new Fighter(defendingPlanet);
@@ -51,8 +51,8 @@ describe('Tests a the fighter attacks system', () => {
   });
 
   it('A fighter is attacking a planet with no defenders', () => {
-    let attackingPlanet = new EarthLike('source', 50, 200, 200, PLAYER_1);
-    let defendingPlanet = new EarthLike('target', 50, 500, 500, PLAYER_2);
+    let attackingPlanet = new EarthLike(200, 200, PLAYER_1);
+    let defendingPlanet = new EarthLike(500, 500, PLAYER_2);
 
     let attackerFighter = new Fighter(attackingPlanet);
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
@@ -72,8 +72,8 @@ describe('Tests a the fighter attacks system', () => {
    * This situation can happen when there's a fighter in route when the ownership already changed
    */
   it('A fighter attacking a friendly planet with no defenders', () => {
-    let attackingPlanet = new EarthLike('source', 50, 200, 200, PLAYER_1);
-    let defendingPlanet = new EarthLike('target', 50, 500, 500, PLAYER_1);
+    let attackingPlanet = new EarthLike(200, 200, PLAYER_1);
+    let defendingPlanet = new EarthLike(500, 500, PLAYER_1);
 
     let attackerFighter = new Fighter(attackingPlanet);
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;

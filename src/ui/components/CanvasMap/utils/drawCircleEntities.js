@@ -2,10 +2,7 @@ import logger from 'shared/logger';
 import {
   POSITION,
   PLAYER_CONTROLLED,
-  CAN_COLONIZE_COMP,
   COLORS,
-  COLONIZE_RANGE,
-  COLONIZE_RANGE_FADED,
   HAS_FIGHTERS,
   IS_DOCKED,
   NEUTRAL,
@@ -82,33 +79,6 @@ export function colorByPlayer(entity, ctx) {
   }
 }
 
-export function colorActionRange(entity, ctx) {
-  let {x, y, radius} = entity[POSITION];
-  // TODO - Clean up duplicate code
-  if (isSelected(entity) && entity[CAN_COLONIZE_COMP]) {
-    ctx.moveTo(x, y);
-    ctx.beginPath();
-    ctx.setLineDash([10, 15]);
-
-    // this radius is 20 long, we need 100 distance between the two centers, so..
-    ctx.strokeStyle = COLORS[COLONIZE_RANGE];
-    ctx.arc(x, y, entity[CAN_COLONIZE_COMP].distance - radius, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.closePath();
-    ctx.setLineDash([]);
-  } else if (entity[CAN_COLONIZE_COMP]) {
-    ctx.moveTo(x, y);
-    ctx.beginPath();
-    ctx.setLineDash([10, 15]);
-
-    // this radius is 20 long, we need 100 distance between the two centers, so..
-    ctx.strokeStyle = COLORS[COLONIZE_RANGE_FADED];
-    ctx.arc(x, y, entity[CAN_COLONIZE_COMP].distance - radius, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.setLineDash([]);
-  }
-}
-
 function writeFighteCount(entity, ctx) {
   entity.hasComponents(HAS_FIGHTERS, () => {
     let dockedFighters = getFighters(entity).filter((fighter) => {
@@ -134,7 +104,6 @@ export default (ctx) => {
     drawEntity(entity, ctx);
     colorByPlayer(entity, ctx);
     writeFighteCount(entity, ctx);
-    colorActionRange(entity, ctx);
   };
 };
 
