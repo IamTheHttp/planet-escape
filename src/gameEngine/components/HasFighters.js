@@ -12,7 +12,6 @@ class HasFighters {
 export default HasFighters;
 
 
-// TODO , add a cache mechanism for docked fighters
 export function getFighters(ent) {
   return ent[HAS_FIGHTERS].fighters;
 }

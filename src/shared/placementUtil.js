@@ -75,7 +75,6 @@ let createGrid = (area, squaresInLine) => {
   return grid;
 };
 
-// TODO - Add some safety checks here to alert that inappropriate sizes were selected
 // we know we can only accomodate set percent...
 let entityPlacer = (entities, area, buffer = 1) => {
   let {topLeftAreaX, topLeftAreaY, bottomRightAreaX, bottomRightAreaY} = area;

@@ -21,12 +21,12 @@ import {
 } from 'gameEngine/constants';
 
 class GameLoop {
-  constructor(cbNotification, mapSize) {
+  constructor(cbNotification, mapSize, numPlayers) {
     Entity.reset();
     this.dispatchAction = this.dispatchAction.bind(this);
     // setup some planets
     generateMap(mapSize);
-    let currentGame = new Game(IN_PROGRESS);
+    let currentGame = new Game(IN_PROGRESS, numPlayers);
     let count = 0;
 
     let loop = () => {

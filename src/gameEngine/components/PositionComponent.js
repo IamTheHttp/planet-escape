@@ -60,7 +60,6 @@ export function isSamePos(ent1, ent2) {
   return getPos(ent1).x === getPos(ent2).x && getPos(ent1).y === getPos(ent2).y;
 }
 
-// TODO perf - we can add memoization here
 export function calcDistance(ent1, ent2) {
   let pos1 = getPos(ent1);
   let pos2 = getPos(ent2);

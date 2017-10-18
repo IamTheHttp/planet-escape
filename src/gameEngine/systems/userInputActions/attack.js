@@ -23,7 +23,7 @@ import {
  * @param redirectFighters
  */
 
-// TODO - This is now a moveFighters, and not just attack - same code is used to attack and move
+// REFACTOR - This is now a moveFighters, and not just attack - same code is used to attack and move
 export function attack(action, entities = getSelectedEntities(), redirectFighters = true) {
   let directedFighters = 0;
   let launchedFighters = 0;
@@ -38,7 +38,7 @@ export function attack(action, entities = getSelectedEntities(), redirectFighter
   let fightersInFleet = [];
   attackingPlanets.forEach((attackingPlanet) => {
     launchedFighters = 0;
-    // TODO - This makes no sense as there's only one defending planet at a time
+    // REFACTOR - This makes no sense as there's only one defending planet at a time
     defendingPlanets.forEach((defendingPlanet) => {
       getFighters(attackingPlanet).forEach((fighterEnt) => {
         // if fighter already has a destination, we do not force a redirect..

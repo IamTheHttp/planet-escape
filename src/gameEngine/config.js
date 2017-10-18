@@ -16,10 +16,12 @@ import {
   CANVAS_Y,
   PLANET_BUFFER,
   AI_MIN_FIGHTERS,
-  DEFAULT_FIGHTER_COUNT
+  DEFAULT_FIGHTER_COUNT,
+  NUM_PLAYERS
 } from './constants.js';
 
 export default {
+  [NUM_PLAYERS] : 2,
   [AI_MIN_FIGHTERS] : 5,
   [DEFAULT_FIGHTER_COUNT] : 10,
   [COLORS]:{
@@ -30,7 +32,6 @@ export default {
     [SELECT]   : 'white',
     [DEFAULT]  : 'black'
   },
-  // TODO add tests for the different sizes, ensure the map has enough room
   [MAP_SIZE] : {
     [TINY] : {
       [PLANETS_IN_MAP] : 10,

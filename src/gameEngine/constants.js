@@ -34,6 +34,7 @@ export const SELECT = 'select';
 export const MOVE = 'move';
 export const ATTACK = 'attack';
 // players
+export const NUM_PLAYERS = 'NUM_PLAYERS';
 export const NEUTRAL = 'NEUTRAL';
 export const PLAYER_1 = 'PLAYER_1';
 export const PLAYER_2 = 'PLAYER_2';

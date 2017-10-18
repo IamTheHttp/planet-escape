@@ -50,7 +50,7 @@ export function selectEntity({x, y}) {
     let centerX = ent[POSITION].x;
     let centerY = ent[POSITION].y;
     let radius = ent[POSITION].radius;
-    // TODO - This PLAYER_1 is really needed?
+    // this is what stops us from selecting an entity that does not belong to us
     let ownedByPlayer = getOwner(ent) === PLAYER_1;
     ent[PLAYER_CONTROLLED].selected = ownedByPlayer && isPosInsideCircle(x, y, centerX, centerY, radius);
   });

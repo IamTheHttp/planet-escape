@@ -18,7 +18,6 @@ import {
   FIGHTER_SPEED
 } from 'gameEngine/constants.js';
 
-// TODO move to assets list or something..
 import fighter from 'assets/fighter.png';
 let fighterImage = new Image();
 fighterImage.src = fighter;

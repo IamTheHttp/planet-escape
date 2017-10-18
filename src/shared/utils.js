@@ -28,7 +28,7 @@ export function randFromArray(array) {
 }
 
 export function generateMap(mapSize) {
-  // TODO -2 because we generate manually two more planets at the end
+  // REFACTOR -2 because we generate manually two more planets at the end
   let planetsToGenerate = mapSize[PLANETS_IN_MAP] - 2;
   let buffer = mapSize[PLANET_BUFFER];
   new Player(PLAYER_1);
@@ -52,7 +52,7 @@ export function generateMap(mapSize) {
     bottomRightAreaY : mapSize[CANVAS_Y]
   };
   entityPlacer(planets, area, buffer);
-  // TODO - Fix the hardcoded numbers, also possible planet overlapping as we do it manually here
+  // REFACTOR - Fix the hardcoded numbers, also possible planet overlapping as we do it manually here
   new EarthLike(50, 50, PLAYER_1);
   new EarthLike(mapSize[CANVAS_X] - 50, mapSize[CANVAS_Y] - 50, PLAYER_2);
 }

@@ -34,7 +34,7 @@ class CanvasMap extends React.Component {
   }
 
   componentDidMount() {
-    // TODO - Can this state be moved outside?
+    // REFACTOR - Can this state be moved outside?
     this.x = 0;
     this.y = 0;
     this.isMouseDown = false;

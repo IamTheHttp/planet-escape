@@ -7,7 +7,6 @@ function calcWinner() {
 
   let enemyEntitiesLeft = 0;
   let playerEntsLeft = 0;
-  // TODO - PERF -  This should be cached somehow, no reason to go over it all the time
   entityLoop(entities, (ent) => {
     let owner = ent[OWNER_COMPONENT].player;
     let friendlies = [PLAYER_1, NEUTRAL];
@@ -25,7 +24,6 @@ function calcWinner() {
   });
 
   // Simple lose algorithem - if no enemy entities left, we win.
-  // TODO - PERF - Can this run less than every frame?
   if (enemyEntitiesLeft === 0) {
     return GAME_WON;
   }

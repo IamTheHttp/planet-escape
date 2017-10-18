@@ -19,7 +19,8 @@ import {
   TINY,
   SMALL,
   MEDIUM,
-  LARGE
+  LARGE,
+  NUM_PLAYERS
 } from 'gameEngine/constants';
 import gameConfig from 'gameEngine/config';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
@@ -45,7 +46,7 @@ class App extends React.Component {
   }
 
   startGame() {
-    return new GameLoop(this.updateGameState.bind(this), mapSize);
+    return new GameLoop(this.updateGameState.bind(this), mapSize, gameConfig[NUM_PLAYERS]);
   }
 
   stopGame() {
@@ -72,46 +73,18 @@ class App extends React.Component {
 
     for (let id in gameEntities) {
       let ent = gameEntities[id];
-
       if (ent.hasComponents(GAME_STATE)) {
         gameEnt = ent;
-        continue; // TODO , this loop expects all entities to be UI entities
+        continue;
       }
-
-      // if (ent[UI_COMP].sections.find(byKey('name', CANVAS)) && ent[POSITION]) {
       entsToDraw.push(ent);
-      // }
-
-      // legacy, when we had a planet section
-      // if (ent[UI_COMP].sections.find(byKey('name', PLANETS))) {
-      //   if (hasOwner(ent) && getOwner(ent) === PLAYER_1) {
-      //     planetSection[id] = ent;
-      //   }
-      // }
-
-      // not used for now
-      // if (ent[UI_COMP].sections.find(byKey('name', BUILDING_OPTIONS))) {
-      //   buildingOptions[ent.id] = ent;
-      // }
-    }
-
-    this.setState({gameEnt, planetSection, summary, totalIncome, buildingOptions});
-
-    /* istanbul ignore else  */
-    if (this.canvasMap) {
-      this.canvasMap.update(entsToDraw);
+      this.setState({gameEnt, planetSection, summary, totalIncome, buildingOptions});
+      /* istanbul ignore else  */
+      if (this.canvasMap) {
+        this.canvasMap.update(entsToDraw);
+      }
     }
   }
-
-  // TODO - Not currently implemented
-  // buildBuilding(entityID) {
-  //   this.game.dispatchAction({
-  //     name:'build',
-  //     entityID,
-  //     entities:[this.state.selectedEntity],
-  //     amount:1
-  //   });
-  // }
 
   getGameEndModal() {
     let popUp = null;

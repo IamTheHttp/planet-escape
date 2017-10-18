@@ -47,15 +47,13 @@ function ai() {
   let entities = Entity.getByComps([OWNER_COMPONENT, HAS_FIGHTERS]);
   // let targetCandidates = Entity.getByComps([OWNER_COMPONENT, HAS_FIGHTERS])
 
-  // TODO - how do we support more players?
   // each enemy planet makes it's own decisions, detached from the others.
   let decisionMakers = entityLoop(entities, (ent) => {
     return getOwner(ent) !== PLAYER_1 && notNeutral(ent);
   });
 
-  // only planets with at least 10 fighters do stuff..
+  // only planets with at least AI_MIN_FIGHTERS fighters do stuff..
   // only ONE planet makes decisions per turn..
-  // TODO - number of planets that make decision might also be part of difficulty
   let decider = decisionMakers.find((planet) => {
     return getDockedFighters(planet).length > gameConfig[AI_MIN_FIGHTERS];
   });
@@ -66,9 +64,8 @@ function ai() {
   // we can do nothing - also viable..
   if (decider) {
     // expand first, once all neutrals are taken, attack!
-    aiExpand(decider); // TODO - AI should check if they can take the neutral
-    aiAttack(decider); // TODO - AI should check if they have enough to attack..
-    // TODO - reinforce strategy
+    aiExpand(decider);
+    aiAttack(decider);
   } else {
     return false;
   }
