@@ -1,7 +1,7 @@
 /** @namespace entity.components.localBonus */
 import {POSITION} from 'gameEngine/constants';
 class PositionComponent {
-  constructor(x, y, radius = 20) {
+  constructor(x, y, radius) {
     this.name = POSITION;
     this.x = x;
     this.y = y;

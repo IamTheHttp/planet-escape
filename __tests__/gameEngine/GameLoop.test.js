@@ -10,11 +10,16 @@ import Entity from 'gameEngine/Entity';
 import entityLoop from 'gameEngine/systems/utils/entityLoop.js';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import {notNeutral} from 'gameEngine/components/OwnerComponent';
+import gameConfig from 'gameEngine/config';
 import {
   HAS_FIGHTERS,
   FIGHTER_BUILD_RATE,
-  PLAYER_1
+  PLAYER_1,
+  MEDIUM,
+  MAP_SIZE,
+  PLANETS_IN_MAP
 } from 'gameEngine/constants';
+let mapSize = gameConfig[MAP_SIZE][MEDIUM];
 
 function getEntityOfType(className) {
   let resp = [];
@@ -34,7 +39,8 @@ describe('Tests a component', () => {
     jest.useFakeTimers();
     let cbMock = jest.fn();
     let sampleID = (new Entity()).id; // no UI_COMP here
-    new GameLoop(cbMock);
+
+    new GameLoop(cbMock, mapSize);
     jest.runOnlyPendingTimers();
     expect(cbMock.mock.calls[0][0][sampleID]).toBeUndefined();
     jest.runOnlyPendingTimers();
@@ -43,7 +49,7 @@ describe('Tests a component', () => {
   it('Build fighters only runs every 15 iterations', () => {
     jest.useFakeTimers();
     let cbMock = jest.fn();
-    new GameLoop(cbMock);
+    new GameLoop(cbMock, mapSize);
     let int = 0;
     while (int < FIGHTER_BUILD_RATE) {
       jest.runOnlyPendingTimers();
@@ -62,24 +68,8 @@ describe('Tests a component', () => {
   });
 
   it('generates a map with a correct number of planets', () => {
-    generateMap();
+    generateMap(mapSize);
     planets = getEntityOfType(EarthLike);
-    expect(planets.length).toBe(30);
-
-    Entity.reset();
-    generateMap(20);
-    planets = getEntityOfType(EarthLike);
-    expect(planets.length).toBe(20);
-
-    Entity.reset();
-    generateMap(30);
-    planets = getEntityOfType(EarthLike);
-    expect(planets.length).toBe(30);
-
-    Entity.reset();
-    generateMap(-5);
-    planets = getEntityOfType(EarthLike);
-    // default is 30 if invalid argument is passed
-    expect(planets.length).toBe(30);
+    expect(planets.length).toBe(mapSize[PLANETS_IN_MAP]);
   });
 });

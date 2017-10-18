@@ -6,11 +6,9 @@ import {mount, shallow} from 'enzyme';
 import React from 'react';
 import {
   drawEntity,
-  colorByPlayer,
-  colorActionRange
+  colorByPlayer
 } from 'ui/components/CanvasMap/utils/drawCircleEntities.js';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Mothership from 'gameEngine/entities/Ships/Mothership';
 
 import {
   NEUTRAL,
@@ -56,15 +54,5 @@ describe('Tests a component', () => {
     colorByPlayer(entity, mockCtx);
     expect(mockCtx.strokeStyle).not.toBe(color);
     expect(mockCtx.arc.mock.calls.length).toBe(2);
-  });
-
-  it('Draws a faded line if nothing is selected', () => {
-    let mockCtx = getMock();
-    let XPOS = 100;
-    let YPOS = 120;
-    let entity = new Mothership(XPOS, YPOS, NEUTRAL);
-    entity[PLAYER_CONTROLLED].selected = false;
-    colorActionRange(entity, mockCtx);
-    expect(mockCtx.moveTo.mock.calls.length).toBe(1);
   });
 });

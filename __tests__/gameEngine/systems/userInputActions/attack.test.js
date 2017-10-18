@@ -3,7 +3,6 @@
 /* global expect */
 /* global beforeEach */
 import {attack} from 'gameEngine/systems/userInputActions/attack';
-import Mothership from 'gameEngine/entities/Ships/Mothership';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import Fighter from 'gameEngine/entities/Ships/Fighter';
 import PositionComponent, {hasDest, setDest} from 'gameEngine/components/PositionComponent';
@@ -26,8 +25,8 @@ describe('Tests the attack action', () => {
 
   it('Cannot attack a non attackable!', () => {
     let earth = new EarthLike(200, 200, PLAYER_1);
-    let ship = new Mothership(200, 300, PLAYER_2);
 
+    let ship = {};
     earth[PLAYER_CONTROLLED].selected = true;
     expect(attack({x:200, y:300})).toBe(0);
   });

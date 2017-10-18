@@ -5,6 +5,11 @@
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
+import gameConfig from 'gameEngine/config';
+import {
+  MEDIUM,
+  MAP_SIZE
+} from 'gameEngine/constants';
 describe('Tests a component', () => {
   beforeEach(() => {
       // setup the test
@@ -14,6 +19,7 @@ describe('Tests a component', () => {
     let dispatch = jest.fn();
     let wrapper = mount(<CanvasMap
       dispatch={dispatch}
+      mapSize={gameConfig[MAP_SIZE][MEDIUM]}
     ></CanvasMap>);
 
     wrapper.find('canvas').simulate('mouseDown');
@@ -25,6 +31,7 @@ describe('Tests a component', () => {
     let dispatch = jest.fn();
     let wrapper = mount(<CanvasMap
       dispatch={dispatch}
+      mapSize={gameConfig[MAP_SIZE][MEDIUM]}
     ></CanvasMap>);
 
     wrapper.find('canvas').simulate('mouseMove');
@@ -37,6 +44,7 @@ describe('Tests a component', () => {
       dispatch={() => {
 
       }}
+      mapSize={gameConfig[MAP_SIZE][MEDIUM]}
     ></CanvasMap>);
 
     let instance = wrapper.instance();
@@ -70,6 +78,7 @@ describe('Tests a component', () => {
       dispatch={() => {
 
       }}
+      mapSize={gameConfig[MAP_SIZE][MEDIUM]}
     ></CanvasMap>);
 
     let instance = wrapper.instance();

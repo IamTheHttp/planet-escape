@@ -78,9 +78,9 @@ class App extends React.Component {
         continue; // TODO , this loop expects all entities to be UI entities
       }
 
-      if (ent[UI_COMP].sections.find(byKey('name', CANVAS)) && ent[POSITION]) {
-        entsToDraw.push(ent);
-      }
+      // if (ent[UI_COMP].sections.find(byKey('name', CANVAS)) && ent[POSITION]) {
+      entsToDraw.push(ent);
+      // }
 
       // legacy, when we had a planet section
       // if (ent[UI_COMP].sections.find(byKey('name', PLANETS))) {

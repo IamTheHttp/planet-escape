@@ -26,11 +26,7 @@ function userInputSystem() {
     // for each entity in the action, do the required logic
     if (action.entities) {
       entityLoop(action.entities, (ent) => {
-        let toBuild;
-        if (action.name === 'build') {
-          toBuild = entities[action.entityID];
-          ent.components[BUILDINGS_COMP].inProgress.push(new toBuild.constructor());
-        }
+        // do stuff here on multiple entities
       });
     } else {
       if (action.name === SELECT) {
