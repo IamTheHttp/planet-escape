@@ -1,7 +1,6 @@
 import React from 'react';
 import './mainMenu.scss';
 
-let options = ['start', 'help - TODO', 'about - TODO', 'exit - TODO'];
 import {
   TINY,
   MEDIUM,
@@ -11,12 +10,13 @@ import {
   CHALLENGING,
   HARD
 } from 'gameEngine/constants';
+let mapSizes = [TINY, SMALL, MEDIUM, LARGE];
+let diffs = [EASY, CHALLENGING, HARD];
+
 class MainMenu extends React.Component {
   constructor() {
     super();
     this.state = {
-      easy:true,
-      tiny:true,
       mapSize : TINY,
       difficulty : EASY
     };
@@ -36,24 +36,15 @@ class MainMenu extends React.Component {
                     Select difficulty
                   </h4>
                   <div className="topDownBtnGroup">
-                    <button
-                      className={`btn btn-success ${this.state.easy && 'active'}`}
-                      onClick={() => {
-                        this.setState({easy:true, challenging:false, hard:false, difficulty : EASY});
-                      }}
-                    >{EASY.toLowerCase()}</button>
-                    <button
-                      className={`btn btn-warning ${this.state.challenging && 'active'}`}
-                      onClick={() => {
-                        this.setState({easy:false, challenging:true, hard:false, difficulty : CHALLENGING});
-                      }}
-                    >{CHALLENGING.toLowerCase()}</button>
-                    <button
-                      className={`btn btn-danger ${this.state.hard && 'active'}`}
-                      onClick={() => {
-                        this.setState({easy:false, challenging:false, hard:true, difficulty : HARD});
-                      }}
-                    >{HARD.toLowerCase()}</button>
+                    {diffs.map((diff) => {
+                      return (<button
+                        key={diff}
+                        className={`btn btn-info ${this.state.difficulty === diff && 'active'}`}
+                        onClick={() => {
+                          this.setState({difficulty:diff});
+                        }}
+                      >{diff.toLowerCase()}</button>);
+                    })}
                   </div>
                 </div>
                 <div className="mapSizeSelector">
@@ -61,30 +52,15 @@ class MainMenu extends React.Component {
                     Select map size
                   </h4>
                   <div className="topDownBtnGroup">
-                    <button
-                      className={`btn btn-info ${this.state.tiny && 'active'}`}
-                      onClick={() => {
-                        this.setState({tiny:true, small:false, medium:false, large:false, mapSize:TINY});
-                      }}
-                    >{TINY.toLowerCase()}</button>
-                    <button
-                      className={`btn btn-info ${this.state.small && 'active'}`}
-                      onClick={() => {
-                        this.setState({tiny:false, small:true, medium:false, large:false, mapSize:SMALL});
-                      }}
-                    >{SMALL.toLowerCase()}</button>
-                    <button
-                      className={`btn btn-info ${this.state.medium && 'active'}`}
-                      onClick={() => {
-                        this.setState({tiny:false, small:false, medium:true, large:false, mapSize:MEDIUM});
-                      }}
-                    >{MEDIUM.toLowerCase()}</button>
-                    <button
-                      className={`btn btn-info ${this.state.large && 'active'}`}
-                      onClick={() => {
-                        this.setState({tiny:false, small:false, medium:false, large:true, mapSize:LARGE});
-                      }}
-                    >{LARGE.toLowerCase()}</button>
+                    {mapSizes.map((size) => {
+                      return (<button
+                        key={size}
+                        className={`btn btn-info ${this.state.mapSize === size && 'active'}`}
+                        onClick={() => {
+                          this.setState({mapSize:size});
+                        }}
+                      >{size.toLowerCase()}</button>);
+                    })}
                   </div>
                 </div>
               </div>

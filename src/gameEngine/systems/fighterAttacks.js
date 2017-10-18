@@ -3,7 +3,7 @@ import entityLoop from 'gameEngine/systems/utils/entityLoop';
 import {getFighters, destroyFighter, getDockedFighters} from 'gameEngine/components/HasFighters';
 import {unSelect} from 'gameEngine/components/PlayerControlledComponent';
 import {hasDest, isSamePos, destReached} from 'gameEngine/components/PositionComponent';
-import {diffPlayers, setOwner, getOwner} from 'gameEngine/components/OwnerComponent';
+import {diffPlayers, getOwner} from 'gameEngine/components/OwnerComponent';
 import Fighter from 'gameEngine/entities/Ships/Fighter';
 
 import {
