@@ -17,10 +17,12 @@ import {
   PLANET_BUFFER,
   AI_MIN_FIGHTERS,
   DEFAULT_FIGHTER_COUNT,
-  NUM_PLAYERS
+  NUM_PLAYERS,
+  PLANET_RADIUS
 } from './constants.js';
 
 export default {
+  [PLANET_RADIUS] : 15,
   [NUM_PLAYERS] : 2,
   [AI_MIN_FIGHTERS] : 5,
   [DEFAULT_FIGHTER_COUNT] : 10,

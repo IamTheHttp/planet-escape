@@ -13,18 +13,20 @@ let planetsImage = new Image();
 planetsImage.src = planets;
 
 import Fighter from 'gameEngine/entities/Ships/Fighter';
-
+import gameConfig from 'gameEngine/config';
 import {
   NEUTRAL,
-  HAS_FIGHTERS
+  HAS_FIGHTERS,
+  PLANET_RADIUS
 } from 'gameEngine/constants';
 
 class EarthLike {
   constructor(xPos = 50, yPos = 50, player = NEUTRAL) {
     let ent = new Entity(EarthLike);
+    let planetRadius = gameConfig[PLANET_RADIUS];
     ent.addComponent(new UIComponent(['planets', 'canvas']));
     ent.addComponent(new BuildingsComponent);
-    ent.addComponent(new PositionComponent(xPos, yPos, 15));
+    ent.addComponent(new PositionComponent(xPos, yPos, planetRadius));
     ent.addComponent(new PlayerControlledComponent());
     ent.addComponent(new OwnerComponent(player));
     ent.addComponent(new HasFighters());

@@ -20,10 +20,20 @@ describe('Tests a component', () => {
 
   jest.useFakeTimers();
 
-  it('Expects to run without issues', () => {
+  it('Expects to run without issues', (done) => {
     let wrapper = mount(<App></App>);
-    wrapper.instance().startGame();
-    jest.runOnlyPendingTimers();
+    wrapper.setState({
+      // gameEnt : {
+      //   [GAME_STATE] : {
+      //     status : GAME_WON
+      //   }
+      // },
+      // isMenuOpen : false
+    }, () => {
+      wrapper.instance().startGame();
+      jest.runOnlyPendingTimers();
+      done();
+    });
   });
 
   it('Expects the popup to open as the game is lost..', () => {

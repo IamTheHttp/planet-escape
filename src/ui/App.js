@@ -30,14 +30,18 @@ let mapSize = gameConfig[MAP_SIZE][LARGE];
 class App extends React.Component {
   constructor() {
     super();
+
+    this.defGameEnt = {
+      [GAME_STATE] : {
+        status : null
+      }
+    };
+
+
     this.state = {
       selectedEntity : false,
       buildingOptions : {},
-      gameEnt : {
-        [GAME_STATE] : {
-          status : null
-        }
-      },
+      gameEnt : this.defGameEnt,
       isMenuOpen : true
     };
     this.game = {};
@@ -63,26 +67,26 @@ class App extends React.Component {
   updateGameState(gameEntities, msFrame) {
     this.logFrame(msFrame);
     this.frameCount++;
-    let planetSection = {};
-    let gameEnt = null;
-    let summary = {};
-    let buildingOptions = {};
-    let totalIncome = 0;
-
+    let gameEnt = this.defGameEnt;
     let entsToDraw = [];
 
     for (let id in gameEntities) {
       let ent = gameEntities[id];
+
       if (ent.hasComponents(GAME_STATE)) {
+        // console.log(ent);
         gameEnt = ent;
         continue;
       }
+
       entsToDraw.push(ent);
-      this.setState({gameEnt, planetSection, summary, totalIncome, buildingOptions});
-      /* istanbul ignore else  */
-      if (this.canvasMap) {
-        this.canvasMap.update(entsToDraw);
-      }
+    }
+
+    this.setState({gameEnt});
+
+    /* istanbul ignore else  */
+    if (this.canvasMap) {
+      this.canvasMap.update(entsToDraw);
     }
   }
 

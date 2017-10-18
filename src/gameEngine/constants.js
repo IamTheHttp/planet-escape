@@ -49,6 +49,7 @@ export const COLORS = {
   [DEFAULT]  : 'black'
 };
 
+export const PLANET_RADIUS = 'PLANET_RADIUS';
 export const MAP_SIZE = 'MAP_SIZE';
 export const TINY = 'TINY';
 export const SMALL = 'SMALL';

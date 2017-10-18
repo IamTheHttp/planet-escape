@@ -8,14 +8,20 @@ import {mount, shallow} from 'enzyme';
 import React from 'react';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
-
+import gameConfig from 'gameEngine/config';
 let rand = global.Math.random;
 global.Math.random = () => {
   return 0;
 };
 import PositionComponent from 'gameEngine/components/PositionComponent';
 import {
-  POSITION
+  POSITION,
+  MAP_SIZE,
+  CANVAS_X,
+  CANVAS_Y,
+  PLANET_RADIUS,
+  PLANET_BUFFER,
+  PLANETS_IN_MAP
 } from 'gameEngine/constants.js';
 import {
   getGridBlockFromPos,
@@ -120,28 +126,40 @@ describe('Tests position', () => {
 
   it('ensures we can place a set amount of objects in area', () => {
     global.Math.random = rand;
-    let radius = 25;
-    let availableArea = 1000 * 1000;
-    let targetRatio = 0.02; // we can support safely up to 2% of the canvas space
-    let shapeSize = radius * radius;
-    let testCount = 0;
-    let buffer = 2; // we test with 1.5 times buffer
-
-    while (testCount < 50) { // change from 50 to 2000 to test robustness
+    Object.keys(gameConfig[MAP_SIZE]).forEach((size) => {
       Entity.reset();
-      let entities = {};
-      let shapeArea = 0;
-      let i = 0;
-      while ((shapeArea / availableArea) < targetRatio) {
-        let ent = new Entity();
-        ent.addComponent(new PositionComponent(null, null, radius));
-        entities[ent.id] = ent;
-        shapeArea += shapeSize;
-        i++;
+      let mapSize = gameConfig[MAP_SIZE][size];
+      let buffer = mapSize[PLANET_BUFFER];
+      let radius = gameConfig[PLANET_RADIUS];
+      let testCount = 0;
+
+      let area = {
+        topLeftAreaX : 0,
+        topLeftAreaY : 0,
+        bottomRightAreaX: mapSize[CANVAS_X],
+        bottomRightAreaY : mapSize[CANVAS_Y]
+      };
+
+      while (testCount < 50) { // change from 50 to 2000 to test robustness
+        Entity.reset();
+        let entities = {};
+        let i = 0;
+
+        while (i < mapSize[PLANETS_IN_MAP]) {
+          let ent = new Entity();
+          ent.addComponent(new PositionComponent(null, null, radius));
+          entities[ent.id] = ent;
+          i++;
+        }
+        let {placedEntities} = entityPlacer(entities, area, buffer);
+
+        // for debugging, makes it easy to know which map size failed
+        // if (placedEntities.length !== i) {
+        //   console.log(size);
+        // }
+        expect(placedEntities.length).toEqual(i);
+        testCount++;
       }
-      let {placedEntities} = entityPlacer(entities, area, buffer);
-      expect(placedEntities.length).toEqual(i);
-      testCount++;
-    }
+    });
   });
 });
