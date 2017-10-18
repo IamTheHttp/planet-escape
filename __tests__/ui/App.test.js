@@ -8,29 +8,28 @@ import React from 'react';
 import App from 'ui/App';
 import {
   GAME_STATE,
+  IN_PROGRESS,
   GAME_LOST,
-  GAME_WON
+  GAME_WON,
+  MAP_SIZE,
+  TINY
 } from 'gameEngine/constants';
-
+import gameConfig from 'gameEngine/config';
 describe('Tests a component', () => {
+  jest.useFakeTimers();
   beforeEach(() => {
         // setup the test
     jest.clearAllTimers();
   });
 
-  jest.useFakeTimers();
-
   it('Expects to run without issues', (done) => {
     let wrapper = mount(<App></App>);
+    wrapper.instance().mapSize = gameConfig[MAP_SIZE][TINY];
     wrapper.setState({
-      // gameEnt : {
-      //   [GAME_STATE] : {
-      //     status : GAME_WON
-      //   }
-      // },
-      // isMenuOpen : false
+      isMenuOpen : false
     }, () => {
-      wrapper.instance().startGame();
+      wrapper.instance().startGame(gameConfig[MAP_SIZE][TINY]);
+      jest.runOnlyPendingTimers();
       jest.runOnlyPendingTimers();
       done();
     });
@@ -38,6 +37,7 @@ describe('Tests a component', () => {
 
   it('Expects the popup to open as the game is lost..', () => {
     let wrapper = mount(<App></App>);
+    wrapper.instance().mapSize = gameConfig[MAP_SIZE][TINY];
     wrapper.setState({
       gameEnt : {
         [GAME_STATE] : {
@@ -53,6 +53,7 @@ describe('Tests a component', () => {
 
   it('Expects the popup to open as the game is lost..', () => {
     let wrapper = mount(<App></App>);
+    wrapper.instance().mapSize = gameConfig[MAP_SIZE][TINY];
     wrapper.setState({
       gameEnt : {
         [GAME_STATE] : {

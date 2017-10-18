@@ -25,7 +25,7 @@ import {
 import gameConfig from 'gameEngine/config';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
 import {byKey} from 'shared/utils';
-let mapSize = gameConfig[MAP_SIZE][LARGE];
+
 
 class App extends React.Component {
   constructor() {
@@ -49,7 +49,7 @@ class App extends React.Component {
     this.frameCount = 0;
   }
 
-  startGame() {
+  startGame(mapSize) {
     return new GameLoop(this.updateGameState.bind(this), mapSize, gameConfig[NUM_PLAYERS]);
   }
 
@@ -97,7 +97,7 @@ class App extends React.Component {
       popUp = (<Modal
         text={'Game Won!'}
         onClick={() => {
-          this.game = this.startGame();
+          this.game = this.startGame(this.mapSize);
         }}
       ></Modal>);
     } else if (this.state.gameEnt[GAME_STATE].status === GAME_LOST) {
@@ -105,7 +105,7 @@ class App extends React.Component {
       popUp = (<Modal
         text={'Game Over!'}
         onClick={() => {
-          this.game = this.startGame();
+          this.game = this.startGame(this.mapSize);
         }}
       ></Modal>);
     }
@@ -114,13 +114,12 @@ class App extends React.Component {
 
   getMainMenuModal() {
     return (<MainMenu
-      onClick={(item) => {
-        if (item === 'start') {
-          this.game = this.startGame();
-          this.setState({
-            isMenuOpen : false
-          });
-        }
+      onStart={(menuSelection) => {
+        this.mapSize = gameConfig[MAP_SIZE][menuSelection.mapSize];
+        this.game = this.startGame(this.mapSize);
+        this.setState({
+          isMenuOpen : false
+        });
       }}
     ></MainMenu>);
   }
@@ -130,14 +129,14 @@ class App extends React.Component {
       <div>
         <div className="container-fluid app">
           <div className="row">
-            <CanvasMap
+            {!this.state.isMenuOpen && <CanvasMap
               ref={(inst) => {
                 this.canvasMap = inst;
               }}
-              mapSize={mapSize}
+              mapSize={this.mapSize}
               dispatch={this.game.dispatchAction}
             >
-            </CanvasMap>
+            </CanvasMap>}
           </div>
         </div>
         {this.getGameEndModal()}

@@ -1,15 +1,28 @@
 .mainMenuModal {
-  text-align:center;
 
-  ul{
-    padding:0;
+  .startGame{
+    text-align:right;
   }
 
-  li {
-    list-style-type: none;
-    padding-bottom:5px;
+  .btn {
+    width:100px;
   }
-  button {
+
+  .difficultySelector, .mapSizeSelector {
     width:150px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align:center;
+    .topDownBtnGroup {
+
+    }
+    .btn {
+      text-transform:capitalize;
+      transition:all 0.3s linear;
+      &.active{
+        margin-left:20px;
+      }
+      margin-bottom:3px;
+    }
   }
 }

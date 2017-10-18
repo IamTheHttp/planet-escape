@@ -66,3 +66,7 @@ export const CANVAS_Y = 'CANVAS_Y';
 export const PLANET_BUFFER = 'PLANET_BUFFER';
 export const AI_MIN_FIGHTERS = 'AI_MIN_FIGHTERS';
 export const DEFAULT_FIGHTER_COUNT = 'DEFAULT_FIGHTER_COUNT';
+
+export const EASY = 'EASY';
+export const CHALLENGING = 'CHALLENGING';
+export const HARD = 'HARD';
