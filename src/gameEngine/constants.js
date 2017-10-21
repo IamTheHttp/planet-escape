@@ -70,3 +70,5 @@ export const DEFAULT_FIGHTER_COUNT = 'DEFAULT_FIGHTER_COUNT';
 export const EASY = 'EASY';
 export const CHALLENGING = 'CHALLENGING';
 export const HARD = 'HARD';
+export const DIFFICULTY = 'DIFFICULTY';
+export const AI_DECISION_RATE = 'AI_DECISION_RATE';

@@ -17,11 +17,12 @@ import {
   IS_DOCKED,
   IN_PROGRESS,
   GAME_STATE,
-  FIGHTER_BUILD_RATE
+  FIGHTER_BUILD_RATE,
+  AI_DECISION_RATE
 } from 'gameEngine/constants';
 
 class GameLoop {
-  constructor(cbNotification, mapSize, numPlayers) {
+  constructor(cbNotification, mapSize, difficulty, numPlayers) {
     Entity.reset();
     this.dispatchAction = this.dispatchAction.bind(this);
     // setup some planets
@@ -33,7 +34,7 @@ class GameLoop {
       let start = performance.now();
       userInputSystem();
       // throttle the AI decision making
-      if (count % 120 === 0) {
+      if (count % difficulty[AI_DECISION_RATE] === 0) {
         ai(count);
       }
       moveSystem();

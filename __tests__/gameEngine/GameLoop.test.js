@@ -17,9 +17,12 @@ import {
   PLAYER_1,
   MEDIUM,
   MAP_SIZE,
-  PLANETS_IN_MAP
+  PLANETS_IN_MAP,
+  DIFFICULTY,
+  EASY
 } from 'gameEngine/constants';
 let mapSize = gameConfig[MAP_SIZE][MEDIUM];
+let difficulty = gameConfig[DIFFICULTY][EASY];
 
 function getEntityOfType(className) {
   let resp = [];
@@ -40,7 +43,7 @@ describe('Tests a component', () => {
     let cbMock = jest.fn();
     let sampleID = (new Entity()).id; // no UI_COMP here
 
-    new GameLoop(cbMock, mapSize);
+    new GameLoop(cbMock, mapSize, difficulty);
     jest.runOnlyPendingTimers();
     expect(cbMock.mock.calls[0][0][sampleID]).toBeUndefined();
     jest.runOnlyPendingTimers();
@@ -49,7 +52,7 @@ describe('Tests a component', () => {
   it('Build fighters only runs every 15 iterations', () => {
     jest.useFakeTimers();
     let cbMock = jest.fn();
-    new GameLoop(cbMock, mapSize);
+    new GameLoop(cbMock, mapSize, difficulty);
     let int = 0;
     while (int < FIGHTER_BUILD_RATE) {
       jest.runOnlyPendingTimers();

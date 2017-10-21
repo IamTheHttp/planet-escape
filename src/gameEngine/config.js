@@ -18,7 +18,12 @@ import {
   AI_MIN_FIGHTERS,
   DEFAULT_FIGHTER_COUNT,
   NUM_PLAYERS,
-  PLANET_RADIUS
+  PLANET_RADIUS,
+  EASY,
+  CHALLENGING,
+  HARD,
+  DIFFICULTY,
+  AI_DECISION_RATE
 } from './constants.js';
 
 export default {
@@ -33,6 +38,17 @@ export default {
     [PLAYER_3] : 'rgba(0, 0, 255, 1)',
     [SELECT]   : 'white',
     [DEFAULT]  : 'black'
+  },
+  [DIFFICULTY] : {
+    [EASY]: {
+      [AI_DECISION_RATE] : 120
+    },
+    [CHALLENGING] : {
+      [AI_DECISION_RATE] : 100
+    },
+    [HARD] : {
+      [AI_DECISION_RATE] : 80
+    }
   },
   [MAP_SIZE] : {
     [TINY] : {

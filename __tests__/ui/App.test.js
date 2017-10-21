@@ -12,7 +12,9 @@ import {
   GAME_LOST,
   GAME_WON,
   MAP_SIZE,
-  TINY
+  TINY,
+  DIFFICULTY,
+  EASY
 } from 'gameEngine/constants';
 import gameConfig from 'gameEngine/config';
 describe('Tests a component', () => {
@@ -25,10 +27,11 @@ describe('Tests a component', () => {
   it('Expects to run without issues', (done) => {
     let wrapper = mount(<App></App>);
     wrapper.instance().mapSize = gameConfig[MAP_SIZE][TINY];
+    wrapper.instance().difficulty = gameConfig[DIFFICULTY][EASY];
     wrapper.setState({
       isMenuOpen : false
     }, () => {
-      wrapper.instance().startGame(gameConfig[MAP_SIZE][TINY]);
+      wrapper.instance().startGame(gameConfig[MAP_SIZE][TINY], gameConfig[DIFFICULTY][EASY]);
       jest.runOnlyPendingTimers();
       jest.runOnlyPendingTimers();
       done();
@@ -38,6 +41,7 @@ describe('Tests a component', () => {
   it('Expects the popup to open as the game is lost..', () => {
     let wrapper = mount(<App></App>);
     wrapper.instance().mapSize = gameConfig[MAP_SIZE][TINY];
+    wrapper.instance().difficulty = gameConfig[DIFFICULTY][EASY];
     wrapper.setState({
       gameEnt : {
         [GAME_STATE] : {
@@ -54,6 +58,7 @@ describe('Tests a component', () => {
   it('Expects the popup to open as the game is lost..', () => {
     let wrapper = mount(<App></App>);
     wrapper.instance().mapSize = gameConfig[MAP_SIZE][TINY];
+    wrapper.instance().difficulty = gameConfig[DIFFICULTY][EASY];
     wrapper.setState({
       gameEnt : {
         [GAME_STATE] : {

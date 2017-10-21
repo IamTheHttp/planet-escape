@@ -9,23 +9,15 @@ import MainMenu from 'ui/components/MainMenu/MainMenu';
 import './global.scss';
 import 'bootstrap/dist/css/bootstrap.css';
 import {
-  UI_COMP,
-  POSITION,
   GAME_STATE,
-  CANVAS,
   GAME_WON,
   GAME_LOST,
   MAP_SIZE,
-  TINY,
-  SMALL,
-  MEDIUM,
-  LARGE,
+  DIFFICULTY,
   NUM_PLAYERS
 } from 'gameEngine/constants';
 import gameConfig from 'gameEngine/config';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
-import {byKey} from 'shared/utils';
-
 
 class App extends React.Component {
   constructor() {
@@ -49,8 +41,8 @@ class App extends React.Component {
     this.frameCount = 0;
   }
 
-  startGame(mapSize) {
-    return new GameLoop(this.updateGameState.bind(this), mapSize, gameConfig[NUM_PLAYERS]);
+  startGame(mapSize, difficulty) {
+    return new GameLoop(this.updateGameState.bind(this), mapSize, difficulty,  gameConfig[NUM_PLAYERS]);
   }
 
   stopGame() {
@@ -97,7 +89,7 @@ class App extends React.Component {
       popUp = (<Modal
         text={'Game Won!'}
         onClick={() => {
-          this.game = this.startGame(this.mapSize);
+          this.game = this.startGame(this.mapSize, this.difficulty);
         }}
       ></Modal>);
     } else if (this.state.gameEnt[GAME_STATE].status === GAME_LOST) {
@@ -105,7 +97,7 @@ class App extends React.Component {
       popUp = (<Modal
         text={'Game Over!'}
         onClick={() => {
-          this.game = this.startGame(this.mapSize);
+          this.game = this.startGame(this.mapSize, this.difficulty);
         }}
       ></Modal>);
     }
@@ -116,7 +108,8 @@ class App extends React.Component {
     return (<MainMenu
       onStart={(menuSelection) => {
         this.mapSize = gameConfig[MAP_SIZE][menuSelection.mapSize];
-        this.game = this.startGame(this.mapSize);
+        this.difficulty = gameConfig[DIFFICULTY][menuSelection.difficulty];
+        this.game = this.startGame(this.mapSize, this.difficulty);
         this.setState({
           isMenuOpen : false
         });
