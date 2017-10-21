@@ -60,7 +60,6 @@ export function attack(action, entities = getSelectedEntities(), redirectFighter
     fightersInFleet.forEach((fighter) => {
       let speed = fighter[MOVEMENT_COMP].speed;
       fighter[POSITION].radius += launchedFighters;
-      console.log(launchedFighters);
       // disalbe the slowdown, not sure this is required...
       // fighter[MOVEMENT_COMP].speed = Math.max(speed - launchedFighters * 0.07, 0.5); // slow down
     });
