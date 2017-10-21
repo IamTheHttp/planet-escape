@@ -15,7 +15,7 @@ import {
   POSITION,
   OWNER_COMPONENT,
   MOVE,
-  SELECT,
+  CLICK,
   NEUTRAL,
   PLAYER_1,
   PLAYER_2,
@@ -45,7 +45,7 @@ describe('Tests the user input system', () => {
   it('placeholder', () => {
 
   });
-  //
+
   it('Tests an action without entities', () => {
     // pushing an action with no entities
     pushAction({
@@ -55,7 +55,8 @@ describe('Tests the user input system', () => {
     userInputSystem('asdsdfs');
     // the success of this test is that nothing throws exceptions, function returns nothing
   });
-  //
+
+
   it('Tests an invalid action(no name)', () => {
     // pushing an action with no entities
     pushAction({
@@ -65,12 +66,13 @@ describe('Tests the user input system', () => {
     // the system doesn't even process it's input if there are no valid actions
     // the success of this test is that nothing throws exceptions, function returns nothing
   });
-  //
+
+
   it('Tests that an entity can be selected', () => {
     let planet = new EarthLike(100, 100, PLAYER_1);
 
     pushAction({
-      name:SELECT,
+      name:CLICK,
       x : 500,
       y : 500,
       selectedBox : getSelectedBox(500, 500)
@@ -79,7 +81,7 @@ describe('Tests the user input system', () => {
     expect(planet[PLAYER_CONTROLLED].selected).toBe(false);
 
     pushAction({
-      name:SELECT,
+      name:CLICK,
       x : 100,
       y : 104.99,
       selectedBox : getSelectedBox(100, 104.99)
@@ -88,7 +90,7 @@ describe('Tests the user input system', () => {
     expect(planet[PLAYER_CONTROLLED].selected).toBe(true);
 
     pushAction({
-      name:'select',
+      name: CLICK,
       x : 104.99,
       y : 100,
       selectedBox : getSelectedBox(104.99, 100)
@@ -97,20 +99,6 @@ describe('Tests the user input system', () => {
     expect(planet[PLAYER_CONTROLLED].selected).toBe(true);
   });
 
-  it('Tests that an entity can be moved', () => {
-    let planet = new EarthLike(100, 100);
-
-    // set as selected
-    planet[PLAYER_CONTROLLED].selected = true;
-    pushAction({
-      name:MOVE,
-      x : 105,
-      y : 100
-    });
-    userInputSystem();
-    expect(planet[POSITION].destY).toBe(100);
-    expect(planet[POSITION].destX).toBe(105);
-  });
 
   it('Attacking action will set destination of fighters', () => {
     let attackingPlanet = new EarthLike(200, 200, PLAYER_1);
@@ -121,7 +109,7 @@ describe('Tests the user input system', () => {
     expect(getFighters(attackingPlanet).length).toBeGreaterThan(0);
 
     pushAction({
-      name:ATTACK,
+      name:CLICK,
       x : 100,
       y : 100
     });

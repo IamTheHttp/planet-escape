@@ -61,7 +61,7 @@ describe('Tests the attack action', () => {
     // even though the attacker has two fighters, since we passed in 'false', we redirect just one
     expect(attack({x:300, y:300}, [attacker], false)).toBe(1);
 
-    // now without the argument, we should point both of these fighters
-    expect(attack({x:300, y:300}, [attacker])).toBe(2);
+    // now with true the argument, we should point both of these fighters
+    expect(attack({x:300, y:300}, [attacker], true)).toBe(2);
   });
 });

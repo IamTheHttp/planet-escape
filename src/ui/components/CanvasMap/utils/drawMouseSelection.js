@@ -1,8 +1,9 @@
 import {
-  SELECT,
+  PLAYER_1,
   COLORS
 } from 'gameEngine/constants';
 
+import gameConfig from 'gameEngine/config';
 export function drawMouseSelection(ctx, selectedBox) {
   let width = selectedBox.end.x - selectedBox.start.x;
   let height = selectedBox.end.y - selectedBox.start.y;
@@ -14,6 +15,6 @@ export function drawMouseSelection(ctx, selectedBox) {
     width,
     height
   );
-  ctx.strokeStyle = COLORS[SELECT];
+  ctx.strokeStyle = gameConfig[COLORS][PLAYER_1];
   ctx.stroke();
 }

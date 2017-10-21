@@ -4,7 +4,8 @@ import {drawMouseSelection} from './utils/drawMouseSelection';
 import onKeyUp from './utils/onKeyUp';
 import updateCursorPosition from './utils/updateCursorPosition';
 import {
-  SELECT,
+  CLICK,
+  DB_CLICK,
   MOVE,
   CANVAS_X,
   CANVAS_Y,
@@ -19,6 +20,7 @@ class CanvasMap extends React.Component {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.lastClick = new Date().getTime();
   }
   // high order function
   dispatch(name) {
@@ -28,7 +30,8 @@ class CanvasMap extends React.Component {
         x: this.x,
         y: this.y,
         selectedBox: this.selectedBox,
-        isMouseDown : this.isMouseDown
+        isMouseDown : this.isMouseDown,
+        dbClick : this.dbClick
       });
     };
   }
@@ -41,8 +44,6 @@ class CanvasMap extends React.Component {
     this.selectedBox = {};
 
     // this might be tracked somewhere else, it has nothing to do with the canvas itself!
-    onKeyUp('e', this.dispatch(MOVE));
-    onKeyUp('a', this.dispatch(ATTACK));
     document.addEventListener('mousemove', updateCursorPosition(this));
   }
 
@@ -60,6 +61,9 @@ class CanvasMap extends React.Component {
   }
 
   onMouseDown() {
+    let now = new Date().getTime();
+    this.dbClick = now - this.lastClick < 300;
+    this.lastClick = now;
     this.isMouseDown = true;
     return this.selectedBox = {
       start: {
@@ -83,9 +87,10 @@ class CanvasMap extends React.Component {
       return false;
     }
   }
+
   onMouseUp() {
     this.isMouseDown = false;
-    this.dispatch(SELECT)();
+    this.dispatch(CLICK)();
   }
 
   onMouseLeave() {

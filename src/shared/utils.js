@@ -57,13 +57,6 @@ export function generateMap(mapSize) {
   new EarthLike(mapSize[CANVAS_X] - 50, mapSize[CANVAS_Y] - 50, PLAYER_2);
 }
 
-
-export function byKey(key, value) {
-  return (obj) => {
-    return obj[key] === value;
-  };
-}
-
 /**
  * Runs the callback one out of X tries, this is a statistical function used in a loop
  */

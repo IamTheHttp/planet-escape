@@ -1,7 +1,6 @@
 import Entity from 'gameEngine/Entity';
 
 import {
-  BUILDINGS_COMP,
   HAS_FIGHTERS,
   PLAYER_CONTROLLED,
   OWNER_COMPONENT,
@@ -25,6 +24,18 @@ export function getSelectedEntities() {
       return true;
     }
   });
+}
+
+export function getClickedEntitiy(action) {
+  let entities = Entity.getByComps([POSITION, PLAYER_CONTROLLED, OWNER_COMPONENT]);
+  let results = entityLoop(entities, (ent) => {
+    let centerX = ent[POSITION].x;
+    let centerY = ent[POSITION].y;
+    let radius = ent[POSITION].radius;
+    // this is what stops us from selecting an entity that does not belong to us
+    return isPosInsideCircle(action.x, action.y, centerX, centerY, radius);
+  });
+  return results;
 }
 
 export function setEntityDest(entity, action) {
@@ -86,6 +97,19 @@ export function unSelectAllEntities() {
     if (ent[PLAYER_CONTROLLED].selected) {
       ent[PLAYER_CONTROLLED].selected = false;
       return true;
+    }
+  });
+}
+
+/**
+ * Unselects all entities, returns an array of affected entities
+ * @returns {Array}
+ */
+export function selectAllEntities(player) {
+  let entities = Entity.getByComps([PLAYER_CONTROLLED, OWNER_COMPONENT]);
+  return entityLoop(entities, (ent) => {
+    if (getOwner(ent) === player) {
+      ent[PLAYER_CONTROLLED].selected = true;
     }
   });
 }

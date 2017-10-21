@@ -36,10 +36,10 @@ describe('Tests a component', () => {
   let planets;
   beforeEach(() => {
     Entity.reset();
+    jest.useFakeTimers();
   });
 
   it('should only pass UI comps to the callback', () => {
-    jest.useFakeTimers();
     let cbMock = jest.fn();
     let sampleID = (new Entity()).id; // no UI_COMP here
 
@@ -50,7 +50,6 @@ describe('Tests a component', () => {
   });
 
   it('Build fighters only runs every 15 iterations', () => {
-    jest.useFakeTimers();
     let cbMock = jest.fn();
     new GameLoop(cbMock, mapSize, difficulty);
     let int = 0;
@@ -74,5 +73,11 @@ describe('Tests a component', () => {
     generateMap(mapSize);
     planets = getEntityOfType(EarthLike);
     expect(planets.length).toBe(mapSize[PLANETS_IN_MAP]);
+  });
+
+  it('Pushes an action, test that no exceptions are raised', () => {
+    let cbMock = jest.fn();
+    let loop = new GameLoop(cbMock, mapSize, difficulty);
+    loop.dispatchAction({});
   });
 });

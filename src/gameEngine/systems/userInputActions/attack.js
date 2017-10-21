@@ -24,7 +24,7 @@ import {
  */
 
 // REFACTOR - This is now a moveFighters, and not just attack - same code is used to attack and move
-export function attack(action, entities = getSelectedEntities(), redirectFighters = true) {
+export function attack(action, entities = getSelectedEntities(), redirectFighters = false) {
   let directedFighters = 0;
   let launchedFighters = 0;
 
@@ -59,7 +59,8 @@ export function attack(action, entities = getSelectedEntities(), redirectFighter
     // for each attacking planet, we create a new 'fleet';
     fightersInFleet.forEach((fighter) => {
       let speed = fighter[MOVEMENT_COMP].speed;
-      fighter[POSITION].radius += launchedFighters;
+      let newSize = fighter[POSITION].radius + launchedFighters;
+      fighter[POSITION].radius = Math.min(newSize, fighter[POSITION].radius * 8);
       // disalbe the slowdown, not sure this is required...
       // fighter[MOVEMENT_COMP].speed = Math.max(speed - launchedFighters * 0.07, 0.5); // slow down
     });

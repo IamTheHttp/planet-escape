@@ -27,7 +27,7 @@ import {
 } from './constants.js';
 
 export default {
-  [PLANET_RADIUS] : 15,
+  [PLANET_RADIUS] : 30,
   [NUM_PLAYERS] : 2,
   [AI_MIN_FIGHTERS] : 5,
   [DEFAULT_FIGHTER_COUNT] : 10,
@@ -36,7 +36,6 @@ export default {
     [PLAYER_1] : 'rgba(0, 255, 0, 1)',
     [PLAYER_2] : 'rgba(255, 0, 0, 1)',
     [PLAYER_3] : 'rgba(0, 0, 255, 1)',
-    [SELECT]   : 'white',
     [DEFAULT]  : 'black'
   },
   [DIFFICULTY] : {
@@ -55,25 +54,25 @@ export default {
       [PLANETS_IN_MAP] : 10,
       [CANVAS_X] : 1920 / 2,
       [CANVAS_Y] : 1080 / 2,
-      [PLANET_BUFFER] : 4
+      [PLANET_BUFFER] : 2
     },
     [SMALL] : {
       [PLANETS_IN_MAP] : 20,
       [CANVAS_X] : 1920 * 3 / 4,
       [CANVAS_Y] : 1080 * 3 / 4,
-      [PLANET_BUFFER] : 4
+      [PLANET_BUFFER] : 2
     },
     [MEDIUM] : {
       [PLANETS_IN_MAP] : 40,
       [CANVAS_X] : 1920,
       [CANVAS_Y] : 1080,
-      [PLANET_BUFFER] : 4
+      [PLANET_BUFFER] : 2
     },
     [LARGE] : {
       [PLANETS_IN_MAP] : 80,
       [CANVAS_X] : 1920 * 2,
       [CANVAS_Y] : 1080 * 2,
-      [PLANET_BUFFER] : 4
+      [PLANET_BUFFER] : 2
     }
   }
 };

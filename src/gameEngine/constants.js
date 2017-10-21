@@ -30,7 +30,8 @@ export const CIRCLE = 'circle';
 
 
 // actions
-export const SELECT = 'select';
+export const CLICK = 'select';
+export const DB_CLICK = 'SELECT_ALL';
 export const MOVE = 'move';
 export const ATTACK = 'attack';
 // players
@@ -45,7 +46,6 @@ export const COLORS = {
   [PLAYER_1] : 'rgba(0, 255, 0, 1)',
   [PLAYER_2] : 'rgba(255, 0, 0, 1)',
   [PLAYER_3] : 'rgba(0, 0, 255, 1)',
-  [SELECT]   : 'white',
   [DEFAULT]  : 'black'
 };
 

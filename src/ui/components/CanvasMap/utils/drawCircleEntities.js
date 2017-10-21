@@ -1,21 +1,19 @@
 import logger from 'shared/logger';
 import {
   POSITION,
-  PLAYER_CONTROLLED,
   COLORS,
   HAS_FIGHTERS,
   IS_DOCKED,
   NEUTRAL,
-  SELECT,
-  DEFAULT,
-  CANVAS,
-  CIRCLE,
   OWNER_COMPONENT,
-  SPRITE
+  SPRITE,
+  PLAYER_1
 } from 'gameEngine/constants';
 import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';
 import {getFighters} from 'gameEngine/components/HasFighters';
 import {isSelected} from 'gameEngine/components/PlayerControlledComponent';
+import {getOwner} from 'gameEngine/components/OwnerComponent';
+
 function drawImage(
   ctx,
   image,
@@ -103,7 +101,7 @@ export default (ctx) => {
     }
     drawEntity(entity, ctx);
     colorByPlayer(entity, ctx);
-    writeFighteCount(entity, ctx);
+    (getOwner(entity) === PLAYER_1 || getOwner(entity) === NEUTRAL) && writeFighteCount(entity, ctx);
   };
 };
 
