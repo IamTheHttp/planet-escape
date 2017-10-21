@@ -88,4 +88,25 @@ describe('Tests a the fighter attacks system', () => {
     expect(getFighters(attackingPlanet).length).toBe(attackCount - 1);
     expect(getOwner(defendingPlanet)).toBe(PLAYER_1);
   });
+
+  it('A fighter attacking a an enemy planet that has fighters out..', () => {
+    let attackingPlanet = new EarthLike(200, 200, PLAYER_1);
+    let defendingPlanet = new EarthLike(500, 500, PLAYER_2);
+
+    let attackerFighter = new Fighter(attackingPlanet);
+    let fighterInSpace = new Fighter(defendingPlanet);
+    attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
+    attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
+    fighterInSpace[POSITION].x = 1000;
+    fighterInSpace[POSITION].y = 1000;
+    fighterInSpace[IS_DOCKED].isDocked = false;
+    attackerFighter[IS_DOCKED].isDocked = false;
+    let attackCount = getFighters(attackingPlanet).length;
+    fighterAttacks();
+    // expect the fighterInSpace entity to be removed from the entity list...
+    expect(Entity.entities[fighterInSpace.id]).toBeUndefined();
+    // the planets should lose one fighter
+    // expect(getFighters(attackingPlanet).length).toBe(attackCount - 1);
+    // expect(getOwner(defendingPlanet)).toBe(PLAYER_1);
+  });
 });

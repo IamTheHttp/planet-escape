@@ -33,12 +33,12 @@ function fighterAttacks() {
   entityLoop(planetEnts, (ent) => {
     planets.push(ent);
   });
-
   hits.forEach((attacker) => {
     // first lets detect if we just 'hit' a friendly planet
     let friendlyPlanet = planets.find((planet) => {
       return isSamePos(planet, attacker) && !diffPlayers(planet, attacker) ;
     });
+
 
     // if we reached a friendly planet
     // let's join that planet!
@@ -50,7 +50,6 @@ function fighterAttacks() {
       destroyFighter(attacker);
       return;
     }
-
     let foundPlanet = planets.find((planet) => {
       return isSamePos(planet, attacker) && diffPlayers(planet, attacker) ;
     });
@@ -60,6 +59,11 @@ function fighterAttacks() {
     if (getDockedFighters(foundPlanet).length === 0) {
       foundPlanet[OWNER_COMPONENT].player = getOwner(attacker);
       unSelect(foundPlanet);
+      // we need to copy the array since we can't modify the array while we loop through it
+      let arr = Object.assign([], getFighters(foundPlanet));
+      arr.forEach((fighter) => {
+        destroyFighter(fighter);
+      });
       destroyFighter(attacker);
       return ;
     }
