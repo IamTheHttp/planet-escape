@@ -38,6 +38,7 @@ export function attack(action, entities = getSelectedEntities(), redirectFighter
   let fightersInFleet = [];
   attackingPlanets.forEach((attackingPlanet) => {
     launchedFighters = 0;
+    fightersInFleet = []; // reset the array
     // REFACTOR - This makes no sense as there's only one defending planet at a time
     defendingPlanets.forEach((defendingPlanet) => {
       getFighters(attackingPlanet).forEach((fighterEnt) => {
@@ -53,14 +54,16 @@ export function attack(action, entities = getSelectedEntities(), redirectFighter
         }
       });
     });
-  });
 
-  // we resize the radius of the fighters in the fleet represent the fleet size
-  fightersInFleet.forEach((fighter) => {
-    let speed = fighter[MOVEMENT_COMP].speed;
-    fighter[POSITION].radius += launchedFighters;
-    // disalbe the slowdown, not sure this is required...
-    // fighter[MOVEMENT_COMP].speed = Math.max(speed - launchedFighters * 0.07, 0.5); // slow down
+    // we resize the radius of the fighters in the fleet represent the fleet size
+    // for each attacking planet, we create a new 'fleet';
+    fightersInFleet.forEach((fighter) => {
+      let speed = fighter[MOVEMENT_COMP].speed;
+      fighter[POSITION].radius += launchedFighters;
+      console.log(launchedFighters);
+      // disalbe the slowdown, not sure this is required...
+      // fighter[MOVEMENT_COMP].speed = Math.max(speed - launchedFighters * 0.07, 0.5); // slow down
+    });
   });
 
   return directedFighters;
