@@ -45,6 +45,10 @@ class CanvasMap extends React.Component {
 
     // this might be tracked somewhere else, it has nothing to do with the canvas itself!
     document.addEventListener('mousemove', updateCursorPosition(this));
+    window.onresize = () => {
+      this.canvas.style.height = `${window.innerHeight}px`;
+    };
+    window.onresize();
   }
 
   update(entsToDraw) {
