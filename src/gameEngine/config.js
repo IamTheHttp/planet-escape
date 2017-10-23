@@ -56,19 +56,19 @@ export default {
       [PLANET_BUFFER] : 2
     },
     [SMALL] : {
-      [PLANETS_IN_MAP] : 20,
+      [PLANETS_IN_MAP] : 18,
       [CANVAS_X] : 1920 * 3 / 4,
       [CANVAS_Y] : 1080 * 3 / 4,
       [PLANET_BUFFER] : 2
     },
     [MEDIUM] : {
-      [PLANETS_IN_MAP] : 40,
+      [PLANETS_IN_MAP] : 38,
       [CANVAS_X] : 1920,
       [CANVAS_Y] : 1080,
       [PLANET_BUFFER] : 2
     },
     [LARGE] : {
-      [PLANETS_IN_MAP] : 80,
+      [PLANETS_IN_MAP] : 82,
       [CANVAS_X] : 1920 * 2,
       [CANVAS_Y] : 1080 * 2,
       [PLANET_BUFFER] : 2

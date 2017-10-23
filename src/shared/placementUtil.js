@@ -75,11 +75,78 @@ let createGrid = (area, squaresInLine) => {
   return grid;
 };
 
-// we know we can only accomodate set percent...
+
+
+
+
+let splitAreaToFour = (area) => {
+  // cut area into 4 places..
+  if (!area) {
+    return;
+  }
+  let xAreaLen = area.bottomRightAreaX - area.topLeftAreaX;
+  let yAreaLen = area.bottomRightAreaY - area.topLeftAreaY;
+
+  let topLeft = {
+    topLeftAreaX : area.topLeftAreaX,
+    topLeftAreaY : area.topLeftAreaY,
+    bottomRightAreaX : xAreaLen / 2,
+    bottomRightAreaY : yAreaLen / 2
+  };
+
+  let topRight = {
+    topLeftAreaX : xAreaLen / 2,
+    topLeftAreaY : area.topLeftAreaY,
+    bottomRightAreaX : xAreaLen,
+    bottomRightAreaY : yAreaLen / 2
+  };
+
+  let bottomLeft = {
+    topLeftAreaX : area.topLeftAreaX,
+    topLeftAreaY : yAreaLen / 2,
+    bottomRightAreaX : xAreaLen / 2,
+    bottomRightAreaY : yAreaLen
+  };
+  let bottomRight = {
+    topLeftAreaX : xAreaLen / 2,
+    topLeftAreaY : yAreaLen / 2,
+    bottomRightAreaX : xAreaLen,
+    bottomRightAreaY : yAreaLen
+  };
+
+  return [topLeft, topRight, bottomLeft, bottomRight];
+};
+
+let placeEntities = (entities, area, buffer = 1) => {
+  let first = splitAreaToFour(area)[0];
+  let second = splitAreaToFour(area)[1];
+  let third = splitAreaToFour(area)[2];
+  let fourth = splitAreaToFour(area)[3];
+
+  let entArr = entityLoop(entities, () => {
+    return true; // filter all to an array
+  });
+
+  // split array into 4 chunks..
+  // let ents = [entArr[0], entArr[1]];
+
+  if (entArr.length % 4 === 0) {
+    let fourthOfEnts = entArr.slice(entArr.length * 0, entArr.length * 1 / 4);
+    let secondFourth = entArr.slice(entArr.length * 1 / 4, entArr.length * 2 / 4);
+    let thirdFourth = entArr.slice(entArr.length * 2 / 4, entArr.length * 3 / 4);
+    let fourFourths = entArr.slice(entArr.length * 3 / 4, entArr.length * 4 / 4);
+    entityPlacer(fourthOfEnts, first, buffer);
+    entityPlacer(secondFourth, second, buffer);
+    entityPlacer(thirdFourth, third, buffer);
+    entityPlacer(fourFourths, fourth, buffer);
+  }
+};
+
+
 let entityPlacer = (entities, area, buffer = 1) => {
   let {topLeftAreaX, topLeftAreaY, bottomRightAreaX, bottomRightAreaY} = area;
 
-  let squaresInLine = Math.floor((bottomRightAreaX - topLeftAreaX) / 10);
+  let squaresInLine = Math.floor((bottomRightAreaX - topLeftAreaX) / 10); // TODO - why 10? - each square is 10px?
   let grid = createGrid(area, squaresInLine); // squares in line
 
   let placedEntities = entityLoop(entities, (ent) => {
@@ -150,7 +217,7 @@ let entityPlacer = (entities, area, buffer = 1) => {
 };
 
 export {
-  entityPlacer,
+  placeEntities as entityPlacer,
   getGridBlockFromPos,
   createGrid
 };

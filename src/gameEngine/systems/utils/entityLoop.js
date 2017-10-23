@@ -8,8 +8,16 @@
  */
 export default (entities, fn) => {
   let ents = [];
-  Object.keys(entities).forEach((entID) => {
-    fn(entities[entID]) && ents.push(entities[entID]);
-  });
+
+  if (entities.forEach) {
+    entities.forEach((ent) => {
+      fn(ent) && ents.push(ent);
+    });
+  } else {
+    Object.keys(entities).forEach((entID) => {
+      fn(entities[entID]) && ents.push(entities[entID]);
+    });
+  }
+
   return ents;
 };
