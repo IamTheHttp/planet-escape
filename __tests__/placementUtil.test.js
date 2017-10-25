@@ -4,30 +4,25 @@
 /* global beforeEach */
 /* global global */
 import Entity from 'gameEngine/Entity';
+import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import {mount, shallow} from 'enzyme';
 import React from 'react';
-import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import entityLoop from 'gameEngine/systems/utils/entityLoop';
-import gameConfig from 'gameEngine/config';
+
 let rand = global.Math.random;
 global.Math.random = () => {
   return 0;
 };
-import PositionComponent from 'gameEngine/components/PositionComponent';
-import {
-  POSITION,
-  MAP_SIZE,
-  CANVAS_X,
-  CANVAS_Y,
-  PLANET_RADIUS,
-  PLANET_BUFFER,
-  PLANETS_IN_MAP
-} from 'gameEngine/constants.js';
-import {
-  getGridBlockFromPos,
-  createGrid,
-  entityPlacer
-} from 'shared/placementUtil';
+
+import {POSITION, MAP_SIZE, PLAYER_1, CANVAS_X, CANVAS_Y, PLAYER_2, PLANET_BUFFER} from 'gameEngine/constants.js';
+import placeEntities from 'shared/placementUtil';
+
+import createGrid from 'shared/mapPlacement/grid';
+import getGridBlockFromPos from 'shared/mapPlacement/getGridBlockFromPos';
+import canCircleBePlacedInPos from 'shared/mapPlacement/canCircleBePlacedInPos';
+import isBlockRangeOccupied from 'shared/mapPlacement/isBlockRangeOccupied';
+import placeEntityInGrid from 'shared/mapPlacement/placeEntityInGrid';
+import gameConfig from 'gameEngine/config';
+let mapSize = gameConfig[MAP_SIZE];
 
 describe('Tests position', () => {
   let area = {
@@ -54,112 +49,51 @@ describe('Tests position', () => {
   it('Gets back a gridBlock from a grid given a position', () => {
     // each block is 10x10 pixels in this example...
     let grid = createGrid(area, squaresInLine);
-    let resp = getGridBlockFromPos(grid, 0, 0);
-    expect(resp.col).toBe(0);
-    expect(resp.row).toBe(0);
+    let block = getGridBlockFromPos(grid, 0, 0);
+    expect(block.col).toBe(0);
+    expect(block.row).toBe(0);
 
-    resp = getGridBlockFromPos(grid, 980, 995);
-    expect(resp.col).toBe(98);
-    expect(resp.row).toBe(99);
+    block = getGridBlockFromPos(grid, 980, 995);
+    expect(block.col).toBe(98);
+    expect(block.row).toBe(99);
   });
 
-  it('Place entity inside an entire grid block', () => {
-    global.Math.random = () => {
-      return 0;
-    };
-    let ent = new Entity();
-    ent.addComponent(new PositionComponent(null, null, 1));
-    let entities = {
-      [ent.id] : ent
-    };
-    let pos = ent[POSITION];
-    // random is always 0 in this test
-    // so the POS is always top left
-    let {grid} = entityPlacer(entities, area);
-    expect(pos.x).toBe(1);
-    expect(pos.y).toBe(1);
-    expect(grid[0][0].occupied).toBe(true);
+  it('Place circle inside an entire grid block', () => {
+    let grid = createGrid(area, squaresInLine);
+    let x = 10;
+    let y = 10;
+    let radius = 5;
+    expect(canCircleBePlacedInPos(x, y, radius, grid)).toBe(true);
+    grid[0][0].occupied = true;
+    expect(canCircleBePlacedInPos(x, y, radius, grid)).toBe(false);
+    grid[0][0].occupied = false;
+    expect(canCircleBePlacedInPos(0, 0, 3000, grid)).toBe(false);
+    expect(canCircleBePlacedInPos(0, 0, 2, grid)).toBe(false);
   });
 
-  it('Place entity so it takes four gridBlocks', () => {
-    global.Math.random = () => {
-      return 0;
-    };
-    let ent = new Entity();
-    ent.addComponent(new PositionComponent(null, null, 50));
-    let entities = {
-      [ent.id] : ent
-    };
-    let pos = ent[POSITION];
-    // random is always 0 in this test
-    // so the POS is always top left
-    let {grid} = entityPlacer(entities, area);
-    expect(pos.x).toBe(50);
-    expect(pos.y).toBe(50);
-    expect(grid[0][0].occupied).toBe(true);
-    expect(grid[1][0].occupied).toBe(true);
-    expect(grid[0][1].occupied).toBe(true);
-    expect(grid[1][1].occupied).toBe(true);
-    expect(grid[4][4].occupied).toBe(true);
+  it('Given two grid blocks, determines if the space betwee them is clear', () => {
+    let grid = createGrid(area, squaresInLine);
+    expect(isBlockRangeOccupied(grid[0][0], grid[1][1], grid)).toBe(false);
+    expect(isBlockRangeOccupied(grid[0][0], grid[9][9], grid)).toBe(false);
+    grid[6][6].occupied = true;
+    expect(isBlockRangeOccupied(grid[0][0], grid[9][9], grid)).toBe(true);
+  });
+
+  it('places an entity in pos', () => {
+    let grid = createGrid(area, squaresInLine);
+    let ent = new EarthLike(null, null);
+    placeEntityInGrid(ent, 30, 30, ent[POSITION].radius, grid);
+    expect(ent[POSITION].x).toBe(30);
+    expect(ent[POSITION].y).toBe(30);
+  });
+
+  it('Starting the entityPlacer with entities that have X/Y occupies grid correctly', () => {
+    let planets = [];
+    let p1 = new EarthLike(50, 50, PLAYER_1);
+    let p2 = new EarthLike(area.bottomRightAreaX - 50, area.bottomRightAreaY - 50, PLAYER_2);
+    planets[p1.id] = p1;
+    planets[p2.id] = p2;
+    let grid = placeEntities(planets, area, 1);
     expect(grid[5][5].occupied).toBe(true);
-    expect(grid[9][10].occupied).toBe(false);
-    expect(grid[10][9].occupied).toBe(false);
-  });
-
-  it('Tries to place on the edge of the map', () => {
-    global.Math.random = () => {
-      return 1;
-    };
-
-    let ent = new Entity();
-    ent.addComponent(new PositionComponent(null, null, 200));
-    let entities = {
-      [ent.id] : ent
-    };
-    let pos = ent[POSITION];
-    // random is always 0 in this test
-    // so the POS is always top left
-    let grid = entityPlacer(entities, area);
-    expect(pos.x).toBe(null);
-    expect(pos.y).toBe(null);
-  });
-
-  it('ensures we can place a set amount of objects in area', () => {
-    global.Math.random = rand;
-    Object.keys(gameConfig[MAP_SIZE]).forEach((size) => {
-      Entity.reset();
-      let mapSize = gameConfig[MAP_SIZE][size];
-      let buffer = mapSize[PLANET_BUFFER];
-      let radius = gameConfig[PLANET_RADIUS];
-      let testCount = 0;
-
-      let area = {
-        topLeftAreaX : 0,
-        topLeftAreaY : 0,
-        bottomRightAreaX: mapSize[CANVAS_X],
-        bottomRightAreaY : mapSize[CANVAS_Y]
-      };
-
-      while (testCount < 50) { // change from 50 to 2000 to test robustness
-        Entity.reset();
-        let entities = {};
-        let i = 0;
-
-        while (i < mapSize[PLANETS_IN_MAP]) {
-          let ent = new Entity();
-          ent.addComponent(new PositionComponent(null, null, radius));
-          entities[ent.id] = ent;
-          i++;
-        }
-        let {placedEntities} = entityPlacer(entities, area, buffer);
-
-        // for debugging, makes it easy to know which map size failed
-        // if (placedEntities.length !== i) {
-        //   console.log(size);
-        // }
-        expect(placedEntities.length).toEqual(i);
-        testCount++;
-      }
-    });
   });
 });

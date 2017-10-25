@@ -15,9 +15,7 @@ import {
   DEFAULT_FIGHTER_COUNT
 } from 'gameEngine/constants';
 import gameConfig from 'gameEngine/config';
-import {
-  entityPlacer
-} from 'shared/placementUtil';
+import placeEntities from 'shared/placementUtil';
 
 export function randFromRange(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -51,10 +49,13 @@ export function generateMap(mapSize) {
     bottomRightAreaX : mapSize[CANVAS_X],
     bottomRightAreaY : mapSize[CANVAS_Y]
   };
-  entityPlacer(planets, area, buffer);
+
   // REFACTOR - Fix the hardcoded numbers, also possible planet overlapping as we do it manually here
-  new EarthLike(50, 50, PLAYER_1);
-  new EarthLike(mapSize[CANVAS_X] - 50, mapSize[CANVAS_Y] - 50, PLAYER_2);
+  let p1 = new EarthLike(50, 50, PLAYER_1);
+  let p2 = new EarthLike(mapSize[CANVAS_X] - 50, mapSize[CANVAS_Y] - 50, PLAYER_2);
+  planets[p1.id] = p1;
+  planets[p2.id] = p2;
+  placeEntities(planets, area, buffer);
 }
 
 /**
