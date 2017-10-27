@@ -25,7 +25,7 @@
 		"build:dll": "NODE_ENV=dll webpack --config=node_modules/webpack-configuration/webpack/webpackConfig.js"
 	},
 	"devDependencies": {
-		"webpack-configuration": "git@bitbucket.org:patrickprivate/react-webpack-configuration.git#10.0.4"
+		"webpack-configuration": "https://IamHttP@bitbucket.org/patrickprivate/react-webpack-configuration.git"
 	},
 	"main": "dist",
 	"dependencies": {
