@@ -1,7 +1,7 @@
 /**
  * Generates a grid for the map.
  *
- * @param area {topLeftAreaX, topLeftAreaY, bottomRightAreaX, bottomRightAreaY}
+ * @param area (topLeftAreaX, topLeftAreaY, bottomRightAreaX, bottomRightAreaY)
  * @param squaresInLine
  * @returns {Array} (A grid is array of rows with arrays of cols, with some extra attributes :
  * squareY, squareX, xLen, yLen
