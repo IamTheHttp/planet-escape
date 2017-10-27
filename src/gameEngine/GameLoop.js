@@ -20,7 +20,7 @@ import {
   FIGHTER_BUILD_RATE,
   AI_DECISION_RATE
 } from 'gameEngine/constants';
-
+import gameConfig from 'gameEngine/config';
 class GameLoop {
   constructor(cbNotification, mapSize, difficulty, numPlayers) {
     Entity.reset();
@@ -40,7 +40,7 @@ class GameLoop {
       moveSystem();
       fighterAttacks();
 
-      if (count % FIGHTER_BUILD_RATE === 0) {
+      if (count % gameConfig[FIGHTER_BUILD_RATE] === 0) {
         buildFighters();
       }
       let uiEnts = {};

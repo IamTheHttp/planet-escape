@@ -53,7 +53,7 @@ describe('Tests a component', () => {
     let cbMock = jest.fn();
     new GameLoop(cbMock, mapSize, difficulty);
     let int = 0;
-    while (int < FIGHTER_BUILD_RATE) {
+    while (int < gameConfig[FIGHTER_BUILD_RATE]) {
       jest.runOnlyPendingTimers();
       int++;
     }

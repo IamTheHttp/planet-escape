@@ -1,6 +1,6 @@
 import React from 'react';
 import './mainMenu.scss';
-
+import {version} from '../../../../package.json';
 import {
   TINY,
   MEDIUM,
@@ -26,7 +26,7 @@ class MainMenu extends React.Component {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            {'Welcome to Planet Escape'}
+            {`Welcome to Planet Escape (version ${version})`}
           </div>
           <div className="modal-body">
             <div>

@@ -17,6 +17,7 @@ import {
   FIGHTER_RADIUS,
   FIGHTER_SPEED
 } from 'gameEngine/constants.js';
+import gameConfig from 'gameEngine/config';
 
 import fighter from 'assets/fighter.png';
 let fighterImage = new Image();
@@ -35,8 +36,8 @@ class Fighter {
     let player = getOwner(planet);
     let x = planet[POSITION].x;
     let y = planet[POSITION].y;
-    ent.addComponent(new PositionComponent(x, y, FIGHTER_RADIUS));
-    ent.addComponent(new MoveComponent(FIGHTER_SPEED));
+    ent.addComponent(new PositionComponent(x, y, gameConfig[FIGHTER_RADIUS]));
+    ent.addComponent(new MoveComponent(gameConfig[FIGHTER_SPEED]));
     ent.addComponent(new OwnerComponent(player));
     ent.addComponent({ name:CAN_ATTACK_PLANETS});
     ent.addComponent(new IsDocked(true));

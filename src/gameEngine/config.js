@@ -22,7 +22,10 @@ import {
   CHALLENGING,
   HARD,
   DIFFICULTY,
-  AI_DECISION_RATE
+  AI_DECISION_RATE,
+  FIGHTER_BUILD_RATE,
+  FIGHTER_RADIUS,
+  FIGHTER_SPEED
 } from './constants.js';
 
 export default {
@@ -30,6 +33,9 @@ export default {
   [NUM_PLAYERS] : 2,
   [AI_MIN_FIGHTERS] : 5,
   [DEFAULT_FIGHTER_COUNT] : 10,
+  [FIGHTER_BUILD_RATE] : 60,
+  [FIGHTER_RADIUS] : 5,
+  [FIGHTER_SPEED] : 2,
   [COLORS]:{
     [NEUTRAL] : 'rgba(128, 128, 128, 1)',
     [PLAYER_1] : 'rgba(0, 255, 0, 1)',

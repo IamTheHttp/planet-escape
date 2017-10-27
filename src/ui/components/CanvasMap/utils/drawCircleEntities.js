@@ -9,6 +9,7 @@ import {
   SPRITE,
   PLAYER_1
 } from 'gameEngine/constants';
+import gameConfig from 'gameEngine/config';
 import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';
 import {getFighters} from 'gameEngine/components/HasFighters';
 import {isSelected} from 'gameEngine/components/PlayerControlledComponent';
@@ -61,8 +62,6 @@ export function colorByPlayer(entity, ctx) {
   if (entity[OWNER_COMPONENT]) {
     let player = entity[OWNER_COMPONENT].player;
     let {x, y, radius} = entity[POSITION];
-    // ctx.fillStyle = COLORS[player];
-    // ctx.fill();
     ctx.moveTo(x, y);
     ctx.beginPath();
     ctx.lineWidth = 1;
@@ -70,7 +69,7 @@ export function colorByPlayer(entity, ctx) {
       ctx.lineWidth = 3;
     }
 
-    ctx.strokeStyle = COLORS[player];
+    ctx.strokeStyle = gameConfig[COLORS][player];
     ctx.arc(x, y, radius, 0, Math.PI * 2);
     ctx.stroke();
     ctx.closePath();
