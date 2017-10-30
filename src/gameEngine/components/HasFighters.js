@@ -27,14 +27,20 @@ export function addFighter(ent, fighter) {
   return ent[HAS_FIGHTERS].fighters.push(fighter);
 }
 
+export function detachFighterFromPlanet(fighter) {
+  let currentFighters = Object.assign([], getFighters(Entity.entities[fighter.planetID]));
+  currentFighters.splice(currentFighters.indexOf(fighter), 1);
+  Entity.entities[fighter.planetID][HAS_FIGHTERS].fighters = currentFighters;
+  delete fighter.planetID;
+}
+
 export function destroyFighter(fighter) {
   let ownerPlanet = Entity.entities[fighter.planetID];
-  let fighters = getFighters(ownerPlanet);
-  let idx = fighters.indexOf(fighter);
-  fighters.splice(idx, 1);
-  ownerPlanet[HAS_FIGHTERS].fighters = fighters;
+  // if fighter has an owner..
+  if (ownerPlanet) {
+    detachFighterFromPlanet(fighter);
+  }
   fighter.destroy();
-  // delete Entity.entities[fighter.id];
 }
 
 

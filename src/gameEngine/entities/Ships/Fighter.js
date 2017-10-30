@@ -3,7 +3,7 @@ import UIComponent from 'gameEngine/components/UIComponent';
 import PositionComponent from 'gameEngine/components/PositionComponent';
 import MoveComponent from 'gameEngine/components/MoveComponent';
 import OwnerComponent, {getOwner} from 'gameEngine/components/OwnerComponent';
-import {addFighter} from 'gameEngine/components/HasFighters';
+import {addFighter, removeFighter} from 'gameEngine/components/HasFighters';
 import IsDocked from 'gameEngine/components/IsDocked';
 import Sprite from 'gameEngine/components/Sprite';
 import {

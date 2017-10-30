@@ -24,14 +24,14 @@ describe('Tests a the fighter attacks system', () => {
     Entity.reset();
   });
 
+
   it('Attack/Defense are removed from the Entity hash as well from the planets', () => {
     let attackingPlanet = new EarthLike(200, 200, PLAYER_1);
     let defendingPlanet = new EarthLike(500, 500, PLAYER_2);
 
     let attackerFighter = new Fighter(attackingPlanet);
     let defFighter = new Fighter(defendingPlanet);
-    new Fighter(defendingPlanet); // 2nd defender
-
+    let defFighter2 = new Fighter(defendingPlanet); // 2nd defender
 
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
     attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
@@ -92,19 +92,34 @@ describe('Tests a the fighter attacks system', () => {
   it('A fighter attacking a an enemy planet that has fighters out..', () => {
     let attackingPlanet = new EarthLike(200, 200, PLAYER_1);
     let defendingPlanet = new EarthLike(500, 500, PLAYER_2);
+    let defendingFriendly = new EarthLike(5000, 5000, PLAYER_1);
 
     let attackerFighter = new Fighter(attackingPlanet);
     let fighterInSpace = new Fighter(defendingPlanet);
+
+    // attacker reache destination
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
     attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
+    attackerFighter[IS_DOCKED].isDocked = false;
+
+    // defending fighter is away
     fighterInSpace[POSITION].x = 1000;
     fighterInSpace[POSITION].y = 1000;
     fighterInSpace[IS_DOCKED].isDocked = false;
-    attackerFighter[IS_DOCKED].isDocked = false;
-    let attackCount = getFighters(attackingPlanet).length;
+
+    // attacking...
+    // let attackCount = getFighters(attackingPlanet).length;
     fighterAttacks();
-    // expect the fighterInSpace entity to be removed from the entity list...
-    expect(Entity.entities[fighterInSpace.id]).toBeUndefined();
+
+    // expect the fighterInSpace entity to still be alive, without a planet ID
+    expect(Entity.entities[fighterInSpace.id].planetID).toBeUndefined();
+
+    // enemy fighters reach our defenseless planet
+    fighterInSpace[POSITION].x = fighterInSpace[POSITION].destX = 5000;
+    fighterInSpace[POSITION].y = fighterInSpace[POSITION].destY = 5000;
+    fighterAttacks();
+    //
+    // expect(getOwner(defendingFriendly)).toBe(PLAYER_2);
     // the planets should lose one fighter
     // expect(getFighters(attackingPlanet).length).toBe(attackCount - 1);
     // expect(getOwner(defendingPlanet)).toBe(PLAYER_1);

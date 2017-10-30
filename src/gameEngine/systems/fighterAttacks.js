@@ -1,6 +1,6 @@
 import Entity from 'gameEngine/Entity';
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
-import {getFighters, destroyFighter, getDockedFighters} from 'gameEngine/components/HasFighters';
+import {getFighters, destroyFighter, getDockedFighters, detachFighterFromPlanet} from 'gameEngine/components/HasFighters';
 import {unSelect} from 'gameEngine/components/PlayerControlledComponent';
 import {hasDest, isSamePos, destReached} from 'gameEngine/components/PositionComponent';
 import {diffPlayers, getOwner} from 'gameEngine/components/OwnerComponent';
@@ -33,6 +33,7 @@ function fighterAttacks() {
   entityLoop(planetEnts, (ent) => {
     planets.push(ent);
   });
+
   hits.forEach((attacker) => {
     // first lets detect if we just 'hit' a friendly planet
     let friendlyPlanet = planets.find((planet) => {
@@ -50,19 +51,21 @@ function fighterAttacks() {
       destroyFighter(attacker);
       return;
     }
+
     let foundPlanet = planets.find((planet) => {
       return isSamePos(planet, attacker) && diffPlayers(planet, attacker) ;
     });
 
-    // if the defending planet has no fighters left, we got it..
-    // this needs to be fixed - no fighters DOCKED.
+    // if the defending planet has no docked fighters left
     if (getDockedFighters(foundPlanet).length === 0) {
       foundPlanet[OWNER_COMPONENT].player = getOwner(attacker);
       unSelect(foundPlanet);
       // we need to copy the array since we can't modify the array while we loop through it
       let arr = Object.assign([], getFighters(foundPlanet));
       arr.forEach((fighter) => {
-        destroyFighter(fighter);
+        detachFighterFromPlanet(fighter);
+        // we need to change owner..
+        // destroyFighter(fighter);
       });
       destroyFighter(attacker);
       return ;
@@ -74,6 +77,7 @@ function fighterAttacks() {
       return defFighter[IS_DOCKED].isDocked;
     });
     // defender can be undefined.. if the planet is out of defenders
+
     destroyFighter(attacker);
     defender && destroyFighter(defender);
   });
