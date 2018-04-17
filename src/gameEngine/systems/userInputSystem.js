@@ -45,7 +45,7 @@ function userInputSystem() {
         }
 
 
-        // if i licked on a friendly, select it
+        // if i clicked on a friendly, select it
         let friendlies = clickedEntities.filter((ent) => {
           return getOwner(ent) === PLAYER_1;
         });

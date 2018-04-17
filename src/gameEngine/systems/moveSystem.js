@@ -18,8 +18,6 @@ function moveEntity(entity) {
     entity.removeComponent(MOVING);
     // TODO aside / What happens when we try add the same component multiple times?
     entity.addComponent(new InPlaceToAttack());
-    // TODO - are we really defending already? seems wrong.
-    // entity.addComponent(new Defending());
     entity.removeComponent(UI_COMP); // we're done moving, no longer need UI
     return;
   }
@@ -37,7 +35,7 @@ function moveEntity(entity) {
     let newX = null;
 
     //  if gradient === Infinity we only move on Y axis..
-    if (gradient === Infinity || gradient === -Infinity) {
+    if (Math.abs(gradient) === Infinity) {
       if (gradient >= 0) {
         entity[POSITION].y = Math.min(entity[POSITION].y + speed, destY);
       } else {
