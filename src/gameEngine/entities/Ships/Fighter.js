@@ -14,6 +14,7 @@ import {
   OWNER_COMPONENT,
   POSITION,
   HAS_FIGHTERS,
+  UI_COMP,
   FIGHTER_RADIUS,
   FIGHTER_SPEED
 } from 'gameEngine/constants.js';
@@ -27,13 +28,7 @@ class Fighter {
   constructor(planet) {
     let ent = new Entity(Fighter);
 
-    // TODO We need to smartly add fighters as UI components
-    ent.addComponent(new UIComponent({
-      name:CANVAS,
-      data : {
-        shape : CIRCLE
-      }
-    }));
+    // addFighterUiComp(ent);
 
     let player = getOwner(planet);
     let x = planet[POSITION].x;
@@ -41,13 +36,22 @@ class Fighter {
     ent.addComponent(new PositionComponent(x, y, gameConfig[FIGHTER_RADIUS]));
     ent.addComponent(new MoveComponent(gameConfig[FIGHTER_SPEED]));
     ent.addComponent(new OwnerComponent(player));
-    ent.addComponent({ name:CAN_ATTACK_PLANETS});
+    ent.addComponent({name: CAN_ATTACK_PLANETS});
     ent.addComponent(new IsDocked(true));
     ent.addComponent(new Sprite(fighterImage, [0, 0, 95, 95])); // sprite args
 
     addFighter(planet, ent);
     return ent;
   }
+}
+
+export function addFighterUiComp(fighter) {
+  fighter.addComponent(new UIComponent({
+    name: CANVAS,
+    data: {
+      shape: CIRCLE
+    }
+  }));
 }
 
 export default Fighter;

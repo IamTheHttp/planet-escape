@@ -8,6 +8,7 @@ import {
 } from 'gameEngine/constants';
 
 import {diffPlayers} from 'gameEngine/components/OwnerComponent';
+import {addFighterUiComp} from 'gameEngine/entities/Ships/Fighter';
 import {setDest, getDest, getPos} from 'gameEngine/components/PositionComponent';
 import {getFighters} from 'gameEngine/components/HasFighters';
 import {isAttackable} from 'gameEngine/components/Attackable';
@@ -50,6 +51,7 @@ export function attack(action, entities = getSelectedEntities(), redirectFighter
     getFighters(attackingPlanet).forEach((fighterEnt) => {
       if (!fighterEnt.hasComponents('MOVING')) {
         fighterEnt.addComponent(new Moving(true));
+        addFighterUiComp(fighterEnt); // because we're moving, we need UI!
       }
       // if fighter already has a destination, we do not force a redirect..
       if ((getDest(fighterEnt).x && redirectFighters) || !getDest(fighterEnt).x) {
