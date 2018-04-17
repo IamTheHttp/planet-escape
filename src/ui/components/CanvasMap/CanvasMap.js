@@ -56,7 +56,9 @@ class CanvasMap extends React.Component {
     if (ctx) {
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       ctx.strokeStyle = '#000'; // defaults
+
       entsToDraw.forEach(drawCircleEntities(ctx));
+
       if (this.isMouseDown) {
         drawMouseSelection(ctx, this.selectedBox);
       }
