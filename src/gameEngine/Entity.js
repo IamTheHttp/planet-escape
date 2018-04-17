@@ -30,7 +30,7 @@ class Entity {
       // if this ent does not have all the other comps, skip..
       this.hasComponents(group.components, () => {
         group.entities[this.id] = this;
-        group.array.push(this);
+        group.array = [...group.array, this];
       });
     }
   }
@@ -40,7 +40,7 @@ class Entity {
   removeComponent(comp) {
     let component = this.components[comp] || comp;
     let compName = component.name;
-    // we need to see if we need to add entity into other components.
+    // we need to see if we need to remove entity from other groups
     for (let groupKey in Group.groups) {
       let group = Group.groups[groupKey];
       // if the ent is in this group, skip.
@@ -52,8 +52,9 @@ class Entity {
       // if this ent does not have all the other comps, skip..
       if (entInGroup && compInGroup && entHasReqComps) {
         delete group.entities[this.id];
-        let idx = group.array.indexOf(this);
-        group.array.splice(idx, 1); // remove from the array
+        group.array = group.array.filter((ent) => {
+          return ent !== this;
+        });
       }
     }
     delete this.components[compName];

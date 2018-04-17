@@ -18,7 +18,6 @@ import {
 
 function fighterAttacks() {
   let hits = Entity.getByComps([OWNER_COMPONENT, CAN_ATTACK_PLANETS, IN_PLACE_TO_ATTACK], 'array');
-  // console.log(hits);
   let planets = Entity.getByComps(HAS_FIGHTERS, 'array');
 
   hits.forEach((attacker) => {

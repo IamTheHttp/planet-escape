@@ -87,6 +87,6 @@ describe('Tests for entities', () => {
     expect(Entity.entities[e.id]).toBeUndefined();
 
     let resp = Entity.getByComps(['test1']);
-    expect(resp[e.id]).toBeUndefined();
+    expect(resp.length).toBe(0);
   });
 });

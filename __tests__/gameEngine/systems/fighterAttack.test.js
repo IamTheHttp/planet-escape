@@ -115,17 +115,13 @@ describe('Tests a the fighter attacks system', () => {
     // let attackCount = getFighters(attackingPlanet).length;
     fighterAttacks();
 
-    // expect the fighterInSpace entity to still be alive, without a planet ID
+    // // expect the fighterInSpace entity to still be alive, without a planet ID
     expect(Entity.entities[fighterInSpace.id].planetID).toBeUndefined();
 
     // enemy fighters reach our defenseless planet
     fighterInSpace[POSITION].x = fighterInSpace[POSITION].destX = 5000;
     fighterInSpace[POSITION].y = fighterInSpace[POSITION].destY = 5000;
+    fighterInSpace.addComponent(new InPlaceToAttack());
     fighterAttacks();
-    //
-    // expect(getOwner(defendingFriendly)).toBe(PLAYER_2);
-    // the planets should lose one fighter
-    // expect(getFighters(attackingPlanet).length).toBe(attackCount - 1);
-    // expect(getOwner(defendingPlanet)).toBe(PLAYER_1);
   });
 });

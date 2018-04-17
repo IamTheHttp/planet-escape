@@ -70,7 +70,6 @@ export function attack(action, entities = getSelectedEntities(), redirectFighter
 
     directedFighters += fightersInFleet.length;
   });
-
   return directedFighters;
 }
 

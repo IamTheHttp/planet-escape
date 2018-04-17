@@ -53,7 +53,7 @@ Group.indexGroup = (components, entities) => {
   entityLoop(entities, (entity) => {
     if (entity.hasComponents(compArray)) {
       group.entities[entity.id] = entity;
-      group.array.push(entity);
+      group.array = [...group.array, entity];
     }
   });
 

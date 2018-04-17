@@ -16,7 +16,6 @@ import Defending from 'gameEngine/components/Defending';
 function moveEntity(entity) {
   if (destReached(entity)) {
     entity.removeComponent(MOVING);
-    // TODO aside / What happens when we try add the same component multiple times?
     entity.addComponent(new InPlaceToAttack());
     entity.removeComponent(UI_COMP); // we're done moving, no longer need UI
     return;
@@ -57,11 +56,12 @@ function moveEntity(entity) {
 }
 
 function moveSystem() {
-  let entities = Entity.getByComps([MOVEMENT_COMP, POSITION, MOVING], 'array');
-
-  entityLoop(entities, (entity) => {
-    moveEntity(entity);
-  });
+  let entities = Entity.getByComps([MOVEMENT_COMP, POSITION, MOVING]);
+  if (entities.length) {
+    entityLoop(entities, (entity) => {
+      moveEntity(entity);
+    });
+  }
 }
 
 export default moveSystem;
