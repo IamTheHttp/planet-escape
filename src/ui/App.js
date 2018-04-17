@@ -69,17 +69,15 @@ class App extends React.Component {
 
     // TODO we should be able to remove this silly loop
     // why can't do we just use getbyComp([GAME_STATE])
-    for (let id in gameEntities) {
-      let ent = gameEntities[id];
 
+    gameEntities.forEach((ent) => {
       if (ent.hasComponents(GAME_STATE)) {
         // console.log(ent);
         gameEnt = ent;
-        continue;
+        return;
       }
-
       entsToDraw.push(ent);
-    }
+    });
 
     this.setState({gameEnt});
 

@@ -5,6 +5,7 @@
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import {getOwner} from 'gameEngine/components/OwnerComponent';
+import InPlaceToAttack from 'gameEngine/components/InPlaceToAttack';
 import fighterAttacks from 'gameEngine/systems/fighterAttacks';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import Fighter from 'gameEngine/entities/Ships/Fighter';
@@ -15,15 +16,14 @@ import {
   PLAYER_2,
   NEUTRAL,
   POSITION,
-  IS_DOCKED
+  IS_DOCKED,
+  IN_PLACE_TO_ATTACK
 } from 'gameEngine/constants';
 
 describe('Tests a the fighter attacks system', () => {
   beforeEach(() => {
-    // setup the test
     Entity.reset();
   });
-
 
   it('Attack/Defense are removed from the Entity hash as well from the planets', () => {
     let attackingPlanet = new EarthLike(200, 200, PLAYER_1);
@@ -33,10 +33,12 @@ describe('Tests a the fighter attacks system', () => {
     let defFighter = new Fighter(defendingPlanet);
     let defFighter2 = new Fighter(defendingPlanet); // 2nd defender
 
+    // set dest and position for fighter
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
     attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
-    attackerFighter[IS_DOCKED].isDocked = false;
+    attackerFighter.addComponent(new InPlaceToAttack());
 
+    // console.log(attackerFighter);
     let defCount = getFighters(defendingPlanet).length;
     let attackCount = getFighters(attackingPlanet).length;
     fighterAttacks();
@@ -57,7 +59,7 @@ describe('Tests a the fighter attacks system', () => {
     let attackerFighter = new Fighter(attackingPlanet);
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
     attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
-    attackerFighter[IS_DOCKED].isDocked = false;
+    attackerFighter.addComponent(new InPlaceToAttack());
 
     let attackCount = getFighters(attackingPlanet).length;
     fighterAttacks();
@@ -78,7 +80,7 @@ describe('Tests a the fighter attacks system', () => {
     let attackerFighter = new Fighter(attackingPlanet);
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
     attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
-    attackerFighter[IS_DOCKED].isDocked = false;
+    attackerFighter.addComponent(new InPlaceToAttack());
 
     let attackCount = getFighters(attackingPlanet).length;
     fighterAttacks();
@@ -100,7 +102,7 @@ describe('Tests a the fighter attacks system', () => {
     // attacker reache destination
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
     attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
-    attackerFighter[IS_DOCKED].isDocked = false;
+    attackerFighter.addComponent(new InPlaceToAttack());
 
     // defending fighter is away
     fighterInSpace[POSITION].x = 1000;

@@ -49,26 +49,32 @@ describe('Tests for entities', () => {
 
     e2.addComponent(comp1);
     let resp;
+    resp = Entity.getByComps('test1', 'map');
+    expect(resp[e.id]).toBe(e);
+    expect(resp[e2.id]).toBe(e2);
+
     resp = Entity.getByComps('test1');
-    expect(resp[e.id]).toBe(e);
-    expect(resp[e2.id]).toBe(e2);
+    expect(resp.length).toBe(2);
     // //
-    resp = Entity.getByComps(['test1']);
+    resp = Entity.getByComps(['test1'],  'map');
     expect(resp[e.id]).toBe(e);
     expect(resp[e2.id]).toBe(e2);
+    resp = Entity.getByComps(['test1'],  'array');
+    expect(resp.length).toBe(2);
 
     // only the first entity has both of them
-    resp = Entity.getByComps(['test1', 'test2']);
-
+    resp = Entity.getByComps(['test1', 'test2'], 'map');
     expect(resp[e.id]).toBe(e);
     expect(resp[e2.id]).toBeUndefined();
+    resp = Entity.getByComps(['test1', 'test2'], 'array');
+    expect(resp.length).toBe(1);
     //
     // // none of them have these components
-    resp = Entity.getByComps(['test1', 'test2', 'nonExistant']);
+    resp = Entity.getByComps(['test1', 'test2', 'nonExistant'], 'map');
     expect(resp).toEqual({});
 
     // no components provided.. which means return all?
-    resp = Entity.getByComps();
+    resp = Entity.getByComps([], 'map');
     expect(resp[e.id]).toBe(e);
     expect(resp[e2.id]).toBe(e2);
   });

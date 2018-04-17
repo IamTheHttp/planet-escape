@@ -39,17 +39,13 @@ describe('Tests a component', () => {
     jest.useFakeTimers();
   });
 
-  it('fails', () => {
-    // this describe hangs for some reason
-    expect(true).toBe(false);
-  });
   it('should only pass UI comps to the callback', () => {
     let cbMock = jest.fn();
     let sampleID = (new Entity()).id; // no UI_COMP here
 
     new GameLoop(cbMock, mapSize, difficulty);
     jest.runOnlyPendingTimers();
-    expect(cbMock.mock.calls[0][0][sampleID]).toBeUndefined();
+    expect(cbMock.mock.calls[0][0].indexOf(sampleID)).toBe(-1);
     jest.runOnlyPendingTimers();
   });
 

@@ -39,7 +39,7 @@ export function attack(action, entities = getSelectedEntities(), redirectFighter
   })[0];
 
   if (!targetPlanet) {
-    return;
+    return directedFighters;
   }
 
   let fightersInFleet = [];

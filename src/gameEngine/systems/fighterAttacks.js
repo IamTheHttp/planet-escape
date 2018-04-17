@@ -10,13 +10,15 @@ import {
   OWNER_COMPONENT,
   CAN_ATTACK_PLANETS,
   POSITION,
+  IN_PLACE_TO_ATTACK,
   HAS_FIGHTERS,
   NEUTRAL,
   IS_DOCKED
 } from 'gameEngine/constants';
 
 function fighterAttacks() {
-  let hits = Entity.getByComps([OWNER_COMPONENT, CAN_ATTACK_PLANETS, 'IN_PLACE_TO_ATTACK'], 'array');
+  let hits = Entity.getByComps([OWNER_COMPONENT, CAN_ATTACK_PLANETS, IN_PLACE_TO_ATTACK], 'array');
+  // console.log(hits);
   let planets = Entity.getByComps(HAS_FIGHTERS, 'array');
 
   hits.forEach((attacker) => {
