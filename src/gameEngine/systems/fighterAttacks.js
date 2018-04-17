@@ -16,30 +16,14 @@ import {
 } from 'gameEngine/constants';
 
 function fighterAttacks() {
-  let hits = [];
-  let planets = [];
-
-  let fighterEnts = Entity.getByComps([OWNER_COMPONENT, CAN_ATTACK_PLANETS, IS_DOCKED]);
-  let planetEnts = Entity.getByComps(HAS_FIGHTERS);
-
-  entityLoop(fighterEnts, (ent) => {
-    // get all fighters that have reached their pos...
-    if (!ent[IS_DOCKED].isDocked && destReached(ent)) {
-      hits.push(ent);
-    }
-  });
-
-  //  turning it into an array..
-  entityLoop(planetEnts, (ent) => {
-    planets.push(ent);
-  });
+  let hits = Entity.getByComps([OWNER_COMPONENT, CAN_ATTACK_PLANETS, 'IN_PLACE_TO_ATTACK'], 'array');
+  let planets = Entity.getByComps(HAS_FIGHTERS, 'array');
 
   hits.forEach((attacker) => {
     // first lets detect if we just 'hit' a friendly planet
     let friendlyPlanet = planets.find((planet) => {
       return isSamePos(planet, attacker) && !diffPlayers(planet, attacker) ;
     });
-
 
     // if we reached a friendly planet
     // let's join that planet!

@@ -67,6 +67,8 @@ class App extends React.Component {
     let gameEnt = this.defGameEnt;
     let entsToDraw = [];
 
+    // TODO we should be able to remove this silly loop
+    // why can't do we just use getbyComp([GAME_STATE])
     for (let id in gameEntities) {
       let ent = gameEntities[id];
 
@@ -123,6 +125,8 @@ class App extends React.Component {
   }
 
   render() {
+    // TODO Create a loading screen after we click 'start' until the app is ready
+    // TODO Move the fps color to a class, position absolute and such
     return (
       <div>
         <div style={{color : this.state.fps >= 60 ? 'green' : 'red'}}>

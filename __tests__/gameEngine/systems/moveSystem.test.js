@@ -6,11 +6,13 @@ import Entity from 'gameEngine/Entity';;
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import moveSystem from 'gameEngine/systems/moveSystem';
+import Moving from 'gameEngine/components/Moving';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import Fighter from 'gameEngine/entities/Ships/Fighter';
 
 import {
-  POSITION
+  POSITION,
+  MOVE
 } from 'gameEngine/constants';
 describe('Tests a component', () => {
   let planet;
@@ -18,6 +20,7 @@ describe('Tests a component', () => {
   beforeEach(() => {
     Entity.reset();
     ship = new Fighter(new EarthLike(1234, 1234));
+    ship.addComponent(new Moving(true));
       // setup the test
   });
 

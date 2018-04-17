@@ -26,6 +26,8 @@ fighterImage.src = fighter;
 class Fighter {
   constructor(planet) {
     let ent = new Entity(Fighter);
+
+    // TODO We need to smartly add fighters as UI components
     ent.addComponent(new UIComponent({
       name:CANVAS,
       data : {

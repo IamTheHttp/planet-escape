@@ -1,9 +1,9 @@
 import Entity from 'gameEngine/Entity';
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
 import {isAttackable} from 'gameEngine/components/Attackable';
-import {OWNER_COMPONENT, PLAYER_1, NEUTRAL, GAME_WON, GAME_LOST} from 'gameEngine/constants';
+import {ATTACKABLE, OWNER_COMPONENT, PLAYER_1, NEUTRAL, GAME_WON, GAME_LOST} from 'gameEngine/constants';
 function calcWinner() {
-  let entities = Entity.getByComps([OWNER_COMPONENT]);
+  let entities = Entity.getByComps([ATTACKABLE, OWNER_COMPONENT]);
 
   let enemyEntitiesLeft = 0;
   let playerEntsLeft = 0;

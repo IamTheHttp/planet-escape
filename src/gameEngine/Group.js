@@ -5,6 +5,7 @@ class Group {
   constructor(components, entities = {}) {
     this.components = components;
     this.entities = entities;
+    this.array = [];
   }
 }
 
@@ -40,7 +41,8 @@ Group.indexGroup = (components, entities) => {
 
   let key = Group.generateGroupKey(compArray);
 
-  let group = {};
+  let group;
+
   if (Group.groups[key]) {
     return;
   } else {
@@ -51,6 +53,7 @@ Group.indexGroup = (components, entities) => {
   entityLoop(entities, (entity) => {
     if (entity.hasComponents(compArray)) {
       group.entities[entity.id] = entity;
+      group.array.push(entity);
     }
   });
 

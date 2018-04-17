@@ -7,10 +7,11 @@ import {
   MOVEMENT_COMP
 } from 'gameEngine/constants';
 
-import { diffPlayers} from 'gameEngine/components/OwnerComponent';
+import {diffPlayers} from 'gameEngine/components/OwnerComponent';
 import {setDest, getDest, getPos} from 'gameEngine/components/PositionComponent';
 import {getFighters} from 'gameEngine/components/HasFighters';
 import {isAttackable} from 'gameEngine/components/Attackable';
+import Moving from 'gameEngine/components/Moving';
 import {
   getSelectedEntities,
   getEntitiesAtPos
@@ -31,28 +32,35 @@ export function attack(action, entities = getSelectedEntities(), redirectFighter
   let attackingPlanets = entities.filter((attackingPlanet) => {
     return attackingPlanet.hasComponents([HAS_FIGHTERS, OWNER_COMPONENT]);
   });
-  let defendingPlanets = getEntitiesAtPos(action.x, action.y).filter((ent) => {
+
+  // this is "target planet", and not "defending planet"
+  let targetPlanet = getEntitiesAtPos(action.x, action.y).filter((ent) => {
     return isAttackable(ent); // just attackable entities can have fighters.. really?
-  });
+  })[0];
+
+  if (!targetPlanet) {
+    return;
+  }
 
   let fightersInFleet = [];
   attackingPlanets.forEach((attackingPlanet) => {
     launchedFighters = 0;
     fightersInFleet = []; // reset the array
-    // REFACTOR - This makes no sense as there's only one defending planet at a time
-    defendingPlanets.forEach((defendingPlanet) => {
-      getFighters(attackingPlanet).forEach((fighterEnt) => {
-        // if fighter already has a destination, we do not force a redirect..
-        if ((getDest(fighterEnt).x && redirectFighters) || !getDest(fighterEnt).x) {
-          setDest(fighterEnt, defendingPlanet);
-          if (fighterEnt[IS_DOCKED].isDocked) {
-            fighterEnt[IS_DOCKED].isDocked = false;
-            launchedFighters++;
-            fightersInFleet.push(fighterEnt);
-          }
-          directedFighters++;
+
+    getFighters(attackingPlanet).forEach((fighterEnt) => {
+      if (!fighterEnt.hasComponents('MOVING')) {
+        fighterEnt.addComponent(new Moving(true));
+      }
+      // if fighter already has a destination, we do not force a redirect..
+      if ((getDest(fighterEnt).x && redirectFighters) || !getDest(fighterEnt).x) {
+        setDest(fighterEnt, targetPlanet);
+        if (fighterEnt[IS_DOCKED].isDocked) {
+          fighterEnt[IS_DOCKED].isDocked = false;
+          launchedFighters++;
+          fightersInFleet.push(fighterEnt);
         }
-      });
+        directedFighters++;
+      }
     });
 
     // we resize the radius of the fighters in the fleet represent the fleet size

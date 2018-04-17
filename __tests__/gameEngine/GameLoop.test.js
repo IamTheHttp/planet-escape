@@ -39,6 +39,10 @@ describe('Tests a component', () => {
     jest.useFakeTimers();
   });
 
+  it('fails', () => {
+    // this describe hangs for some reason
+    expect(true).toBe(false);
+  });
   it('should only pass UI comps to the callback', () => {
     let cbMock = jest.fn();
     let sampleID = (new Entity()).id; // no UI_COMP here

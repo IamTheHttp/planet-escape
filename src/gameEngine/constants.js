@@ -1,4 +1,5 @@
 export const BUILDINGS_COMP = 'BUILDINGS';
+export const MOVING = 'MOVING';
 export const OWNER_COMPONENT = 'OWNER';
 export const SPRITE = 'SPRITE';
 export const UI_COMP = 'UI';

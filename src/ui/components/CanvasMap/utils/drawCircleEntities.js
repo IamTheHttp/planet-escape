@@ -23,6 +23,7 @@ function drawImage(
   cropStartX, cropStartY, cropSizeX, cropSizeY,
   rotation, // in radians
 ) {
+  // TODO - This method is expensive in the loop!
   ctx.translate(x + width / 2, y + height / 2); // will rotate around new position
   ctx.rotate(rotation);
 
@@ -77,6 +78,8 @@ export function colorByPlayer(entity, ctx) {
 }
 
 function writeFighteCount(entity, ctx) {
+  // TODO - This method is expensive in the loop!
+  // TODO - This method has a typo!
   entity.hasComponents(HAS_FIGHTERS, () => {
     let dockedFighters = getFighters(entity).filter((fighter) => {
       return fighter[IS_DOCKED].isDocked;

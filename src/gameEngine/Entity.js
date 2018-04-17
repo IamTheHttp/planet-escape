@@ -15,7 +15,7 @@ class Entity {
     // creates an index group if it does not exist..
     Group.indexGroup(Object.keys(this.components), Entity.entities);
 
-    // we need to see if we need to add entity into other components.
+    // we need to see if we need to add entity into other groups.
     for (let groupKey in Group.groups) {
       let group = Group.groups[groupKey];
       // if the ent is in this group, skip.
@@ -30,6 +30,7 @@ class Entity {
       // if this ent does not have all the other comps, skip..
       this.hasComponents(group.components, () => {
         group.entities[this.id] = this;
+        group.array.push(this);
       });
     }
   }
@@ -51,6 +52,8 @@ class Entity {
       // if this ent does not have all the other comps, skip..
       if (entInGroup && compInGroup && entHasReqComps) {
         delete group.entities[this.id];
+        let idx = group.array.indexOf(this);
+        group.array.splice(idx, 1); // remove from the array
       }
     }
     delete this.components[compName];
@@ -80,11 +83,17 @@ class Entity {
 
 Entity.entities = {};
 
-Entity.getByComps = (components = []) => {
+/**
+ *
+ * @param components
+ * @param type
+ * @return {type : 'array'|'map'}
+ */
+Entity.getByComps = (components = [], type = 'array') => {
   let compNames = components.reduce ? components : [components];
   Group.indexGroup(components, Entity.entities);
   let group = Group.getGroup(compNames);
-  return group.entities;
+  return type === 'map' ? group.entities : group.array;
 };
 
 Entity.reset = () => {

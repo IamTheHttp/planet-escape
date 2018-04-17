@@ -2,18 +2,30 @@ import entityLoop from 'gameEngine/systems/utils/entityLoop';
 import Entity from 'gameEngine/Entity';
 import {
   POSITION,
-  MOVEMENT_COMP
+  MOVEMENT_COMP,
+  MOVING,
+  IS_DOCKED
 } from 'gameEngine/constants';
 
 import {getPos, getDest, destReached} from 'gameEngine/components/PositionComponent';
 function moveEntity(entity) {
-  let destX = getDest(entity).x;
-  let destY = getDest(entity).y;
   if (destReached(entity)) {
+    entity[IS_DOCKED].isDocked = true;
+    entity.removeComponent(MOVING);
+    // TODO - IN_PLACE_TO_ATTACK is only for different players, else it's just docked..
+    // for example, if we move to a friendly planet, we're not in place to attack...
+    // TODO aside / What happens when we try add the same component multiple times?
+    // TODO - Create a proper component for IN_PLACE_TO_ATTACK
+    entity.addComponent({
+      name : 'IN_PLACE_TO_ATTACK'
+    });
     return;
   }
 
-  let LINEAR = true;
+  let destX = getDest(entity).x;
+  let destY = getDest(entity).y;
+  let LINEAR = true; // future movements might not be "linear"
+
   if (LINEAR && destX && destY) {
     let curX = getPos(entity).x;
     let curY = getPos(entity).y;
@@ -45,7 +57,7 @@ function moveEntity(entity) {
 }
 
 function moveSystem() {
-  let entities = Entity.getByComps([MOVEMENT_COMP, POSITION]);
+  let entities = Entity.getByComps([MOVEMENT_COMP, POSITION, MOVING], 'array');
 
   entityLoop(entities, (entity) => {
     moveEntity(entity);

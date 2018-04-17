@@ -21,6 +21,7 @@ import {
   AI_DECISION_RATE
 } from 'gameEngine/constants';
 import gameConfig from 'gameEngine/config';
+
 class GameLoop {
   constructor(cbNotification, mapSize, difficulty, numPlayers) {
     Entity.reset();
@@ -43,20 +44,14 @@ class GameLoop {
       if (count % gameConfig[FIGHTER_BUILD_RATE] === 0) {
         buildFighters();
       }
-      let uiEnts = {};
-
-      entityLoop(Entity.entities, (entity) => {
-        let isDocked = entity[IS_DOCKED] && entity[IS_DOCKED].isDocked;
-        if (!isDocked && entity.hasComponents(UI_COMP)) {
-          uiEnts[entity.id] = entity;
-        }
-      });
+      // TODO - Make sure that anything that does not need a UI_COMP, does not have it.
+      let uiEnts = Entity.getByComps([UI_COMP]);
 
       if (currentGame[GAME_STATE]) {
         currentGame[GAME_STATE].frameID = requestAnimationFrame(loop);
         currentGame[GAME_STATE].status = calcWinner();
       }
-
+      //
       uiEnts[currentGame.id] = currentGame;
       cbNotification(uiEnts, performance.now() - start);
       count++;
