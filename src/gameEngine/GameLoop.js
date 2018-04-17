@@ -45,23 +45,17 @@ class GameLoop {
         buildFighters();
       }
       // TODO - Make sure that anything that does not need a UI_COMP, does not have it.
-      let uiEnts = Entity.getByComps([UI_COMP]);
 
       if (currentGame[GAME_STATE]) {
         currentGame[GAME_STATE].frameID = requestAnimationFrame(loop);
         currentGame[GAME_STATE].status = calcWinner();
       }
-      //
-      uiEnts[currentGame.id] = currentGame;
-      cbNotification(uiEnts, performance.now() - start);
+
+      cbNotification(Entity, performance.now() - start);
       count++;
     };
     currentGame[GAME_STATE].frameID = requestAnimationFrame(loop);
   }
-
-  // stopGame() {
-  //   clearInterval(this.loopID);
-  // }
 
   /**
    * @param action {obj} - contains, {entityID}

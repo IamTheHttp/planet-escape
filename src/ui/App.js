@@ -10,6 +10,7 @@ import './global.scss';
 import 'bootstrap/dist/css/bootstrap.css';
 import {
   GAME_STATE,
+  UI_COMP,
   GAME_WON,
   GAME_LOST,
   MAP_SIZE,
@@ -61,26 +62,13 @@ class App extends React.Component {
     }
   }
 
-  updateGameState(gameEntities, msFrame) {
+  updateGameState(Entity, msFrame) {
     this.logFrame(msFrame);
     this.frameCount++;
-    let gameEnt = this.defGameEnt;
-    let entsToDraw = [];
-
-    // TODO we should be able to remove this silly loop
-    // why can't do we just use getbyComp([GAME_STATE])
-
-    gameEntities.forEach((ent) => {
-      if (ent.hasComponents(GAME_STATE)) {
-        // console.log(ent);
-        gameEnt = ent;
-        return;
-      }
-      entsToDraw.push(ent);
-    });
+    let entsToDraw = Entity.getByComps([UI_COMP]);
+    let gameEnt = Entity.getByComps([GAME_STATE])[0];
 
     this.setState({gameEnt});
-
     /* istanbul ignore else  */
     if (this.canvasMap) {
       this.canvasMap.update(entsToDraw);
