@@ -24,17 +24,18 @@ class App extends React.Component {
     super();
 
     this.defGameEnt = {
-      [GAME_STATE] : {
-        status : null
+      [GAME_STATE]: {
+        status: null
       }
     };
 
 
     this.state = {
-      selectedEntity : false,
-      buildingOptions : {},
-      gameEnt : this.defGameEnt,
-      isMenuOpen : true
+      selectedEntity: false,
+      buildingOptions: {},
+      gameEnt: this.defGameEnt,
+      isMenuOpen: true,
+      fps : 60
     };
     this.game = {};
     // this.getGameEndModal = this.getGameEndModal.bind(this);
@@ -42,7 +43,7 @@ class App extends React.Component {
   }
 
   startGame(mapSize, difficulty) {
-    return new GameLoop(this.updateGameState.bind(this), mapSize, difficulty,  gameConfig[NUM_PLAYERS]);
+    return new GameLoop(this.updateGameState.bind(this), mapSize, difficulty, gameConfig[NUM_PLAYERS]);
   }
 
   stopGame() {
@@ -51,8 +52,12 @@ class App extends React.Component {
 
   logFrame(msFrame) {
     /* istanbul ignore else  */
-    if (this.frameCount % 300 === 0) {
-      logger.info(`Frame Duration ${msFrame.toPrecision(3)}`);
+
+    if (this.frameCount % 15 === 0) {
+      this.setState({
+        fps: (60 / msFrame).toPrecision(3)
+      });
+      // logger.info(`Frame Duration ${msFrame.toPrecision(3)}`);
     }
   }
 
@@ -111,7 +116,7 @@ class App extends React.Component {
         this.difficulty = gameConfig[DIFFICULTY][menuSelection.difficulty];
         this.game = this.startGame(this.mapSize, this.difficulty);
         this.setState({
-          isMenuOpen : false
+          isMenuOpen: false
         });
       }}
     ></MainMenu>);
@@ -120,6 +125,9 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <div style={{color : this.state.fps >= 60 ? 'green' : 'red'}}>
+          FPS : {this.state.fps}
+        </div>
         <div className="container-fluid app">
           <div className="row">
             {!this.state.isMenuOpen && <CanvasMap
