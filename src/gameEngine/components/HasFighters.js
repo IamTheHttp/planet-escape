@@ -1,7 +1,7 @@
 import Entity from 'gameEngine/Entity';
 import {
   HAS_FIGHTERS,
-  IS_DOCKED
+  DEFENDING
 } from 'gameEngine/constants';
 class HasFighters {
   constructor() {
@@ -16,9 +16,9 @@ export function getFighters(ent) {
   return ent[HAS_FIGHTERS].fighters;
 }
 
-export function getDockedFighters(entity) {
+export function getDefendingFighters(entity) {
   return getFighters(entity).filter((fighter) => {
-    return fighter[IS_DOCKED].isDocked;
+    return fighter.hasComponents(DEFENDING);
   });
 }
 

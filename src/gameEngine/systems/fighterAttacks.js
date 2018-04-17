@@ -1,6 +1,6 @@
 import Entity from 'gameEngine/Entity';
 import entityLoop from 'gameEngine/systems/utils/entityLoop';
-import {getFighters, destroyFighter, getDockedFighters, detachFighterFromPlanet} from 'gameEngine/components/HasFighters';
+import {getFighters, destroyFighter, getDefendingFighters, detachFighterFromPlanet} from 'gameEngine/components/HasFighters';
 import {unSelect} from 'gameEngine/components/PlayerControlledComponent';
 import {hasDest, isSamePos, destReached} from 'gameEngine/components/PositionComponent';
 import {diffPlayers, getOwner} from 'gameEngine/components/OwnerComponent';
@@ -13,7 +13,7 @@ import {
   IN_PLACE_TO_ATTACK,
   HAS_FIGHTERS,
   NEUTRAL,
-  IS_DOCKED
+  DEFENDING
 } from 'gameEngine/constants';
 
 function fighterAttacks() {
@@ -24,7 +24,7 @@ function fighterAttacks() {
   hits.forEach((attacker) => {
     // first lets detect if we just 'hit' a friendly planet
     let friendlyPlanet = planets.find((planet) => {
-      return isSamePos(planet, attacker) && !diffPlayers(planet, attacker) ;
+      return isSamePos(planet, attacker) && !diffPlayers(planet, attacker);
     });
 
     // if we reached a friendly planet
@@ -43,7 +43,7 @@ function fighterAttacks() {
     });
 
     // if the defending planet has no docked fighters left
-    if (getDockedFighters(foundPlanet).length === 0) {
+    if (getDefendingFighters(foundPlanet).length === 0) {
       foundPlanet[OWNER_COMPONENT].player = getOwner(attacker);
       unSelect(foundPlanet);
       // we need to copy the array since we can't modify the array while we loop through it
@@ -57,12 +57,10 @@ function fighterAttacks() {
       return ;
     }
 
-    // there must be a planet here.. always.. let's leave this comment for the future :)
     let defender = getFighters(foundPlanet).find((defFighter) => {
-      // kill only 'docked' fighters without destination
-      return defFighter[IS_DOCKED].isDocked;
+      // kill only 'defending' fighters
+      return defFighter.hasComponents(DEFENDING);
     });
-    // defender can be undefined.. if the planet is out of defenders
 
     destroyFighter(attacker);
     defender && destroyFighter(defender);

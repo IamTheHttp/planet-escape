@@ -3,7 +3,7 @@ import {
   POSITION,
   COLORS,
   HAS_FIGHTERS,
-  IS_DOCKED,
+  DEFENDING,
   NEUTRAL,
   OWNER_COMPONENT,
   SPRITE,
@@ -77,20 +77,19 @@ export function colorByPlayer(entity, ctx) {
   }
 }
 
-function writeFighteCount(entity, ctx) {
+function writeFighterCount(entity, ctx) {
   // TODO - This method is expensive in the loop!
-  // TODO - This method has a typo!
   entity.hasComponents(HAS_FIGHTERS, () => {
-    let dockedFighters = getFighters(entity).filter((fighter) => {
-      return fighter[IS_DOCKED].isDocked;
-    }).length;
     let {x, y, radius} = entity[POSITION];
+    let defendingFighters = getFighters(entity).filter((fighter) => {
+      return fighter[DEFENDING];
+    }).length;
     ctx.font = '18px serif';
     ctx.textBaseline = 'top';
     ctx.fillStyle = 'yellow';
 
-    if (dockedFighters > 0) {
-      ctx.fillText(dockedFighters, radius + x - radius / 4, radius + y - radius / 4);
+    if (defendingFighters > 0) {
+      ctx.fillText(defendingFighters, radius + x - radius / 4, radius + y - radius / 4);
     }
   });
 }
@@ -103,7 +102,7 @@ export default (ctx) => {
     }
     drawEntity(entity, ctx);
     colorByPlayer(entity, ctx);
-    (getOwner(entity) === PLAYER_1 || getOwner(entity) === NEUTRAL) && writeFighteCount(entity, ctx);
+    (getOwner(entity) === PLAYER_1 || getOwner(entity) === NEUTRAL) && writeFighterCount(entity, ctx);
   };
 };
 

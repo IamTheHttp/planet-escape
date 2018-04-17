@@ -9,6 +9,7 @@ module.exports = function(jestConfig){
   jestConfig.collectCoverageFrom.push("!src/liveExample.js");
   jestConfig.collectCoverageFrom.push("!src/index.js");
 
+  jestConfig.bail = true;
   jestConfig.coverageThreshold.global = {
     "branches": 90,
     "functions": 90,

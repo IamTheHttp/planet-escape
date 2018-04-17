@@ -25,9 +25,10 @@ export function randFromArray(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
+// we manually add planets at the end of the drawing, for the player positions
+const MANUALLY_ADDED_PLANETS = 2;
 export function generateMap(mapSize) {
-  // REFACTOR -2 because we generate manually two more planets at the end
-  let planetsToGenerate = mapSize[PLANETS_IN_MAP] - 2;
+  let planetsToGenerate = mapSize[PLANETS_IN_MAP] - MANUALLY_ADDED_PLANETS;
   let buffer = mapSize[PLANET_BUFFER];
   new Player(PLAYER_1);
 

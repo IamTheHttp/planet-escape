@@ -16,7 +16,7 @@ import {
   PLAYER_2,
   NEUTRAL,
   POSITION,
-  IS_DOCKED,
+  DEFENDING,
   IN_PLACE_TO_ATTACK
 } from 'gameEngine/constants';
 
@@ -36,6 +36,7 @@ describe('Tests a the fighter attacks system', () => {
     // set dest and position for fighter
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
     attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
+    attackerFighter.removeComponent(DEFENDING);
     attackerFighter.addComponent(new InPlaceToAttack());
 
     // console.log(attackerFighter);
@@ -59,6 +60,7 @@ describe('Tests a the fighter attacks system', () => {
     let attackerFighter = new Fighter(attackingPlanet);
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
     attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
+    attackerFighter.removeComponent(DEFENDING);
     attackerFighter.addComponent(new InPlaceToAttack());
 
     let attackCount = getFighters(attackingPlanet).length;
@@ -80,6 +82,7 @@ describe('Tests a the fighter attacks system', () => {
     let attackerFighter = new Fighter(attackingPlanet);
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
     attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
+    attackerFighter.removeComponent(DEFENDING);
     attackerFighter.addComponent(new InPlaceToAttack());
 
     let attackCount = getFighters(attackingPlanet).length;
@@ -99,15 +102,14 @@ describe('Tests a the fighter attacks system', () => {
     let attackerFighter = new Fighter(attackingPlanet);
     let fighterInSpace = new Fighter(defendingPlanet);
 
-    // attacker reache destination
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
     attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
+    attackerFighter.removeComponent(DEFENDING);
     attackerFighter.addComponent(new InPlaceToAttack());
 
-    // defending fighter is away
-    fighterInSpace[POSITION].x = 1000;
-    fighterInSpace[POSITION].y = 1000;
-    fighterInSpace[IS_DOCKED].isDocked = false;
+    // fighter in space is not defending..
+    // this state is handled by the various systems
+    fighterInSpace.removeComponent(DEFENDING);
 
     // attacking...
     // let attackCount = getFighters(attackingPlanet).length;

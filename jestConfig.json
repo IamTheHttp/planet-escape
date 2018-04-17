@@ -3,6 +3,7 @@
 		"<rootDir>/",
 		"<rootDir>/src"
 	],
+  "bail" : true,
 	"testRegex": "(/__tests__/.*|(\\.|/)(jest))\\.jsx?$",
 	"transformIgnorePatterns": [
 		"/node_modules/"

@@ -5,7 +5,7 @@ import {randFromArray} from 'shared/utils';
 import {notNeutral, getOwner} from 'gameEngine/components/OwnerComponent';
 import {getPos, calcDistance} from 'gameEngine/components/PositionComponent';
 import {attack} from 'gameEngine/systems/userInputActions/attack';
-import {getDockedFighters} from 'gameEngine/components/HasFighters';
+import {getDefendingFighters} from 'gameEngine/components/HasFighters';
 import {
   OWNER_COMPONENT,
   HAS_FIGHTERS,
@@ -55,7 +55,7 @@ function ai() {
   // only planets with at least AI_MIN_FIGHTERS fighters do stuff..
   // only ONE planet makes decisions per turn..
   let decider = decisionMakers.find((planet) => {
-    return getDockedFighters(planet).length > gameConfig[AI_MIN_FIGHTERS];
+    return getDefendingFighters(planet).length > gameConfig[AI_MIN_FIGHTERS];
   });
 
   // we can attack.

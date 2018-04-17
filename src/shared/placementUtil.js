@@ -1,10 +1,11 @@
 import entityPlacer from 'shared/mapPlacement/entityPlacer';
 import createGrid from 'shared/mapPlacement/grid';
 
+const PX_PER_SQUARE = 10;
 let placeEntities = (entities, area, buffer = 1) => {
   let {topLeftAreaX, topLeftAreaY, bottomRightAreaX, bottomRightAreaY} = area;
 
-  let squaresInLine = Math.floor((bottomRightAreaX - topLeftAreaX) / 10); // TODO - why 10? - each square is 10px?
+  let squaresInLine = Math.floor((bottomRightAreaX - topLeftAreaX) / PX_PER_SQUARE);
   let grid = createGrid(area, squaresInLine); // squares in line
 
   entityPlacer(entities, grid, buffer);

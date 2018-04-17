@@ -14,7 +14,7 @@ import Game from 'gameEngine/entities/Game';
 
 import {
   UI_COMP,
-  IS_DOCKED,
+  DEFENDING,
   IN_PROGRESS,
   GAME_STATE,
   FIGHTER_BUILD_RATE,
@@ -44,7 +44,6 @@ class GameLoop {
       if (count % gameConfig[FIGHTER_BUILD_RATE] === 0) {
         buildFighters();
       }
-      // TODO - Make sure that anything that does not need a UI_COMP, does not have it.
 
       if (currentGame[GAME_STATE]) {
         currentGame[GAME_STATE].frameID = requestAnimationFrame(loop);

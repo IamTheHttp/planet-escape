@@ -47,21 +47,4 @@ describe('Tests the attack action', () => {
 
     expect(attack({x:300, y:300})).toBe(1);
   });
-
-  it('Attack should NOT redirect fighters to target', () => {
-    let attacker = new EarthLike(200, 200, PLAYER_1);
-    attacker[PLAYER_CONTROLLED].selected = true;
-    new Fighter(attacker);
-    let fighterWithDest = new Fighter(attacker);
-
-    let defender = new EarthLike(300, 300, PLAYER_2);
-    let defender2 = new EarthLike(500, 500, PLAYER_2);
-    setDest(fighterWithDest, defender2);
-
-    // even though the attacker has two fighters, since we passed in 'false', we redirect just one
-    expect(attack({x:300, y:300}, [attacker], false)).toBe(1);
-
-    // now with true the argument, we should point both of these fighters
-    expect(attack({x:300, y:300}, [attacker], true)).toBe(2);
-  });
 });

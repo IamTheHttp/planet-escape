@@ -4,21 +4,22 @@ import {
   POSITION,
   MOVEMENT_COMP,
   MOVING,
-  IS_DOCKED,
+  DEFENDING,
   UI_COMP
 } from 'gameEngine/constants';
 
 
 import {getPos, getDest, destReached} from 'gameEngine/components/PositionComponent';
 import InPlaceToAttack from 'gameEngine/components/InPlaceToAttack';
+import Defending from 'gameEngine/components/Defending';
+
 function moveEntity(entity) {
   if (destReached(entity)) {
-    entity[IS_DOCKED].isDocked = true;
     entity.removeComponent(MOVING);
-    // TODO - IN_PLACE_TO_ATTACK is only for different players, else it's just docked..
-    // for example, if we move to a friendly planet, we're not in place to attack...
     // TODO aside / What happens when we try add the same component multiple times?
     entity.addComponent(new InPlaceToAttack());
+    // TODO - are we really defending already? seems wrong.
+    // entity.addComponent(new Defending());
     entity.removeComponent(UI_COMP); // we're done moving, no longer need UI
     return;
   }

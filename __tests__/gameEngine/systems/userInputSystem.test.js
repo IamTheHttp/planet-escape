@@ -102,9 +102,10 @@ describe('Tests the user input system', () => {
 
   it('Attacking action will set destination of fighters', () => {
     let attackingPlanet = new EarthLike(200, 200, PLAYER_1);
-    attackingPlanet[PLAYER_CONTROLLED].selected = true;
     let defendingPlanet = new EarthLike(100, 100, PLAYER_2);
     let attackFighter = new Fighter(attackingPlanet);
+
+    attackingPlanet[PLAYER_CONTROLLED].selected = true;
 
     expect(getFighters(attackingPlanet).length).toBeGreaterThan(0);
 
