@@ -86,8 +86,8 @@ Entity.entities = {};
 /**
  *
  * @param components
- * @param type
- * @return {type : 'array'|'map'}
+ * @param type 'array'|'map'
+ * @return return array/map
  */
 Entity.getByComps = (components = [], type = 'array') => {
   let compNames = components.reduce ? components : [components];
