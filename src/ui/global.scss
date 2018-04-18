@@ -1,7 +1,10 @@
 .app{
-  text-align:center;
   height:100%;
   background-color:black;
+}
+
+ol {
+  padding:5px;
 }
 
 canvas {
@@ -28,4 +31,8 @@ canvas {
 
 .map {
 
+}
+
+.hintList {
+  color:green;
 }

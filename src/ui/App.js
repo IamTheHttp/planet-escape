@@ -133,6 +133,14 @@ class App extends React.Component {
                 >
                 </CanvasMinimap>}
               </div>
+              <div className="hintList">
+                <h3>Hints:</h3>
+                <ol>
+                  <li>Tap to select.</li>
+                  <li>Tap to attack.</li>
+                  <li>Double tap selects all.</li>
+                </ol>
+              </div>
             </div>
             <div className="col-xs-9 main">
               <div className="row">

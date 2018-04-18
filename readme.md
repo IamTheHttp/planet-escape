@@ -5,6 +5,7 @@
 - Introduecd (on purpose) a bug in the angle of the fighters
 - Moved FPS to absolute position
 - Updated Jarb 1.0.2
+- Added styling
 ## 1.0.1
 - Fixed performance issues to support 1000s of fighters
 ## 1.0.0
