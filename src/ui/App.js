@@ -128,7 +128,19 @@ class App extends React.Component {
                     this.canvasMinimap = inst;
                   }}
                   mapSize={this.mapSize}
-                  dispatch={() => {
+                  onClick={(x, y) => {
+                    // we need the flip the signs
+                    // so, even though that's the x,y that was clicked
+                    // we need to center this x,y.
+                    // how do we do that?
+                    // well we know the size of the canvas.
+                    // height 540
+                    // width 960
+                    // so we need to add half of that?
+
+                    // do we need to take into consideration scale here?
+
+                    this.canvasMap.canvasAPI.pan(-x + 960 / 2, -y + 540 / 2);
                   }}
                 >
                 </CanvasMinimap>}
@@ -148,7 +160,6 @@ class App extends React.Component {
                   ref={(inst) => {
                     this.canvasMap = inst;
                   }}
-                  mapSize={this.mapSize}
                   dispatch={this.game.dispatchAction}
                 >
                 </CanvasMap>}

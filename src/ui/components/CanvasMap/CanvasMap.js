@@ -1,5 +1,9 @@
+// TODO for minimap
+// TODO - DONE, first, Tapping on the minimap, should pan!
+// TODO If the minimap and the main map are NOT the same size, we need to show a square on the minimap
+// TODO, the pan value of the main map needs to fed into the minimap canvas,
+
 import React from 'react';
-import onKeyUp from './utils/onKeyUp';
 import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';
 import {getFighters} from 'gameEngine/components/HasFighters';
 import CanvasAPI from 'lib/CanvasAPI';
@@ -8,11 +12,6 @@ import {isSelected} from 'gameEngine/components/PlayerControlledComponent';
 import SelectedBox from 'lib/SelectedBox';
 import {
   CLICK,
-  DB_CLICK,
-  MOVE,
-  CANVAS_X,
-  CANVAS_Y,
-  ATTACK,
   POSITION,
   COLORS,
   OWNER_COMPONENT,
@@ -40,12 +39,15 @@ class CanvasMap extends React.Component {
     }
     let rect = canvas.getBoundingClientRect();
     // base position
-    let x = event.clientX - rect.left - this.canvasAPI.getPan().panX;
-    let y = event.clientY - rect.top - this.canvasAPI.getPan().panY;
+    let x = event.clientX - rect.left;
+    let y = event.clientY - rect.top;
 
     // adjust scale
-    this.x = Math.max(0, Math.round(x * (canvas.width / canvas.offsetWidth)));
-    this.y = Math.max(0, Math.round(y * (canvas.height / canvas.offsetHeight)));
+    this.x = Math.max(0, Math.round(x * (canvas.width / canvas.offsetWidth)))  - this.canvasAPI.getPan().panX;
+    this.y = Math.max(0, Math.round(y * (canvas.height / canvas.offsetHeight))) - this.canvasAPI.getPan().panY;
+
+    console.log(this.canvasAPI.getPan());
+    console.log(x, y, this.x, this.y);
   }
 
   // high order function
@@ -188,9 +190,8 @@ class CanvasMap extends React.Component {
         ref={(elm) => {
           this.canvas = elm;
         }}
-        height={this.props.mapSize[CANVAS_Y]}
-        width={this.props.mapSize[CANVAS_X]}
-        style={{border: '1px solid black'}}
+        height={540}
+        width={960}
         onMouseDown={this.onMouseDown}
         onMouseMove={this.onMouseMove}
         onMouseUp={this.onMouseUp}

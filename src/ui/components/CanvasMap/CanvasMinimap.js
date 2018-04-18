@@ -1,36 +1,20 @@
 import React from 'react';
-import onKeyUp from './utils/onKeyUp';
-import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';
-import {getFighters} from 'gameEngine/components/HasFighters';
 import CanvasAPI from 'lib/CanvasAPI';
 import gameConfig from 'gameEngine/config';
 import {isSelected} from 'gameEngine/components/PlayerControlledComponent';
-import SelectedBox from 'lib/SelectedBox';
 import {
-  CLICK,
-  DB_CLICK,
-  MOVE,
   CANVAS_X,
   CANVAS_Y,
-  ATTACK,
   POSITION,
   COLORS,
-  OWNER_COMPONENT,
-  PLAYER_1,
-  HAS_FIGHTERS,
-  DEFENDING
+  OWNER_COMPONENT
 } from 'gameEngine/constants';
 
 class CanvasMap extends React.Component {
   constructor() {
     super();
-    this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
-    this.onMouseUp = this.onMouseUp.bind(this);
-    this.onMouseLeave = this.onMouseLeave.bind(this);
     this.updateCursorPosition = this.updateCursorPosition.bind(this);
-    this.lastClick = new Date().getTime();
-    this.selectedBox = new SelectedBox();
   }
 
   updateCursorPosition(event) {
@@ -46,20 +30,6 @@ class CanvasMap extends React.Component {
     // adjust scale
     this.x = Math.max(0, Math.round(x * (canvas.width / canvas.offsetWidth)));
     this.y = Math.max(0, Math.round(y * (canvas.height / canvas.offsetHeight)));
-  }
-
-  // high order function
-  dispatch(name) {
-    return () => {
-      return this.props.dispatch({
-        name,
-        x: this.x,
-        y: this.y,
-        selectedBox: this.selectedBox.getData(),
-        isMouseDown: this.isMouseDown,
-        dbClick: this.dbClick
-      });
-    };
   }
 
   componentDidMount() {
@@ -101,83 +71,16 @@ class CanvasMap extends React.Component {
         lineWidth,
         fillColor : color
       });
-
-      // draw the image, if the entity has one..
-      // TODO - fighter images are incorrect!
-      let [cropStartX, cropStartY, cropSizeX, cropSizeY] = getSpriteArgs(entity);
-      let image = getSprite(entity);
-
-      // this.canvasAPI.addImage({
-      //   id: `${entity.id}-image`,
-      //   image,
-      //   x: x - radius, y: y - radius,
-      //   height: radius * 2, width: radius * 2,
-      //   cropStartX, cropStartY, cropSizeX, cropSizeY,
-      //   rotation: angle // in radians
-      // });
-
-      entity.hasComponents(HAS_FIGHTERS, () => {
-        let defendingFighters = getFighters(entity).filter((fighter) => {
-          return fighter[DEFENDING];
-        }).length;
-
-        if (defendingFighters > 0) {
-          // this.canvasAPI.write({
-          //   id: `${entity.id}-fighterCount`,
-          //   text: defendingFighters,
-          //   x: radius + x - radius / 4,
-          //   y: radius + y - radius / 4,
-          //   font: '18px serif',
-          //   textBaseline: 'top',
-          //   fillStyle: 'yellow'
-          // });
-        }
-      });
     });
-
-    // this.canvasAPI.addRect({
-    //   id: 'selectedBox',
-    //   x: this.selectedBox.start.x,
-    //   y: this.selectedBox.start.y,
-    //   width: this.selectedBox.getWidth(),
-    //   height: this.selectedBox.getHeight(),
-    //   strokeStyle: gameConfig[COLORS][PLAYER_1]
-    // });
 
     this.canvasAPI.draw();
   }
 
   onMouseDown() {
-    let now = new Date().getTime();
-    this.dbClick = now - this.lastClick < 300;
-    this.lastClick = now;
-    this.isMouseDown = true;
-
-    this.selectedBox.setStart(this.x, this.y);
-    this.selectedBox.setEnd(this.x, this.y);
-    return this.selectedBox.getData();
-  }
-
-  onMouseMove() {
-    if (this.isMouseDown) {
-      this.selectedBox.setEnd(this.x, this.y);
-      return this.selectedBox.getData().end;
-    } else {
-      return false;
-    }
-  }
-
-  onMouseUp() {
-    this.isMouseDown = false;
-    this.dispatch(CLICK)();
-    this.selectedBox.reset();
-    this.canvasAPI.remove('selectedBox');
-  }
-
-  onMouseLeave() {
-    if (this.isMouseDown) {
-      this.onMouseUp();
-    }
+    console.log('On mouse down!');
+    console.log('x', this.x);
+    console.log('y', this.y);
+    this.props.onClick(this.x, this.y);
   }
 
   render() {
@@ -190,9 +93,6 @@ class CanvasMap extends React.Component {
         height={this.props.mapSize[CANVAS_Y]}
         width={this.props.mapSize[CANVAS_X]}
         onMouseDown={this.onMouseDown}
-        onMouseMove={this.onMouseMove}
-        onMouseUp={this.onMouseUp}
-        onMouseLeave={this.onMouseLeave}
       ></canvas>
     );
   }
