@@ -40,7 +40,6 @@ let entityPlacer = (entities, grid, buffer = 1) => {
       count++;
       /* istanbul ignore if */
       if (count === 1000) {
-        // console.log(count);
         logger.error('ERROR PLACING ENTITY - Still no pos');
         return false;
       }

@@ -45,9 +45,6 @@ class CanvasMap extends React.Component {
     // adjust scale
     this.x = Math.max(0, Math.round(x * (canvas.width / canvas.offsetWidth)))  - this.canvasAPI.getPan().panX;
     this.y = Math.max(0, Math.round(y * (canvas.height / canvas.offsetHeight))) - this.canvasAPI.getPan().panY;
-
-    console.log(this.canvasAPI.getPan());
-    console.log(x, y, this.x, this.y);
   }
 
   // high order function

@@ -77,9 +77,6 @@ class CanvasMap extends React.Component {
   }
 
   onMouseDown() {
-    console.log('On mouse down!');
-    console.log('x', this.x);
-    console.log('y', this.y);
     this.props.onClick(this.x, this.y);
   }
 
