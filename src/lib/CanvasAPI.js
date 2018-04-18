@@ -55,7 +55,7 @@ class CanvasAPI {
     });
   }
 
-  addCircle({id, x, y, radius, strokeStyle, lineWidth}) {
+  addCircle({id, x, y, radius, strokeStyle, lineWidth, fillColor}) {
     let ctx = this.ctx;
     this.shapes.set(id, () => {
       ctx.strokeStyle = strokeStyle;
@@ -63,6 +63,10 @@ class CanvasAPI {
       ctx.moveTo(x, y);
       ctx.beginPath();
       ctx.arc(x, y, radius, 0, Math.PI * 2);
+      if (fillColor) {
+        ctx.fillStyle = fillColor;
+        ctx.fill();
+      }
       ctx.stroke();
       ctx.closePath();
     });

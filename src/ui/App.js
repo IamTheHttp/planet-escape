@@ -69,7 +69,6 @@ class App extends React.Component {
     let entsToDraw = Entity.getByComps([UI_COMP]);
     let gameEnt = Entity.getByComps([GAME_STATE])[0];
 
-    console.log(gameEnt);
     this.setState({gameEnt});
     /* istanbul ignore else  */
     if (this.canvasMap) {

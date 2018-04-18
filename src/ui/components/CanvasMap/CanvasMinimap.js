@@ -81,7 +81,6 @@ class CanvasMap extends React.Component {
     entsToDraw.forEach((entity) => {
       let {x, y, radius, angle} = entity[POSITION];
 
-      let color = null;
       let lineWidth = 1;
       if (entity.hasComponents(OWNER_COMPONENT)) {
         color = gameConfig[COLORS][entity[OWNER_COMPONENT].player];
@@ -97,7 +96,8 @@ class CanvasMap extends React.Component {
         y,
         radius,
         strokeStyle: color,
-        lineWidth
+        lineWidth,
+        fillColor : color
       });
 
       // draw the image, if the entity has one..
@@ -187,7 +187,7 @@ class CanvasMap extends React.Component {
         }}
         height={this.props.mapSize[CANVAS_Y]}
         width={this.props.mapSize[CANVAS_X]}
-        style={{backgroundColor: 'gray', border: '1px solid black'}}
+        style={{border: '1px solid black'}}
         onMouseDown={this.onMouseDown}
         onMouseMove={this.onMouseMove}
         onMouseUp={this.onMouseUp}
