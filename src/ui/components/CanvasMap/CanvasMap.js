@@ -149,23 +149,7 @@ class CanvasMap extends React.Component {
       strokeStyle: gameConfig[COLORS][PLAYER_1]
     });
 
-
-
-
     this.canvasAPI.draw();
-    // let ctx = this.canvas.getContext('2d');
-    /* istanbul ignore else  */
-    //
-    // if (ctx) {
-    //   // ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    //   // ctx.strokeStyle = '#000'; // defaults
-    //   //
-    //   // entsToDraw.forEach(drawCircleEntities(ctx));
-    //   //
-    //   // if (this.isMouseDown) {
-    //   //   drawMouseSelection(ctx, this.selectedBox);
-    //   // }
-    // }
   }
 
   onMouseDown() {

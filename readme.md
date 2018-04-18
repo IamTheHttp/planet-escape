@@ -3,6 +3,7 @@
 - Added canvasAPI
 - Added selectedBox object
 - Introduecd (on purpose) a bug in the angle of the fighters
+- Moved FPS to absolute position
 ## 1.0.1
 - Fixed performance issues to support 1000s of fighters
 ## 1.0.0
