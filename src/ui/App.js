@@ -121,7 +121,7 @@ class App extends React.Component {
         </div>
         <div className="container-fluid app">
           <div className="row">
-            <div className="col-xs-3">
+            <div className="col-xs-3 sidebar">
               <div className="row">
                 {!this.state.isMenuOpen && <CanvasMinimap
                   ref={(inst) => {
@@ -134,7 +134,7 @@ class App extends React.Component {
                 </CanvasMinimap>}
               </div>
             </div>
-            <div className="col-xs-9">
+            <div className="col-xs-9 main">
               <div className="row">
                 {!this.state.isMenuOpen && <CanvasMap
                   ref={(inst) => {

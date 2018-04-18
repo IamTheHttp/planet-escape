@@ -1,5 +1,7 @@
 .app{
   text-align:center;
+  height:100%;
+  background-color:black;
 }
 
 canvas {
@@ -16,4 +18,14 @@ canvas {
 
 #minimap {
   width:100%;
+  border-bottom:1px solid lime;
+}
+
+.sidebar {
+  height:100%;
+  border-right:1px solid lime;
+}
+
+.map {
+
 }

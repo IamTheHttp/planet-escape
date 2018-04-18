@@ -189,7 +189,6 @@ class CanvasMap extends React.Component {
         }}
         height={this.props.mapSize[CANVAS_Y]}
         width={this.props.mapSize[CANVAS_X]}
-        style={{border: '1px solid black'}}
         onMouseDown={this.onMouseDown}
         onMouseMove={this.onMouseMove}
         onMouseUp={this.onMouseUp}

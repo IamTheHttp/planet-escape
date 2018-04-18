@@ -30,8 +30,8 @@ class MainMenu extends React.Component {
           </div>
           <div className="modal-body">
             <div>
-              <div>
-                <div className="difficultySelector">
+              <div className="row">
+                <div className="difficultySelector col-xs-6">
                   <h4>
                     Select difficulty
                   </h4>
@@ -47,7 +47,7 @@ class MainMenu extends React.Component {
                     })}
                   </div>
                 </div>
-                <div className="mapSizeSelector">
+                <div className="mapSizeSelector col-xs-6">
                   <h4>
                     Select map size
                   </h4>
