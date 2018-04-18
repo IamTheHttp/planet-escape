@@ -1,5 +1,5 @@
 // Set node environment to testing
-var webpackCfg = require('webpack-configuration/webpack/envs/karma');
+var webpackCfg = require('jarb/webpack/envs/karma');
 
 // var preProPath = process.cwd() +'karmaTests/loadtests.js';
 // var coverageDir = process.cwd() + 'karmaCoverage';
