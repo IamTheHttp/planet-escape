@@ -121,23 +121,31 @@ class App extends React.Component {
         </div>
         <div className="container-fluid app">
           <div className="row">
-            {!this.state.isMenuOpen && <CanvasMap
-              ref={(inst) => {
-                this.canvasMap = inst;
-              }}
-              mapSize={this.mapSize}
-              dispatch={this.game.dispatchAction}
-            >
-            </CanvasMap>}
-            {!this.state.isMenuOpen && <CanvasMinimap
-              ref={(inst) => {
-                this.canvasMinimap = inst;
-              }}
-              mapSize={this.mapSize}
-              dispatch={() => {
-              }}
-            >
-            </CanvasMinimap>}
+            <div className="col-xs-3">
+              <div className="row">
+                {!this.state.isMenuOpen && <CanvasMinimap
+                  ref={(inst) => {
+                    this.canvasMinimap = inst;
+                  }}
+                  mapSize={this.mapSize}
+                  dispatch={() => {
+                  }}
+                >
+                </CanvasMinimap>}
+              </div>
+            </div>
+            <div className="col-xs-9">
+              <div className="row">
+                {!this.state.isMenuOpen && <CanvasMap
+                  ref={(inst) => {
+                    this.canvasMap = inst;
+                  }}
+                  mapSize={this.mapSize}
+                  dispatch={this.game.dispatchAction}
+                >
+                </CanvasMap>}
+              </div>
+            </div>
           </div>
         </div>
         {this.getGameEndModal()}
