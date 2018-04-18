@@ -81,6 +81,7 @@ class CanvasMap extends React.Component {
     entsToDraw.forEach((entity) => {
       let {x, y, radius, angle} = entity[POSITION];
 
+      let color;
       let lineWidth = 1;
       if (entity.hasComponents(OWNER_COMPONENT)) {
         color = gameConfig[COLORS][entity[OWNER_COMPONENT].player];
