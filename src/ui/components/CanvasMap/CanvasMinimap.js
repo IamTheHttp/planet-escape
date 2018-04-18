@@ -133,14 +133,14 @@ class CanvasMap extends React.Component {
       });
     });
 
-    this.canvasAPI.addRect({
-      id: 'selectedBox',
-      x: this.selectedBox.start.x,
-      y: this.selectedBox.start.y,
-      width: this.selectedBox.getWidth(),
-      height: this.selectedBox.getHeight(),
-      strokeStyle: gameConfig[COLORS][PLAYER_1]
-    });
+    // this.canvasAPI.addRect({
+    //   id: 'selectedBox',
+    //   x: this.selectedBox.start.x,
+    //   y: this.selectedBox.start.y,
+    //   width: this.selectedBox.getWidth(),
+    //   height: this.selectedBox.getHeight(),
+    //   strokeStyle: gameConfig[COLORS][PLAYER_1]
+    // });
 
     this.canvasAPI.draw();
   }
