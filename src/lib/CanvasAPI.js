@@ -6,6 +6,12 @@ class CanvasAPI {
     this.shapes = new Map();
   }
 
+  /**
+   * Clears all the shapes
+   */
+  clear() {
+    this.shapes = new Map();
+  }
   remove(id) {
     this.shapes.delete(id);
   }
@@ -47,11 +53,11 @@ class CanvasAPI {
     });
   }
 
-
-  addCircle({id, x, y, radius, strokeStyle}) {
+  addCircle({id, x, y, radius, strokeStyle, lineWidth}) {
     let ctx = this.ctx;
     this.shapes.set(id, () => {
       ctx.strokeStyle = strokeStyle;
+      ctx.lineWidth = lineWidth;
       ctx.moveTo(x, y);
       ctx.beginPath();
       ctx.arc(x, y, radius, 0, Math.PI * 2);
@@ -64,7 +70,25 @@ class CanvasAPI {
    * Method allows us to pan around the canvas
    */
   pan(x, y) {
+    this.panX = x;
+    this.panY = y;
     this.ctx.setTransform(1, 0, 0, 1, x, y);
+  }
+
+  getPan() {
+    return {
+      panX : this.panX || 0,
+      panY : this.panY || 0
+    };
+  }
+
+  write({id, text, x, y, font, textBaseline, fillStyle}) {
+    this.shapes.set(id, () => {
+      this.ctx.font = font;
+      this.ctx.textBaseline = textBaseline;
+      this.ctx.fillStyle = fillStyle;
+      this.ctx.fillText(text, x, y);
+    });
   }
 
   draw() {

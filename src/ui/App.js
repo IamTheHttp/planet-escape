@@ -111,7 +111,7 @@ class App extends React.Component {
   }
 
   render() {
-    // TODO Create a loading screen after we click 'start' until the app is ready
+    // REFACTOR Create a loading screen after we click 'start' until the app is ready
     // TODO Move the fps color to a class, position absolute and such
     return (
       <div>
