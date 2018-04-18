@@ -1,6 +1,4 @@
 import React from 'react';
-import drawCircleEntities from './utils/drawCircleEntities';
-import {drawMouseSelection} from './utils/drawMouseSelection';
 import onKeyUp from './utils/onKeyUp';
 import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';
 import {getFighters} from 'gameEngine/components/HasFighters';
@@ -93,7 +91,6 @@ class CanvasMap extends React.Component {
         color = gameConfig[COLORS][entity[OWNER_COMPONENT].player];
       }
 
-      // TODO we're missing selection colors
       if (isSelected(entity)) {
         lineWidth = 3; // REFACTOR - Move to a config?
       }
