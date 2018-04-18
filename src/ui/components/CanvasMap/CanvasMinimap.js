@@ -105,14 +105,14 @@ class CanvasMap extends React.Component {
       let [cropStartX, cropStartY, cropSizeX, cropSizeY] = getSpriteArgs(entity);
       let image = getSprite(entity);
 
-      this.canvasAPI.addImage({
-        id: `${entity.id}-image`,
-        image,
-        x: x - radius, y: y - radius,
-        height: radius * 2, width: radius * 2,
-        cropStartX, cropStartY, cropSizeX, cropSizeY,
-        rotation: angle // in radians
-      });
+      // this.canvasAPI.addImage({
+      //   id: `${entity.id}-image`,
+      //   image,
+      //   x: x - radius, y: y - radius,
+      //   height: radius * 2, width: radius * 2,
+      //   cropStartX, cropStartY, cropSizeX, cropSizeY,
+      //   rotation: angle // in radians
+      // });
 
       entity.hasComponents(HAS_FIGHTERS, () => {
         let defendingFighters = getFighters(entity).filter((fighter) => {
@@ -120,15 +120,15 @@ class CanvasMap extends React.Component {
         }).length;
 
         if (defendingFighters > 0) {
-          this.canvasAPI.write({
-            id: `${entity.id}-fighterCount`,
-            text: defendingFighters,
-            x: radius + x - radius / 4,
-            y: radius + y - radius / 4,
-            font: '18px serif',
-            textBaseline: 'top',
-            fillStyle: 'yellow'
-          });
+          // this.canvasAPI.write({
+          //   id: `${entity.id}-fighterCount`,
+          //   text: defendingFighters,
+          //   x: radius + x - radius / 4,
+          //   y: radius + y - radius / 4,
+          //   font: '18px serif',
+          //   textBaseline: 'top',
+          //   fillStyle: 'yellow'
+          // });
         }
       });
     });

@@ -26,6 +26,7 @@ class CanvasAPI {
   }) {
     let ctx = this.ctx;
     this.shapes.set(id, () => {
+      ctx.beginPath();
       ctx.save();
       ctx.translate(x + width / 2, y + height / 2);
       ctx.rotate(rotation);
@@ -34,6 +35,7 @@ class CanvasAPI {
         -width / 2, -height / 2,  // pos in canvas // at the top left of the canvas
         width, height); // size in canvas
       this.ctx.restore();
+      this.ctx.closePath();
     });
   }
 
@@ -84,10 +86,12 @@ class CanvasAPI {
 
   write({id, text, x, y, font, textBaseline, fillStyle}) {
     this.shapes.set(id, () => {
+      this.ctx.beginPath();
       this.ctx.font = font;
       this.ctx.textBaseline = textBaseline;
       this.ctx.fillStyle = fillStyle;
       this.ctx.fillText(text, x, y);
+      this.ctx.closePath();
     });
   }
 
