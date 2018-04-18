@@ -29,6 +29,22 @@ class CanvasAPI {
     });
   }
 
+  addRect({id, x, y, width, height}) {
+    let ctx = this.ctx;
+    this.shapes.set(id, () => {
+      ctx.beginPath();
+      ctx.rect(
+        x,
+        y,
+        width,
+        height
+      );
+      ctx.stroke();
+      ctx.closePath();
+    });
+  }
+
+
   addCircle({id, x, y, radius}) {
     let ctx = this.ctx;
     this.shapes.set(id, () => {

@@ -3,6 +3,7 @@ import drawCircleEntities from './utils/drawCircleEntities';
 import {drawMouseSelection} from './utils/drawMouseSelection';
 import onKeyUp from './utils/onKeyUp';
 import updateCursorPosition from './utils/updateCursorPosition';
+import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';
 import CanvasAPI from 'lib/CanvasAPI';
 import {
   CLICK,
@@ -30,7 +31,7 @@ class CanvasMap extends React.Component {
         name,
         x: this.x,
         y: this.y,
-        selectedBox: this.selectedBox,
+        selectedBox: Object.assign({}, this.selectedBox),
         isMouseDown : this.isMouseDown,
         dbClick : this.dbClick
       });
@@ -53,12 +54,48 @@ class CanvasMap extends React.Component {
 
   update(entsToDraw) {
     entsToDraw.forEach((entity) => {
-      let {x, y, radius} = entity[POSITION];
+      // TODO  why can we draw things that have null positions?
+      let {x, y, radius, angle} = entity[POSITION];
       if (x === null || y === null) {
         return;
       }
       this.canvasAPI.addCircle({ id: entity.id, x, y, radius});
+
+      // TODO we're missing the images
+      let [cropStartX, cropStartY, cropSizeX, cropSizeY] = getSpriteArgs(entity);
+      let image = getSprite(entity);
+
+      this.canvasAPI.addImage({
+        id: `${entity.id}-image`,
+        image,
+        x: x - radius, y: y - radius,
+        height: radius * 2, width: radius * 2,
+        cropStartX, cropStartY, cropSizeX, cropSizeY,
+        rotation : angle // in radians
+      });
     });
+
+    // TODO this is UGLY!
+    if (this.selectedBox.start && this.selectedBox.end) {
+      let width = this.selectedBox.end.x - this.selectedBox.start.x;
+      let height = this.selectedBox.end.y - this.selectedBox.start.y;
+
+      this.canvasAPI.addRect({
+        id : 'selectedBox',
+        x : this.selectedBox.start.x,
+        y : this.selectedBox.start.y,
+        width,
+        height
+      });
+    }
+
+    // TODO we're missing stroke colors for the lines
+    // TODO we're missing the numbers near the planets.
+
+
+
+
+
 
     this.canvasAPI.draw();
     // let ctx = this.canvas.getContext('2d');
@@ -107,6 +144,8 @@ class CanvasMap extends React.Component {
   onMouseUp() {
     this.isMouseDown = false;
     this.dispatch(CLICK)();
+    this.selectedBox = {};
+    this.canvasAPI.remove('selectedBox');
   }
 
   onMouseLeave() {
