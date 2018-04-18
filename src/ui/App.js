@@ -19,6 +19,7 @@ import {
 } from 'gameEngine/constants';
 import gameConfig from 'gameEngine/config';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
+import CanvasMinimap from 'ui/components/CanvasMap/CanvasMinimap';
 
 class App extends React.Component {
   constructor() {
@@ -36,7 +37,7 @@ class App extends React.Component {
       buildingOptions: {},
       gameEnt: this.defGameEnt,
       isMenuOpen: true,
-      fps : 60
+      fps: 60
     };
     this.game = {};
     // this.getGameEndModal = this.getGameEndModal.bind(this);
@@ -72,6 +73,7 @@ class App extends React.Component {
     /* istanbul ignore else  */
     if (this.canvasMap) {
       this.canvasMap.update(entsToDraw);
+      this.canvasMinimap.update(entsToDraw);
     }
   }
 
@@ -127,6 +129,15 @@ class App extends React.Component {
               dispatch={this.game.dispatchAction}
             >
             </CanvasMap>}
+            {!this.state.isMenuOpen && <CanvasMinimap
+              ref={(inst) => {
+                this.canvasMinimap = inst;
+              }}
+              mapSize={this.mapSize}
+              dispatch={() => {
+              }}
+            >
+            </CanvasMinimap>}
           </div>
         </div>
         {this.getGameEndModal()}
