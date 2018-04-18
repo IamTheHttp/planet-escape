@@ -5,6 +5,8 @@ import onKeyUp from './utils/onKeyUp';
 import updateCursorPosition from './utils/updateCursorPosition';
 import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';
 import CanvasAPI from 'lib/CanvasAPI';
+import gameConfig from 'gameEngine/config';
+
 import {
   CLICK,
   DB_CLICK,
@@ -12,7 +14,10 @@ import {
   CANVAS_X,
   CANVAS_Y,
   ATTACK,
-  POSITION
+  POSITION,
+  COLORS,
+  OWNER_COMPONENT,
+  PLAYER_1
 } from 'gameEngine/constants';
 
 class CanvasMap extends React.Component {
@@ -59,9 +64,18 @@ class CanvasMap extends React.Component {
       if (x === null || y === null) {
         return;
       }
-      this.canvasAPI.addCircle({ id: entity.id, x, y, radius});
+      // draw the circle itself
+      // circle needs color!
 
-      // TODO we're missing the images
+      if (entity.hasComponents(OWNER_COMPONENT)) {
+        let player = entity[OWNER_COMPONENT].player;
+        this.canvasAPI.addCircle({id: entity.id, x, y, radius, strokeStyle : gameConfig[COLORS][player]});
+      } else {
+        this.canvasAPI.addCircle({id: entity.id, x, y, radius});
+      }
+
+      // draw the image, if the entity has one..
+      // TODO - fighter images are incorrect!
       let [cropStartX, cropStartY, cropSizeX, cropSizeY] = getSpriteArgs(entity);
       let image = getSprite(entity);
 
@@ -75,6 +89,8 @@ class CanvasMap extends React.Component {
       });
     });
 
+
+
     // TODO this is UGLY!
     if (this.selectedBox.start && this.selectedBox.end) {
       let width = this.selectedBox.end.x - this.selectedBox.start.x;
@@ -85,14 +101,13 @@ class CanvasMap extends React.Component {
         x : this.selectedBox.start.x,
         y : this.selectedBox.start.y,
         width,
-        height
+        height,
+        strokeStyle : gameConfig[COLORS][PLAYER_1]
       });
     }
 
     // TODO we're missing stroke colors for the lines
     // TODO we're missing the numbers near the planets.
-
-
 
 
 

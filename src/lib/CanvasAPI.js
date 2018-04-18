@@ -1,6 +1,8 @@
 class CanvasAPI {
-  constructor(ctx) {
+  constructor(ctx, strokeStyle = 'white') {
     this.ctx = ctx;
+    this.defaultStrokeStyle = strokeStyle;
+    ctx.strokeStyle = strokeStyle;
     this.shapes = new Map();
   }
 
@@ -29,9 +31,10 @@ class CanvasAPI {
     });
   }
 
-  addRect({id, x, y, width, height}) {
+  addRect({id, x, y, width, height, strokeStyle}) {
     let ctx = this.ctx;
     this.shapes.set(id, () => {
+      ctx.strokeStyle = strokeStyle;
       ctx.beginPath();
       ctx.rect(
         x,
@@ -45,9 +48,10 @@ class CanvasAPI {
   }
 
 
-  addCircle({id, x, y, radius}) {
+  addCircle({id, x, y, radius, strokeStyle}) {
     let ctx = this.ctx;
     this.shapes.set(id, () => {
+      ctx.strokeStyle = strokeStyle;
       ctx.moveTo(x, y);
       ctx.beginPath();
       ctx.arc(x, y, radius, 0, Math.PI * 2);
@@ -71,6 +75,7 @@ class CanvasAPI {
 
     for (let shape of this.shapes.values()) {
       shape();
+      this.ctx.strokeStyle = this.defaultStrokeStyle;
     }
   }
 }
