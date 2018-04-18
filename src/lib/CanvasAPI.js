@@ -32,12 +32,12 @@ class CanvasAPI {
   addCircle({id, x, y, radius}) {
     let ctx = this.ctx;
     this.shapes.set(id, () => {
-      ctx.beginPath();
       ctx.moveTo(x, y);
+      ctx.beginPath();
       ctx.arc(x, y, radius, 0, Math.PI * 2);
       ctx.stroke();
       ctx.closePath();
-    })
+    });
   }
 
   /**
@@ -50,10 +50,10 @@ class CanvasAPI {
   draw() {
     this.ctx.save();
     this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    this.ctx.clearRect(0, 0, 200, 200);
+    this.ctx.clearRect(0, 0, 1000, 1000);
     this.ctx.restore();
 
-    for (var shape of this.shapes.values()) {
+    for (let shape of this.shapes.values()) {
       shape();
     }
   }

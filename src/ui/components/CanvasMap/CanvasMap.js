@@ -3,15 +3,16 @@ import drawCircleEntities from './utils/drawCircleEntities';
 import {drawMouseSelection} from './utils/drawMouseSelection';
 import onKeyUp from './utils/onKeyUp';
 import updateCursorPosition from './utils/updateCursorPosition';
+import CanvasAPI from 'lib/CanvasAPI';
 import {
   CLICK,
   DB_CLICK,
   MOVE,
   CANVAS_X,
   CANVAS_Y,
-  ATTACK
+  ATTACK,
+  POSITION
 } from 'gameEngine/constants';
-
 
 class CanvasMap extends React.Component {
   constructor() {
@@ -51,18 +52,28 @@ class CanvasMap extends React.Component {
   }
 
   update(entsToDraw) {
-    let ctx = this.canvas.getContext('2d');
-    /* istanbul ignore else  */
-    if (ctx) {
-      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      ctx.strokeStyle = '#000'; // defaults
-
-      entsToDraw.forEach(drawCircleEntities(ctx));
-
-      if (this.isMouseDown) {
-        drawMouseSelection(ctx, this.selectedBox);
+    entsToDraw.forEach((entity) => {
+      let {x, y, radius} = entity[POSITION];
+      if (x === null || y === null) {
+        return;
       }
-    }
+      this.canvasAPI.addCircle({ id: entity.id, x, y, radius});
+    });
+
+    this.canvasAPI.draw();
+    // let ctx = this.canvas.getContext('2d');
+    /* istanbul ignore else  */
+    //
+    // if (ctx) {
+    //   // ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    //   // ctx.strokeStyle = '#000'; // defaults
+    //   //
+    //   // entsToDraw.forEach(drawCircleEntities(ctx));
+    //   //
+    //   // if (this.isMouseDown) {
+    //   //   drawMouseSelection(ctx, this.selectedBox);
+    //   // }
+    // }
   }
 
   onMouseDown() {
@@ -109,10 +120,13 @@ class CanvasMap extends React.Component {
       <canvas
         ref={(elm) => {
           this.canvas = elm;
+          if (this.canvas && this.canvas.getContext('2d')) {
+            this.canvasAPI = new CanvasAPI(this.canvas.getContext('2d'));
+          }
         }}
         height={this.props.mapSize[CANVAS_Y]}
         width={this.props.mapSize[CANVAS_X]}
-        style={{backgroundColor : 'black', border:'1px solid black'}}
+        style={{backgroundColor : 'gray', border:'1px solid black'}}
         onMouseDown={this.onMouseDown}
         onMouseMove={this.onMouseMove}
         onMouseUp={this.onMouseUp}
