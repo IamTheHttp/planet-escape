@@ -1,7 +1,6 @@
 // TODO for minimap
-// TODO - DONE, first, Tapping on the minimap, should pan!
-// TODO If the minimap and the main map are NOT the same size, we need to show a square on the minimap
-// TODO, the pan value of the main map needs to fed into the minimap canvas,
+// TODO Prevent panning the minimap to unreachable parts of the map!
+// We should prevent two things : The focusing on the wrong aspect of the map + drawing
 // TODO Finalize tests
 import React from 'react';
 import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';

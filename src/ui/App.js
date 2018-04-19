@@ -12,7 +12,9 @@ import {
   GAME_LOST,
   MAP_SIZE,
   DIFFICULTY,
-  NUM_PLAYERS
+  NUM_PLAYERS,
+  CANVAS_X,
+  CANVAS_Y
 } from 'gameEngine/constants';
 import gameConfig from 'gameEngine/config';
 import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
@@ -129,8 +131,19 @@ class App extends React.Component {
                   }}
                   mapSize={this.mapSize}
                   onClick={(x, y) => {
-                    this.canvasMinimap.updatePanLocation(x - 960 / 2, y - 540 / 2, 960, 540);
-                    this.canvasMap.canvasAPI.pan(-x + 960 / 2, -y + 540 / 2);
+                    // Handle negative overflows, both numbers should be positive
+                    let calcPanX = Math.max(x - 960 / 2, 0);
+                    let calcPanY = Math.max(y - 540 / 2, 0);
+
+                    // Handle positive overflows, both numbers should not exceed map size
+                    let width = this.mapSize[CANVAS_X];
+                    let height = this.mapSize[CANVAS_Y];
+
+                    calcPanX = calcPanX + 960 < width ? calcPanX : width - 960;
+                    calcPanY = calcPanY + 540 < height ? calcPanY : height - 540;
+
+                    this.canvasMinimap.updatePanLocation(calcPanX, calcPanY, 960, 540);
+                    this.canvasMap.canvasAPI.pan(-calcPanX, -calcPanY);
                   }}
                 >
                 </CanvasMinimap>}
