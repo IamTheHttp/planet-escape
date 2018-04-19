@@ -1,5 +1,5 @@
 # Change log
-## Master
+## 1.0.2
 - Added canvasAPI
 - Added selectedBox object
 - Introduced (on purpose) a bug in the angle of the fighters
