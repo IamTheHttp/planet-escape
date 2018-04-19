@@ -1,4 +1,6 @@
 # Change log
+## master
+- Fixed assets path to ./
 ## 1.0.2
 - Added canvasAPI
 - Added selectedBox object
