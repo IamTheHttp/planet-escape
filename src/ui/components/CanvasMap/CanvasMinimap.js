@@ -29,7 +29,8 @@ class CanvasMap extends React.Component {
       this.canvasAPI = new CanvasAPI(this.canvas.getContext('2d'));
       window.canvasAPI = this.canvasAPI;
     }
-    this.updatePanLocation(0, 0, 200, 200);
+
+    this.updatePanLocation(0, 0, 960, 540);
   }
 
   updateCursorPosition(event) {
@@ -55,9 +56,11 @@ class CanvasMap extends React.Component {
   }
 
   update(entsToDraw) {
+    // clear all shapes first
     this.canvasAPI.clear();
 
-    if (this.panX) {
+    // start adding shapes
+    if (typeof this.panX !== 'undefined') {
       this.canvasAPI.addRect({
         id: 'currentMap',
         x: this.panX,

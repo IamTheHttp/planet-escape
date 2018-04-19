@@ -52,7 +52,6 @@ class App extends React.Component {
 
   logFrame(msFrame) {
     /* istanbul ignore else  */
-
     if (this.frameCount % 15 === 0) {
       this.setState({
         fps: (60 / msFrame).toPrecision(3)
@@ -77,15 +76,13 @@ class App extends React.Component {
 
   getGameEndModal() {
     let popUp = null;
-    if (this.state.gameEnt[GAME_STATE].status === GAME_WON) {
+    if (window.debugTools.triggerWin || this.state.gameEnt[GAME_STATE].status === GAME_WON) {
       this.stopGame();
       popUp = (<Modal
         text={'Game Won!'}
         onClick={() => {
           this.game = this.startGame(this.mapSize, this.difficulty);
           // reset all panning
-          this.canvasMap.canvasAPI.pan(0, 0);
-          this.canvasMinimap.updatePanLocation(0, 0, 960, 540);
         }}
       ></Modal>);
     } else if (this.state.gameEnt[GAME_STATE].status === GAME_LOST) {
@@ -95,8 +92,6 @@ class App extends React.Component {
         onClick={() => {
           this.game = this.startGame(this.mapSize, this.difficulty);
           // reset all panning
-          this.canvasMap.canvasAPI.pan(0, 0);
-          this.canvasMinimap.updatePanLocation(0, 0, 960, 540);
         }}
       ></Modal>);
     }
@@ -171,4 +166,7 @@ class App extends React.Component {
 }
 
 export default App;
+
+
+
 

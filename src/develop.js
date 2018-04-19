@@ -1,3 +1,4 @@
+import './debugTools';
 let title = document.getElementsByTagName('title')[0];
 title.innerHTML = 'Planet Escape!';
 import 'polyfill/rAF.js';
