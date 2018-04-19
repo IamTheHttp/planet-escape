@@ -32,6 +32,24 @@ class CanvasMap extends React.Component {
     this.selectedBox = new SelectedBox();
   }
 
+  componentDidMount() {
+    this.x = 0;
+    this.y = 0;
+    this.isMouseDown = false;
+
+    // this might be tracked somewhere else, it has nothing to do with the canvas itself!
+    document.addEventListener('mousemove', this.updateCursorPosition);
+    window.onresize = () => {
+      this.canvas.style.width = '100%';
+    };
+    window.onresize();
+
+    if (this.canvas && this.canvas.getContext('2d')) {
+      this.canvasAPI = new CanvasAPI(this.canvas.getContext('2d'));
+      window.canvasAPI = this.canvasAPI;
+    }
+  }
+
   updateCursorPosition(event) {
     let canvas = this.canvas;
     if (!canvas) {
@@ -59,24 +77,6 @@ class CanvasMap extends React.Component {
         dbClick: this.dbClick
       });
     };
-  }
-
-  componentDidMount() {
-    this.x = 0;
-    this.y = 0;
-    this.isMouseDown = false;
-
-    // this might be tracked somewhere else, it has nothing to do with the canvas itself!
-    document.addEventListener('mousemove', this.updateCursorPosition);
-    window.onresize = () => {
-      this.canvas.style.width = '100%';
-    };
-    window.onresize();
-
-    if (this.canvas && this.canvas.getContext('2d')) {
-      this.canvasAPI = new CanvasAPI(this.canvas.getContext('2d'));
-      window.canvasAPI = this.canvasAPI;
-    }
   }
 
   update(entsToDraw) {

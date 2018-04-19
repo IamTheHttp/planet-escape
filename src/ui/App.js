@@ -1,6 +1,3 @@
-import 'polyfill/rAF.js';
-import 'polyfill/perf.js';
-import logger from 'shared/logger';
 import React from 'react';
 import {render} from 'react-dom';
 import GameLoop from 'gameEngine/GameLoop';
@@ -30,7 +27,7 @@ class App extends React.Component {
         status: null
       }
     };
-
+    this.gameCount = 0;
 
     this.state = {
       selectedEntity: false,
@@ -45,6 +42,7 @@ class App extends React.Component {
   }
 
   startGame(mapSize, difficulty) {
+    this.gameCount++;
     return new GameLoop(this.updateGameState.bind(this), mapSize, difficulty, gameConfig[NUM_PLAYERS]);
   }
 
@@ -85,7 +83,9 @@ class App extends React.Component {
         text={'Game Won!'}
         onClick={() => {
           this.game = this.startGame(this.mapSize, this.difficulty);
+          // reset all panning
           this.canvasMap.canvasAPI.pan(0, 0);
+          this.canvasMinimap.updatePanLocation(0, 0, 960, 540);
         }}
       ></Modal>);
     } else if (this.state.gameEnt[GAME_STATE].status === GAME_LOST) {
@@ -94,7 +94,9 @@ class App extends React.Component {
         text={'Game Over!'}
         onClick={() => {
           this.game = this.startGame(this.mapSize, this.difficulty);
+          // reset all panning
           this.canvasMap.canvasAPI.pan(0, 0);
+          this.canvasMinimap.updatePanLocation(0, 0, 960, 540);
         }}
       ></Modal>);
     }
@@ -126,22 +128,13 @@ class App extends React.Component {
             <div className="col-xs-3 sidebar">
               <div className="row">
                 {!this.state.isMenuOpen && <CanvasMinimap
+                  key={this.gameCount}
                   ref={(inst) => {
                     this.canvasMinimap = inst;
                   }}
                   mapSize={this.mapSize}
                   onClick={(x, y) => {
-                    // we need the flip the signs
-                    // so, even though that's the x,y that was clicked
-                    // we need to center this x,y.
-                    // how do we do that?
-                    // well we know the size of the canvas.
-                    // height 540
-                    // width 960
-                    // so we need to add half of that?
-
-                    // do we need to take into consideration scale here?
-
+                    this.canvasMinimap.updatePanLocation(x - 960 / 2, y - 540 / 2, 960, 540);
                     this.canvasMap.canvasAPI.pan(-x + 960 / 2, -y + 540 / 2);
                   }}
                 >
@@ -159,6 +152,7 @@ class App extends React.Component {
             <div className="col-xs-9 main">
               <div className="row">
                 {!this.state.isMenuOpen && <CanvasMap
+                  key={this.gameCount}
                   ref={(inst) => {
                     this.canvasMap = inst;
                   }}

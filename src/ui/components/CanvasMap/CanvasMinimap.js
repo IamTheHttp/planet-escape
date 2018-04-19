@@ -17,6 +17,21 @@ class CanvasMap extends React.Component {
     this.updateCursorPosition = this.updateCursorPosition.bind(this);
   }
 
+  componentDidMount() {
+    this.x = 0;
+    this.y = 0;
+    this.isMouseDown = false;
+
+    // this might be tracked somewhere else, it has nothing to do with the canvas itself!
+    document.addEventListener('mousemove', this.updateCursorPosition);
+
+    if (this.canvas && this.canvas.getContext('2d')) {
+      this.canvasAPI = new CanvasAPI(this.canvas.getContext('2d'));
+      window.canvasAPI = this.canvasAPI;
+    }
+    this.updatePanLocation(0, 0, 200, 200);
+  }
+
   updateCursorPosition(event) {
     let canvas = this.canvas;
     if (!canvas) {
@@ -32,22 +47,28 @@ class CanvasMap extends React.Component {
     this.y = Math.max(0, Math.round(y * (canvas.height / canvas.offsetHeight)));
   }
 
-  componentDidMount() {
-    this.x = 0;
-    this.y = 0;
-    this.isMouseDown = false;
-
-    // this might be tracked somewhere else, it has nothing to do with the canvas itself!
-    document.addEventListener('mousemove', this.updateCursorPosition);
-
-    if (this.canvas && this.canvas.getContext('2d')) {
-      this.canvasAPI = new CanvasAPI(this.canvas.getContext('2d'));
-      window.canvasAPI = this.canvasAPI;
-    }
+  updatePanLocation(x, y, width, height) {
+    this.panX = x;
+    this.panY = y;
+    this.panWidth = width;
+    this.panHeight = height;
   }
 
   update(entsToDraw) {
     this.canvasAPI.clear();
+
+    if (this.panX) {
+      this.canvasAPI.addRect({
+        id: 'currentMap',
+        x: this.panX,
+        y: this.panY,
+        width: this.panWidth,
+        height : this.panHeight,
+        strokeStyle : 'green',
+        lineWidth : 20
+      });
+    }
+
     entsToDraw.forEach((entity) => {
       let {x, y, radius, angle} = entity[POSITION];
 
@@ -81,6 +102,9 @@ class CanvasMap extends React.Component {
   }
 
   render() {
+    if (!this.props.mapSize) {
+      return null;
+    }
     return (
       <canvas
         id="minimap"

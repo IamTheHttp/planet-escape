@@ -39,10 +39,11 @@ class CanvasAPI {
     });
   }
 
-  addRect({id, x, y, width, height, strokeStyle}) {
+  addRect({id, x, y, width, height, strokeStyle, lineWidth}) {
     let ctx = this.ctx;
     this.shapes.set(id, () => {
       ctx.strokeStyle = strokeStyle;
+      ctx.lineWidth = lineWidth;
       ctx.beginPath();
       ctx.rect(
         x,
