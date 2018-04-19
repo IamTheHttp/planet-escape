@@ -183,6 +183,7 @@ class CanvasMap extends React.Component {
   render() {
     return (
       <canvas
+        className="mainMap"
         ref={(elm) => {
           this.canvas = elm;
         }}

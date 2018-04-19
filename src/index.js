@@ -1,6 +1,4 @@
-window.debugTools = {};
-let title = document.getElementsByTagName('title')[0];
-title.innerHTML = 'Planet Escape!';
+import './pageSetup';
 import 'polyfill/rAF.js';
 import 'polyfill/perf.js';
 import React from 'react';
