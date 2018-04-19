@@ -85,6 +85,7 @@ class App extends React.Component {
         text={'Game Won!'}
         onClick={() => {
           this.game = this.startGame(this.mapSize, this.difficulty);
+          this.canvasMap.canvasAPI.pan(0, 0);
         }}
       ></Modal>);
     } else if (this.state.gameEnt[GAME_STATE].status === GAME_LOST) {
@@ -93,6 +94,7 @@ class App extends React.Component {
         text={'Game Over!'}
         onClick={() => {
           this.game = this.startGame(this.mapSize, this.difficulty);
+          this.canvasMap.canvasAPI.pan(0, 0);
         }}
       ></Modal>);
     }
