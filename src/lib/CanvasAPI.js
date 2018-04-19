@@ -114,6 +114,7 @@ class CanvasAPI {
 }
 
 // adding an image causes segmentation fault for some reason :)
+/* istanbul ignore next */
 if (process.env.NODE_ENV === 'test') {
   CanvasAPI.prototype.addImage = () => {};
 }

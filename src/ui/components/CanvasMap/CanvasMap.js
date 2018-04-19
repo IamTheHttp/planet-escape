@@ -1,7 +1,3 @@
-// TODO for minimap
-// TODO Prevent panning the minimap to unreachable parts of the map!
-// We should prevent two things : The focusing on the wrong aspect of the map + drawing
-// TODO Finalize tests
 import React from 'react';
 import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';
 import {getFighters} from 'gameEngine/components/HasFighters';
@@ -60,8 +56,8 @@ class CanvasMap extends React.Component {
     let y = event.clientY - rect.top;
 
     // adjust scale
-    this.x = Math.max(0, Math.round(x * (canvas.width / canvas.offsetWidth)))  - this.canvasAPI.getPan().panX;
-    this.y = Math.max(0, Math.round(y * (canvas.height / canvas.offsetHeight))) - this.canvasAPI.getPan().panY;
+    this.x = Math.max(0, Math.round(x * (canvas.width / rect.width)))  - this.canvasAPI.getPan().panX;
+    this.y = Math.max(0, Math.round(y * (canvas.height / rect.height))) - this.canvasAPI.getPan().panY;
   }
 
   // high order function

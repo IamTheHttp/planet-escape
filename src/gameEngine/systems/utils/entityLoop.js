@@ -22,6 +22,7 @@ export default (entities, fn) => {
     });
   }
 
+  /* istanbul ignore next */
   if (ents.length > 1000) {
     logger.warn('WARNING, BIG LOOP DETECTED');
   }

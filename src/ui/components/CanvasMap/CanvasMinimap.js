@@ -85,7 +85,6 @@ class CanvasMap extends React.Component {
         lineWidth = 3; // REFACTOR - Move to a config?
       }
 
-      // TODO need to add panning ability
       this.canvasAPI.addCircle({
         id: entity.id,
         x,

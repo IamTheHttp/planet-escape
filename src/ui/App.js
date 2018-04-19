@@ -78,7 +78,7 @@ class App extends React.Component {
 
   getGameEndModal() {
     let popUp = null;
-    if (window.debugTools.triggerWin || this.state.gameEnt[GAME_STATE].status === GAME_WON) {
+    if (this.state.gameEnt[GAME_STATE].status === GAME_WON) {
       this.stopGame();
       popUp = (<Modal
         text={'Game Won!'}
@@ -114,7 +114,6 @@ class App extends React.Component {
   }
 
   render() {
-    // REFACTOR Create a loading screen after we click 'start' until the app is ready
     return (
       <div>
         <div id="fps">

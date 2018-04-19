@@ -2,10 +2,13 @@
 ## Master
 - Added canvasAPI
 - Added selectedBox object
-- Introduecd (on purpose) a bug in the angle of the fighters
-- Moved FPS to absolute position
+- Introduced (on purpose) a bug in the angle of the fighters
+- Moved FPS to absolute position top right
 - Updated Jarb 1.0.2
 - Added styling
+- Added minimap
+- Prevent text from accidently being selected.
+- Added support for mobileView
 ## 1.0.1
 - Fixed performance issues to support 1000s of fighters
 ## 1.0.0
