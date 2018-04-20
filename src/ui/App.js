@@ -42,7 +42,6 @@ class App extends React.Component {
     };
     this.game = {};
     // this.getGameEndModal = this.getGameEndModal.bind(this);
-    this.frameCount = 0;
   }
 
   startGame(mapSize, difficulty) {
@@ -57,19 +56,7 @@ class App extends React.Component {
     this.game.resume();
   }
 
-  logFrame(msFrame) {
-    /* istanbul ignore else  */
-    if (this.frameCount % 15 === 0) {
-      this.setState({
-        fps: (60 / msFrame).toPrecision(3)
-      });
-      // logger.info(`Frame Duration ${msFrame.toPrecision(3)}`);
-    }
-  }
-
   updateGameState(Entity, msFrame) {
-    this.logFrame(msFrame);
-    this.frameCount++;
     let entsToDraw = Entity.getByComps([UI_COMP]);
     let gameEnt = Entity.getByComps([GAME_STATE])[0];
 

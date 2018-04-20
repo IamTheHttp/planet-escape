@@ -5,6 +5,7 @@
 - Updated jarb to 1.0.3
 - Fixed fleet performance, ships won't be rendered when they're in fleet!
 - Added Pause/Play and back to main menu page
+- Removed FPS count
 ## 1.0.2
 - Added canvasAPI
 - Added selectedBox object
