@@ -3,6 +3,7 @@
 - Fixed assets path to ./
 - Cached defender count for improved Perf, defender pilots should not affect performance
 - Updated jarb to 1.0.3
+- Fixed fleet performance, ships won't be rendered when they're in fleet!
 ## 1.0.2
 - Added canvasAPI
 - Added selectedBox object

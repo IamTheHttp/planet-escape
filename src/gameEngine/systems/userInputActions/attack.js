@@ -53,19 +53,18 @@ export function attack(action, entities = getSelectedEntities(), redirectFighter
       if (fighterEnt.hasComponents(DEFENDING)) {
         fighterEnt.addComponent(new Moving());
         stopDefending(fighterEnt); // adds more logic behind the scenes
-        addFighterUiComp(fighterEnt); // because we're moving, we need UI!
+
         fightersInFleet.push(fighterEnt);
         setDest(fighterEnt, targetPlanet);
       }
     });
 
     // we resize the radius of the fighters in the fleet represent the fleet size
-    fightersInFleet.forEach((fighter) => {
-      let speed = fighter[MOVEMENT_COMP].speed;
+    fightersInFleet.some((fighter) => {
+      addFighterUiComp(fighter); // because we're moving, we need UI!
       let newSize = fighter[POSITION].radius + fightersInFleet.length;
       fighter[POSITION].radius = Math.min(newSize, fighter[POSITION].radius * 8);
-      // disalbe the slowdown, not sure this is required...
-      // fighter[MOVEMENT_COMP].speed = Math.max(speed - launchedFighters * 0.07, 0.5); // slow down
+      return true;
     });
 
     directedFighters += fightersInFleet.length;

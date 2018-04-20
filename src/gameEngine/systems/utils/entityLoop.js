@@ -24,7 +24,7 @@ export default (entities, fn) => {
 
   /* istanbul ignore next */
   if (ents.length > 1000) {
-    logger.warn('WARNING, BIG LOOP DETECTED');
+    logger.error('WARNING, BIG LOOP DETECTED');
   }
 
   return ents;
