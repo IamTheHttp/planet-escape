@@ -2,6 +2,7 @@
 ## master
 - Fixed assets path to ./
 - Cached defender count for improved Perf, defender pilots should not affect performance
+- Updated jarb to 1.0.3
 ## 1.0.2
 - Added canvasAPI
 - Added selectedBox object

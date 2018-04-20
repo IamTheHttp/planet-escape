@@ -1566,10 +1566,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getFighters = getFighters;
+exports.stopDefending = stopDefending;
 exports.getDefendingFighters = getDefendingFighters;
 exports.addFighter = addFighter;
-exports.detachFighterFromPlanet = detachFighterFromPlanet;
 exports.destroyFighter = destroyFighter;
+exports.detachFighterFromPlanet = detachFighterFromPlanet;
 
 var _Entity = __webpack_require__(6);
 
@@ -1586,6 +1587,7 @@ var HasFighters = function HasFighters() {
 
   this.name = _constants.HAS_FIGHTERS;
   this.fighters = [];
+  this.defenders = 0;
 };
 
 exports.default = HasFighters;
@@ -1593,15 +1595,34 @@ function getFighters(ent) {
   return ent[_constants.HAS_FIGHTERS].fighters;
 }
 
+function stopDefending(fighter) {
+  _Entity2.default.entities[fighter.planetID][_constants.HAS_FIGHTERS].defenders--;
+  fighter.removeComponent(_constants.DEFENDING);
+}
+
+// Expensive loop
+// TODO, remove loop, use cached values only from HAS_FIGHTERS
 function getDefendingFighters(entity) {
-  return getFighters(entity).filter(function (fighter) {
-    return fighter.hasComponents(_constants.DEFENDING);
-  });
+  return entity[_constants.HAS_FIGHTERS].defenders;
 }
 
 function addFighter(ent, fighter) {
   fighter.planetID = ent.id;
+  ent[_constants.HAS_FIGHTERS].defenders++;
   return ent[_constants.HAS_FIGHTERS].fighters.push(fighter);
+}
+
+function destroyFighter(fighter) {
+  var ownerPlanet = _Entity2.default.entities[fighter.planetID];
+  // if fighter has an owner..
+  if (ownerPlanet) {
+    // if fighter was defending, remove it from defender count
+    if (fighter.hasComponents([_constants.DEFENDING])) {
+      ownerPlanet[_constants.HAS_FIGHTERS].defenders--;
+    }
+    detachFighterFromPlanet(fighter);
+  }
+  fighter.destroy();
 }
 
 function detachFighterFromPlanet(fighter) {
@@ -1610,18 +1631,6 @@ function detachFighterFromPlanet(fighter) {
   _Entity2.default.entities[fighter.planetID][_constants.HAS_FIGHTERS].fighters = currentFighters;
   delete fighter.planetID;
 }
-
-function destroyFighter(fighter) {
-  var ownerPlanet = _Entity2.default.entities[fighter.planetID];
-  // if fighter has an owner..
-  if (ownerPlanet) {
-    detachFighterFromPlanet(fighter);
-  }
-  fighter.destroy();
-}
-
-// when we attack, we reset the array of the fighters.. great right?
-// when we reach our target, we splice the index from the new built fighters instead of the old ones
 
 /***/ }),
 /* 17 */
@@ -2928,6 +2937,15 @@ var Fighter = function Fighter(planet) {
   (0, _HasFighters.addFighter)(planet, ent);
   return ent;
 };
+
+// REFACTOR - Should we allow hooks for addComponent / removeComponent?
+// That would allow us to add the required logic in one place, while we avoid
+// using magic functions that are defined in various places.
+
+// TODO
+// Using the Refactor statement above :
+// We can hook into "stopDefending" and add the UI comp.
+
 
 function addFighterUiComp(fighter) {
   fighter.addComponent(new _UIComponent2.default({
@@ -7289,8 +7307,8 @@ function attack(action) {
 
     (0, _HasFighters.getFighters)(attackingPlanet).forEach(function (fighterEnt) {
       if (fighterEnt.hasComponents(_constants.DEFENDING)) {
-        fighterEnt.removeComponent(_constants.DEFENDING);
         fighterEnt.addComponent(new _Moving2.default());
+        (0, _HasFighters.stopDefending)(fighterEnt); // adds more logic behind the scenes
         (0, _Fighter.addFighterUiComp)(fighterEnt); // because we're moving, we need UI!
         fightersInFleet.push(fighterEnt);
         (0, _PositionComponent.setDest)(fighterEnt, targetPlanet);
@@ -11452,7 +11470,7 @@ function ai() {
   // only planets with at least AI_MIN_FIGHTERS fighters do stuff..
   // only ONE planet makes decisions per turn..
   var decider = decisionMakers.find(function (planet) {
-    return (0, _HasFighters.getDefendingFighters)(planet).length > _config2.default[_constants.AI_MIN_FIGHTERS];
+    return (0, _HasFighters.getDefendingFighters)(planet) > _config2.default[_constants.AI_MIN_FIGHTERS];
   });
 
   // we can attack.
@@ -11630,7 +11648,7 @@ function fighterAttacks() {
     });
 
     // if the defending planet has no docked fighters left
-    if ((0, _HasFighters.getDefendingFighters)(foundPlanet).length === 0) {
+    if ((0, _HasFighters.getDefendingFighters)(foundPlanet) === 0) {
       foundPlanet[_constants.OWNER_COMPONENT].player = (0, _OwnerComponent.getOwner)(attacker);
       (0, _PlayerControlledComponent.unSelect)(foundPlanet);
       // we need to copy the array since we can't modify the array while we loop through it
@@ -12458,14 +12476,10 @@ var CanvasMap = function (_React$Component) {
         });
 
         entity.hasComponents(_constants.HAS_FIGHTERS, function () {
-          var defendingFighters = (0, _HasFighters.getFighters)(entity).filter(function (fighter) {
-            return fighter[_constants.DEFENDING];
-          }).length;
-
-          if (defendingFighters > 0) {
+          if ((0, _HasFighters.getDefendingFighters)(entity) > 0) {
             _this4.canvasAPI.write({
               id: entity.id + '-fighterCount',
-              text: defendingFighters,
+              text: (0, _HasFighters.getDefendingFighters)(entity),
               x: radius + x - radius / 4,
               y: radius + y - radius / 4,
               font: '18px serif',

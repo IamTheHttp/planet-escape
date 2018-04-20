@@ -25,7 +25,7 @@
     "build:dll": "NODE_ENV=dll webpack --config=node_modules/jarb/webpack/webpackConfig.js"
   },
   "devDependencies": {
-    "jarb": "1.0.2"
+    "jarb": "1.0.3"
   },
   "main": "dist",
   "dependencies": {
