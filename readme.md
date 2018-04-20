@@ -1,6 +1,7 @@
 # Change log
 ## master
 - Fixed assets path to ./
+- Cached defender count for improved Perf, defender pilots should not affect performance
 ## 1.0.2
 - Added canvasAPI
 - Added selectedBox object

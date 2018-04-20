@@ -42,7 +42,7 @@ function fighterAttacks() {
     });
 
     // if the defending planet has no docked fighters left
-    if (getDefendingFighters(foundPlanet).length === 0) {
+    if (getDefendingFighters(foundPlanet) === 0) {
       foundPlanet[OWNER_COMPONENT].player = getOwner(attacker);
       unSelect(foundPlanet);
       // we need to copy the array since we can't modify the array while we loop through it

@@ -7,6 +7,7 @@ class HasFighters {
   constructor() {
     this.name = HAS_FIGHTERS;
     this.fighters = [];
+    this.defenders = 0;
   }
 }
 export default HasFighters;
@@ -16,15 +17,34 @@ export function getFighters(ent) {
   return ent[HAS_FIGHTERS].fighters;
 }
 
+export function stopDefending(fighter) {
+  Entity.entities[fighter.planetID][HAS_FIGHTERS].defenders--;
+  fighter.removeComponent(DEFENDING);
+}
+
+// Expensive loop
+// TODO, remove loop, use cached values only from HAS_FIGHTERS
 export function getDefendingFighters(entity) {
-  return getFighters(entity).filter((fighter) => {
-    return fighter.hasComponents(DEFENDING);
-  });
+  return entity[HAS_FIGHTERS].defenders;
 }
 
 export function addFighter(ent, fighter) {
   fighter.planetID = ent.id;
+  ent[HAS_FIGHTERS].defenders++;
   return ent[HAS_FIGHTERS].fighters.push(fighter);
+}
+
+export function destroyFighter(fighter) {
+  let ownerPlanet = Entity.entities[fighter.planetID];
+  // if fighter has an owner..
+  if (ownerPlanet) {
+    // if fighter was defending, remove it from defender count
+    if (fighter.hasComponents([DEFENDING])) {
+      ownerPlanet[HAS_FIGHTERS].defenders--;
+    }
+    detachFighterFromPlanet(fighter);
+  }
+  fighter.destroy();
 }
 
 export function detachFighterFromPlanet(fighter) {
@@ -33,17 +53,3 @@ export function detachFighterFromPlanet(fighter) {
   Entity.entities[fighter.planetID][HAS_FIGHTERS].fighters = currentFighters;
   delete fighter.planetID;
 }
-
-export function destroyFighter(fighter) {
-  let ownerPlanet = Entity.entities[fighter.planetID];
-  // if fighter has an owner..
-  if (ownerPlanet) {
-    detachFighterFromPlanet(fighter);
-  }
-  fighter.destroy();
-}
-
-
-
-// when we attack, we reset the array of the fighters.. great right?
-// when we reach our target, we splice the index from the new built fighters instead of the old ones

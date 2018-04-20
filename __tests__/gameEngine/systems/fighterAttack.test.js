@@ -10,7 +10,7 @@ import fighterAttacks from 'gameEngine/systems/fighterAttacks';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import Fighter from 'gameEngine/entities/Ships/Fighter';
 import Entity from 'gameEngine/Entity';
-import {getFighters} from 'gameEngine/components/HasFighters';
+import {getFighters, stopDefending} from 'gameEngine/components/HasFighters';
 import {
   PLAYER_1,
   PLAYER_2,
@@ -94,7 +94,7 @@ describe('Tests a the fighter attacks system', () => {
     expect(getOwner(defendingPlanet)).toBe(PLAYER_1);
   });
 
-  it('A fighter attacking a an enemy planet that has fighters out..', () => {
+  it('A fighter attacking an enemy planet that has fighters out..', () => {
     let attackingPlanet = new EarthLike(200, 200, PLAYER_1);
     let defendingPlanet = new EarthLike(500, 500, PLAYER_2);
     let defendingFriendly = new EarthLike(5000, 5000, PLAYER_1);
@@ -104,12 +104,14 @@ describe('Tests a the fighter attacks system', () => {
 
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
     attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
-    attackerFighter.removeComponent(DEFENDING);
+    stopDefending(attackerFighter);
+    // attackerFighter.removeComponent(DEFENDING);
     attackerFighter.addComponent(new InPlaceToAttack());
 
     // fighter in space is not defending..
     // this state is handled by the various systems
-    fighterInSpace.removeComponent(DEFENDING);
+    stopDefending(fighterInSpace);
+    // fighterInSpace.removeComponent(DEFENDING);
 
     // attacking...
     // let attackCount = getFighters(attackingPlanet).length;

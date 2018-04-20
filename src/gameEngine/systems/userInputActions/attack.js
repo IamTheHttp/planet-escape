@@ -11,7 +11,7 @@ import {
 import {diffPlayers} from 'gameEngine/components/OwnerComponent';
 import {addFighterUiComp} from 'gameEngine/entities/Ships/Fighter';
 import {setDest, getDest, getPos} from 'gameEngine/components/PositionComponent';
-import {getFighters} from 'gameEngine/components/HasFighters';
+import {getFighters, stopDefending} from 'gameEngine/components/HasFighters';
 import {isAttackable} from 'gameEngine/components/Attackable';
 import Moving from 'gameEngine/components/Moving';
 import {
@@ -51,8 +51,8 @@ export function attack(action, entities = getSelectedEntities(), redirectFighter
 
     getFighters(attackingPlanet).forEach((fighterEnt) => {
       if (fighterEnt.hasComponents(DEFENDING)) {
-        fighterEnt.removeComponent(DEFENDING);
         fighterEnt.addComponent(new Moving());
+        stopDefending(fighterEnt); // adds more logic behind the scenes
         addFighterUiComp(fighterEnt); // because we're moving, we need UI!
         fightersInFleet.push(fighterEnt);
         setDest(fighterEnt, targetPlanet);

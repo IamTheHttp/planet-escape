@@ -1,6 +1,6 @@
 import React from 'react';
 import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';
-import {getFighters} from 'gameEngine/components/HasFighters';
+import {getDefendingFighters} from 'gameEngine/components/HasFighters';
 import CanvasAPI from 'lib/CanvasAPI';
 import gameConfig from 'gameEngine/config';
 import {isSelected} from 'gameEngine/components/PlayerControlledComponent';
@@ -113,14 +113,10 @@ class CanvasMap extends React.Component {
       });
 
       entity.hasComponents(HAS_FIGHTERS, () => {
-        let defendingFighters = getFighters(entity).filter((fighter) => {
-          return fighter[DEFENDING];
-        }).length;
-
-        if (defendingFighters > 0) {
+        if (getDefendingFighters(entity) > 0) {
           this.canvasAPI.write({
             id: `${entity.id}-fighterCount`,
-            text: defendingFighters,
+            text: getDefendingFighters(entity),
             x: radius + x - radius / 4,
             y: radius + y - radius / 4,
             font: '18px serif',

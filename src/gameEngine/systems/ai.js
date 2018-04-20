@@ -55,7 +55,7 @@ function ai() {
   // only planets with at least AI_MIN_FIGHTERS fighters do stuff..
   // only ONE planet makes decisions per turn..
   let decider = decisionMakers.find((planet) => {
-    return getDefendingFighters(planet).length > gameConfig[AI_MIN_FIGHTERS];
+    return getDefendingFighters(planet) > gameConfig[AI_MIN_FIGHTERS];
   });
 
   // we can attack.
