@@ -895,7 +895,7 @@ exports.default = function (entities, fn) {
 
   /* istanbul ignore next */
   if (ents.length > 1000) {
-    _logger2.default.warn('WARNING, BIG LOOP DETECTED');
+    _logger2.default.error('WARNING, BIG LOOP DETECTED');
   }
 
   return ents;
@@ -7309,19 +7309,18 @@ function attack(action) {
       if (fighterEnt.hasComponents(_constants.DEFENDING)) {
         fighterEnt.addComponent(new _Moving2.default());
         (0, _HasFighters.stopDefending)(fighterEnt); // adds more logic behind the scenes
-        (0, _Fighter.addFighterUiComp)(fighterEnt); // because we're moving, we need UI!
+
         fightersInFleet.push(fighterEnt);
         (0, _PositionComponent.setDest)(fighterEnt, targetPlanet);
       }
     });
 
     // we resize the radius of the fighters in the fleet represent the fleet size
-    fightersInFleet.forEach(function (fighter) {
-      var speed = fighter[_constants.MOVEMENT_COMP].speed;
+    fightersInFleet.some(function (fighter) {
+      (0, _Fighter.addFighterUiComp)(fighter); // because we're moving, we need UI!
       var newSize = fighter[_constants.POSITION].radius + fightersInFleet.length;
       fighter[_constants.POSITION].radius = Math.min(newSize, fighter[_constants.POSITION].radius * 8);
-      // disalbe the slowdown, not sure this is required...
-      // fighter[MOVEMENT_COMP].speed = Math.max(speed - launchedFighters * 0.07, 0.5); // slow down
+      return true;
     });
 
     directedFighters += fightersInFleet.length;
