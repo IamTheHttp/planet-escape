@@ -31,7 +31,8 @@ class GameLoop {
     let currentGame = new Game(IN_PROGRESS, numPlayers);
     let count = 0;
 
-    let loop = () => {
+    this.currentGame = currentGame;
+    this.loop = () => {
       let start = performance.now();
       userInputSystem();
       // throttle the AI decision making
@@ -46,14 +47,23 @@ class GameLoop {
       }
 
       if (currentGame[GAME_STATE]) {
-        currentGame[GAME_STATE].frameID = requestAnimationFrame(loop);
+        currentGame[GAME_STATE].frameID = requestAnimationFrame(this.loop);
         currentGame[GAME_STATE].status = calcWinner();
       }
 
       cbNotification(Entity, performance.now() - start);
       count++;
     };
-    currentGame[GAME_STATE].frameID = requestAnimationFrame(loop);
+
+    this.resume();
+  }
+
+  resume() {
+    this.currentGame[GAME_STATE].frameID = requestAnimationFrame(this.loop);
+  }
+
+  stop() {
+    cancelAnimationFrame(this.currentGame[GAME_STATE].frameID);
   }
 
   /**

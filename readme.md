@@ -4,6 +4,7 @@
 - Cached defender count for improved Perf, defender pilots should not affect performance
 - Updated jarb to 1.0.3
 - Fixed fleet performance, ships won't be rendered when they're in fleet!
+- Added Pause/Play and back to main menu page
 ## 1.0.2
 - Added canvasAPI
 - Added selectedBox object

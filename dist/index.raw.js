@@ -10702,6 +10702,8 @@ var App = function (_React$Component) {
       buildingOptions: {},
       gameEnt: _this.defGameEnt,
       isMenuOpen: true,
+      gamePaused: false,
+      gameStarted: false,
       fps: 60
     };
     _this.game = {};
@@ -10719,7 +10721,12 @@ var App = function (_React$Component) {
   }, {
     key: 'stopGame',
     value: function stopGame() {
-      window.cancelAnimationFrame(this.state.gameEnt[_constants.GAME_STATE].frameID);
+      this.game.stop();
+    }
+  }, {
+    key: 'resumeGame',
+    value: function resumeGame() {
+      this.game.resume();
     }
   }, {
     key: 'logFrame',
@@ -10753,6 +10760,9 @@ var App = function (_React$Component) {
       var _this2 = this;
 
       var popUp = null;
+      if (!this.state.gameEnt[_constants.GAME_STATE]) {
+        return;
+      }
       if (this.state.gameEnt[_constants.GAME_STATE].status === _constants.GAME_WON) {
         this.stopGame();
         popUp = _react2.default.createElement(_Modal2.default, {
@@ -10785,7 +10795,8 @@ var App = function (_React$Component) {
           _this3.difficulty = _config2.default[_constants.DIFFICULTY][menuSelection.difficulty];
           _this3.game = _this3.startGame(_this3.mapSize, _this3.difficulty);
           _this3.setState({
-            isMenuOpen: false
+            isMenuOpen: false,
+            gameStarted: true
           });
         }
       });
@@ -10798,11 +10809,20 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(
-          'div',
-          { id: 'fps' },
-          'FPS : ',
-          this.state.fps
+        this.state.gameStarted && _react2.default.createElement(
+          'button',
+          {
+            onClick: function onClick() {
+              _this4.stopGame();
+              _this4.setState({
+                gameStarted: false
+              });
+            },
+            id: 'backToMainMenu',
+            className: 'btn btn-default',
+            type: 'button'
+          },
+          _react2.default.createElement('span', { className: 'glyphicon glyphicon-menu-hamburger' })
         ),
         _react2.default.createElement(
           'div',
@@ -10816,7 +10836,7 @@ var App = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'row' },
-                !this.state.isMenuOpen && _react2.default.createElement(_CanvasMinimap2.default, {
+                this.state.gameStarted && _react2.default.createElement(_CanvasMinimap2.default, {
                   key: this.gameCount,
                   ref: function ref(inst) {
                     _this4.canvasMinimap = inst;
@@ -10839,31 +10859,51 @@ var App = function (_React$Component) {
                   }
                 })
               ),
-              _react2.default.createElement(
+              this.state.gameStarted && _react2.default.createElement(
                 'div',
-                { className: 'hintList' },
+                null,
                 _react2.default.createElement(
-                  'h3',
+                  'div',
                   null,
-                  'Hints:'
+                  _react2.default.createElement(
+                    'button',
+                    {
+                      onClick: function onClick() {
+                        _this4.state.gamePaused ? _this4.resumeGame() : _this4.stopGame();
+                        _this4.setState({
+                          gamePaused: !_this4.state.gamePaused
+                        });
+                      }
+                    },
+                    this.state.gamePaused ? 'Resume' : 'Pause'
+                  )
                 ),
                 _react2.default.createElement(
-                  'ol',
-                  null,
+                  'div',
+                  { className: 'hintList' },
                   _react2.default.createElement(
-                    'li',
+                    'h3',
                     null,
-                    'Tap to select.'
+                    'Hints:'
                   ),
                   _react2.default.createElement(
-                    'li',
+                    'ol',
                     null,
-                    'Tap to attack.'
-                  ),
-                  _react2.default.createElement(
-                    'li',
-                    null,
-                    'Double tap selects all.'
+                    _react2.default.createElement(
+                      'li',
+                      null,
+                      'Tap to select.'
+                    ),
+                    _react2.default.createElement(
+                      'li',
+                      null,
+                      'Tap to attack.'
+                    ),
+                    _react2.default.createElement(
+                      'li',
+                      null,
+                      'Double tap selects all.'
+                    )
                   )
                 )
               )
@@ -10874,7 +10914,7 @@ var App = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'row' },
-                !this.state.isMenuOpen && _react2.default.createElement(_CanvasMap2.default, {
+                this.state.gameStarted && _react2.default.createElement(_CanvasMap2.default, {
                   key: this.gameCount,
                   ref: function ref(inst) {
                     _this4.canvasMap = inst;
@@ -10886,7 +10926,7 @@ var App = function (_React$Component) {
           )
         ),
         this.getGameEndModal(),
-        this.state.isMenuOpen && this.getMainMenuModal()
+        !this.state.gameStarted && this.getMainMenuModal()
       );
     }
   }]);
@@ -10963,6 +11003,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var GameLoop = function () {
   function GameLoop(cbNotification, mapSize, difficulty, numPlayers) {
+    var _this = this;
+
     _classCallCheck(this, GameLoop);
 
     _Entity2.default.reset();
@@ -10972,7 +11014,8 @@ var GameLoop = function () {
     var currentGame = new _Game2.default(_constants.IN_PROGRESS, numPlayers);
     var count = 0;
 
-    var loop = function loop() {
+    this.currentGame = currentGame;
+    this.loop = function () {
       var start = performance.now();
       (0, _userInputSystem2.default)();
       // throttle the AI decision making
@@ -10987,22 +11030,33 @@ var GameLoop = function () {
       }
 
       if (currentGame[_constants.GAME_STATE]) {
-        currentGame[_constants.GAME_STATE].frameID = requestAnimationFrame(loop);
+        currentGame[_constants.GAME_STATE].frameID = requestAnimationFrame(_this.loop);
         currentGame[_constants.GAME_STATE].status = (0, _calcWinner2.default)();
       }
 
       cbNotification(_Entity2.default, performance.now() - start);
       count++;
     };
-    currentGame[_constants.GAME_STATE].frameID = requestAnimationFrame(loop);
+
+    this.resume();
   }
 
-  /**
-   * @param action {obj} - contains, {entityID}
-   */
-
-
   _createClass(GameLoop, [{
+    key: 'resume',
+    value: function resume() {
+      this.currentGame[_constants.GAME_STATE].frameID = requestAnimationFrame(this.loop);
+    }
+  }, {
+    key: 'stop',
+    value: function stop() {
+      cancelAnimationFrame(this.currentGame[_constants.GAME_STATE].frameID);
+    }
+
+    /**
+     * @param action {obj} - contains, {entityID}
+     */
+
+  }, {
     key: 'dispatchAction',
     value: function dispatchAction(action) {
       (0, _userInputSystem.pushAction)(action);

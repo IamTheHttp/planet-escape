@@ -29,7 +29,8 @@ describe('Tests a component', () => {
     wrapper.instance().mapSize = gameConfig[MAP_SIZE][TINY];
     wrapper.instance().difficulty = gameConfig[DIFFICULTY][EASY];
     wrapper.setState({
-      isMenuOpen : false
+      isMenuOpen : false,
+      gameStarted : true
     }, () => {
       wrapper.instance().startGame(gameConfig[MAP_SIZE][TINY], gameConfig[DIFFICULTY][EASY]);
       jest.runOnlyPendingTimers();
@@ -40,35 +41,47 @@ describe('Tests a component', () => {
 
   it('Expects the popup to open as the game is lost..', () => {
     let wrapper = mount(<App></App>);
-    wrapper.instance().mapSize = gameConfig[MAP_SIZE][TINY];
-    wrapper.instance().difficulty = gameConfig[DIFFICULTY][EASY];
+    let inst = wrapper.instance();
+
+    inst.mapSize = gameConfig[MAP_SIZE][TINY];
+    inst.difficulty = gameConfig[DIFFICULTY][EASY];
+    inst.game = {
+      stop : () => {}
+    };
+
     wrapper.setState({
       gameEnt : {
         [GAME_STATE] : {
           status : GAME_LOST
         }
       },
-      isMenuOpen : false
+      isMenuOpen : false,
+      gameStarted : true
     });
 
-    let inst = wrapper.instance();
     expect(wrapper.find('.modal-dialog').length).toBe(1);
   });
 
-  it('Expects the popup to open as the game is lost..', () => {
+  it('Expects the popup to open as the game is won..', () => {
     let wrapper = mount(<App></App>);
-    wrapper.instance().mapSize = gameConfig[MAP_SIZE][TINY];
-    wrapper.instance().difficulty = gameConfig[DIFFICULTY][EASY];
+    let inst = wrapper.instance();
+
+    inst.mapSize = gameConfig[MAP_SIZE][TINY];
+    inst.difficulty = gameConfig[DIFFICULTY][EASY];
+    inst.game = {
+      stop : () => {}
+    };
+
     wrapper.setState({
       gameEnt : {
         [GAME_STATE] : {
           status : GAME_WON
         }
       },
-      isMenuOpen : false
+      isMenuOpen : false,
+      gameStarted : true
     });
 
-    let inst = wrapper.instance();
     expect(wrapper.find('.modal-dialog').length).toBe(1);
   });
 });

@@ -36,6 +36,8 @@ class App extends React.Component {
       buildingOptions: {},
       gameEnt: this.defGameEnt,
       isMenuOpen: true,
+      gamePaused : false,
+      gameStarted: false,
       fps: 60
     };
     this.game = {};
@@ -49,7 +51,10 @@ class App extends React.Component {
   }
 
   stopGame() {
-    window.cancelAnimationFrame(this.state.gameEnt[GAME_STATE].frameID);
+    this.game.stop();
+  }
+  resumeGame() {
+    this.game.resume();
   }
 
   logFrame(msFrame) {
@@ -78,6 +83,9 @@ class App extends React.Component {
 
   getGameEndModal() {
     let popUp = null;
+    if (!this.state.gameEnt[GAME_STATE]) {
+      return;
+    }
     if (this.state.gameEnt[GAME_STATE].status === GAME_WON) {
       this.stopGame();
       popUp = (<Modal
@@ -107,7 +115,8 @@ class App extends React.Component {
         this.difficulty = gameConfig[DIFFICULTY][menuSelection.difficulty];
         this.game = this.startGame(this.mapSize, this.difficulty);
         this.setState({
-          isMenuOpen: false
+          isMenuOpen: false,
+          gameStarted: true
         });
       }}
     ></MainMenu>);
@@ -116,14 +125,26 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <div id="fps">
-          FPS : {this.state.fps}
-        </div>
+        {this.state.gameStarted &&
+        <button
+          onClick={() => {
+            this.stopGame();
+            this.setState({
+              gameStarted: false
+            });
+          }}
+          id="backToMainMenu"
+          className="btn btn-default"
+          type="button"
+        >
+          <span className="glyphicon glyphicon-menu-hamburger"></span>
+        </button>
+        }
         <div className="container-fluid app">
           <div className="row">
             <div className="col-xs-3 sidebar">
               <div className="row">
-                {!this.state.isMenuOpen && <CanvasMinimap
+                {this.state.gameStarted && <CanvasMinimap
                   key={this.gameCount}
                   ref={(inst) => {
                     this.canvasMinimap = inst;
@@ -147,18 +168,31 @@ class App extends React.Component {
                 >
                 </CanvasMinimap>}
               </div>
-              <div className="hintList">
-                <h3>Hints:</h3>
-                <ol>
-                  <li>Tap to select.</li>
-                  <li>Tap to attack.</li>
-                  <li>Double tap selects all.</li>
-                </ol>
+              {this.state.gameStarted && <div>
+                <div>
+                  <button
+                    onClick={() => {
+                      this.state.gamePaused ? this.resumeGame() : this.stopGame();
+                      this.setState({
+                        gamePaused : !this.state.gamePaused
+                      });
+                    }}
+                  >{this.state.gamePaused ? 'Resume' : 'Pause'}</button>
+                </div>
+                <div className="hintList">
+                  <h3>Hints:</h3>
+                  <ol>
+                    <li>Tap to select.</li>
+                    <li>Tap to attack.</li>
+                    <li>Double tap selects all.</li>
+                  </ol>
+                </div>
               </div>
+              }
             </div>
             <div className="col-xs-9 main">
               <div className="row">
-                {!this.state.isMenuOpen && <CanvasMap
+                {this.state.gameStarted && <CanvasMap
                   key={this.gameCount}
                   ref={(inst) => {
                     this.canvasMap = inst;
@@ -171,7 +205,7 @@ class App extends React.Component {
           </div>
         </div>
         {this.getGameEndModal()}
-        {this.state.isMenuOpen && this.getMainMenuModal()}
+        {!this.state.gameStarted && this.getMainMenuModal()}
       </div>
     );
   }

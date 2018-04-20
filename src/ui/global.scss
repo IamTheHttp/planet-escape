@@ -14,15 +14,6 @@ ol {
   border-bottom:1px solid green;
 }
 
-#fps {
-  position: absolute;
-  top: 0;
-  right: 0;
-  color: lime;
-  font-size: 15px;
-  z-index: 9999;
-}
-
 #minimap {
   width:100%;
   border-bottom:1px solid lime;
@@ -43,4 +34,12 @@ ol {
 
 .hintList {
   color:green;
+}
+
+#backToMainMenu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 15px;
+  z-index: 9999;
 }
