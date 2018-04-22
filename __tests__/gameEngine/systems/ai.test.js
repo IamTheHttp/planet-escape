@@ -4,8 +4,7 @@
 /* global beforeEach */
 import {mount, shallow} from 'enzyme';
 import React from 'react';
-import Entity from 'gameEngine/Entity';
-import entityLoop from 'gameEngine/systems/utils/entityLoop.js';
+import Entity from '../../../src/lib/ECS/Entity';
 import ai from 'gameEngine/systems/ai';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import Fighter from 'gameEngine/entities/Ships/Fighter';
@@ -14,20 +13,27 @@ import {
   NEUTRAL,
   PLAYER_1,
   PLAYER_2,
-  POSITION
+  AI_DECISION_RATE
 } from 'gameEngine/constants';
 
-
 describe('Tests a component', () => {
+  let systemArguments;
+
   beforeEach(() => {
     // setup the test
     Entity.reset();
+    systemArguments = {
+      count : 0,
+      difficulty : {
+        [AI_DECISION_RATE] : 1
+      }
+    };
   });
 
   it('Tests that without enough fighters, the enemy planet does nothing', () => {
     let attacker = new EarthLike(80, 80, PLAYER_2);
     new Fighter(attacker);
-    expect(ai()).toBe(false);
+    expect(ai(systemArguments)).toBe(false);
   });
 
   it('Tests that with enough fighters, the enemy planet tries to expand', () => {
@@ -42,7 +48,7 @@ describe('Tests a component', () => {
     let fighter5 = new Fighter(attacker);
     let fighter6 = new Fighter(attacker);
 
-    ai();
+    ai(systemArguments);
     expect(getDest(fighter1).x).toBe(100);
     expect(getDest(fighter1).y).toBe(100);
     // expect(ai()).toBe(false);
@@ -58,7 +64,7 @@ describe('Tests a component', () => {
     let fighter4 = new Fighter(attacker);
     let fighter5 = new Fighter(attacker);
     let fighter6 = new Fighter(attacker);
-    ai();
+    ai(systemArguments);
     expect(getDest(fighter1).x).toBe(50);
     expect(getDest(fighter1).y).toBe(50);
   });
@@ -77,7 +83,7 @@ describe('Tests a component', () => {
     let fighter4 = new Fighter(attacker);
     let fighter5 = new Fighter(attacker);
     let fighter6 = new Fighter(attacker);
-    ai();
+    ai(systemArguments);
     expect(getDest(fighter1).x).toBe(100);
     expect(getDest(fighter1).y).toBe(100);
   });

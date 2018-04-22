@@ -4,7 +4,7 @@
 /* global beforeEach */
 import {mount, shallow} from 'enzyme';
 import React from 'react';
-import Entity from 'gameEngine/Entity';
+import Entity from '../../src/lib/ECS/Entity';
 describe('Tests for entities', () => {
   beforeEach(() => {
     Entity.reset();

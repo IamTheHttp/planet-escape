@@ -9,7 +9,7 @@ import InPlaceToAttack from 'gameEngine/components/InPlaceToAttack';
 import fighterAttacks from 'gameEngine/systems/fighterAttacks';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import Fighter from 'gameEngine/entities/Ships/Fighter';
-import Entity from 'gameEngine/Entity';
+import Entity from '../../../src/lib/ECS/Entity';
 import {getFighters, stopDefending} from 'gameEngine/components/HasFighters';
 import {
   PLAYER_1,

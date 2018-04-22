@@ -4,17 +4,13 @@
 /* global beforeEach */
 import {mount, shallow} from 'enzyme';
 import React from 'react';
-import GameLoop from 'gameEngine/GameLoop';
+import GameLoop from 'gameEngine/Game';
 import {generateMap} from 'shared/utils';
-import Entity from 'gameEngine/Entity';
-import entityLoop from 'gameEngine/systems/utils/entityLoop.js';
+import Entity from '../../src/lib/ECS/Entity';
+import entityLoop from '../../src/lib/ECS/util/entityLoop.js';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import {notNeutral} from 'gameEngine/components/OwnerComponent';
 import gameConfig from 'gameEngine/config';
 import {
-  HAS_FIGHTERS,
-  FIGHTER_BUILD_RATE,
-  PLAYER_1,
   MEDIUM,
   MAP_SIZE,
   PLANETS_IN_MAP,
@@ -41,32 +37,28 @@ describe('Tests a component', () => {
 
   it('Should pass Entity as callback', () => {
     let cbMock = jest.fn();
-    let sampleID = (new Entity()).id; // no UI_COMP here
 
-    new GameLoop(cbMock, mapSize, difficulty);
+    new GameLoop({
+      notificationSystem: cbMock,
+      renderSystem : () => {},
+      mapSize,
+      difficulty
+    });
     jest.runOnlyPendingTimers();
-    expect(cbMock.mock.calls[0][0]).toBe(Entity);
+    expect(cbMock.mock.calls[0][0].Entity).toBe(Entity);
     jest.runOnlyPendingTimers();
   });
 
-  it('Build fighters only runs every 15 iterations', () => {
-    let cbMock = jest.fn();
-    new GameLoop(cbMock, mapSize, difficulty);
-    let int = 0;
-    while (int < gameConfig[FIGHTER_BUILD_RATE]) {
-      jest.runOnlyPendingTimers();
-      int++;
-    }
-    //
-    let fighters = 0;
-    let hasFighters = 0;
-    entityLoop(Entity.entities, (ent) => {
-      if (ent[HAS_FIGHTERS] && notNeutral(ent)) {
-        fighters += ent[HAS_FIGHTERS].fighters.length;
-        hasFighters++;
-      }
-    });
-    expect(fighters).toBe(hasFighters);
+  it('Should stop the game', () => {
+    window.cancelAnimationFrame = jest.fn();
+    new GameLoop({
+      notificationSystem: () => {},
+      renderSystem : () => {},
+      mapSize,
+      difficulty
+    }).stop();
+
+    expect(cancelAnimationFrame.mock.calls.length).toBe(1);
   });
 
   it('generates a map with a correct number of planets', () => {
@@ -77,7 +69,12 @@ describe('Tests a component', () => {
 
   it('Pushes an action, test that no exceptions are raised', () => {
     let cbMock = jest.fn();
-    let loop = new GameLoop(cbMock, mapSize, difficulty);
+    let loop = new GameLoop({
+      notificationSystem: cbMock,
+      renderSystem : () => {},
+      mapSize,
+      difficulty
+    });
     loop.dispatchAction({});
   });
 });

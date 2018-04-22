@@ -8,8 +8,7 @@ import {
   NEUTRAL,
   CANVAS_X,
   CANVAS_Y,
-  HAS_FIGHTERS,
-  MAP_SIZE,
+  PLAYER_PLANET_GUTTER_DISTANCE,
   PLANETS_IN_MAP,
   PLANET_BUFFER,
   DEFAULT_FIGHTER_COUNT
@@ -51,9 +50,10 @@ export function generateMap(mapSize) {
     bottomRightAreaY : mapSize[CANVAS_Y]
   };
 
-  // REFACTOR - Fix the hardcoded numbers, also possible planet overlapping as we do it manually here
-  let p1 = new EarthLike(50, 50, PLAYER_1);
-  let p2 = new EarthLike(mapSize[CANVAS_X] - 50, mapSize[CANVAS_Y] - 50, PLAYER_2);
+  // TODO - Possible planet overlapping as we assign planet location manually
+  let gutter = gameConfig[PLAYER_PLANET_GUTTER_DISTANCE];
+  let p1 = new EarthLike(gutter, gutter, PLAYER_1);
+  let p2 = new EarthLike(mapSize[CANVAS_X] - gutter, mapSize[CANVAS_Y] - gutter, PLAYER_2);
   planets[p1.id] = p1;
   planets[p2.id] = p2;
   placeEntities(planets, area, buffer);

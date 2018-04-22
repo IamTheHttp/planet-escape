@@ -1,5 +1,5 @@
-import Entity from 'gameEngine/Entity';
-import entityLoop from 'gameEngine/systems/utils/entityLoop';
+import Entity from '../../lib/ECS/Entity';
+import entityLoop from '../../lib/ECS/util/entityLoop';
 import {getFighters, destroyFighter, getDefendingFighters, detachFighterFromPlanet} from 'gameEngine/components/HasFighters';
 import {unSelect} from 'gameEngine/components/PlayerControlledComponent';
 import {hasDest, isSamePos, destReached} from 'gameEngine/components/PositionComponent';

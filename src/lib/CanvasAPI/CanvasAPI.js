@@ -16,6 +16,8 @@ class CanvasAPI {
     this.shapes.delete(id);
   }
 
+
+  /* istanbul ignore next */
   addImage({
     id,
     image, // the image to display
@@ -34,8 +36,8 @@ class CanvasAPI {
         cropStartX, cropStartY, cropSizeX, cropSizeY,
         -width / 2, -height / 2,  // pos in canvas // at the top left of the canvas
         width, height); // size in canvas
-      this.ctx.restore();
-      this.ctx.closePath();
+      ctx.restore();
+      ctx.closePath();
     });
   }
 

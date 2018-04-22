@@ -1,5 +1,5 @@
-import Entity from 'gameEngine/Entity';
-import entityLoop from 'gameEngine/systems/utils/entityLoop';
+import Entity from '../../lib/ECS/Entity';
+import entityLoop from '../../lib/ECS/util/entityLoop';
 import {isAttackable} from 'gameEngine/components/Attackable';
 import {ATTACKABLE, OWNER_COMPONENT, PLAYER_1, NEUTRAL, GAME_WON, GAME_LOST} from 'gameEngine/constants';
 function calcWinner() {

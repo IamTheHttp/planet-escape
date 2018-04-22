@@ -6,7 +6,7 @@ import {mount, shallow} from 'enzyme';
 import React from 'react';
 import Sprite, {getSpriteArgs} from 'gameEngine/components/Sprite';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Entity from 'gameEngine/Entity';
+import Entity from '../../../src/lib/ECS/Entity';
 import {
   PLAYER_1,
   IN_PROGRESS,

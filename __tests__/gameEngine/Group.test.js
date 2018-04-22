@@ -2,8 +2,8 @@
 /* global it */
 /* global expect */
 /* global beforeEach */
-import Entity from 'gameEngine/Entity';
-import Group from 'gameEngine/Group';
+import Entity from '../../src/lib/ECS/Entity';
+import Group from '../../src/lib/ECS/Group';
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 

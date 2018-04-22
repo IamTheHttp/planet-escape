@@ -1,4 +1,4 @@
-import Entity from 'gameEngine/Entity';
+import Entity from '../../../lib/ECS/Entity';
 
 import {
   HAS_FIGHTERS,
@@ -8,7 +8,7 @@ import {
   POSITION
 } from 'gameEngine/constants';
 import {getOwner} from 'gameEngine/components/OwnerComponent';
-import entityLoop from 'gameEngine/systems/utils/entityLoop';
+import entityLoop from '../../../lib/ECS/util/entityLoop';
 
 export function isPosInsideCircle(x, y, centerX, centerY, radius) {
   return Math.pow((x - centerX), 2) + Math.pow((y - centerY), 2) < Math.pow(radius, 2);
@@ -103,11 +103,11 @@ export function unSelectAllEntities() {
 
 /**
  * Unselects all entities, returns an array of affected entities
- * @returns {Array}
+ * @returns {Null}
  */
 export function selectAllEntities(player) {
   let entities = Entity.getByComps([PLAYER_CONTROLLED, OWNER_COMPONENT]);
-  return entityLoop(entities, (ent) => {
+  entityLoop(entities, (ent) => {
     if (getOwner(ent) === player) {
       ent[PLAYER_CONTROLLED].selected = true;
     }

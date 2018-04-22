@@ -25,10 +25,15 @@ import {
   AI_DECISION_RATE,
   FIGHTER_BUILD_RATE,
   FIGHTER_RADIUS,
-  FIGHTER_SPEED
+  FIGHTER_SPEED,
+  MAIN_VIEW_SIZE_X,
+  MAIN_VIEW_SIZE_Y,
+  PLAYER_PLANET_GUTTER_DISTANCE,
+  SELECT_WIDTH
 } from './constants.js';
 
 export default {
+  [SELECT_WIDTH] : 3,
   [PLANET_RADIUS] : 30,
   [NUM_PLAYERS] : 2,
   [AI_MIN_FIGHTERS] : 5,
@@ -54,6 +59,9 @@ export default {
       [AI_DECISION_RATE] : 80
     }
   },
+  [PLAYER_PLANET_GUTTER_DISTANCE] : 50,
+  [MAIN_VIEW_SIZE_X] : 1920 / 2,
+  [MAIN_VIEW_SIZE_Y] : 1080 / 2,
   [MAP_SIZE] : {
     [TINY] : {
       [PLANETS_IN_MAP] : 14,

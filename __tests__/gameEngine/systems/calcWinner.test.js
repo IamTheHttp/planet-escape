@@ -5,7 +5,7 @@
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import calcWinner from 'gameEngine/systems/calcWinner';
-import Entity from 'gameEngine/Entity';
+import Entity from '../../../src/lib/ECS/Entity';
 import {
   POSITION,
   PLAYER_1,

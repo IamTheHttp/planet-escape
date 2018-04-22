@@ -6,7 +6,7 @@ import {attack} from 'gameEngine/systems/userInputActions/attack';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import Fighter from 'gameEngine/entities/Ships/Fighter';
 import PositionComponent, {hasDest, setDest} from 'gameEngine/components/PositionComponent';
-import Entity from 'gameEngine/Entity';
+import Entity from '../../../../src/lib/ECS/Entity';
 
 import {
   NEUTRAL,

@@ -1,6 +1,6 @@
-module.exports = function(jestConfig){
+module.exports = function (jestConfig) {
   //collectCoverageFrom is already an array in the default configuration we use, but it's always safe to ensure it exists beforehand
-  if(!jestConfig.collectCoverageFrom){
+  if (!jestConfig.collectCoverageFrom) {
     jestConfig.collectCoverageFrom = [];
   }
 
@@ -9,9 +9,13 @@ module.exports = function(jestConfig){
   jestConfig.collectCoverageFrom.push("!src/liveExample.js");
   jestConfig.collectCoverageFrom.push("!src/index.js");
 
+  jestConfig.setupFiles = [
+    "<rootDir>/src/polyfill/rAF.js"
+  ];
+
   jestConfig.bail = true;
   jestConfig.coverageThreshold.global = {
-    "branches": 85.00,
+    "branches": 90,
     "functions": 90,
     "lines": 90,
     "statements": 90

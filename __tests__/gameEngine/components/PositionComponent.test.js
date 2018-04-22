@@ -6,7 +6,7 @@ import {mount, shallow} from 'enzyme';
 import React from 'react';
 import PositionComponent, {hasDest, setDest} from 'gameEngine/components/PositionComponent';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Entity from 'gameEngine/Entity';
+import Entity from '../../../src/lib/ECS/Entity';
 import {
   PLAYER_1,
   POSITION

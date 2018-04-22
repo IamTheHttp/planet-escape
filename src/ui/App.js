@@ -1,98 +1,164 @@
-import React from 'react';
-import {render} from 'react-dom';
-import GameLoop from 'gameEngine/GameLoop';
-import Modal from 'ui/components/Modal/Modal';
-import MainMenu from 'ui/components/MainMenu/MainMenu';
-import './global.scss';
-import 'bootstrap/dist/css/bootstrap.css';
 import {
   GAME_STATE,
-  UI_COMP,
   GAME_WON,
   GAME_LOST,
   MAP_SIZE,
   DIFFICULTY,
   NUM_PLAYERS,
   CANVAS_X,
-  CANVAS_Y
+  CANVAS_Y,
+  CLICK,
+  MAIN_VIEW_SIZE_X,
+  MAIN_VIEW_SIZE_Y
 } from 'gameEngine/constants';
+import React from 'react';
+import './global.scss';
+import GameLoop from 'gameEngine/Game';
+import Modal from 'ui/components/Modal/Modal';
+import MainMenu from 'ui/components/MainMenu/MainMenu';
 import gameConfig from 'gameEngine/config';
-import CanvasMap from 'ui/components/CanvasMap/CanvasMap';
-import CanvasMinimap from 'ui/components/CanvasMap/CanvasMinimap';
-
+import MainMenuBtn from 'ui/components/MainMenuBtn/MainMenuBtn';
+import Sidebar from 'ui/components/Sidebar/Sidebar';
+import MainView from 'ui/components/MainView/MainView';
+import renderSystem from 'gameEngine/systems/renderSystem';
+import GameCanvas from 'lib/GameCanvas/GameCanvas';
+// TODO - improve test coverage to at least 90% before merge
 class App extends React.Component {
   constructor() {
     super();
-
-    this.defGameEnt = {
-      [GAME_STATE]: {
-        status: null
-      }
-    };
-    this.gameCount = 0;
-
-    this.state = {
-      selectedEntity: false,
-      buildingOptions: {},
-      gameEnt: this.defGameEnt,
-      isMenuOpen: true,
-      gamePaused : false,
-      gameStarted: false,
-      fps: 60
-    };
     this.game = {};
-    // this.getGameEndModal = this.getGameEndModal.bind(this);
+    this.state = {
+      gameCount: 0,
+      isMenuOpen: true,
+      gamePaused: false,
+      gameEnded: true,
+      gameWon: null // null means the game was not yet decided
+    };
+    this.updateGameState = this.updateGameState.bind(this);
+    this.renderOnCanvas = this.renderOnCanvas.bind(this);
+    this.startGame = this.startGame.bind(this);
   }
 
   startGame(mapSize, difficulty) {
-    this.gameCount++;
-    return new GameLoop(this.updateGameState.bind(this), mapSize, difficulty, gameConfig[NUM_PLAYERS]);
+    let gameCanvas = new GameCanvas({
+      mapHeight  : mapSize[CANVAS_Y],
+      mapWidth   : mapSize[CANVAS_X],
+      viewHeight : gameConfig[MAIN_VIEW_SIZE_Y],
+      viewWidth  : gameConfig[MAIN_VIEW_SIZE_X],
+      onViewMapMove : (dataObj) => {
+        this.selectedBox = dataObj.selectedBox;
+      },
+      onViewMapClick: (dataObj) => {
+        this.game.dispatchAction({
+          name: CLICK,
+          x : dataObj.x,
+          y : dataObj.y,
+          isMouseDown: dataObj.isMouseDown,
+          dbClick: dataObj.dbClick,
+          selectedBox : dataObj.selectedBox
+        });
+        this.selectedBox = null;
+      }
+    });
+
+    let {map, minimap} = gameCanvas.getNewCanvasPairs({
+      getMapRef: (API, el) => {
+        this.setState({
+          viewMapCanvasAPI : API
+        });
+      },
+      getMiniRef: (API, el) => {
+        this.setState({
+          miniMapCanvasAPI : API
+        });
+      }
+    });
+
+    this.setState({
+      gameCount: this.state.gameCount++,
+      isMenuOpen: false,
+      gamePaused: false,
+      gameEnded: false,
+      gameWon: null, // null means the game was not yet decided
+      map,
+      minimap
+    });
+
+    // at this point, no canvas exists yet.. crap
+    return new GameLoop({
+      notificationSystem: this.updateGameState,
+      mapSize,
+      difficulty,
+      numPlayers: gameConfig[NUM_PLAYERS],
+      renderSystem: this.renderOnCanvas
+    });
+  }
+
+  pauseGame() {
+    this.game.stop();
+    this.setState({
+      isMenuOpen: false,
+      gamePaused: true
+    });
   }
 
   stopGame() {
     this.game.stop();
+    this.setState({
+      isMenuOpen: true,
+      gamePaused: false,
+      gameEnded: true
+    });
   }
+
   resumeGame() {
     this.game.resume();
   }
 
-  updateGameState(Entity, msFrame) {
-    let entsToDraw = Entity.getByComps([UI_COMP]);
-    let gameEnt = Entity.getByComps([GAME_STATE])[0];
-
-    this.setState({gameEnt});
+  renderOnCanvas(systemArguments) {
     /* istanbul ignore else  */
-    if (this.canvasMap) {
-      this.canvasMap.update(entsToDraw);
-      this.canvasMinimap.update(entsToDraw);
+    if (this.state.viewMapCanvasAPI) {
+      renderSystem(
+        systemArguments,
+        this.state.viewMapCanvasAPI,
+        this.state.miniMapCanvasAPI,
+        this.selectedBox
+      );
+    }
+  }
+
+  updateGameState(systemArguments) {
+    let gameEnt = systemArguments.Entity.getByComps([GAME_STATE])[0];
+
+    if (gameEnt) {
+      let gameWon = gameEnt[GAME_STATE].status === GAME_WON;
+      let gameLost = gameEnt[GAME_STATE].status === GAME_LOST;
+
+      if ((gameWon || gameLost) && !this.state.gameEnded) {
+        this.stopGame();
+        this.setState({
+          gameEnded: true,
+          isMenuOpen: false,
+          gameWon
+        });
+      }
     }
   }
 
   getGameEndModal() {
-    let popUp = null;
-    if (!this.state.gameEnt[GAME_STATE]) {
-      return;
+    let gameWon = this.state.gameWon;
+
+    if (gameWon !== null) {
+      return (
+        <Modal
+          text={gameWon ? 'Game Won!' : 'Game lost!'}
+          onClick={() => {
+            this.game = this.startGame(this.mapSize, this.difficulty);
+          }}
+        ></Modal>);
+    } else {
+      return null;
     }
-    if (this.state.gameEnt[GAME_STATE].status === GAME_WON) {
-      this.stopGame();
-      popUp = (<Modal
-        text={'Game Won!'}
-        onClick={() => {
-          this.game = this.startGame(this.mapSize, this.difficulty);
-          // reset all panning
-        }}
-      ></Modal>);
-    } else if (this.state.gameEnt[GAME_STATE].status === GAME_LOST) {
-      this.stopGame();
-      popUp = (<Modal
-        text={'Game Over!'}
-        onClick={() => {
-          this.game = this.startGame(this.mapSize, this.difficulty);
-          // reset all panning
-        }}
-      ></Modal>);
-    }
-    return popUp;
   }
 
   getMainMenuModal() {
@@ -101,105 +167,45 @@ class App extends React.Component {
         this.mapSize = gameConfig[MAP_SIZE][menuSelection.mapSize];
         this.difficulty = gameConfig[DIFFICULTY][menuSelection.difficulty];
         this.game = this.startGame(this.mapSize, this.difficulty);
-        this.setState({
-          isMenuOpen: false,
-          gameStarted: true
-        });
       }}
     ></MainMenu>);
   }
 
   render() {
-    return (
-      <div>
-        {this.state.gameStarted &&
-        <button
-          onClick={() => {
-            this.stopGame();
-            this.setState({
-              gameStarted: false
-            });
-          }}
-          id="backToMainMenu"
-          className="btn btn-default"
-          type="button"
-        >
-          <span className="glyphicon glyphicon-menu-hamburger"></span>
-        </button>
-        }
-        <div className="container-fluid app">
-          <div className="row">
-            <div className="col-xs-3 sidebar">
-              <div className="row">
-                {this.state.gameStarted && <CanvasMinimap
-                  key={this.gameCount}
-                  ref={(inst) => {
-                    this.canvasMinimap = inst;
-                  }}
-                  mapSize={this.mapSize}
-                  onClick={(x, y) => {
-                    // Handle negative overflows, both numbers should be positive
-                    let calcPanX = Math.max(x - 960 / 2, 0);
-                    let calcPanY = Math.max(y - 540 / 2, 0);
-
-                    // Handle positive overflows, both numbers should not exceed map size
-                    let width = this.mapSize[CANVAS_X];
-                    let height = this.mapSize[CANVAS_Y];
-
-                    calcPanX = calcPanX + 960 < width ? calcPanX : width - 960;
-                    calcPanY = calcPanY + 540 < height ? calcPanY : height - 540;
-
-                    this.canvasMinimap.updatePanLocation(calcPanX, calcPanY, 960, 540);
-                    this.canvasMap.canvasAPI.pan(-calcPanX, -calcPanY);
-                  }}
-                >
-                </CanvasMinimap>}
-              </div>
-              {this.state.gameStarted && <div>
-                <div>
-                  <button
-                    onClick={() => {
-                      this.state.gamePaused ? this.resumeGame() : this.stopGame();
-                      this.setState({
-                        gamePaused : !this.state.gamePaused
-                      });
-                    }}
-                  >{this.state.gamePaused ? 'Resume' : 'Pause'}</button>
-                </div>
-                <div className="hintList">
-                  <h3>Hints:</h3>
-                  <ol>
-                    <li>Tap to select.</li>
-                    <li>Tap to attack.</li>
-                    <li>Double tap selects all.</li>
-                  </ol>
-                </div>
-              </div>
-              }
-            </div>
-            <div className="col-xs-9 main">
-              <div className="row">
-                {this.state.gameStarted && <CanvasMap
-                  key={this.gameCount}
-                  ref={(inst) => {
-                    this.canvasMap = inst;
-                  }}
-                  dispatch={this.game.dispatchAction}
-                >
-                </CanvasMap>}
-              </div>
+    if (!this.state.isMenuOpen) {
+      return (
+        <div>
+          <MainMenuBtn
+            onClick={() => {
+              this.stopGame();
+            }}
+          >
+          </MainMenuBtn>
+          <div className="container-fluid app">
+            <div className="row">
+              <Sidebar
+                canvasElm={this.state.minimap}
+                isGamePaused={this.state.gamePaused}
+                onPauseClick={() => {
+                  this.state.gamePaused ? this.resumeGame() : this.pauseGame();
+                  this.setState({
+                    gamePaused: !this.state.gamePaused
+                  });
+                }}
+              >
+              </Sidebar>
+              <MainView
+                canvasElm={this.state.map}
+              >
+              </MainView>
             </div>
           </div>
+          {this.getGameEndModal()}
         </div>
-        {this.getGameEndModal()}
-        {!this.state.gameStarted && this.getMainMenuModal()}
-      </div>
-    );
+      );
+    } else {
+      return this.getMainMenuModal();
+    }
   }
 }
-
 export default App;
-
-
-
-

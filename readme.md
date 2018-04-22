@@ -1,5 +1,5 @@
 # Change log
-## master
+## 1.0.3
 - Fixed assets path to ./
 - Cached defender count for improved Perf, defender pilots should not affect performance
 - Updated jarb to 1.0.3

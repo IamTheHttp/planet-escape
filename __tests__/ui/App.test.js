@@ -7,10 +7,6 @@ import React from 'react';
 
 import App from 'ui/App';
 import {
-  GAME_STATE,
-  IN_PROGRESS,
-  GAME_LOST,
-  GAME_WON,
   MAP_SIZE,
   TINY,
   DIFFICULTY,
@@ -50,13 +46,9 @@ describe('Tests a component', () => {
     };
 
     wrapper.setState({
-      gameEnt : {
-        [GAME_STATE] : {
-          status : GAME_LOST
-        }
-      },
       isMenuOpen : false,
-      gameStarted : true
+      gameStarted : true,
+      gameWon : false
     });
 
     expect(wrapper.find('.modal-dialog').length).toBe(1);
@@ -73,13 +65,9 @@ describe('Tests a component', () => {
     };
 
     wrapper.setState({
-      gameEnt : {
-        [GAME_STATE] : {
-          status : GAME_WON
-        }
-      },
       isMenuOpen : false,
-      gameStarted : true
+      gameStarted : true,
+      gameWon : true
     });
 
     expect(wrapper.find('.modal-dialog').length).toBe(1);

@@ -1,4 +1,4 @@
-import Entity from 'gameEngine/Entity';
+import Entity from '../../../lib/ECS/Entity';
 import UIComponent from 'gameEngine/components/UIComponent';
 import PositionComponent from 'gameEngine/components/PositionComponent';
 import MoveComponent from 'gameEngine/components/MoveComponent';
@@ -39,11 +39,10 @@ class Fighter {
   }
 }
 
-// REFACTOR - Should we allow hooks for addComponent / removeComponent?
+// TODO
+// Should we allow hooks for addComponent / removeComponent?
 // That would allow us to add the required logic in one place, while we avoid
 // using magic functions that are defined in various places.
-
-// TODO
 // Using the Refactor statement above :
 // We can hook into "stopDefending" and add the UI comp.
 export function addFighterUiComp(fighter) {
@@ -56,4 +55,3 @@ export function addFighterUiComp(fighter) {
 }
 
 export default Fighter;
-

@@ -1,4 +1,4 @@
-import Entity from 'gameEngine/Entity';
+import Entity from '../../../lib/ECS/Entity';
 import UIComponent from 'gameEngine/components/UIComponent';
 import BuildingsComponent from 'gameEngine/components/BuildingsComponent';
 import PositionComponent from 'gameEngine/components/PositionComponent';

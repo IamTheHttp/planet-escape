@@ -2,7 +2,7 @@
 /* global it */
 /* global expect */
 /* global beforeEach */
-import Entity from 'gameEngine/Entity';
+import Entity from '../../src/lib/ECS/Entity';
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import {loadImages, oneOutOf} from 'shared/utils';

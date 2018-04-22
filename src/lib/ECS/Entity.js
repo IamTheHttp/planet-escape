@@ -1,5 +1,5 @@
-import Group from 'gameEngine/Group';
-import entityLoop from 'gameEngine/systems/utils/entityLoop';
+import Group from './Group';
+import entityLoop from './util/entityLoop';
 class Entity {
   constructor(classRef) {
     Entity.counter++;
@@ -90,7 +90,7 @@ Entity.entities = {};
  * @param type 'array'|'map'
  * @return return array/map
  */
-Entity.getByComps = (components = [], type = 'array') => {
+Entity.getByComps = (components, type = 'array') => {
   let compNames = components.reduce ? components : [components];
   Group.indexGroup(components, Entity.entities);
   let group = Group.getGroup(compNames);

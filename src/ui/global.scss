@@ -10,11 +10,12 @@ ol {
   padding:5px;
 }
 
-.mainMap {
+.viewMap {
+  width:100%;
   border-bottom:1px solid green;
 }
 
-#minimap {
+.minimap {
   width:100%;
   border-bottom:1px solid lime;
 }

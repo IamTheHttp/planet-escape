@@ -4,7 +4,7 @@
 /* global beforeEach */
 import {mount, shallow} from 'enzyme';
 import React from 'react';
-import Entity from 'gameEngine/Entity';
+import Entity from '../../../src/lib/ECS/Entity';
 import userInputSystem, {pushAction, attack} from 'gameEngine/systems/userInputSystem';
 import {getFighters} from 'gameEngine/components/HasFighters';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';

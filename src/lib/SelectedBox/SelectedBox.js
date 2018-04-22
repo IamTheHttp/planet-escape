@@ -17,7 +17,9 @@ class SelectedBox {
   getData() {
     return {
       start : Object.assign({}, this.start),
-      end : Object.assign({}, this.end)
+      end : Object.assign({}, this.end),
+      width : this.getWidth(),
+      height : this.getHeight()
     };
   }
 

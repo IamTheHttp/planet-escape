@@ -1,5 +1,5 @@
-import Entity from 'gameEngine/Entity';
-import entityLoop from 'gameEngine/systems/utils/entityLoop';
+import Entity from '../../lib/ECS/Entity';
+import entityLoop from '../../lib/ECS/util/entityLoop';
 import {randFromArray} from 'shared/utils';
 // import Fighter from 'gameEngine/entities/Ships/Fighter';
 import {notNeutral, getOwner} from 'gameEngine/components/OwnerComponent';
@@ -11,7 +11,8 @@ import {
   HAS_FIGHTERS,
   PLAYER_1,
   NEUTRAL,
-  AI_MIN_FIGHTERS
+  AI_MIN_FIGHTERS,
+  AI_DECISION_RATE
 } from 'gameEngine/constants';
 
 import gameConfig from 'gameEngine/config';
@@ -43,7 +44,10 @@ function aiExpand(expander) {
   }
 }
 
-function ai() {
+function ai(systemArguments) {
+  if (systemArguments.count % systemArguments.difficulty[AI_DECISION_RATE] !== 0) {
+    return;
+  }
   let entities = Entity.getByComps([OWNER_COMPONENT, HAS_FIGHTERS]);
   // let targetCandidates = Entity.getByComps([OWNER_COMPONENT, HAS_FIGHTERS])
 
@@ -70,7 +74,6 @@ function ai() {
     return false;
   }
 }
-
 
 
 export default ai;

@@ -1,4 +1,4 @@
-import Entity from 'gameEngine/Entity';
+import Entity from '../../../../src/lib/ECS/Entity';
 
 /* global describe */
 /* global it */
@@ -11,13 +11,15 @@ import {
   getSelectedEntities,
   setEntityDest,
   getEntitiesAtPos,
-  selectEntitiesInSelectedBox
+  selectEntitiesInSelectedBox,
+  selectAllEntities
 } from 'gameEngine/systems/utils/userInput.util';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import {
   PLAYER_CONTROLLED,
   POSITION,
-  PLAYER_1
+  PLAYER_1,
+  PLAYER_2
 } from 'gameEngine/constants';
 
 describe('Tests the user input utils', () => {
@@ -102,10 +104,15 @@ describe('Tests the user input utils', () => {
     };
     selectEntitiesInSelectedBox(selectBox);
     expect(planetA[PLAYER_CONTROLLED].selected).toBe(true);
+  });
 
-    // // remove the playercontrolled comp, ensure nothing breaks
-    // planetA.removeComponent(PLAYER_CONTROLLED);
-    // selectEntity({x:110, y:110});
-    // expect(planetA[PLAYER_CONTROLLED]).toBeUndefined();
+  it('Select all entities of a player', () => {
+    let planetA = new EarthLike(100, 100, PLAYER_1);
+    let planetB = new EarthLike(100, 100, PLAYER_2);
+    expect(planetA[PLAYER_CONTROLLED].selected).toBe(false);
+    expect(planetB[PLAYER_CONTROLLED].selected).toBe(false);
+    selectAllEntities(PLAYER_1);
+    expect(planetA[PLAYER_CONTROLLED].selected).toBe(true);
+    expect(planetB[PLAYER_CONTROLLED].selected).toBe(false);
   });
 });

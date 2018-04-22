@@ -1,4 +1,4 @@
-import entityLoop from 'gameEngine/systems/utils/entityLoop';
+import entityLoop from './util/entityLoop';
 
 
 class Group {

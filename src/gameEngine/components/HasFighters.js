@@ -1,4 +1,5 @@
-import Entity from 'gameEngine/Entity';
+// REFACTOR to just "fighters" component
+import Entity from '../../lib/ECS/Entity';
 import {
   HAS_FIGHTERS,
   DEFENDING

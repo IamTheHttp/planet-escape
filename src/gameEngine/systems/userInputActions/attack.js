@@ -1,4 +1,4 @@
-import Entity from 'gameEngine/Entity';
+import Entity from '../../../lib/ECS/Entity';
 import {
   HAS_FIGHTERS,
   OWNER_COMPONENT,
@@ -23,11 +23,8 @@ import {
  * Returns the number of successful hits
  * @param action {} {x , y}
  * @param entities Array list of entities that are attacking
- * @param redirectFighters
  */
-
-// REFACTOR - This is now a moveFighters, and not just attack - same code is used to attack and move
-export function attack(action, entities = getSelectedEntities(), redirectFighters = false) {
+export function attack(action, entities = getSelectedEntities()) {
   let directedFighters = 0;
   let launchedFighters ;
   let fightersInFleet;

@@ -1,4 +1,4 @@
-import Entity from 'gameEngine/Entity';
+import Entity from '../../lib/ECS/Entity';
 
 class Player {
   constructor() {

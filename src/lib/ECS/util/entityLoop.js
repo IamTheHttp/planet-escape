@@ -1,6 +1,3 @@
-
-import logger from 'shared/logger';
-
 /**
  * used to loop over and possibly filter entities
  * if the CB returns true, an array of entities that return true is returned.
@@ -20,11 +17,6 @@ export default (entities, fn) => {
     Object.keys(entities).forEach((entID) => {
       fn(entities[entID]) && ents.push(entities[entID]);
     });
-  }
-
-  /* istanbul ignore next */
-  if (ents.length > 1000) {
-    logger.error('WARNING, BIG LOOP DETECTED');
   }
 
   return ents;

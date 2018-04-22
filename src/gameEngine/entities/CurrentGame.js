@@ -1,13 +1,13 @@
-import Entity from 'gameEngine/Entity';
+import Entity from '../../lib/ECS/Entity';
 import GameState from 'gameEngine/components/GameState';
 import {GAME, IN_PROGRESS} from 'gameEngine/constants';
 
-class Game {
+class CurrentGame {
   constructor(numPlayers) {
-    let ent = new Entity(Game);
+    let ent = new Entity(CurrentGame);
     ent.name = GAME;
     ent.addComponent(new GameState(IN_PROGRESS, numPlayers));
     return ent;
   }
 }
-export default Game;
+export default CurrentGame;

@@ -1,3 +1,6 @@
+import 'polyfill/rAF.js';
+import 'bootstrap/dist/css/bootstrap.css';
+
 /* istanbul ignore next */
 if (!document.getElementsByTagName('title')[0]) {
   let titleElm = document.createElement('title');

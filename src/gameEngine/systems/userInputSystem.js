@@ -1,11 +1,7 @@
-import Entity from 'gameEngine/Entity';
-import entityLoop from 'gameEngine/systems/utils/entityLoop';
+import entityLoop from 'lib/ECS/util/entityLoop';
 
 import {
   CLICK,
-  DB_CLICK,
-  MOVE,
-  ATTACK,
   PLAYER_1
 } from 'gameEngine/constants';
 
@@ -16,16 +12,11 @@ import {getOwner} from 'gameEngine/components/OwnerComponent';
 let actions = [];
 
 import {
-  selectEntity,
-  getSelectedEntities,
-  setEntityDest,
   selectAllEntities,
-  unSelectAllEntities,
   getClickedEntitiy
 } from 'gameEngine/systems/utils/userInput.util';
 
 function userInputSystem() {
-  let entities = Entity.entities;
   // loop over all actions
   actions.forEach((action) => {
     // for each entity in the action, do the required logic
@@ -36,14 +27,12 @@ function userInputSystem() {
     } else {
       if (action.name === CLICK) {
         let clickedEntities = getClickedEntitiy(action);
-        // is this friendly?
 
         // if i clicked on nothing, we might have a selection box.
         if (clickedEntities.length === 0) {
           select(action);
           // select(action); // this will also unselect first..
         }
-
 
         // if i clicked on a friendly, select it
         let friendlies = clickedEntities.filter((ent) => {
@@ -70,7 +59,6 @@ function userInputSystem() {
   // reset actions when we're done
   actions = [];
 }
-
 
 export default userInputSystem;
 

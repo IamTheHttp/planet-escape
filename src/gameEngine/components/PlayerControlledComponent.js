@@ -1,4 +1,3 @@
-/** @namespace entity.components.localBonus */
 import {PLAYER_CONTROLLED} from 'gameEngine/constants';
 class PlayerControlledComponent {
   constructor() {
@@ -10,7 +9,11 @@ class PlayerControlledComponent {
 export default PlayerControlledComponent;
 
 export function isSelected(entity) {
-  return entity[PLAYER_CONTROLLED] && entity[PLAYER_CONTROLLED].selected;
+  if (entity[PLAYER_CONTROLLED]) {
+    return entity[PLAYER_CONTROLLED].selected;
+  } else {
+    return false;
+  }
 }
 
 export function unSelect(entity) {
