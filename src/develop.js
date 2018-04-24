@@ -8,7 +8,6 @@ import neutral from 'assets/neutral.png';
 import fighter from 'assets/fighter.png';
 import {loadImages} from 'shared/utils';
 
-console.log(neutral);
 loadImages([neutral, player1, player2, fighter], () => {
   render(<App></App>, document.getElementById('app'));
 });

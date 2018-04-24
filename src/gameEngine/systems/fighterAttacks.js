@@ -1,6 +1,11 @@
 import Entity from '../../lib/ECS/Entity';
 import entityLoop from '../../lib/ECS/util/entityLoop';
-import {getFighters, destroyFighter, getDefendingFighters, detachFighterFromPlanet} from 'gameEngine/components/HasFighters';
+import {
+  getFighters,
+  destroyFighter,
+  getDefendingFighters,
+  detachFighterFromPlanet
+} from 'gameEngine/components/HasFighters';
 import {unSelect} from 'gameEngine/components/PlayerControlledComponent';
 import {hasDest, isSamePos, destReached} from 'gameEngine/components/PositionComponent';
 import {diffPlayers, getOwner} from 'gameEngine/components/OwnerComponent';

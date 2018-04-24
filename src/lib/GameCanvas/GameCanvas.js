@@ -21,6 +21,13 @@ class GameCanvas {
     this.handleMiniMapClick = this.handleMiniMapClick.bind(this);
     this.handleMapMouseMove = this.handleMapMouseMove.bind(this);
     this.handleMapMouseLeave = this.handleMapMouseLeave.bind(this);
+
+    // TODO
+    // detect touch started on X in the client.
+    // on every move, try panning the X by the amount the swipe moved.
+    document.addEventListener('touchmove', (e) => {
+
+    }, false);
   }
 
   updateCursorPosition(event, canvas, canvasAPI) {

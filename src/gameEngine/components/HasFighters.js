@@ -23,10 +23,15 @@ export function stopDefending(fighter) {
   fighter.removeComponent(DEFENDING);
 }
 
-// Expensive loop
-// TODO, remove loop, use cached values only from HAS_FIGHTERS
 export function getDefendingFighters(entity) {
   return entity[HAS_FIGHTERS].defenders;
+}
+
+export function detachFighterFromPlanet(fighter) {
+  let currentFighters = Object.assign([], getFighters(Entity.entities[fighter.planetID]));
+  currentFighters.splice(currentFighters.indexOf(fighter), 1);
+  Entity.entities[fighter.planetID][HAS_FIGHTERS].fighters = currentFighters;
+  delete fighter.planetID;
 }
 
 export function addFighter(ent, fighter) {
@@ -48,9 +53,3 @@ export function destroyFighter(fighter) {
   fighter.destroy();
 }
 
-export function detachFighterFromPlanet(fighter) {
-  let currentFighters = Object.assign([], getFighters(Entity.entities[fighter.planetID]));
-  currentFighters.splice(currentFighters.indexOf(fighter), 1);
-  Entity.entities[fighter.planetID][HAS_FIGHTERS].fighters = currentFighters;
-  delete fighter.planetID;
-}
