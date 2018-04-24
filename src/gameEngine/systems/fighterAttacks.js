@@ -44,6 +44,11 @@ function fighterAttacks() {
     // if the defending planet has no docked fighters left
     if (getDefendingFighters(foundPlanet) === 0) {
       foundPlanet[OWNER_COMPONENT].player = getOwner(attacker);
+      // TODO create a proper component
+      foundPlanet.addComponent({
+        name : 'EXPLOSION',
+        times : 0
+      });
       unSelect(foundPlanet);
       // we need to copy the array since we can't modify the array while we loop through it
       let arr = Object.assign([], getFighters(foundPlanet));

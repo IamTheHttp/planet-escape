@@ -13,7 +13,8 @@ import {
   CAN_ATTACK_PLANETS,
   POSITION,
   FIGHTER_RADIUS,
-  FIGHTER_SPEED
+  FIGHTER_SPEED,
+  FIGHTER_IMAGE
 } from 'gameEngine/constants.js';
 
 import fighter from 'assets/fighter.png';
@@ -32,7 +33,10 @@ class Fighter {
     ent.addComponent(new OwnerComponent(player));
     ent.addComponent({name: CAN_ATTACK_PLANETS});
     ent.addComponent(new Defending);
-    ent.addComponent(new Sprite(fighterImage, [0, 0, 95, 95])); // sprite args
+
+    ent.addComponent(new Sprite([{
+      name : FIGHTER_IMAGE
+    }])); // sprite args
 
     addFighter(planet, ent);
     return ent;
@@ -48,9 +52,7 @@ class Fighter {
 export function addFighterUiComp(fighter) {
   fighter.addComponent(new UIComponent({
     name: CANVAS,
-    data: {
-      shape: CIRCLE
-    }
+    shape : CIRCLE
   }));
 }
 

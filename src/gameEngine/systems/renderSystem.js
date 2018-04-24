@@ -5,8 +5,13 @@ import {
   HAS_FIGHTERS,
   UI_COMP,
   PLAYER_1,
-  SELECT_WIDTH
+  SELECT_WIDTH,
+  CIRCLE,
+  FIGHTER_COUNT,
+  SPRITE,
+  PLANETS
 } from 'gameEngine/constants';
+import imageBuffer from 'assets/imageBuffer';
 import gameConfig from 'gameEngine/config';
 import {isSelected} from 'gameEngine/components/PlayerControlledComponent';
 import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';
@@ -16,6 +21,7 @@ function renderSystem(systemArguments, mapAPI, miniMapAPI, selectedBox) {
   mapAPI.clear();
   miniMapAPI.clear();
   let entsToDraw = systemArguments.Entity.getByComps([UI_COMP]);
+
 
   /* istanbul ignore else  */
   if (mapAPI && miniMapAPI) {
@@ -65,39 +71,74 @@ function renderMap(entity, canvasAPI) {
     lineWidth = gameConfig[SELECT_WIDTH];
   }
 
-  canvasAPI.addCircle({
-    id: entity.id,
-    x,
-    y,
-    radius,
-    strokeStyle: color,
-    lineWidth
-  });
+  if (entity.hasComponents(SPRITE)) {
+    // draw the image, if the entity has one..
+    // TODO - fighter images are incorrect!
 
-  // draw the image, if the entity has one..
-  // TODO - fighter images are incorrect!
-  let [cropStartX, cropStartY, cropSizeX, cropSizeY] = getSpriteArgs(entity);
-  let image = getSprite(entity);
+    entity[SPRITE].images.forEach((imageToRender) => {
+      // TODO this is ugly, create a fn that gets all this from the entity.
+      let data = imageBuffer[imageToRender.name][entity[OWNER_COMPONENT].player];
+      if (!data) {
+        return;
+      }
+      let [cropStartX, cropStartY, cropSizeX, cropSizeY] = data.spriteArgs;
+      let image = data.img;
 
-  canvasAPI.addImage({
-    id: `${entity.id}-image`,
-    image,
-    x: x - radius, y: y - radius,
-    height: radius * 2, width: radius * 2,
-    cropStartX, cropStartY, cropSizeX, cropSizeY,
-    rotation: angle // in radians
-  });
+      canvasAPI.addImage({
+        id: `${entity.id}-image-${imageToRender.name}`,
+        image,
+        x: x - radius, y: y - radius,
+        height: radius * 2, width: radius * 2,
+        cropStartX, cropStartY, cropSizeX, cropSizeY,
+        rotation: angle // in radians
+      });
+    });
+  }
 
-  entity.hasComponents(HAS_FIGHTERS, () => {
-    if (getDefendingFighters(entity) > 0) {
-      canvasAPI.write({
-        id: `${entity.id}-fighterCount`,
-        text: getDefendingFighters(entity),
-        x: radius + x - radius / 4,
-        y: radius + y - radius / 4,
-        font: '18px serif',
-        textBaseline: 'top',
-        fillStyle: 'yellow'
+  entity[UI_COMP].sections.forEach((section) => {
+    if (section.shape === CIRCLE && isSelected(entity)) {
+      canvasAPI.addCircle({
+        id: entity.id,
+        x,
+        y,
+        radius : isSelected(entity) ? radius + 3 : radius,
+        strokeStyle: color,
+        lineWidth
+      });
+    }
+
+    if (section.shape === CIRCLE && entity.hasComponents('EXPLOSION')) {
+      canvasAPI.addCircle({
+        id: entity.id,
+        x,
+        y,
+        radius : radius + entity.EXPLOSION.times * 2,
+        strokeStyle: color,
+        lineWidth
+      });
+      entity.EXPLOSION.times++;
+      if (entity.EXPLOSION.times === 10) {
+        entity.removeComponent('EXPLOSION');
+      }
+    }
+
+    let padNum = (num) => {
+      return num < 10 ? ` ${num}` : num;
+    };
+
+    if (section.shape === FIGHTER_COUNT) {
+      entity.hasComponents(HAS_FIGHTERS, () => {
+        if (getDefendingFighters(entity) > 0) {
+          canvasAPI.write({
+            id: `${entity.id}-fighterCount`,
+            text: padNum(getDefendingFighters(entity)),
+            x: radius + x - radius / 4,
+            y: radius + y - radius / 4,
+            font: '18px serif',
+            textBaseline: 'top',
+            fillStyle: color
+          });
+        }
       });
     }
   });
@@ -119,7 +160,7 @@ function renderMiniMap(entity, canvasAPI) {
     radius,
     strokeStyle: color,
     lineWidth,
-    fillColor : color
+    fillColor: color
   });
 }
 

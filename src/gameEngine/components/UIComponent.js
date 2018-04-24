@@ -17,10 +17,7 @@ class UIComponent {
         if (!section.name) {
           throw ('Missing field "name" for section in UIComponent');
         }
-        return {
-          name : section.name,
-          data : section.data
-        };
+        return section;
       } else {
         // if it's a string, make it an object..
         return {
