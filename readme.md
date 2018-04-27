@@ -4,6 +4,7 @@
 - Change renderSystem to render from the imageBuffer, Sprite now only needs a name
 - Added a different image per player_ID
 - Added planet ownership swap animation
+- Added shield icon to planets to show amount of planets
 ## 1.0.3
 - Fixed assets path to ./
 - Cached defender count for improved Perf, defender pilots should not affect performance

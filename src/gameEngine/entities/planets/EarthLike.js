@@ -16,7 +16,8 @@ import {
   CANVAS,
   PLANETS,
   CIRCLE,
-  FIGHTER_COUNT
+  FIGHTER_COUNT,
+  SHIELD_IMAGE
 } from 'gameEngine/constants';
 
 class EarthLike {
@@ -29,9 +30,20 @@ class EarthLike {
     ent.addComponent(new HasFighters());
     ent.addComponent(new Attackable(true));
 
-    ent.addComponent(new Sprite([{
-      name : PLANETS
-    }]));
+    ent.addComponent(new Sprite([
+      {
+        name: PLANETS
+      },
+      {
+        name: SHIELD_IMAGE,
+        pos : {
+          x : 35,
+          y: 35,
+          heightRatio : 0.6,
+          widthRatio : 0.6
+        }
+      }
+    ]));
 
     // TODO this should be an interface somewhere, i don't like free forming objects
     let shapes = [
