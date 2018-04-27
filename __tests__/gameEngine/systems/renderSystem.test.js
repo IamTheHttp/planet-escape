@@ -87,9 +87,6 @@ describe('Tests the render system', () => {
     }, mapAPI, miniMapAPI, selectedBox);
 
     expect(miniMapAPI.addRect.mock.calls[0][0].id).toBe('currentMap');
-
     expect(miniMapAPI.addCircle.mock.calls[0][0].id).toBe(ent.id);
-    expect(mapAPI.addCircle.mock.calls[0][0].id).toBe(ent.id);
-    expect(mapAPI.addImage.mock.calls[0][0].id).toBe(`${ent.id}-image`);
   });
 });

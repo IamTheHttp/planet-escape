@@ -2,6 +2,7 @@ import React from 'react';
 
 class HintsList extends React.Component {
   render() {
+    // TODO Add tiny images to this section that represent
     return (
       <div className="hintList">
         <h3>Hints:</h3>

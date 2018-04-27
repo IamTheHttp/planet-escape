@@ -10,7 +10,9 @@ import Entity from '../../../src/lib/ECS/Entity';
 import {
   PLAYER_1,
   IN_PROGRESS,
-  GAME_WON
+  GAME_WON,
+  PLANETS,
+  SPRITE
 } from 'gameEngine/constants';
 
 describe('Tests a component', () => {
@@ -21,9 +23,11 @@ describe('Tests a component', () => {
 
   it('init new component', () => {
     let data = {};
-    let compDefault = new Sprite('IMAGE_PATH', data);
+    let compDefault = new Sprite([{
+      name : PLANETS
+    }]);
     let ent = new Entity();
     ent.addComponent(compDefault);
-    expect(getSpriteArgs((ent))).toBe(data);
+    expect(ent[SPRITE].images.length).toBe(1);
   });
 });
