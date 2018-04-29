@@ -28,6 +28,7 @@ function moveEntity(entity) {
   if (LINEAR && destX && destY) {
     let curX = getPos(entity).x;
     let curY = getPos(entity).y;
+    // TODO refactor to be using angle instead of gradient, we're already calculating this field
     let gradient = (destY - curY) / (destX - curX);
     let speed = entity[MOVEMENT_COMP].speed;
     let distanceX = destX - curX;
