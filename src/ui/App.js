@@ -161,7 +161,7 @@ class App extends React.Component {
     }
   }
 
-  getMainMenuModal() {
+  mainMenu() {
     return (<MainMenu
       onQuickStart={(menuSelection) => {
         this.mapSize = gameConfig[MAP_SIZE][menuSelection.mapSize];
@@ -177,7 +177,10 @@ class App extends React.Component {
         <div>
           <MainMenuBtn
             onClick={() => {
-              this.stopGame();
+              // TODO this needs to be pause game
+              // now when paused, render the "mid game menu"
+              // mid game menu needs to have "resume, help and exit"
+              this.pauseGame();
             }}
           >
           </MainMenuBtn>
@@ -204,7 +207,7 @@ class App extends React.Component {
         </div>
       );
     } else {
-      return this.getMainMenuModal();
+      return this.mainMenu();
     }
   }
 }
