@@ -163,7 +163,7 @@ class App extends React.Component {
 
   getMainMenuModal() {
     return (<MainMenu
-      onStart={(menuSelection) => {
+      onQuickStart={(menuSelection) => {
         this.mapSize = gameConfig[MAP_SIZE][menuSelection.mapSize];
         this.difficulty = gameConfig[DIFFICULTY][menuSelection.difficulty];
         this.game = this.startGame(this.mapSize, this.difficulty);

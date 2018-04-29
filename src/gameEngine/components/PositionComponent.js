@@ -1,5 +1,7 @@
 /** @namespace entity.components.localBonus */
 import {POSITION} from 'gameEngine/constants';
+let memoize = require('memoizee');
+
 class PositionComponent {
   constructor(x, y, radius) {
     this.name = POSITION;
@@ -60,11 +62,13 @@ export function isSamePos(ent1, ent2) {
   return getPos(ent1).x === getPos(ent2).x && getPos(ent1).y === getPos(ent2).y;
 }
 
-export function calcDistance(ent1, ent2) {
+let calcDistance = memoize((ent1, ent2) => {
   let pos1 = getPos(ent1);
   let pos2 = getPos(ent2);
   let xDist = Math.pow(pos1.x - pos2.x, 2);
   let yDist = Math.pow(pos1.y - pos2.y, 2);
   let squaredDist = xDist + yDist;
   return Math.sqrt(squaredDist);
-}
+});
+
+export {calcDistance};

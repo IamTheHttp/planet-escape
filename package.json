@@ -30,7 +30,8 @@
   "main": "dist",
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "canvas-prebuilt": "^1.6.5-prerelease.1"
+    "canvas-prebuilt": "^1.6.5-prerelease.1",
+    "memoizee": "^0.4.12"
   },
   "jsnext:main": "src",
   "module": "src"
