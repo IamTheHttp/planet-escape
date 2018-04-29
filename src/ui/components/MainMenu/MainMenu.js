@@ -2,6 +2,7 @@ import React from 'react';
 import './mainMenu.scss';
 import Help from './Help';
 import {version} from '../../../../package.json';
+import earthImage from 'assets/player1.png';
 import {
   TINY,
   MEDIUM,
@@ -31,23 +32,23 @@ class MainMenu extends React.Component {
     }
 
     return (
-      <div>
-        <button className="btn btn-info" onClick={() => {
+      <div className="menuButtons">
+        <button className="btnItem" onClick={() => {
           this.setState({selection: 'quickStart'});
         }}>
           Quick start
         </button>
-        <button className="btn btn-info" onClick={() => {
+        <button className="btnItem" onClick={() => {
           this.setState({selection: 'tutorial'});
         }}>
           Tutorial
         </button>
-        <button className="btn btn-info" onClick={() => {
+        <button className="btnItem" onClick={() => {
           this.setState({selection: 'help'});
         }}>
           Help
         </button>
-        <button className="btn btn-info" onClick={() => {
+        <button className="btnItem" onClick={() => {
           this.setState({selection: 'about'});
         }}>
           About
@@ -73,15 +74,15 @@ class MainMenu extends React.Component {
     return (
       <div>
         <div className="row">
-          <div className="difficultySelector col-xs-6">
-            <h4>
-              Select difficulty
-            </h4>
-            <div className="topDownBtnGroup">
+          <div className="difficultySelector col-xs-4">
+            <div className="menuButtons">
+              <h4 className="title">
+                Select difficulty
+              </h4>
               {difficulties.map((diff) => {
                 return (<button
                   key={diff}
-                  className={`btn btn-info ${this.state.difficulty === diff && 'active'}`}
+                  className={`btnItem ${this.state.difficulty === diff && 'active'}`}
                   onClick={() => {
                     this.setState({difficulty: diff});
                   }}
@@ -89,15 +90,15 @@ class MainMenu extends React.Component {
               })}
             </div>
           </div>
-          <div className="mapSizeSelector col-xs-6">
-            <h4>
-              Select map size
-            </h4>
-            <div className="topDownBtnGroup">
+          <div className="mapSizeSelector col-xs-4">
+            <div className="menuButtons">
+              <h4 className="title">
+                Select map size
+              </h4>
               {mapSizes.map((size) => {
                 return (<button
                   key={size}
-                  className={`btn btn-info ${this.state.mapSize === size && 'active'}`}
+                  className={`btnItem ${this.state.mapSize === size && 'active'}`}
                   onClick={() => {
                     this.setState({mapSize: size});
                   }}
@@ -105,15 +106,16 @@ class MainMenu extends React.Component {
               })}
             </div>
           </div>
-        </div>
-        <div className="startGame">
-          <button
-            className={'btn btn-primary'}
-            onClick={() => {
-              this.props.onQuickStart(this.state);
-            }}>
-            Quick start
-          </button>
+          <div className="col-xs-4">
+            <div className="startGame"
+               onClick={() => {
+                 this.props.onQuickStart(this.state);
+               }}
+            >
+              <img src={earthImage}/>
+              <h3 className="title">Start</h3>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -126,12 +128,12 @@ class MainMenu extends React.Component {
 
     return (
       <button
-        className="pull-right back btn btn-danger"
+        className="pull-right btnBack"
         onClick={() => {
-          this.setState({selection : false});
+          this.setState({selection: false});
         }}
       >
-        &times;
+        &#x25C0;
       </button>
     );
   }
@@ -141,12 +143,12 @@ class MainMenu extends React.Component {
       <div className="mainMenu">
         <div className="">
           <div className="">
-            <div className="">
+            <div className="menuHeader">
               {`Welcome to Planet Escape (version ${version})`}
               {this.backButton()}
             </div>
             <div className="">
-              <div className="topDownBtnGroup">
+              <div className="">
                 {this.topMenu()}
                 {this.quickStartSelection()}
                 {this.help()}
@@ -156,65 +158,6 @@ class MainMenu extends React.Component {
         </div>
       </div>
     );
-  }
-
-  _render() {
-    return (<div className="modal show mainMenuModal">
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            {`Welcome to Planet Escape (version ${version})`}
-          </div>
-          <div className="modal-body">
-            <div>
-              <div className="row">
-                <div className="difficultySelector col-xs-6">
-                  <h4>
-                    Select difficulty
-                  </h4>
-                  <div className="topDownBtnGroup">
-                    {difficulties.map((diff) => {
-                      return (<button
-                        key={diff}
-                        className={`btn btn-info ${this.state.difficulty === diff && 'active'}`}
-                        onClick={() => {
-                          this.setState({difficulty: diff});
-                        }}
-                      >{diff.toLowerCase()}</button>);
-                    })}
-                  </div>
-                </div>
-                <div className="mapSizeSelector col-xs-6">
-                  <h4>
-                    Select map size
-                  </h4>
-                  <div className="topDownBtnGroup">
-                    {mapSizes.map((size) => {
-                      return (<button
-                        key={size}
-                        className={`btn btn-info ${this.state.mapSize === size && 'active'}`}
-                        onClick={() => {
-                          this.setState({mapSize: size});
-                        }}
-                      >{size.toLowerCase()}</button>);
-                    })}
-                  </div>
-                </div>
-              </div>
-              <div className="startGame">
-                <button
-                  className={'btn btn-primary'}
-                  onClick={() => {
-                    this.props.onQuickStart(this.state);
-                  }}>
-                  Quick start
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>);
   }
 }
 

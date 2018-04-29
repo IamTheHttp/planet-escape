@@ -1,24 +1,36 @@
 .mainMenu {
-  overflow-y:auto!important;
-  height:100vh;
-  color:white;
-  background:url('/assets/mainMenu.jpg');
+  overflow-y: auto !important;
+  height: 100vh;
+  color: white;
+  background: url('~/src/assets/mainMenu.jpg');
   background-size: 100%;
 
-  .startGame{
-    text-align:right;
+  .menuHeader {
+    height:35px;
   }
 
-  .difficultySelector, .mapSizeSelector {
-    text-align:center;
+  .startGame {
+    text-align: right;
+  }
 
-    .btn {
-      text-transform:capitalize;
-      transition:all 0.3s linear;
-      &.active{
-        width:130px;
-      }
-      margin-bottom:3px;
+  .btnBack {
+    border-radius: 0;
+    background-color: #651616;
+    border: 1px solid black;
+    border-left: 1px solid #ffffff91;
+    border-bottom: 1px solid #ffffff91;
+  }
+
+  .startGame {
+    border:1px solid white;
+    background-color:black;
+    width:175px;
+    max-width:100%;
+    .title {
+      text-align:center;
+    }
+    img {
+      width:100%;
     }
   }
 }

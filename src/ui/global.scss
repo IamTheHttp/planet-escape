@@ -36,3 +36,24 @@ ol {
   font-size: 15px;
   z-index: 9999;
 }
+
+.menuButtons {
+  .title {
+    margin: 15px;
+  }
+  .btnItem {
+    display: block;
+    margin: 15px;
+    border: 1px solid white;
+    background-color: black;
+    border-radius: 3px;
+    padding: 5px;
+    text-transform: capitalize;
+    max-width: 100%;
+    width: 200px;
+    &.active {
+      background-color:white;
+      color:black;
+    }
+  }
+}
