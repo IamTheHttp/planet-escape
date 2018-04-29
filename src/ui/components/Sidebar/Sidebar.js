@@ -1,5 +1,4 @@
 import React from 'react';
-import HintsList from './Hints';
 
 class Sidebar extends React.Component {
   render() {
@@ -15,7 +14,6 @@ class Sidebar extends React.Component {
             >{this.props.isGamePaused ? 'Resume' : 'Pause'}
             </button>
           </div>
-          <HintsList></HintsList>
         </div>
       </div>
     );

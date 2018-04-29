@@ -1,6 +1,6 @@
 import React from 'react';
 
-class HintsList extends React.Component {
+class Help extends React.Component {
   render() {
     // TODO Add tiny images to this section that represent
     return (
@@ -16,4 +16,4 @@ class HintsList extends React.Component {
   }
 }
 
-export default HintsList;
+export default Help;

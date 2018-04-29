@@ -1,5 +1,6 @@
 import React from 'react';
 import './mainMenu.scss';
+import Help from './Help';
 import {version} from '../../../../package.json';
 import {
   TINY,
@@ -52,6 +53,15 @@ class MainMenu extends React.Component {
           About
         </button>
       </div>
+    );
+  }
+
+  help() {
+    if (this.state.selection !== 'help') {
+      return null;
+    }
+    return (
+      <Help></Help>
     );
   }
 
@@ -121,6 +131,7 @@ class MainMenu extends React.Component {
               <div className="topDownBtnGroup">
                 {this.topMenu()}
                 {this.quickStartSelection()}
+                {this.help()}
               </div>
             </div>
           </div>
@@ -128,7 +139,6 @@ class MainMenu extends React.Component {
       </div>
     );
   }
-
 
   _render() {
     return (<div className="modal show mainMenuModal">
