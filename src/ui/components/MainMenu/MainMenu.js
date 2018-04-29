@@ -57,6 +57,24 @@ class MainMenu extends React.Component {
     );
   }
 
+  about() {
+    if (this.state.selection !== 'about') {
+      return null;
+    }
+    return (
+      <div className="about col-xs-offset-3 col-xs-6">Created by Patrick Tolosa</div>
+    );
+  }
+
+  tutorial() {
+    if (this.state.selection !== 'tutorial') {
+      return null;
+    }
+    return (
+      <div className="tutorial col-xs-offset-3 col-xs-6">Coming soon</div>
+    );
+  }
+
   help() {
     if (this.state.selection !== 'help') {
       return null;
@@ -152,6 +170,8 @@ class MainMenu extends React.Component {
                 {this.topMenu()}
                 {this.quickStartSelection()}
                 {this.help()}
+                {this.tutorial()}
+                {this.about()}
               </div>
             </div>
           </div>
