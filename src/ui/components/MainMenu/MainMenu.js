@@ -18,7 +18,7 @@ class MainMenu extends React.Component {
   constructor() {
     super();
     this.state = {
-      selection: '',
+      selection: false,
       mapSize: TINY,
       difficulty: EASY
     };
@@ -119,15 +119,33 @@ class MainMenu extends React.Component {
     );
   }
 
+  backButton() {
+    if (!this.state.selection) {
+      return null;
+    }
+
+    return (
+      <button
+        className="pull-right back btn btn-danger"
+        onClick={() => {
+          this.setState({selection : false});
+        }}
+      >
+        &times;
+      </button>
+    );
+  }
+
   render() {
     return (
-      <div className="modal show mainMenuModal">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
+      <div className="mainMenu">
+        <div className="">
+          <div className="">
+            <div className="">
               {`Welcome to Planet Escape (version ${version})`}
+              {this.backButton()}
             </div>
-            <div className="modal-body">
+            <div className="">
               <div className="topDownBtnGroup">
                 {this.topMenu()}
                 {this.quickStartSelection()}

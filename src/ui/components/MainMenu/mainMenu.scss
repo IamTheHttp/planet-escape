@@ -1,15 +1,12 @@
-.mainMenuModal {
+.mainMenu {
   overflow-y:auto!important;
+  height:100vh;
+  color:white;
+  background:url('/assets/mainMenu.jpg');
+  background-size: 100%;
 
   .startGame{
     text-align:right;
-  }
-
-  .btn {
-    width:100px;
-    display:block;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .difficultySelector, .mapSizeSelector {
