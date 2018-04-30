@@ -6,6 +6,7 @@
 - Added planet ownership swap animation
 - Added shield icon to planets to show amount of planets
 - Added memoization to calcDistance
+- Added menus and mid game pause menus.
 ## 1.0.3
 - Fixed assets path to ./
 - Cached defender count for improved Perf, defender pilots should not affect performance
