@@ -126,9 +126,9 @@ class MainMenu extends React.Component {
           </div>
           <div className="col-xs-4">
             <div className="startGame"
-               onClick={() => {
-                 this.props.onQuickStart(this.state);
-               }}
+                 onClick={() => {
+                   this.props.onQuickStart(this.state);
+                 }}
             >
               <img src={earthImage}/>
               <h3 className="title">Start</h3>
@@ -158,23 +158,17 @@ class MainMenu extends React.Component {
 
   render() {
     return (
-      <div className="mainMenu">
+      <div className="splashMenu">
+        <div className="menuHeader">
+          {`Welcome to Planet Escape (version ${version})`}
+          {this.backButton()}
+        </div>
         <div className="">
-          <div className="">
-            <div className="menuHeader">
-              {`Welcome to Planet Escape (version ${version})`}
-              {this.backButton()}
-            </div>
-            <div className="">
-              <div className="">
-                {this.topMenu()}
-                {this.quickStartSelection()}
-                {this.help()}
-                {this.tutorial()}
-                {this.about()}
-              </div>
-            </div>
-          </div>
+          {this.topMenu()}
+          {this.quickStartSelection()}
+          {this.help()}
+          {this.tutorial()}
+          {this.about()}
         </div>
       </div>
     );

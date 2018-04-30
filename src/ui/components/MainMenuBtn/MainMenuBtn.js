@@ -6,7 +6,6 @@ class MainMenuBtn extends React.Component {
       <button
         onClick={this.props.onClick}
         id="backToMainMenu"
-        className="btn btn-default"
         type="button"
       >
         <span className="glyphicon glyphicon-menu-hamburger"></span>

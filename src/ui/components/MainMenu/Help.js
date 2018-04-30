@@ -8,8 +8,8 @@ class Help extends React.Component {
       <div className="helpSection col-xs-offset-3 col-xs-6">
         <div>Hints:</div>
         <ul>
-          <li>Tap one of your planets <img className="inlineImage" src={earthImage}/> to select</li>
-          <li>Tap enemy planet <img className="inlineImage" src={alienImage}/> to attack</li>
+          <li>Tap one of your planets <img className="inlineImage" src={earthImage}/> to select.</li>
+          <li>Tap enemy planet <img className="inlineImage" src={alienImage}/> to attack.</li>
           <li>Double tap on one of your planets to selects all.</li>
         </ul>
       </div>

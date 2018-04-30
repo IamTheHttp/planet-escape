@@ -7,14 +7,6 @@ class Sidebar extends React.Component {
         <div className="row">
           {this.props.canvasElm}
         </div>
-        <div>
-          <div>
-            <button
-              onClick={this.props.onPauseClick}
-            >{this.props.isGamePaused ? 'Resume' : 'Pause'}
-            </button>
-          </div>
-        </div>
       </div>
     );
   }

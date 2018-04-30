@@ -1,9 +1,20 @@
-.mainMenu {
-  overflow-y: auto !important;
+.splashMenu {
   height: 100vh;
   color: white;
   background: url('~/src/assets/mainMenu.jpg');
   background-size: 100%;
+
+  &.gamePaused {
+    .menuButtons {
+      width: 224px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .menuHeader {
+      text-align: center;
+      font-size: 30px;
+    }
+  }
 
   .menuHeader {
     height:35px;

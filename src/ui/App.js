@@ -41,21 +41,21 @@ class App extends React.Component {
 
   startGame(mapSize, difficulty) {
     let gameCanvas = new GameCanvas({
-      mapHeight  : mapSize[CANVAS_Y],
-      mapWidth   : mapSize[CANVAS_X],
-      viewHeight : gameConfig[MAIN_VIEW_SIZE_Y],
-      viewWidth  : gameConfig[MAIN_VIEW_SIZE_X],
-      onViewMapMove : (dataObj) => {
+      mapHeight: mapSize[CANVAS_Y],
+      mapWidth: mapSize[CANVAS_X],
+      viewHeight: gameConfig[MAIN_VIEW_SIZE_Y],
+      viewWidth: gameConfig[MAIN_VIEW_SIZE_X],
+      onViewMapMove: (dataObj) => {
         this.selectedBox = dataObj.selectedBox;
       },
       onViewMapClick: (dataObj) => {
         this.game.dispatchAction({
           name: CLICK,
-          x : dataObj.x,
-          y : dataObj.y,
+          x: dataObj.x,
+          y: dataObj.y,
           isMouseDown: dataObj.isMouseDown,
           dbClick: dataObj.dbClick,
-          selectedBox : dataObj.selectedBox
+          selectedBox: dataObj.selectedBox
         });
         this.selectedBox = null;
       }
@@ -64,12 +64,12 @@ class App extends React.Component {
     let {map, minimap} = gameCanvas.getNewCanvasPairs({
       getMapRef: (API, el) => {
         this.setState({
-          viewMapCanvasAPI : API
+          viewMapCanvasAPI: API
         });
       },
       getMiniRef: (API, el) => {
         this.setState({
-          miniMapCanvasAPI : API
+          miniMapCanvasAPI: API
         });
       }
     });
@@ -171,41 +171,67 @@ class App extends React.Component {
     ></MainMenu>);
   }
 
-  render() {
-    if (!this.state.isMenuOpen) {
+  pauseMenu() {
+    if (!this.state.gamePaused) {
+      return null;
+    } else {
       return (
-        <div>
-          <MainMenuBtn
-            onClick={() => {
-              // TODO this needs to be pause game
-              // now when paused, render the "mid game menu"
-              // mid game menu needs to have "resume, help and exit"
-              this.pauseGame();
-            }}
-          >
-          </MainMenuBtn>
-          <div className="container-fluid app">
-            <div className="row">
-              <Sidebar
-                canvasElm={this.state.minimap}
-                isGamePaused={this.state.gamePaused}
-                onPauseClick={() => {
-                  this.state.gamePaused ? this.resumeGame() : this.pauseGame();
-                  this.setState({
-                    gamePaused: !this.state.gamePaused
-                  });
-                }}
-              >
-              </Sidebar>
-              <MainView
-                canvasElm={this.state.map}
-              >
-              </MainView>
-            </div>
+        <div className="splashMenu gamePaused">
+          <div className="menuHeader">
+            Game paused
           </div>
-          {this.getGameEndModal()}
+          <div className="menuButtons">
+            <button className="btnItem" onClick={() => {
+              this.setState({gamePaused: false});
+              this.resumeGame();
+            }}>
+              Resume
+            </button>
+            <button className="btnItem" onClick={() => {
+              this.setState({gamePaused: false});
+              this.stopGame();
+            }}>
+              Exit
+            </button>
+          </div>
         </div>
       );
+    }
+  }
+
+  render() {
+    if (!this.state.isMenuOpen) {
+      if (this.state.gamePaused) {
+        return this.pauseMenu();
+      } else {
+        return (
+          <div>
+            <MainMenuBtn
+              onClick={() => {
+                // TODO this needs to be pause game
+                // now when paused, render the "mid game menu"
+                // mid game menu needs to have "resume, help and exit"
+                this.setState({gamePaused: true});
+                this.pauseGame();
+              }}
+            >
+            </MainMenuBtn>
+            <div className="container-fluid app">
+              <div className="row">
+                <Sidebar
+                  canvasElm={this.state.minimap}
+                >
+                </Sidebar>
+                <MainView
+                  canvasElm={this.state.map}
+                >
+                </MainView>
+              </div>
+            </div>
+            {this.getGameEndModal()}
+          </div>
+        );
+      }
     } else {
       return this.mainMenu();
     }
