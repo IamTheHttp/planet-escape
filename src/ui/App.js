@@ -236,6 +236,7 @@ class App extends React.Component {
               }}
             >
             </MainMenuBtn>
+            {this.state.minimap}
             <div className="container-fluid app">
               <div className="row">
                 <MainView
@@ -247,10 +248,7 @@ class App extends React.Component {
                   canvasElm={this.state.map}
                 >
                 </MainView>
-                <Sidebar
-                  canvasElm={this.state.minimap}
-                >
-                </Sidebar>
+
               </div>
             </div>
             {this.getGameEndModal()}

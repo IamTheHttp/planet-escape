@@ -36,7 +36,12 @@ ol {
 }
 
 .minimap {
-  width:100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 25vw;
+  z-index: 99999;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .sidebar {

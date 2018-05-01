@@ -4,9 +4,7 @@ class Sidebar extends React.Component {
   render() {
     return (
       <div className="col-xs-3 sidebar hidden">
-        <div className="row">
           {this.props.canvasElm}
-        </div>
       </div>
     );
   }
