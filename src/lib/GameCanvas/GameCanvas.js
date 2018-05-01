@@ -21,6 +21,8 @@ class GameCanvas {
     this.handleMiniMapClick = this.handleMiniMapClick.bind(this);
     this.handleMapMouseMove = this.handleMapMouseMove.bind(this);
     this.handleMapMouseLeave = this.handleMapMouseLeave.bind(this);
+    this.handleTouchMove = this.handleTouchMove.bind(this);
+    this.handleTouchStart = this.handleTouchStart.bind(this);
   }
 
   updateCursorPosition(event, canvas, canvasAPI) {
@@ -53,7 +55,7 @@ class GameCanvas {
       y: this.viewMapY,
       isMouseDown: this.isMouseDown,
       dbClick: this.dbClick,
-      selectedBox : this.selectedBox.getData()
+      selectedBox: this.selectedBox.getData()
     });
   }
 
@@ -70,7 +72,7 @@ class GameCanvas {
       y: this.viewMapY,
       isMouseDown: this.isMouseDown,
       dbClick: this.dbClick,
-      selectedBox : this.selectedBox.getData()
+      selectedBox: this.selectedBox.getData()
     });
     this.selectedBox.reset();
   }
@@ -112,6 +114,40 @@ class GameCanvas {
     this.mapAPI.pan(-calcPanX, -calcPanY);
   }
 
+  handleTouchStart(e) {
+    let {x, y} = this.updateCursorPosition(e.touches[0], this.viewMapCanvas, this.mapAPI);
+
+    this.viewMapX = x;
+    this.viewMapY = y;
+  }
+
+  handleTouchMove(e) {
+    // REFACTOR this code seems very similar to the onMinimapClick!
+    let {x, y} = this.updateCursorPosition(e.touches[0], this.viewMapCanvas, this.mapAPI);
+
+    let calcPanX;
+    let calcPanY;
+    let {panX, panY} = this.mapAPI.getPan();
+
+    let xMoved = x - this.viewMapX;
+    let yMoved = y - this.viewMapY;
+
+    calcPanX = panX + xMoved;
+    calcPanY = panY + yMoved;
+
+    // both numbers should be negative
+    calcPanX = Math.min(calcPanX, 0);
+    calcPanY = Math.min(calcPanY, 0);
+
+    // the panning + the mapSize, should not exceed the viewSize
+    let width = this.mapWidth;
+    let height = this.mapHeight;
+    calcPanX = -calcPanX + this.viewWidth < width ? calcPanX : this.viewWidth - width;
+    calcPanY = -calcPanY + this.viewHeight < height ? calcPanY : this.viewHeight - height;
+
+    this.mapAPI.pan(calcPanX, calcPanY);
+  }
+
   GenerateMapCanvas(getRef) {
     return (
       <canvas
@@ -123,95 +159,10 @@ class GameCanvas {
           this.viewMapCanvas = el;
           document.removeEventListener('mousemove', this.updateViewMapCursorPosition);
           document.addEventListener('mousemove', this.updateViewMapCursorPosition);
-
-
-          let touching = false;
-          let touchStartX;
-          let touchStartY;
-          let pan;
-
-          let handleStart = (e) => {
-            touching = true;
-
-            let {x, y} = this.updateCursorPosition(e.touches[0], this.viewMapCanvas, this.mapAPI);
-
-            touchStartX = x;
-            touchStartY = y;
-            pan = this.mapAPI.getPan();
-          };
-
-          let handleMove = (e) => {
-            let {x, y} = this.updateCursorPosition(e.touches[0], this.viewMapCanvas, this.mapAPI);
-            // once we move, we want to pan by the amount moved.
-            // how much and where did we move from last time?
-
-            let calcPanX;
-            let calcPanY;
-            let {panX, panY} = this.mapAPI.getPan();
-
-            let xMoved = x - touchStartX;
-            let yMoved = y - touchStartY;
-            /*
-
-
-             // new X, new Y :
-             console.log(touchStartX, xMoved);
-
-             let newX =
-            let calcPanX = Math.max(x - this.viewWidth / 2, 0);
-            let calcPanY = Math.max(y - this.viewHeight / 2, 0);
-
-            // positive numbers to right and bottom.
-            // negative numbers are top and left.
-            // pan is negative always
-            // xMoved, yMoved are negative if moving down and right
-
-
-
-
-
-            // both nunmbers should be negative.
-            calcPanX = Math.min(calcPanX, 0);
-            calcPanY = Math.min(calcPanY, 0);
-
-            // both numbers should not exceed map width
-            let width = this.mapWidth;
-            let height = this.mapHeight;
-
-            // calcPanX = calcPanX + this.viewWidth < width ? calcPanX : width - this.viewWidth;
-            // calcPanY = calcPanY + this.viewHeight < height ? calcPanY : height - this.viewHeight;
-
-            // calcPanX = calcPanX + this.viewWidth
-            // calcPanY = calcPanY + this.viewHeight
-
-             */
-
-            calcPanX = panX + xMoved;
-            calcPanY = panY + yMoved;
-            console.log(`${calcPanX}:${this.viewWidth} // ${calcPanY}:${this.viewHeight}`);
-
-            // both numbers should be negative
-            calcPanX = Math.min(calcPanX, 0);
-            calcPanY = Math.min(calcPanY, 0);
-
-            // the panning + the mapSize, should not exceed the viewSize
-            let width = this.mapWidth;
-            let height = this.mapHeight;
-            calcPanX = -calcPanX + this.viewWidth < width ? calcPanX : this.viewWidth - width;
-            calcPanY = -calcPanY + this.viewHeight < height ? calcPanY : this.viewHeight - height;
-
-            this.mapAPI.pan(calcPanX, calcPanY);
-          };
-
-          let noop = () => {
-
-          };
-
-          el.addEventListener('touchstart', handleStart, false);
-          el.addEventListener('touchend', noop, false);
-          el.addEventListener('touchcancel', noop, false);
-          el.addEventListener('touchmove', handleMove, false);
-
+          el.removeEventListener('touchstart', this.handleTouchStart, false);
+          el.removeEventListener('touchmove', this.handleTouchMove, false);
+          el.addEventListener('touchstart', this.handleTouchStart, false);
+          el.addEventListener('touchmove', this.handleTouchMove, false);
 
           this.mapAPI = new CanvasAPI(el.getContext('2d'));
           getRef(this.mapAPI, el);

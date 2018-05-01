@@ -7,6 +7,8 @@
 - Added shield icon to planets to show amount of planets
 - Added memoization to calcDistance
 - Added menus and mid game pause menus.
+- Restyled the minimap / mainview.
+- Added swipe support to move around the map (gameCanvas)
 ## 1.0.3
 - Fixed assets path to ./
 - Cached defender count for improved Perf, defender pilots should not affect performance

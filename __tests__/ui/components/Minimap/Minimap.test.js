@@ -4,10 +4,10 @@
 /* global beforeEach */
 import {mount, shallow} from 'enzyme';
 import React from 'react';
-import Sidebar from 'ui/components/Sidebar/Sidebar';
+import Minimap from 'ui/components/Minimap/Minimap';
 describe('Tests a component', () => {
   it('renders', () => {
-    let wrapper = shallow(<Sidebar
-    ></Sidebar>);
+    let wrapper = shallow(<Minimap
+    ></Minimap>);
   });
 });
