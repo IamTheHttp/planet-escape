@@ -1,5 +1,5 @@
 # Change log
-## master
+## 1.0.4
 - Add ImageBuffer
 - Change renderSystem to render from the imageBuffer, Sprite now only needs a name
 - Added a different image per player_ID
