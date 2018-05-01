@@ -18,7 +18,7 @@ import Modal from 'ui/components/Modal/Modal';
 import MainMenu from 'ui/components/MainMenu/MainMenu';
 import gameConfig from 'gameEngine/config';
 import MainMenuBtn from 'ui/components/MainMenuBtn/MainMenuBtn';
-import Sidebar from 'ui/components/Sidebar/Sidebar';
+import Minimap from 'ui/components/Minimap/Minimap';
 import MainView from 'ui/components/MainView/MainView';
 import renderSystem from 'gameEngine/systems/renderSystem';
 import GameCanvas from 'lib/GameCanvas/GameCanvas';
@@ -236,7 +236,9 @@ class App extends React.Component {
               }}
             >
             </MainMenuBtn>
-            {this.state.minimap}
+            <Minimap
+              canvasReactElement={this.state.minimap}
+            />
             <div className="container-fluid app">
               <div className="row">
                 <MainView
