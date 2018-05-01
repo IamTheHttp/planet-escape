@@ -39,6 +39,26 @@ class App extends React.Component {
     this.startGame = this.startGame.bind(this);
   }
 
+  componentDidMount() {
+    let resizeGame = () => {
+      let widthToHeight = 960 / 540;
+      let newWidth = window.innerWidth;
+      let newHeight = window.innerHeight;
+      let newWidthToHeight = newWidth / newHeight;
+
+      this.setState({
+        widthToHeight,
+        newWidthToHeight,
+        newWidth,
+        newHeight
+      });
+    };
+
+    window.addEventListener('resize', resizeGame, false);
+    window.addEventListener('orientationchange', resizeGame, false);
+    resizeGame();
+  }
+
   startGame(mapSize, difficulty) {
     let gameCanvas = new GameCanvas({
       mapHeight: mapSize[CANVAS_Y],
@@ -218,14 +238,19 @@ class App extends React.Component {
             </MainMenuBtn>
             <div className="container-fluid app">
               <div className="row">
+                <MainView
+                  widthToHeight={this.state.widthToHeight}
+                  newWidthToHeight={this.state.newWidthToHeight}
+                  newWidth={this.state.newWidth}
+                  newHeight={this.state.newHeight}
+                  viewMapCanvasAPI={this.state.viewMapCanvasAPI}
+                  canvasElm={this.state.map}
+                >
+                </MainView>
                 <Sidebar
                   canvasElm={this.state.minimap}
                 >
                 </Sidebar>
-                <MainView
-                  canvasElm={this.state.map}
-                >
-                </MainView>
               </div>
             </div>
             {this.getGameEndModal()}
@@ -238,3 +263,7 @@ class App extends React.Component {
   }
 }
 export default App;
+/*
+
+
+ */
