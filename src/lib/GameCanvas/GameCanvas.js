@@ -21,13 +21,8 @@ class GameCanvas {
     this.handleMiniMapClick = this.handleMiniMapClick.bind(this);
     this.handleMapMouseMove = this.handleMapMouseMove.bind(this);
     this.handleMapMouseLeave = this.handleMapMouseLeave.bind(this);
-
-    // TODO
-    // detect touch started on X in the client.
-    // on every move, try panning the X by the amount the swipe moved.
-    document.addEventListener('touchmove', (e) => {
-
-    }, false);
+    this.handleTouchMove = this.handleTouchMove.bind(this);
+    this.handleTouchStart = this.handleTouchStart.bind(this);
   }
 
   updateCursorPosition(event, canvas, canvasAPI) {
@@ -60,7 +55,7 @@ class GameCanvas {
       y: this.viewMapY,
       isMouseDown: this.isMouseDown,
       dbClick: this.dbClick,
-      selectedBox : this.selectedBox.getData()
+      selectedBox: this.selectedBox.getData()
     });
   }
 
@@ -77,7 +72,7 @@ class GameCanvas {
       y: this.viewMapY,
       isMouseDown: this.isMouseDown,
       dbClick: this.dbClick,
-      selectedBox : this.selectedBox.getData()
+      selectedBox: this.selectedBox.getData()
     });
     this.selectedBox.reset();
   }
@@ -119,6 +114,40 @@ class GameCanvas {
     this.mapAPI.pan(-calcPanX, -calcPanY);
   }
 
+  handleTouchStart(e) {
+    let {x, y} = this.updateCursorPosition(e.touches[0], this.viewMapCanvas, this.mapAPI);
+
+    this.viewMapX = x;
+    this.viewMapY = y;
+  }
+
+  handleTouchMove(e) {
+    // REFACTOR this code seems very similar to the onMinimapClick!
+    let {x, y} = this.updateCursorPosition(e.touches[0], this.viewMapCanvas, this.mapAPI);
+
+    let calcPanX;
+    let calcPanY;
+    let {panX, panY} = this.mapAPI.getPan();
+
+    let xMoved = x - this.viewMapX;
+    let yMoved = y - this.viewMapY;
+
+    calcPanX = panX + xMoved;
+    calcPanY = panY + yMoved;
+
+    // both numbers should be negative
+    calcPanX = Math.min(calcPanX, 0);
+    calcPanY = Math.min(calcPanY, 0);
+
+    // the panning + the mapSize, should not exceed the viewSize
+    let width = this.mapWidth;
+    let height = this.mapHeight;
+    calcPanX = -calcPanX + this.viewWidth < width ? calcPanX : this.viewWidth - width;
+    calcPanY = -calcPanY + this.viewHeight < height ? calcPanY : this.viewHeight - height;
+
+    this.mapAPI.pan(calcPanX, calcPanY);
+  }
+
   GenerateMapCanvas(getRef) {
     return (
       <canvas
@@ -130,6 +159,11 @@ class GameCanvas {
           this.viewMapCanvas = el;
           document.removeEventListener('mousemove', this.updateViewMapCursorPosition);
           document.addEventListener('mousemove', this.updateViewMapCursorPosition);
+          el.removeEventListener('touchstart', this.handleTouchStart, false);
+          el.removeEventListener('touchmove', this.handleTouchMove, false);
+          el.addEventListener('touchstart', this.handleTouchStart, false);
+          el.addEventListener('touchmove', this.handleTouchMove, false);
+
           this.mapAPI = new CanvasAPI(el.getContext('2d'));
           getRef(this.mapAPI, el);
         }}
