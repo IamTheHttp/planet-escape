@@ -1,4 +1,7 @@
 # Change log
+## master
+- Reduced image sizes.
+- Fixed IOS bugs (game was non responsive)
 ## 1.0.4
 - Add ImageBuffer
 - Change renderSystem to render from the imageBuffer, Sprite now only needs a name
