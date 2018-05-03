@@ -23,6 +23,7 @@ class GameCanvas {
     this.handleMapMouseLeave = this.handleMapMouseLeave.bind(this);
     this.handleTouchMove = this.handleTouchMove.bind(this);
     this.handleTouchStart = this.handleTouchStart.bind(this);
+    this.handleMiniMapTouchStart = this.handleMiniMapTouchStart.bind(this);
   }
 
   updateCursorPosition(event, canvas, canvasAPI) {
@@ -38,6 +39,7 @@ class GameCanvas {
   }
 
   handleMapMouseDown() {
+    console.log('CLICK!');
     let now = new Date().getTime();
     this.dbClick = now - this.lastClick < 300;
     this.lastClick = now;
@@ -111,6 +113,7 @@ class GameCanvas {
 
     calcPanX = calcPanX + this.viewWidth < width ? calcPanX : width - this.viewWidth;
     calcPanY = calcPanY + this.viewHeight < height ? calcPanY : height - this.viewHeight;
+
     this.mapAPI.pan(-calcPanX, -calcPanY);
   }
 
@@ -121,7 +124,18 @@ class GameCanvas {
     this.viewMapY = y;
   }
 
+  handleMiniMapTouchStart(e) {
+    let {x, y} = this.updateCursorPosition(e.touches[0], this.miniMapCanvas, this.miniMapAPI);
+
+    this.miniMapX = x;
+    this.miniMapY = y;
+
+    this.handleMiniMapClick();
+  }
+
+
   handleTouchMove(e) {
+    e.preventDefault();
     // REFACTOR this code seems very similar to the onMinimapClick!
     let {x, y} = this.updateCursorPosition(e.touches[0], this.viewMapCanvas, this.mapAPI);
 
@@ -159,6 +173,7 @@ class GameCanvas {
           this.viewMapCanvas = el;
           document.removeEventListener('mousemove', this.updateViewMapCursorPosition);
           document.addEventListener('mousemove', this.updateViewMapCursorPosition);
+          // TODO move to regular events?
           el.removeEventListener('touchstart', this.handleTouchStart, false);
           el.removeEventListener('touchmove', this.handleTouchMove, false);
           el.addEventListener('touchstart', this.handleTouchStart, false);
@@ -170,6 +185,8 @@ class GameCanvas {
         height={this.viewHeight}
         width={this.viewWidth}
         onMouseDown={this.handleMapMouseDown}
+        onTouchStart={this.handleMapMouseDown}
+        onTouchEnd={this.handleMapMouseUp}
         onMouseMove={this.handleMapMouseMove}
         onMouseUp={this.handleMapMouseUp}
         onMouseLeave={this.handleMapMouseLeave}
@@ -195,6 +212,7 @@ class GameCanvas {
         height={this.mapHeight}
         width={this.mapWidth}
         onMouseDown={this.handleMiniMapClick}
+        onTouchStart={this.handleMiniMapTouchStart}
       ></canvas>
     );
   }

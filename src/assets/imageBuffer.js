@@ -50,15 +50,15 @@ let imageBuffer = {
   [PLANETS] : {
     [NEUTRAL] : {
       img : neutralImage,
-      spriteArgs : [510, 380, 300, 300]
+      spriteArgs : [0, 0, 150, 138]
     },
     [PLAYER_1] : {
       img : player1Image,
-      spriteArgs : [0, 0, 192, 182]
+      spriteArgs : [0, 0, 189, 182]
     },
     [PLAYER_2] : {
       img : player2Image,
-      spriteArgs : [0, 0, 846, 846]
+      spriteArgs : [0, 0, 150, 150]
     }
   },
   [FIGHTER_IMAGE] : {
