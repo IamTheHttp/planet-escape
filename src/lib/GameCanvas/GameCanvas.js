@@ -13,6 +13,8 @@ class GameCanvas {
     this.onMiniMapClick = options.onMiniMapClick;
     this.lastClick = 0;
     this.dbClick = false;
+    this.lastTap = 0;
+    this.lastClick = false;
     this.selectedBox = new SelectedBox();
     this.updateViewMapCursorPosition = this.updateViewMapCursorPosition.bind(this);
     this.updateMiniMapCursorPosition = this.updateMiniMapCursorPosition.bind(this);
@@ -23,6 +25,7 @@ class GameCanvas {
     this.handleMapMouseLeave = this.handleMapMouseLeave.bind(this);
     this.handleTouchMove = this.handleTouchMove.bind(this);
     this.handleTouchStart = this.handleTouchStart.bind(this);
+    this.handleMapTouchEnd = this.handleMapTouchEnd.bind(this);
     this.handleMiniMapTouchStart = this.handleMiniMapTouchStart.bind(this);
   }
 
@@ -36,16 +39,6 @@ class GameCanvas {
     y = Math.max(0, Math.round(y * (canvas.height / rect.height))) - canvasAPI.getPan().panY;
 
     return {x, y};
-  }
-
-  handleMapMouseDown() {
-    console.log('CLICK!');
-    let now = new Date().getTime();
-    this.dbClick = now - this.lastClick < 300;
-    this.lastClick = now;
-    this.isMouseDown = true;
-    this.selectedBox.setStart(this.viewMapX, this.viewMapY);
-    this.selectedBox.setEnd(this.viewMapX, this.viewMapY);
   }
 
   handleMapMouseMove() {
@@ -67,16 +60,30 @@ class GameCanvas {
     }
   }
 
-  handleMapMouseUp() {
+  handleMapTouchEnd() {
     this.isMouseDown = false;
     this.onViewMapClick({
       x: this.viewMapX,
       y: this.viewMapY,
       isMouseDown: this.isMouseDown,
-      dbClick: this.dbClick,
+      dbClick: this.dbTap,
       selectedBox: this.selectedBox.getData()
     });
     this.selectedBox.reset();
+  }
+
+  handleMapMouseUp() {
+    if (!this.lastTap) {
+      this.isMouseDown = false;
+      this.onViewMapClick({
+        x: this.viewMapX,
+        y: this.viewMapY,
+        isMouseDown: this.isMouseDown,
+        dbClick: this.dbClick,
+        selectedBox: this.selectedBox.getData()
+      });
+      this.selectedBox.reset();
+    }
   }
 
 
@@ -117,11 +124,32 @@ class GameCanvas {
     this.mapAPI.pan(-calcPanX, -calcPanY);
   }
 
+  handleMapMouseDown() {
+    if (!this.lastTap) {
+      let now = new Date().getTime();
+      this.dbClick = (now - this.lastClick) < 300;
+      this.lastClick = now;
+      this.isMouseDown = true;
+      this.setSelectBox();
+    }
+  }
+
+  setSelectBox() {
+    this.selectedBox.setStart(this.viewMapX, this.viewMapY);
+    this.selectedBox.setEnd(this.viewMapX, this.viewMapY);
+  }
+
   handleTouchStart(e) {
     let {x, y} = this.updateCursorPosition(e.touches[0], this.viewMapCanvas, this.mapAPI);
+    let now = new Date().getTime();
+
+    this.dbTap = (now - this.lastTap) < 300;
+    this.lastTap = now;
 
     this.viewMapX = x;
     this.viewMapY = y;
+
+    this.setSelectBox();
   }
 
   handleMiniMapTouchStart(e) {
@@ -174,9 +202,7 @@ class GameCanvas {
           document.removeEventListener('mousemove', this.updateViewMapCursorPosition);
           document.addEventListener('mousemove', this.updateViewMapCursorPosition);
           // TODO move to regular events?
-          el.removeEventListener('touchstart', this.handleTouchStart, false);
           el.removeEventListener('touchmove', this.handleTouchMove, false);
-          el.addEventListener('touchstart', this.handleTouchStart, false);
           el.addEventListener('touchmove', this.handleTouchMove, false);
 
           this.mapAPI = new CanvasAPI(el.getContext('2d'));
@@ -185,8 +211,8 @@ class GameCanvas {
         height={this.viewHeight}
         width={this.viewWidth}
         onMouseDown={this.handleMapMouseDown}
-        onTouchStart={this.handleMapMouseDown}
-        onTouchEnd={this.handleMapMouseUp}
+        onTouchStart={this.handleTouchStart}
+        onTouchEnd={this.handleMapTouchEnd}
         onMouseMove={this.handleMapMouseMove}
         onMouseUp={this.handleMapMouseUp}
         onMouseLeave={this.handleMapMouseLeave}
