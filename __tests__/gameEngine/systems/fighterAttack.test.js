@@ -8,7 +8,7 @@ import {getOwner} from 'gameEngine/components/OwnerComponent';
 import InPlaceToAttack from 'gameEngine/components/InPlaceToAttack';
 import fighterAttacks from 'gameEngine/systems/fighterAttacks';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Fighter from 'gameEngine/entities/Ships/Fighter';
+import Fighter, {fighterPool} from 'gameEngine/entities/Ships/Fighter';
 import Entity from '../../../src/lib/ECS/Entity';
 import {getFighters, stopDefending} from 'gameEngine/components/HasFighters';
 import {
@@ -23,6 +23,7 @@ import {
 describe('Tests a the fighter attacks system', () => {
   beforeEach(() => {
     Entity.reset();
+    fighterPool.reset();
   });
 
   it('Attack/Defense are removed from the Entity hash as well from the planets', () => {
@@ -43,9 +44,11 @@ describe('Tests a the fighter attacks system', () => {
     let defCount = getFighters(defendingPlanet).length;
     let attackCount = getFighters(attackingPlanet).length;
     fighterAttacks();
+
     // expect the attackerFighter entity to be removed from the entity list...
-    expect(Entity.entities[attackerFighter.id]).toBeUndefined();
-    expect(Entity.entities[defFighter.id]).toBeUndefined();
+    // well, not exactly removed - more like going a reset.
+    expect(Entity.entities[attackerFighter.id][POSITION].x).toBe(null);
+    expect(Entity.entities[defFighter.id][POSITION].x).toBe(null);
 
     // the planets should lose one fighter
     expect(getFighters(defendingPlanet).length).toBe(defCount - 1);
@@ -66,7 +69,7 @@ describe('Tests a the fighter attacks system', () => {
     let attackCount = getFighters(attackingPlanet).length;
     fighterAttacks();
     // expect the attackerFighter entity to be removed from the entity list...
-    expect(Entity.entities[attackerFighter.id]).toBeUndefined();
+    expect(Entity.entities[attackerFighter.id][POSITION].x).toBe(null);
     // the planets should lose one fighter
     expect(getFighters(attackingPlanet).length).toBe(attackCount - 1);
     expect(getOwner(defendingPlanet)).toBe(getOwner(attackingPlanet));
@@ -88,7 +91,7 @@ describe('Tests a the fighter attacks system', () => {
     let attackCount = getFighters(attackingPlanet).length;
     fighterAttacks();
     // expect the attackerFighter entity to be removed from the entity list...
-    expect(Entity.entities[attackerFighter.id]).toBeUndefined();
+    expect(Entity.entities[attackerFighter.id][POSITION].x).toBe(null);
     // the planets should lose one fighter
     expect(getFighters(attackingPlanet).length).toBe(attackCount - 1);
     expect(getOwner(defendingPlanet)).toBe(PLAYER_1);
@@ -118,7 +121,7 @@ describe('Tests a the fighter attacks system', () => {
     fighterAttacks();
 
     // // expect the fighterInSpace entity to still be alive, without a planet ID
-    expect(Entity.entities[fighterInSpace.id].planetID).toBeUndefined();
+    expect(Entity.entities[attackerFighter.id][POSITION].x).toBe(null);
 
     // enemy fighters reach our defenseless planet
     fighterInSpace[POSITION].x = fighterInSpace[POSITION].destX = 5000;

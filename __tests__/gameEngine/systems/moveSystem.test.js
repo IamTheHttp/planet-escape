@@ -8,7 +8,7 @@ import React from 'react';
 import moveSystem from 'gameEngine/systems/moveSystem';
 import Moving from 'gameEngine/components/Moving';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Fighter from 'gameEngine/entities/Ships/Fighter';
+import Fighter, {fighterPool} from 'gameEngine/entities/Ships/Fighter';
 
 import {
   POSITION,
@@ -18,7 +18,9 @@ describe('Tests a component', () => {
   let planet;
   let ship;
   beforeEach(() => {
+    // TODO - Move to utility that resets the tests
     Entity.reset();
+    fighterPool.reset();
     ship = new Fighter(new EarthLike(1234, 1234));
     ship.addComponent(new Moving(true));
       // setup the test

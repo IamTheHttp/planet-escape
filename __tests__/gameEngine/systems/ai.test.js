@@ -7,7 +7,7 @@ import React from 'react';
 import Entity from '../../../src/lib/ECS/Entity';
 import ai from 'gameEngine/systems/ai';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Fighter from 'gameEngine/entities/Ships/Fighter';
+import Fighter, {fighterPool} from 'gameEngine/entities/Ships/Fighter';
 import {getDest} from 'gameEngine/components/PositionComponent';
 import {
   NEUTRAL,
@@ -22,6 +22,7 @@ describe('Tests a component', () => {
   beforeEach(() => {
     // setup the test
     Entity.reset();
+    fighterPool.reset();
     systemArguments = {
       count : 0,
       difficulty : {
