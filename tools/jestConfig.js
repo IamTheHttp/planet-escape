@@ -15,10 +15,10 @@ module.exports = function (jestConfig) {
 
   jestConfig.bail = true;
   jestConfig.coverageThreshold.global = {
-    "branches": 84,
-    "functions": 85,
-    "lines": 85,
-    "statements": 85
+    "branches": 80,
+    "functions": 80,
+    "lines": 80,
+    "statements": 80
   };
   return jestConfig;
 };

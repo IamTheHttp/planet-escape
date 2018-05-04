@@ -11,7 +11,6 @@ describe('Tests a component', () => {
     ></MainMenu>);
 
     wrapper.find('.btnItem').forEach((el) => {
-      console.log(el);
       el.simulate('click');
     });
   });
