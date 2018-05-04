@@ -1,5 +1,5 @@
 # Change log
-## master
+## 1.0.5
 - Reduced image sizes.
 - Fixed IOS bugs (game was non responsive)
 ## 1.0.4
