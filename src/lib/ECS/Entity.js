@@ -104,23 +104,17 @@ class Entity {
     delete Entity.entities[this.id];
   }
 
-  hasComponents(components = [], fn = () => {}) {
+  hasComponents(components = []) {
     // quick breakout
     if (this.components[components]) {
-      fn();
       return true;
     }
 
     let compNames = components.reduce ? components : [components];
 
-    let hasComp = compNames.reduce((agg, compName) => {
+    return compNames.reduce((agg, compName) => {
       return agg && !!this.components[compName];
     }, true);
-
-    if (hasComp) {
-      fn();
-    }
-    return hasComp;
   }
 }
 

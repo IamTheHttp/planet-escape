@@ -31,7 +31,8 @@ function renderMap(entity, canvasAPI) {
     lineWidth = gameConfig[SELECT_WIDTH];
   }
 
-  let drawFighterCount = () => {};
+  let drawFighterCount = () => {
+  };
   if (entity.hasComponents(SPRITE)) {
     // draw the image, if the entity has one..
     // TODO - fighter images are incorrect!
@@ -47,6 +48,7 @@ function renderMap(entity, canvasAPI) {
         });
       }
 
+      // TODO use Constants
       if (section.shape === CIRCLE && entity.hasComponents('EXPLOSION')) {
         canvasAPI.addCircle({
           id: entity.id,
@@ -66,24 +68,22 @@ function renderMap(entity, canvasAPI) {
         return num < 10 ? ` ${num}` : num;
       };
 
-      if (section.shape === FIGHTER_COUNT) {
-        entity.hasComponents(HAS_FIGHTERS, () => {
-          if (getDefendingFighters(entity) > 0) {
-            let fontSize = getDefendingFighters(entity) > 99 ? 12 : 18;
-            // we need to draw it last, so we save it for a bit later.
-            drawFighterCount = () => {
-              canvasAPI.write({
-                id: `${entity.id}-fighterCount`,
-                text: padNum(getDefendingFighters(entity)),
-                x: radius + x - radius / 4 - 8,
-                y: radius + y - radius / 4 - 12,
-                font: `${fontSize}px serif`,
-                textBaseline: 'top',
-                fillStyle: 'black'
-              });
-            };
-          }
-        });
+      if (section.shape === FIGHTER_COUNT && entity.hasComponents(HAS_FIGHTERS)) {
+        if (getDefendingFighters(entity) > 0) {
+          let fontSize = getDefendingFighters(entity) > 99 ? 12 : 18;
+          // we need to draw it last, so we save it for a bit later.
+          drawFighterCount = () => {
+            canvasAPI.write({
+              id: `${entity.id}-fighterCount`,
+              text: padNum(getDefendingFighters(entity)),
+              x: radius + x - radius / 4 - 8,
+              y: radius + y - radius / 4 - 12,
+              font: `${fontSize}px serif`,
+              textBaseline: 'top',
+              fillStyle: 'black'
+            });
+          };
+        }
       }
     });
 
