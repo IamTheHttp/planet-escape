@@ -11,7 +11,6 @@ import Sprite from 'gameEngine/components/Sprite';
 import gameConfig from 'gameEngine/config';
 import {
   NEUTRAL,
-  HAS_FIGHTERS,
   PLANET_RADIUS,
   CANVAS,
   PLANETS,

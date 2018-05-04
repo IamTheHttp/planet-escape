@@ -28,7 +28,7 @@ export function getDefendingFighters(entity) {
 }
 
 export function detachFighterFromPlanet(fighter) {
-  let currentFighters = Object.assign([], getFighters(Entity.entities[fighter.planetID]));
+  let currentFighters = getFighters(Entity.entities[fighter.planetID]).concat();
   currentFighters.splice(currentFighters.indexOf(fighter), 1);
   Entity.entities[fighter.planetID][HAS_FIGHTERS].fighters = currentFighters;
   delete fighter.planetID;
@@ -50,6 +50,6 @@ export function destroyFighter(fighter) {
     }
     detachFighterFromPlanet(fighter);
   }
-  fighter.destroy();
+  fighter.remove();
 }
 

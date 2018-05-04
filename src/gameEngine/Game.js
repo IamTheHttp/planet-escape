@@ -7,6 +7,7 @@ import ai from './systems/ai';
 import calcWinner from './systems/calcWinner';
 import {generateMap} from 'shared/utils';
 import CurrentGame from 'gameEngine/entities/CurrentGame';
+import Fighter, {fighterPool} from 'gameEngine/entities/Ships/Fighter';
 import {
   IN_PROGRESS,
   GAME_STATE
@@ -15,6 +16,10 @@ import {
 class GameLoop {
   constructor({notificationSystem, renderSystem, mapSize, difficulty, numPlayers}) {
     Entity.reset();
+    fighterPool.generate(1000);
+
+    // TODO, investigate object pool
+
     this.dispatchAction = this.dispatchAction.bind(this);
     // setup some planets
     generateMap(mapSize);
@@ -29,6 +34,7 @@ class GameLoop {
       Entity
     };
     this.currentGame = currentGame;
+
 
     this.loop = () => {
       // between initiations, it seems that the loop can run without

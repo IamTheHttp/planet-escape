@@ -7,6 +7,7 @@ import {addFighter} from 'gameEngine/components/HasFighters';
 import Defending from 'gameEngine/components/Defending';
 import gameConfig from 'gameEngine/config';
 import Sprite from 'gameEngine/components/Sprite';
+import ObjectPool from 'lib/ObjectPool/ObjectPool';
 import {
   CANVAS,
   CIRCLE,
@@ -14,7 +15,9 @@ import {
   POSITION,
   FIGHTER_RADIUS,
   FIGHTER_SPEED,
-  FIGHTER_IMAGE
+  FIGHTER_IMAGE,
+  OWNER_COMPONENT,
+  IN_PLACE_TO_ATTACK
 } from 'gameEngine/constants.js';
 
 import fighter from 'assets/fighter.png';
@@ -25,12 +28,7 @@ class Fighter {
   constructor(planet) {
     let ent = new Entity(Fighter);
 
-    let player = getOwner(planet);
-    let x = planet[POSITION].x;
-    let y = planet[POSITION].y;
-    ent.addComponent(new PositionComponent(x, y, gameConfig[FIGHTER_RADIUS]));
     ent.addComponent(new MoveComponent(gameConfig[FIGHTER_SPEED]));
-    ent.addComponent(new OwnerComponent(player));
     ent.addComponent({name: CAN_ATTACK_PLANETS});
     ent.addComponent(new Defending);
 
@@ -38,7 +36,24 @@ class Fighter {
       name : FIGHTER_IMAGE
     }])); // sprite args
 
-    addFighter(planet, ent);
+    ent.addComponent(new OwnerComponent(null));
+    ent.addComponent(new PositionComponent(null, null, gameConfig[FIGHTER_RADIUS]));
+
+    ent.remove = () => {
+      // Whats the bear minimum we need to do to clean up a fighter?
+      // Reset owner
+      ent[OWNER_COMPONENT].player = null;
+      // Reset position
+      ent[POSITION].x = null;
+      ent[POSITION].y = null;
+      // Remove the 'in place to attack';
+      ent.removeComponent(IN_PLACE_TO_ATTACK);
+
+      // reset the defending state
+      fighterPool.release(ent);
+      ent.addComponent(new Defending);
+    };
+
     return ent;
   }
 }
@@ -56,4 +71,24 @@ export function addFighterUiComp(fighter) {
   }));
 }
 
-export default Fighter;
+let fighterPool = new ObjectPool(Fighter);
+
+function FighterFactory(planet) {
+  let ent = fighterPool.acquire();
+
+  ent[OWNER_COMPONENT].player = getOwner(planet);
+  ent[POSITION].x = planet[POSITION].x;
+  ent[POSITION].y = planet[POSITION].y;
+  addFighter(planet, ent);
+  return ent;
+}
+
+// we do new F();
+// this acquires.
+// we can't acquire, so we create a new Fighter();
+//
+window.FighterFactory = FighterFactory;
+window.Fighter = Fighter;
+window.fighterPool = fighterPool;
+export {fighterPool};
+export default FighterFactory;

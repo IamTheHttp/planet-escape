@@ -3,7 +3,6 @@ class OwnerComponent {
   constructor(player = NEUTRAL) {
     this.name = OWNER_COMPONENT;
     this.player = player;
-    this.playerChangeTime = false; // planet never changed hands...
   }
 }
 

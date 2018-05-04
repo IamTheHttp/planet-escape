@@ -22,7 +22,7 @@ import {
 } from 'gameEngine/constants';
 
 function fighterAttacks() {
-  let hits = Entity.getByComps([OWNER_COMPONENT, CAN_ATTACK_PLANETS, IN_PLACE_TO_ATTACK], 'array');
+  let hits = Entity.getByComps([OWNER_COMPONENT, CAN_ATTACK_PLANETS, IN_PLACE_TO_ATTACK]);
   let planets = Entity.getByComps(HAS_FIGHTERS, 'array');
 
   hits.forEach((attacker) => {
@@ -39,40 +39,39 @@ function fighterAttacks() {
       // though it might be 'better', this is much easier.
       new Fighter(friendlyPlanet);
       destroyFighter(attacker);
-      return;
-    }
-
-    let foundPlanet = planets.find((planet) => {
-      return isSamePos(planet, attacker) && diffPlayers(planet, attacker) ;
-    });
-
-    // if the defending planet has no docked fighters left
-    if (getDefendingFighters(foundPlanet) === 0) {
-      foundPlanet[OWNER_COMPONENT].player = getOwner(attacker);
-      // TODO create a proper component
-      foundPlanet.addComponent({
-        name : 'EXPLOSION',
-        times : 0
+    } else {
+      let foundPlanet = planets.find((planet) => {
+        return isSamePos(planet, attacker) && diffPlayers(planet, attacker) ;
       });
-      unSelect(foundPlanet);
-      // we need to copy the array since we can't modify the array while we loop through it
-      let arr = Object.assign([], getFighters(foundPlanet));
-      arr.forEach((fighter) => {
-        detachFighterFromPlanet(fighter);
-        // we need to change owner..
-        // destroyFighter(fighter);
+
+      // if the defending planet has no docked fighters left
+      if (getDefendingFighters(foundPlanet) === 0) {
+        foundPlanet[OWNER_COMPONENT].player = getOwner(attacker);
+        // TODO create a proper component
+        foundPlanet.addComponent({
+          name : 'EXPLOSION',
+          times : 0
+        });
+        unSelect(foundPlanet);
+        // we need to copy the array since we can't modify the array while we loop through it
+        let arr = Object.assign([], getFighters(foundPlanet));
+        arr.forEach((fighter) => {
+          detachFighterFromPlanet(fighter);
+          // we need to change owner..
+          // destroyFighter(fighter);
+        });
+        destroyFighter(attacker);
+        return ;
+      }
+
+      let defender = getFighters(foundPlanet).find((defFighter) => {
+        // kill only 'defending' fighters
+        return defFighter.hasComponents(DEFENDING);
       });
+
       destroyFighter(attacker);
-      return ;
+      defender && destroyFighter(defender);
     }
-
-    let defender = getFighters(foundPlanet).find((defFighter) => {
-      // kill only 'defending' fighters
-      return defFighter.hasComponents(DEFENDING);
-    });
-
-    destroyFighter(attacker);
-    defender && destroyFighter(defender);
   });
 }
 
