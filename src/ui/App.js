@@ -9,7 +9,10 @@ import {
   CANVAS_Y,
   CLICK,
   MAIN_VIEW_SIZE_X,
-  MAIN_VIEW_SIZE_Y
+  MAIN_VIEW_SIZE_Y,
+  LARGE,
+  STRESS_TEST,
+  FIGHTER_BUILD_RATE
 } from 'gameEngine/constants';
 import React from 'react';
 import './global.scss';
@@ -37,6 +40,12 @@ class App extends React.Component {
     this.updateGameState = this.updateGameState.bind(this);
     this.renderOnCanvas = this.renderOnCanvas.bind(this);
     this.startGame = this.startGame.bind(this);
+
+    window.stressTest = () => {
+      window.copyCalled = 0;
+      gameConfig[FIGHTER_BUILD_RATE] = 1;
+      this.startGame(gameConfig[MAP_SIZE][LARGE], gameConfig[DIFFICULTY][STRESS_TEST]);
+    };
   }
 
   componentDidMount() {

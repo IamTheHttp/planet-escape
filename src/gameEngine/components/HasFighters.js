@@ -45,7 +45,7 @@ export function destroyFighter(fighter) {
   // if fighter has an owner..
   if (ownerPlanet) {
     // if fighter was defending, remove it from defender count
-    if (fighter.hasComponents([DEFENDING])) {
+    if (fighter.hasComponents(DEFENDING)) {
       ownerPlanet[HAS_FIGHTERS].defenders--;
     }
     detachFighterFromPlanet(fighter);

@@ -40,7 +40,7 @@ function aiExpand(expander) {
       return cd(expander, lastPlanet) < cd(expander, currentPlanet) ? lastPlanet : currentPlanet;
     });
 
-    attack(getPos(expandToPlanet), [expander], false); // redirect false, do not change dest of fighters
+    attack(getPos(expandToPlanet), [expander]); // redirect false, do not change dest of fighters
   }
 }
 

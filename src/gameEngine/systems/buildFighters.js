@@ -9,17 +9,19 @@ import {
 } from 'gameEngine/constants';
 import gameConfig from 'gameEngine/config';
 
+function buildFighterLoop(ent) {
+  if (notNeutral(ent)) {
+    new Fighter(ent);
+  }
+}
+
 function buildFighters(systemArguments) {
   if (systemArguments.count % gameConfig[FIGHTER_BUILD_RATE] !== 0) {
     return;
   }
   let entities = Entity.getByComps([OWNER_COMPONENT, HAS_FIGHTERS]);
 
-  entityLoop(entities, (ent) => {
-    if (notNeutral(ent)) {
-      new Fighter(ent);
-    }
-  });
+  entityLoop(entities, buildFighterLoop);
 }
 
 export default buildFighters;

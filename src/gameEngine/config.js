@@ -29,7 +29,8 @@ import {
   MAIN_VIEW_SIZE_X,
   MAIN_VIEW_SIZE_Y,
   PLAYER_PLANET_GUTTER_DISTANCE,
-  SELECT_WIDTH
+  SELECT_WIDTH,
+  STRESS_TEST
 } from './constants.js';
 
 export default {
@@ -57,6 +58,9 @@ export default {
     },
     [HARD] : {
       [AI_DECISION_RATE] : 80
+    },
+    [STRESS_TEST] : {
+      [AI_DECISION_RATE] : 10
     }
   },
   [PLAYER_PLANET_GUTTER_DISTANCE] : 50,
