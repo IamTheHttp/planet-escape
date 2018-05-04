@@ -1,4 +1,6 @@
 # Change log
+## master
+- Fixed fighter image rotation
 ## 1.0.5
 - Reduced image sizes.
 - Fixed IOS bugs (game was non responsive)
