@@ -11270,13 +11270,13 @@ var imageBuffer = (_imageBuffer = {}, _defineProperty(_imageBuffer, _constants.S
   spriteArgs: [0, 0, 209, 228]
 }), _SHIELD_IMAGE)), _defineProperty(_imageBuffer, _constants.PLANETS, (_PLANETS = {}, _defineProperty(_PLANETS, _constants.NEUTRAL, {
   img: neutralImage,
-  spriteArgs: [510, 380, 300, 300]
+  spriteArgs: [0, 0, 150, 138]
 }), _defineProperty(_PLANETS, _constants.PLAYER_1, {
   img: player1Image,
-  spriteArgs: [0, 0, 192, 182]
+  spriteArgs: [0, 0, 189, 182]
 }), _defineProperty(_PLANETS, _constants.PLAYER_2, {
   img: player2Image,
-  spriteArgs: [0, 0, 846, 846]
+  spriteArgs: [0, 0, 150, 150]
 }), _PLANETS)), _defineProperty(_imageBuffer, _constants.FIGHTER_IMAGE, (_FIGHTER_IMAGE = {}, _defineProperty(_FIGHTER_IMAGE, _constants.NEUTRAL, {
   img: fighterImage,
   spriteArgs: [0, 0, 95, 95]
@@ -12768,6 +12768,8 @@ var GameCanvas = function () {
     this.onMiniMapClick = options.onMiniMapClick;
     this.lastClick = 0;
     this.dbClick = false;
+    this.lastTap = 0;
+    this.lastClick = false;
     this.selectedBox = new _SelectedBox2.default();
     this.updateViewMapCursorPosition = this.updateViewMapCursorPosition.bind(this);
     this.updateMiniMapCursorPosition = this.updateMiniMapCursorPosition.bind(this);
@@ -12778,6 +12780,8 @@ var GameCanvas = function () {
     this.handleMapMouseLeave = this.handleMapMouseLeave.bind(this);
     this.handleTouchMove = this.handleTouchMove.bind(this);
     this.handleTouchStart = this.handleTouchStart.bind(this);
+    this.handleMapTouchEnd = this.handleMapTouchEnd.bind(this);
+    this.handleMiniMapTouchStart = this.handleMiniMapTouchStart.bind(this);
   }
 
   _createClass(GameCanvas, [{
@@ -12792,16 +12796,6 @@ var GameCanvas = function () {
       y = Math.max(0, Math.round(y * (canvas.height / rect.height))) - canvasAPI.getPan().panY;
 
       return { x: x, y: y };
-    }
-  }, {
-    key: 'handleMapMouseDown',
-    value: function handleMapMouseDown() {
-      var now = new Date().getTime();
-      this.dbClick = now - this.lastClick < 300;
-      this.lastClick = now;
-      this.isMouseDown = true;
-      this.selectedBox.setStart(this.viewMapX, this.viewMapY);
-      this.selectedBox.setEnd(this.viewMapX, this.viewMapY);
     }
   }, {
     key: 'handleMapMouseMove',
@@ -12825,17 +12819,32 @@ var GameCanvas = function () {
       }
     }
   }, {
-    key: 'handleMapMouseUp',
-    value: function handleMapMouseUp() {
+    key: 'handleMapTouchEnd',
+    value: function handleMapTouchEnd() {
       this.isMouseDown = false;
       this.onViewMapClick({
         x: this.viewMapX,
         y: this.viewMapY,
         isMouseDown: this.isMouseDown,
-        dbClick: this.dbClick,
+        dbClick: this.dbTap,
         selectedBox: this.selectedBox.getData()
       });
       this.selectedBox.reset();
+    }
+  }, {
+    key: 'handleMapMouseUp',
+    value: function handleMapMouseUp() {
+      if (!this.lastTap) {
+        this.isMouseDown = false;
+        this.onViewMapClick({
+          x: this.viewMapX,
+          y: this.viewMapY,
+          isMouseDown: this.isMouseDown,
+          dbClick: this.dbClick,
+          selectedBox: this.selectedBox.getData()
+        });
+        this.selectedBox.reset();
+      }
     }
   }, {
     key: 'updateViewMapCursorPosition',
@@ -12884,7 +12893,25 @@ var GameCanvas = function () {
 
       calcPanX = calcPanX + this.viewWidth < width ? calcPanX : width - this.viewWidth;
       calcPanY = calcPanY + this.viewHeight < height ? calcPanY : height - this.viewHeight;
+
       this.mapAPI.pan(-calcPanX, -calcPanY);
+    }
+  }, {
+    key: 'handleMapMouseDown',
+    value: function handleMapMouseDown() {
+      if (!this.lastTap) {
+        var now = new Date().getTime();
+        this.dbClick = now - this.lastClick < 300;
+        this.lastClick = now;
+        this.isMouseDown = true;
+        this.setSelectBox();
+      }
+    }
+  }, {
+    key: 'setSelectBox',
+    value: function setSelectBox() {
+      this.selectedBox.setStart(this.viewMapX, this.viewMapY);
+      this.selectedBox.setEnd(this.viewMapX, this.viewMapY);
     }
   }, {
     key: 'handleTouchStart',
@@ -12893,16 +12920,37 @@ var GameCanvas = function () {
           x = _updateCursorPosition3.x,
           y = _updateCursorPosition3.y;
 
+      var now = new Date().getTime();
+
+      this.dbTap = now - this.lastTap < 300;
+      this.lastTap = now;
+
       this.viewMapX = x;
       this.viewMapY = y;
+
+      this.setSelectBox();
+    }
+  }, {
+    key: 'handleMiniMapTouchStart',
+    value: function handleMiniMapTouchStart(e) {
+      var _updateCursorPosition4 = this.updateCursorPosition(e.touches[0], this.miniMapCanvas, this.miniMapAPI),
+          x = _updateCursorPosition4.x,
+          y = _updateCursorPosition4.y;
+
+      this.miniMapX = x;
+      this.miniMapY = y;
+
+      this.handleMiniMapClick();
     }
   }, {
     key: 'handleTouchMove',
     value: function handleTouchMove(e) {
+      e.preventDefault();
       // REFACTOR this code seems very similar to the onMinimapClick!
-      var _updateCursorPosition4 = this.updateCursorPosition(e.touches[0], this.viewMapCanvas, this.mapAPI),
-          x = _updateCursorPosition4.x,
-          y = _updateCursorPosition4.y;
+
+      var _updateCursorPosition5 = this.updateCursorPosition(e.touches[0], this.viewMapCanvas, this.mapAPI),
+          x = _updateCursorPosition5.x,
+          y = _updateCursorPosition5.y;
 
       var calcPanX = void 0;
       var calcPanY = void 0;
@@ -12943,9 +12991,8 @@ var GameCanvas = function () {
           _this.viewMapCanvas = el;
           document.removeEventListener('mousemove', _this.updateViewMapCursorPosition);
           document.addEventListener('mousemove', _this.updateViewMapCursorPosition);
-          el.removeEventListener('touchstart', _this.handleTouchStart, false);
+          // TODO move to regular events?
           el.removeEventListener('touchmove', _this.handleTouchMove, false);
-          el.addEventListener('touchstart', _this.handleTouchStart, false);
           el.addEventListener('touchmove', _this.handleTouchMove, false);
 
           _this.mapAPI = new _CanvasAPI2.default(el.getContext('2d'));
@@ -12954,6 +13001,8 @@ var GameCanvas = function () {
         height: this.viewHeight,
         width: this.viewWidth,
         onMouseDown: this.handleMapMouseDown,
+        onTouchStart: this.handleTouchStart,
+        onTouchEnd: this.handleMapTouchEnd,
         onMouseMove: this.handleMapMouseMove,
         onMouseUp: this.handleMapMouseUp,
         onMouseLeave: this.handleMapMouseLeave
@@ -12979,7 +13028,8 @@ var GameCanvas = function () {
         },
         height: this.mapHeight,
         width: this.mapWidth,
-        onMouseDown: this.handleMiniMapClick
+        onMouseDown: this.handleMiniMapClick,
+        onTouchStart: this.handleMiniMapTouchStart
       });
     }
   }]);
@@ -28812,7 +28862,7 @@ module.exports = function (value) {
 /* 314 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"planet-escape","private":true,"version":"1.0.4","description":"Planet escape! a game like no other","scripts":{"init":"npm install && jarb init","start":"npm run build:dll && NODE_ENV=develop node node_modules/jarb/webpack/devServer.js","build":"node node_modules/jarb/scripts/build.js","build:dist":"NODE_ENV=production webpack --config=node_modules/jarb/webpack/webpackConfig.js && npm run cssnano","build:docs":"rimraf ./docs/** && jsdoc -c ./jsdocs.conf.json -u ./tutorials -t ./node_modules/ink-docstrap/template -R readme.md -r ./src -d docs  && npm run build:liveExample","build:clean":"rimraf ./dist/**","build:liveExample":"NODE_ENV=liveExample RAW_FILE=1 ASSETS_PATH=/liveExample/ webpack --config=node_modules/jarb/webpack/webpackConfig.js","analyze":"NODE_ENV=production webpack --config=node_modules/jarb/webpack/webpackConfig.js --profile --json | webpack-bundle-size-analyzer > stats.txt","test":"npm run lint && jest --config=jestConfig.json --coverage","tdd":"npm run lint && jest --config=jestConfig.json --watch","releasePatch":"release-it","releaseMinor":"release-it minor","releaseMajor":"release-it major","karma":"NODE_ENV=karma npm run lint && karma start","karma:watch":"NODE_ENV=karma npm run lint && karma start --autoWatch=true --singleRun=false","cssnano":"if test -e ./dist/bundle.css; then cssnano ./dist/bundle.css ./dist/bundle.css; else echo 'no css file to minify'; fi","lint":"eslint -c=./.eslint ./src __tests__ __karma__ mocks","build:dist:raw":"NODE_ENV=production RAW_FILE=1 webpack --config=node_modules/jarb/webpack/webpackConfig.js && npm run cssnano","build:dll":"NODE_ENV=dll webpack --config=node_modules/jarb/webpack/webpackConfig.js"},"devDependencies":{"jarb":"1.0.3"},"main":"dist","dependencies":{"bootstrap":"^3.3.7","canvas-prebuilt":"^1.6.5-prerelease.1","memoizee":"^0.4.12"},"jsnext:main":"src","module":"src"}
+module.exports = {"name":"planet-escape","private":true,"version":"1.0.5","description":"Planet escape! a game like no other","scripts":{"init":"npm install && jarb init","start":"npm run build:dll && NODE_ENV=develop node node_modules/jarb/webpack/devServer.js","build":"node node_modules/jarb/scripts/build.js","build:dist":"NODE_ENV=production webpack --config=node_modules/jarb/webpack/webpackConfig.js && npm run cssnano","build:docs":"rimraf ./docs/** && jsdoc -c ./jsdocs.conf.json -u ./tutorials -t ./node_modules/ink-docstrap/template -R readme.md -r ./src -d docs  && npm run build:liveExample","build:clean":"rimraf ./dist/**","build:liveExample":"NODE_ENV=liveExample RAW_FILE=1 ASSETS_PATH=/liveExample/ webpack --config=node_modules/jarb/webpack/webpackConfig.js","analyze":"NODE_ENV=production webpack --config=node_modules/jarb/webpack/webpackConfig.js --profile --json > stats.json && webpack-bundle-analyzer ./stats.json","test":"npm run lint && jest --config=jestConfig.json --coverage","tdd":"npm run lint && jest --config=jestConfig.json --watch","releasePatch":"release-it","releaseMinor":"release-it minor","releaseMajor":"release-it major","karma":"NODE_ENV=karma npm run lint && karma start","karma:watch":"NODE_ENV=karma npm run lint && karma start --autoWatch=true --singleRun=false","cssnano":"if test -e ./dist/bundle.css; then cssnano ./dist/bundle.css ./dist/bundle.css; else echo 'no css file to minify'; fi","lint":"eslint -c=./.eslint ./src __tests__ __karma__ mocks","build:dist:raw":"NODE_ENV=production RAW_FILE=1 webpack --config=node_modules/jarb/webpack/webpackConfig.js && npm run cssnano","build:dll":"NODE_ENV=dll webpack --config=node_modules/jarb/webpack/webpackConfig.js"},"devDependencies":{"jarb":"1.0.3","webpack-bundle-analyzer":"^2.11.1"},"main":"dist","dependencies":{"bootstrap":"^3.3.7","canvas-prebuilt":"^1.6.5-prerelease.1","memoizee":"^0.4.12"},"jsnext:main":"src","module":"src"}
 
 /***/ }),
 /* 315 */
