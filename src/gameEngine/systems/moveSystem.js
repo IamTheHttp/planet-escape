@@ -23,9 +23,9 @@ function moveEntity(entity) {
 
   let destX = getDest(entity).x;
   let destY = getDest(entity).y;
-  let LINEAR = true; // future movements might not be "linear"
 
-  if (LINEAR && destX && destY) {
+  /* istanbul ignore next */
+  if (destX && destY) {
     let curX = getPos(entity).x;
     let curY = getPos(entity).y;
 

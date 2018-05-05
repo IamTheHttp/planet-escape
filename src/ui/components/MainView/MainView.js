@@ -4,6 +4,7 @@ class MainView extends React.Component {
   componentWillReceiveProps(props) {
     let {newWidthToHeight, widthToHeight, newWidth, newHeight} = props;
 
+    /* istanbul ignore next */
     if (this.el) {
       let gameArea = this.el;
 
