@@ -133,8 +133,6 @@ Entity.getByComps = (components, type = 'array') => {
   return type === 'map' ? group.entities : group.array.concat();
 };
 
-// TODO - Empty the pools!
-// TODO - We need a reference of all the pools in the game..
 Entity.reset = () => {
   entityLoop(Entity.entities, (entity) => {
     entity.destroy();

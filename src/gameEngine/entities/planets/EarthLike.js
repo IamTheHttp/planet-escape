@@ -44,7 +44,7 @@ class EarthLike {
       }
     ]));
 
-    // TODO this should be an interface somewhere, i don't like free forming objects
+    // REFACTOR this should be an interface somewhere, i don't like free forming objects
     let shapes = [
       {
         name: CANVAS,
@@ -63,4 +63,5 @@ class EarthLike {
   }
 }
 
+window.EarthLike = EarthLike;
 export default EarthLike;

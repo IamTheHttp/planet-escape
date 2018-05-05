@@ -9,12 +9,12 @@ import {
   CIRCLE,
   FIGHTER_COUNT,
   SPRITE,
-  PLANETS
+  PLANETS,
+  EXPLOSION
 } from 'gameEngine/constants';
 import imageBuffer from 'assets/imageBuffer';
 import gameConfig from 'gameEngine/config';
 import {isSelected} from 'gameEngine/components/PlayerControlledComponent';
-import {getSprite, getSpriteArgs} from 'gameEngine/components/Sprite';
 import {getDefendingFighters} from 'gameEngine/components/HasFighters';
 
 
@@ -34,8 +34,6 @@ function renderMap(entity, canvasAPI) {
   let drawFighterCount = () => {
   };
   if (entity.hasComponents(SPRITE)) {
-    // draw the image, if the entity has one..
-    // TODO - fighter images are incorrect!
     entity[UI_COMP].sections.forEach((section) => {
       if (section.shape === CIRCLE && isSelected(entity)) {
         canvasAPI.addCircle({
@@ -48,8 +46,7 @@ function renderMap(entity, canvasAPI) {
         });
       }
 
-      // TODO use Constants
-      if (section.shape === CIRCLE && entity.hasComponents('EXPLOSION')) {
+      if (section.shape === CIRCLE && entity.hasComponents(EXPLOSION)) {
         canvasAPI.addCircle({
           id: entity.id,
           x,
@@ -60,7 +57,7 @@ function renderMap(entity, canvasAPI) {
         });
         entity.EXPLOSION.times++;
         if (entity.EXPLOSION.times === 10) {
-          entity.removeComponent('EXPLOSION');
+          entity.removeComponent(EXPLOSION);
         }
       }
 
@@ -88,7 +85,7 @@ function renderMap(entity, canvasAPI) {
     });
 
     entity[SPRITE].images.forEach((imageToRender) => {
-      // TODO this is ugly, create a fn that gets all this from the entity.
+      // REFACTOR this is ugly, create a fn that gets all this from the entity.
       let data = imageBuffer[imageToRender.name][entity[OWNER_COMPONENT].player];
       if (!data) {
         return;

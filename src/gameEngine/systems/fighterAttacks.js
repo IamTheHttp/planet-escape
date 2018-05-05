@@ -7,6 +7,7 @@ import {
   detachFighterFromPlanet
 } from 'gameEngine/components/HasFighters';
 import {unSelect} from 'gameEngine/components/PlayerControlledComponent';
+import Explosion from 'gameEngine/components/Explosion';
 import {hasDest, isSamePos, destReached} from 'gameEngine/components/PositionComponent';
 import {diffPlayers, getOwner} from 'gameEngine/components/OwnerComponent';
 import Fighter from 'gameEngine/entities/Ships/Fighter';
@@ -18,7 +19,8 @@ import {
   IN_PLACE_TO_ATTACK,
   HAS_FIGHTERS,
   NEUTRAL,
-  DEFENDING
+  DEFENDING,
+  EXPLOSION
 } from 'gameEngine/constants';
 
 function fighterAttacks() {
@@ -47,11 +49,7 @@ function fighterAttacks() {
       // if the defending planet has no docked fighters left
       if (getDefendingFighters(foundPlanet) === 0) {
         foundPlanet[OWNER_COMPONENT].player = getOwner(attacker);
-        // TODO create a proper component
-        foundPlanet.addComponent({
-          name : 'EXPLOSION',
-          times : 0
-        });
+        foundPlanet.addComponent(new Explosion());
         unSelect(foundPlanet);
         // we need to copy the array since we can't modify the array while we loop through it
         let arr = Object.assign([], getFighters(foundPlanet));

@@ -5,7 +5,8 @@ import {
   DEFENDING,
   POSITION,
   MOVEMENT_COMP,
-  MOVING
+  MOVING,
+  PLAYER_1
 } from 'gameEngine/constants';
 
 import {diffPlayers} from 'gameEngine/components/OwnerComponent';
@@ -58,8 +59,10 @@ export function attack(action, entities = getSelectedEntities()) {
 
     // we resize the radius of the fighters in the fleet represent the fleet size
     fightersInFleet.some((fighter) => {
-      addFighterUiComp(fighter); // because we're moving, we need UI!
+      // because we're moving, we need UI to be shown
+      addFighterUiComp(fighter);
       let newSize = fighter[POSITION].radius + fightersInFleet.length;
+
       fighter[POSITION].radius = Math.min(newSize, fighter[POSITION].radius * 8);
       return true;
     });

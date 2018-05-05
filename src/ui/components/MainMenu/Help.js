@@ -3,7 +3,6 @@ import earthImage from 'assets/player1.png';
 import alienImage from 'assets/player2.png';
 class Help extends React.Component {
   render() {
-    // TODO Add tiny images to this section that represent
     return (
       <div className="helpSection col-xs-offset-3 col-xs-6">
         <div>Hints:</div>

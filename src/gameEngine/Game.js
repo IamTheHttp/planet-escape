@@ -18,8 +18,6 @@ class GameLoop {
     Entity.reset();
     fighterPool.generate(1000);
 
-    // TODO, investigate object pool
-
     this.dispatchAction = this.dispatchAction.bind(this);
     // setup some planets
     generateMap(mapSize);

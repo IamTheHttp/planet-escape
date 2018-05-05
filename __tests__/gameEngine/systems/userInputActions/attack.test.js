@@ -4,7 +4,7 @@
 /* global beforeEach */
 import {attack} from 'gameEngine/systems/userInputActions/attack';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Fighter from 'gameEngine/entities/Ships/Fighter';
+import Fighter, {fighterPool} from 'gameEngine/entities/Ships/Fighter';
 import PositionComponent, {hasDest, setDest} from 'gameEngine/components/PositionComponent';
 import Entity from '../../../../src/lib/ECS/Entity';
 
@@ -12,7 +12,8 @@ import {
   NEUTRAL,
   PLAYER_1,
   PLAYER_2,
-  PLAYER_CONTROLLED
+  PLAYER_CONTROLLED,
+  POSITION
 } from 'gameEngine/constants';
 
 
@@ -21,6 +22,7 @@ describe('Tests the attack action', () => {
   beforeEach(() => {
     // setup the test
     Entity.reset();
+    fighterPool.reset();
   });
 
   it('Cannot attack a non attackable!', () => {
@@ -46,5 +48,32 @@ describe('Tests the attack action', () => {
     let defender = new EarthLike(300, 300, PLAYER_2);
 
     expect(attack({x:300, y:300})).toBe(1);
+  });
+
+  it('Should change fleet size ', () => {
+    let attacker = new EarthLike(200, 200, PLAYER_1);
+    attacker[PLAYER_CONTROLLED].selected = true;
+    let firstFighter = new Fighter(attacker);
+    new Fighter(attacker);
+    new Fighter(attacker);
+    new Fighter(attacker);
+    new Fighter(attacker);
+    new Fighter(attacker);
+    new Fighter(attacker);
+    new Fighter(attacker);
+    let lastFighter = new Fighter(attacker);
+
+    let defender = new EarthLike(300, 300, PLAYER_2);
+
+    expect(attack({x:300, y:300})).toBe(9);
+
+    // why 14? 9 + base(5)
+    expect(firstFighter[POSITION].radius).toBe(14);
+
+    // now let's destroy this fighter and nesure radius changes back
+
+    firstFighter.remove();
+
+    expect(firstFighter[POSITION].radius).toBe(5);
   });
 });

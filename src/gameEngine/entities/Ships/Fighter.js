@@ -48,6 +48,8 @@ class Fighter {
       ent[POSITION].y = null;
       // Remove the 'in place to attack';
       ent.removeComponent(IN_PLACE_TO_ATTACK);
+      // okay, we also need to reset the radius, since we change it for some reason!
+      ent[POSITION].radius = gameConfig[FIGHTER_RADIUS];
 
       // reset the defending state
       fighterPool.release(ent);
@@ -74,19 +76,17 @@ export function addFighterUiComp(fighter) {
 let fighterPool = new ObjectPool(Fighter);
 
 function FighterFactory(planet) {
+  // We take one from the pool but we reset some key parts in it
   let ent = fighterPool.acquire();
 
   ent[OWNER_COMPONENT].player = getOwner(planet);
   ent[POSITION].x = planet[POSITION].x;
   ent[POSITION].y = planet[POSITION].y;
+
   addFighter(planet, ent);
   return ent;
 }
 
-// we do new F();
-// this acquires.
-// we can't acquire, so we create a new Fighter();
-//
 window.FighterFactory = FighterFactory;
 window.Fighter = Fighter;
 window.fighterPool = fighterPool;

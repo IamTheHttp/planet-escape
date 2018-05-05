@@ -201,7 +201,7 @@ class GameCanvas {
           this.viewMapCanvas = el;
           document.removeEventListener('mousemove', this.updateViewMapCursorPosition);
           document.addEventListener('mousemove', this.updateViewMapCursorPosition);
-          // TODO move to regular events?
+          // REFACTOR move to regular events?
           el.removeEventListener('touchmove', this.handleTouchMove, false);
           el.addEventListener('touchmove', this.handleTouchMove, false);
 

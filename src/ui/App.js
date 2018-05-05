@@ -237,9 +237,6 @@ class App extends React.Component {
           <div>
             <MainMenuBtn
               onClick={() => {
-                // TODO this needs to be pause game
-                // now when paused, render the "mid game menu"
-                // mid game menu needs to have "resume, help and exit"
                 this.setState({gamePaused: true});
                 this.pauseGame();
               }}

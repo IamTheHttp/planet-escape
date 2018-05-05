@@ -4,7 +4,7 @@ class Sprite {
   constructor(images) {
     this.name = SPRITE;
     this.images = images;
-    // TODO move this structure creation to a function
+    // REFACTOR move this structure creation to a function, though it's not currently being used.
     // let imgs = [{
     //   name : 'PLANETS',
     //   pos : { // relative to the entity
@@ -17,12 +17,3 @@ class Sprite {
 }
 
 export default Sprite;
-
-// TODO remove these useless funcitons
-export function getSprite(entity) {
-  return entity[SPRITE].sprite;
-}
-// TODO remove these useless funcitons
-export function getSpriteArgs(entity) {
-  return entity[SPRITE].spriteArgs;
-}

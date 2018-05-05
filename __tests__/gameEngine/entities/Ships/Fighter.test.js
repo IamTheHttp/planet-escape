@@ -2,8 +2,7 @@
 /* global it */
 /* global expect */
 /* global beforeEach */
-import {mount, shallow} from 'enzyme';
-import React from 'react';
+import Entity from 'lib/ECS/Entity';
 import Fighter, {fighterPool} from 'gameEngine/entities/Ships/Fighter';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import {POSITION} from 'gameEngine/constants';

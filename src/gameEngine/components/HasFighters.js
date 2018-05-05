@@ -53,3 +53,4 @@ export function destroyFighter(fighter) {
   fighter.remove();
 }
 
+window.destroyFighter = destroyFighter;
