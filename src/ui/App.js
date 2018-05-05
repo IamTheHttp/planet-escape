@@ -25,7 +25,6 @@ import Minimap from 'ui/components/Minimap/Minimap';
 import MainView from 'ui/components/MainView/MainView';
 import renderSystem from 'gameEngine/systems/renderSystem';
 import GameCanvas from 'lib/GameCanvas/GameCanvas';
-// TODO - improve test coverage to at least 90% before merge
 class App extends React.Component {
   constructor() {
     super();

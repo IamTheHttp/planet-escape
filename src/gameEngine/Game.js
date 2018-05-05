@@ -16,7 +16,8 @@ import {
 class GameLoop {
   constructor({notificationSystem, renderSystem, mapSize, difficulty, numPlayers}) {
     Entity.reset();
-    fighterPool.generate(1000);
+    fighterPool.generate(10000);
+    console.log('genearting 10k...');
 
     this.dispatchAction = this.dispatchAction.bind(this);
     // setup some planets
