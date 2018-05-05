@@ -42,7 +42,6 @@ class App extends React.Component {
     this.startGame = this.startGame.bind(this);
 
     window.stressTest = () => {
-      window.copyCalled = 0;
       gameConfig[FIGHTER_BUILD_RATE] = 10;
       this.game = this.startGame(gameConfig[MAP_SIZE][LARGE], gameConfig[DIFFICULTY][STRESS_TEST]);
     };

@@ -55,7 +55,6 @@ class Entity {
       }
       // if this ent does not have all the other comps, skip..
       if (this.hasComponents(group.components)) {
-        window.copyCalled++;
         this.assignGroup(group);
         let newGroup = this.copyArray(group);
         group.array = this.extendGroup(newGroup);

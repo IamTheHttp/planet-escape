@@ -21,6 +21,7 @@ import {
 } from 'gameEngine/constants.js';
 
 import fighter from 'assets/fighter.png';
+let fighterPool;
 let fighterImage = new Image();
 fighterImage.src = fighter;
 
@@ -73,7 +74,7 @@ export function addFighterUiComp(fighter) {
   }));
 }
 
-let fighterPool = new ObjectPool(Fighter);
+fighterPool = new ObjectPool(Fighter);
 
 function FighterFactory(planet) {
   // We take one from the pool but we reset some key parts in it
@@ -87,8 +88,5 @@ function FighterFactory(planet) {
   return ent;
 }
 
-window.FighterFactory = FighterFactory;
-window.Fighter = Fighter;
-window.fighterPool = fighterPool;
 export {fighterPool};
 export default FighterFactory;

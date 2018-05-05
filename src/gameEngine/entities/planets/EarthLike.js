@@ -63,5 +63,4 @@ class EarthLike {
   }
 }
 
-window.EarthLike = EarthLike;
 export default EarthLike;
