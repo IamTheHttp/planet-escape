@@ -1,6 +1,7 @@
 # Change log
 ## master
-- Fixed fighter image rotation
+- Fixed fighter image rotation,
+- Added object pool for Fighters
 ## 1.0.5
 - Reduced image sizes.
 - Fixed IOS bugs (game was non responsive)

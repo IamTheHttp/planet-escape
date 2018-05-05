@@ -11,7 +11,7 @@
     "build:docs": "rimraf ./docs/** && jsdoc -c ./jsdocs.conf.json -u ./tutorials -t ./node_modules/ink-docstrap/template -R readme.md -r ./src -d docs  && npm run build:liveExample",
     "build:clean": "rimraf ./dist/**",
     "build:liveExample": "NODE_ENV=liveExample RAW_FILE=1 ASSETS_PATH=/liveExample/ webpack --config=node_modules/jarb/webpack/webpackConfig.js",
-    "analyze": "NODE_ENV=production webpack --config=node_modules/jarb/webpack/webpackConfig.js --profile --json > stats.json && webpack-bundle-analyzer ./stats.json",
+    "analyze": "NODE_ENV=production webpack --config=node_modules/jarb/webpack/webpackConfig.js --profile --json | webpack-bundle-size-analyzer > stats.txt",
     "test": "npm run lint && jest --config=jestConfig.json --coverage",
     "tdd": "npm run lint && jest --config=jestConfig.json --watch",
     "releasePatch": "release-it",
