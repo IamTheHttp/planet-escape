@@ -1,7 +1,8 @@
 # Change log
-## master
+## 1.0.6
 - Fixed fighter image rotation,
 - Added object pool for Fighters
+- Added smart rendering to only render entities in the main view.
 ## 1.0.5
 - Reduced image sizes.
 - Fixed IOS bugs (game was non responsive)
