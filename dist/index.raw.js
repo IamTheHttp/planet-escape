@@ -11078,6 +11078,7 @@ var GameLoop = function () {
     var notificationSystem = _ref.notificationSystem,
         renderSystem = _ref.renderSystem,
         mapSize = _ref.mapSize,
+        viewSize = _ref.viewSize,
         difficulty = _ref.difficulty,
         numPlayers = _ref.numPlayers;
 
@@ -11095,6 +11096,7 @@ var GameLoop = function () {
     var count = 0;
     var systemArguments = {
       mapSize: mapSize,
+      viewSize: viewSize,
       difficulty: difficulty,
       numPlayers: numPlayers,
       count: count,
@@ -12037,10 +12039,35 @@ function renderSystem(systemArguments, mapAPI, miniMapAPI, selectedBox) {
 
   /* istanbul ignore else  */
   if (mapAPI && miniMapAPI) {
-    entsToDraw.forEach(function (entity) {
-      renderMap(entity, mapAPI);
+    var _mapAPI$getPan = mapAPI.getPan(),
+        panX = _mapAPI$getPan.panX,
+        panY = _mapAPI$getPan.panY;
+
+    var _systemArguments$view = systemArguments.viewSize,
+        viewWidth = _systemArguments$view.viewWidth,
+        viewHeight = _systemArguments$view.viewHeight;
+
+
+    var loopHandler = function loopHandler(entity) {
+      var _entity$POSITION3 = entity[_constants.POSITION],
+          x = _entity$POSITION3.x,
+          y = _entity$POSITION3.y,
+          radius = _entity$POSITION3.radius;
+
+      var entWidth = radius * 2;
+      var xOutOfBound = x + entWidth < -panX || x - entWidth > -panX + viewWidth;
+      var yOutOfBound = y + entWidth < -panY || y - entWidth > -panY + viewHeight;
+
+      // out of screen? do nothing
+      if (xOutOfBound || yOutOfBound) {
+        // do nothing
+      } else {
+        renderMap(entity, mapAPI);
+      }
       renderMiniMap(entity, miniMapAPI);
-    });
+    };
+
+    entsToDraw.forEach(loopHandler);
 
     // more map shapes
     if (selectedBox) {
@@ -13532,6 +13559,10 @@ var App = function (_React$Component) {
       return new _Game2.default({
         notificationSystem: this.updateGameState,
         mapSize: mapSize,
+        viewSize: {
+          viewHeight: _config2.default[_constants.MAIN_VIEW_SIZE_Y],
+          viewWidth: _config2.default[_constants.MAIN_VIEW_SIZE_X]
+        },
         difficulty: difficulty,
         numPlayers: _config2.default[_constants.NUM_PLAYERS],
         renderSystem: this.renderOnCanvas
@@ -29064,7 +29095,7 @@ module.exports = function (value) {
 /* 316 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"planet-escape","private":true,"version":"1.0.5","description":"Planet escape! a game like no other","scripts":{"init":"npm install && jarb init","start":"npm run build:dll && NODE_ENV=develop node node_modules/jarb/webpack/devServer.js","build":"node node_modules/jarb/scripts/build.js","build:dist":"NODE_ENV=production webpack --config=node_modules/jarb/webpack/webpackConfig.js && npm run cssnano","build:docs":"rimraf ./docs/** && jsdoc -c ./jsdocs.conf.json -u ./tutorials -t ./node_modules/ink-docstrap/template -R readme.md -r ./src -d docs  && npm run build:liveExample","build:clean":"rimraf ./dist/**","build:liveExample":"NODE_ENV=liveExample RAW_FILE=1 ASSETS_PATH=/liveExample/ webpack --config=node_modules/jarb/webpack/webpackConfig.js","analyze":"NODE_ENV=production webpack --config=node_modules/jarb/webpack/webpackConfig.js --profile --json | webpack-bundle-size-analyzer > stats.txt","test":"npm run lint && jest --config=jestConfig.json --coverage","tdd":"npm run lint && jest --config=jestConfig.json --watch","releasePatch":"release-it","releaseMinor":"release-it minor","releaseMajor":"release-it major","karma":"NODE_ENV=karma npm run lint && karma start","karma:watch":"NODE_ENV=karma npm run lint && karma start --autoWatch=true --singleRun=false","cssnano":"if test -e ./dist/bundle.css; then cssnano ./dist/bundle.css ./dist/bundle.css; else echo 'no css file to minify'; fi","lint":"eslint -c=./.eslint ./src __tests__ __karma__ mocks","build:dist:raw":"NODE_ENV=production RAW_FILE=1 webpack --config=node_modules/jarb/webpack/webpackConfig.js && npm run cssnano","build:dll":"NODE_ENV=dll webpack --config=node_modules/jarb/webpack/webpackConfig.js"},"devDependencies":{"jarb":"1.0.3","webpack-bundle-analyzer":"^2.11.1"},"main":"dist","dependencies":{"bootstrap":"^3.3.7","canvas-prebuilt":"^1.6.5-prerelease.1","memoizee":"^0.4.12"},"jsnext:main":"src","module":"src"}
+module.exports = {"name":"planet-escape","private":true,"version":"1.0.6","description":"Planet escape! a game like no other","scripts":{"init":"npm install && jarb init","start":"npm run build:dll && NODE_ENV=develop node node_modules/jarb/webpack/devServer.js","build":"node node_modules/jarb/scripts/build.js","build:dist":"NODE_ENV=production webpack --config=node_modules/jarb/webpack/webpackConfig.js && npm run cssnano","build:docs":"rimraf ./docs/** && jsdoc -c ./jsdocs.conf.json -u ./tutorials -t ./node_modules/ink-docstrap/template -R readme.md -r ./src -d docs  && npm run build:liveExample","build:clean":"rimraf ./dist/**","build:liveExample":"NODE_ENV=liveExample RAW_FILE=1 ASSETS_PATH=/liveExample/ webpack --config=node_modules/jarb/webpack/webpackConfig.js","analyze":"NODE_ENV=production webpack --config=node_modules/jarb/webpack/webpackConfig.js --profile --json | webpack-bundle-size-analyzer > stats.txt","test":"npm run lint && jest --config=jestConfig.json --coverage","tdd":"npm run lint && jest --config=jestConfig.json --watch","releasePatch":"release-it","releaseMinor":"release-it minor","releaseMajor":"release-it major","karma":"NODE_ENV=karma npm run lint && karma start","karma:watch":"NODE_ENV=karma npm run lint && karma start --autoWatch=true --singleRun=false","cssnano":"if test -e ./dist/bundle.css; then cssnano ./dist/bundle.css ./dist/bundle.css; else echo 'no css file to minify'; fi","lint":"eslint -c=./.eslint ./src __tests__ __karma__ mocks","build:dist:raw":"NODE_ENV=production RAW_FILE=1 webpack --config=node_modules/jarb/webpack/webpackConfig.js && npm run cssnano","build:dll":"NODE_ENV=dll webpack --config=node_modules/jarb/webpack/webpackConfig.js"},"devDependencies":{"jarb":"1.0.3","webpack-bundle-analyzer":"^2.11.1"},"main":"dist","dependencies":{"bootstrap":"^3.3.7","canvas-prebuilt":"^1.6.5-prerelease.1","memoizee":"^0.4.12"},"jsnext:main":"src","module":"src"}
 
 /***/ }),
 /* 317 */
