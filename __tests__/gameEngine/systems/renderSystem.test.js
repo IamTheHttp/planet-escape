@@ -3,7 +3,9 @@
 /* global expect */
 /* global beforeEach */
 import {
-  PLAYER_1
+  PLAYER_1,
+  MAIN_VIEW_SIZE_X,
+  MAIN_VIEW_SIZE_Y
 } from 'gameEngine/constants';
 import Entity from 'lib/ECS/Entity';
 import {mount, shallow} from 'enzyme';
@@ -15,6 +17,10 @@ describe('Tests the render system', () => {
   let mapAPI;
   let miniMapAPI;
   let selectedBox;
+  let viewSize = {
+    heightSize : 2000,
+    widthSize : 2000
+  };
 
   beforeEach(() => {
     mapAPI = {
@@ -59,7 +65,8 @@ describe('Tests the render system', () => {
 
   it('renderSystem, without selectedBox and no entities', () => {
     renderSystem({
-      Entity
+      Entity,
+      viewSize
     }, mapAPI, miniMapAPI, false);
 
     expect(mapAPI.addRect.mock.calls.length).toBe(0);
@@ -67,14 +74,16 @@ describe('Tests the render system', () => {
 
   it('renderSystem, with selectedBox and no entities', () => {
     renderSystem({
-      Entity
+      Entity,
+      viewSize
     }, mapAPI, miniMapAPI, selectedBox);
     expect(mapAPI.addRect.mock.calls.length).toBe(1);
   });
 
   it('renderSystem, test minimap with no entities', () => {
     renderSystem({
-      Entity
+      Entity,
+      viewSize
     }, mapAPI, miniMapAPI, selectedBox);
 
     expect(miniMapAPI.addRect.mock.calls[0][0].id).toBe('currentMap');
@@ -83,7 +92,8 @@ describe('Tests the render system', () => {
   it('renderSystemwith entities', () => {
     let ent = new EarthLike(200, 200, PLAYER_1);
     renderSystem({
-      Entity
+      Entity,
+      viewSize
     }, mapAPI, miniMapAPI, selectedBox);
 
     expect(miniMapAPI.addRect.mock.calls[0][0].id).toBe('currentMap');

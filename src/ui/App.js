@@ -115,6 +115,10 @@ class App extends React.Component {
     return new GameLoop({
       notificationSystem: this.updateGameState,
       mapSize,
+      viewSize : {
+        viewHeight: gameConfig[MAIN_VIEW_SIZE_Y],
+        viewWidth: gameConfig[MAIN_VIEW_SIZE_X]
+      },
       difficulty,
       numPlayers: gameConfig[NUM_PLAYERS],
       renderSystem: this.renderOnCanvas

@@ -142,18 +142,36 @@ function renderMiniMap(entity, canvasAPI) {
 }
 
 
+
+
+
+
 function renderSystem(systemArguments, mapAPI, miniMapAPI, selectedBox) {
   mapAPI.clear();
   miniMapAPI.clear();
   let entsToDraw = systemArguments.Entity.getByComps([UI_COMP]);
 
-
   /* istanbul ignore else  */
   if (mapAPI && miniMapAPI) {
-    entsToDraw.forEach((entity) => {
-      renderMap(entity, mapAPI);
+    let {panX, panY} = mapAPI.getPan();
+    let {viewWidth, viewHeight} = systemArguments.viewSize;
+
+    let loopHandler = (entity) => {
+      let {x, y, radius} = entity[POSITION];
+      let entWidth = radius * 2;
+      let xOutOfBound = x + entWidth < -panX || x - entWidth > -panX + viewWidth;
+      let yOutOfBound = y + entWidth < -panY || y - entWidth > -panY + viewHeight;
+
+      // out of screen? do nothing
+      if (xOutOfBound || yOutOfBound) {
+        // do nothing
+      } else {
+        renderMap(entity, mapAPI);
+      }
       renderMiniMap(entity, miniMapAPI);
-    });
+    };
+
+    entsToDraw.forEach(loopHandler);
 
     // more map shapes
     if (selectedBox) {

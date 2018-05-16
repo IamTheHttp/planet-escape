@@ -14,7 +14,7 @@ import {
 } from 'gameEngine/constants';
 
 class GameLoop {
-  constructor({notificationSystem, renderSystem, mapSize, difficulty, numPlayers}) {
+  constructor({notificationSystem, renderSystem, mapSize, viewSize, difficulty, numPlayers}) {
     Entity.reset();
     fighterPool.generate(10000);
     console.log('genearting 10k...');
@@ -27,6 +27,7 @@ class GameLoop {
     let count = 0;
     let systemArguments = {
       mapSize,
+      viewSize,
       difficulty,
       numPlayers,
       count,
