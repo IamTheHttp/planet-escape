@@ -16,6 +16,13 @@ let spliceOne = function(arr, index) {
 };
 
 
+/**
+ * Entity class to a static interface
+ *
+ * entity.addComponent(Component component)
+ *
+ */
+
 class Entity {
   constructor(classRef) {
     Entity.counter++;
@@ -62,6 +69,7 @@ class Entity {
     }
   }
 
+  // that's not really copying the array now is it?
   copyArray(group) {
     return group.array;
   }
@@ -88,7 +96,6 @@ class Entity {
       if (group.entities[this.id] && compInGroup && entHasReqComps) {
         delete group.entities[this.id];
         spliceOne(group.array, group.array.indexOf(this));
-        // group.array.splice(group.array.indexOf(this), 1);
       }
     }
 
@@ -96,6 +103,9 @@ class Entity {
     delete this[compName];
   }
 
+  /**
+   * Destroying an entity means removing all its components and deleting it from the Entity Object
+   */
   destroy() {
     Object.keys(this.components).forEach((compName) => {
       this.removeComponent(this.components[compName]);
@@ -143,10 +153,3 @@ Entity.counter = 0;
 
 window.Entity = Entity;
 export default Entity;
-
-
-
-
-
-
-

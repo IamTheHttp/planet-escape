@@ -1,4 +1,6 @@
 # Change log
+## master
+- Moved Menu texts to i18n confiugration file
 ## 1.0.6
 - Fixed fighter image rotation,
 - Added object pool for Fighters

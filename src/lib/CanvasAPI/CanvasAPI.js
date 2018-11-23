@@ -1,3 +1,12 @@
+/**
+ * Library for working with Canvas,
+ * Works by using a 2D context as an argument
+ * Provides abstraction for some common shapes in Canvas
+ */
+
+
+
+
 class CanvasAPI {
   constructor(ctx, strokeStyle = 'white') {
     this.ctx = ctx;
@@ -12,6 +21,11 @@ class CanvasAPI {
   clear() {
     this.shapes = new Map();
   }
+
+  /**
+   * Removes a shape by its ID
+   * @param id
+   */
   remove(id) {
     this.shapes.delete(id);
   }

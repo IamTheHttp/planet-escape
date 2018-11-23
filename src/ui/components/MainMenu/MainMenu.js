@@ -1,3 +1,5 @@
+import i18n from 'ui/i18n';
+
 import React from 'react';
 import './mainMenu.scss';
 import Help from './Help';
@@ -36,22 +38,22 @@ class MainMenu extends React.Component {
         <button className="btnItem" onClick={() => {
           this.setState({selection: 'quickStart'});
         }}>
-          Quick start
+          {i18n.quickStart}
         </button>
         <button className="btnItem" onClick={() => {
           this.setState({selection: 'tutorial'});
         }}>
-          Tutorial
+          {i18n.tutorial}
         </button>
         <button className="btnItem" onClick={() => {
           this.setState({selection: 'help'});
         }}>
-          Help
+          {i18n.help}
         </button>
         <button className="btnItem" onClick={() => {
           this.setState({selection: 'about'});
         }}>
-          About
+          {i18n.about}
         </button>
       </div>
     );
@@ -111,7 +113,7 @@ class MainMenu extends React.Component {
           <div className="mapSizeSelector col-xs-4">
             <div className="menuButtons">
               <h4 className="title">
-                Select map size
+                {i18n.selectMapSize}
               </h4>
               {mapSizes.map((size) => {
                 return (<button
@@ -131,7 +133,7 @@ class MainMenu extends React.Component {
                  }}
             >
               <img src={earthImage}/>
-              <h3 className="title">Start</h3>
+              <h3 className="title">{i18n.start}</h3>
             </div>
           </div>
         </div>
@@ -150,8 +152,8 @@ class MainMenu extends React.Component {
         onClick={() => {
           this.setState({selection: false});
         }}
+        dangerouslySetInnerHTML={{__html: i18n.back}}
       >
-        &#x25C0;
       </button>
     );
   }
@@ -160,10 +162,10 @@ class MainMenu extends React.Component {
     return (
       <div className="splashMenu">
         <div className="menuHeader">
-          {`Welcome to Planet Escape (version ${version})`}
+          {`${i18n.welcome}${version}`}
           {this.backButton()}
         </div>
-        <div className="">
+        <div>
           {this.topMenu()}
           {this.quickStartSelection()}
           {this.help()}
