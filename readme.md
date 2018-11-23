@@ -1,6 +1,7 @@
 # Change log
 ## master
-- Moved Menu texts to i18n confiugration file
+- Moved Menu texts to i18n Configuration file
+- Added loading screens to game launch
 ## 1.0.6
 - Fixed fighter image rotation,
 - Added object pool for Fighters

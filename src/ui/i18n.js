@@ -6,7 +6,8 @@ let config = {
   selectMapSize: 'Select map size',
   back: '&#x25C0;',
   welcome: 'Welcome to Planet Escape. Version:',
-  start: 'Start'
+  start: 'Start',
+  gameTitle: 'Planet Escape'
 };
 
 export default config;

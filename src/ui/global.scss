@@ -14,8 +14,34 @@ body, html {
   -ms-user-select: none;      /* IE 10+ */
   user-select: none;          /* Likely future */
   height:100vh;
-  background: url('../assets/background.jpg');
-  background-size: cover;
+
+  &.loading {
+    font-size: 50px;
+    text-align: center;
+    margin-top: 100px;
+  }
+
+  &.loaded {
+    background: url('../assets/background.jpg');
+    background-size: cover;
+  }
+}
+
+@keyframes grow {
+  0% {
+    width:0;
+  }
+  100% {
+    width:100%;
+  }
+}
+
+#progress {
+  background-color: #00FF11;
+  height:10px;
+  animation: grow 20s linear infinite;
+  position:absolute;
+  bottom:0;
 }
 
 ol {
@@ -74,7 +100,6 @@ ol {
     left: 0px;
   }
 }
-
 
 .sidebar {
   height:100vh;
