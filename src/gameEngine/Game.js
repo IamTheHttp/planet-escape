@@ -1,3 +1,10 @@
+// Fighters destroyed
+// Fighters created
+// entities moved
+// distances calculated
+// Entities created
+// Entities destroyed
+
 import Entity from 'lib/ECS/Entity';
 import userInputSystem, {pushAction} from './systems/userInputSystem';
 import moveSystem from './systems/moveSystem';
@@ -17,7 +24,6 @@ class GameLoop {
   constructor({notificationSystem, renderSystem, mapSize, viewSize, difficulty, numPlayers}) {
     Entity.reset();
     fighterPool.generate(10000);
-    console.log('genearting 10k...');
 
     this.dispatchAction = this.dispatchAction.bind(this);
     // setup some planets

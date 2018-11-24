@@ -1,3 +1,5 @@
+
+// TODO - Total isn't implemented here..
 class ObjectPool {
   constructor(PooledClass) {
     this.type = PooledClass;
