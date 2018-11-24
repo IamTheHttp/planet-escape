@@ -23,6 +23,7 @@ let spliceOne = function(arr, index) {
  *
  */
 
+
 class Entity {
   constructor(classRef) {
     Entity.counter++;
@@ -130,7 +131,6 @@ class Entity {
 Entity.entities = {};
 
 /**
- *
  * @param components
  * @param type 'array'|'map'
  * @return return array/map

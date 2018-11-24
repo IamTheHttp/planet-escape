@@ -33,11 +33,11 @@ import mainMenuBackground from 'assets/background.jpg';
 import {loadImages} from 'shared/utils';
 
 
-let appDiv = document.getElementById('app');
+let appDiv = document.getElementById('app') || document.createElement('div');
 
 appDiv.innerHTML = 'Loading game assets...';
 
-// Start loading the images...
+
 loadImages([mainMenuBackground, neutral, player1, player2, fighter], () => {
   appDiv.className = 'loaded';
   document.body.removeChild(document.getElementById('progress'));

@@ -29,15 +29,15 @@
       "id": 6,
       "meta": {}
     },
-    "../node_modules/fbjs/lib/emptyFunction.js": {
+    "../node_modules/react/lib/ReactComponentTreeHook.js": {
       "id": 7,
       "meta": {}
     },
-    "../node_modules/react/lib/ReactComponentTreeHook.js": {
+    "../node_modules/react-dom/lib/ReactInstrumentation.js": {
       "id": 8,
       "meta": {}
     },
-    "../node_modules/react-dom/lib/ReactInstrumentation.js": {
+    "../node_modules/fbjs/lib/emptyFunction.js": {
       "id": 9,
       "meta": {}
     },

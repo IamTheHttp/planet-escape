@@ -48,7 +48,8 @@ describe('Tests a component', () => {
     wrapper.setState({
       isMenuOpen : false,
       gameStarted : true,
-      gameWon : false
+      gameWon : false,
+      gameReport : {}
     });
 
     expect(wrapper.find('.modal-dialog').length).toBe(1);
@@ -65,9 +66,10 @@ describe('Tests a component', () => {
     };
 
     wrapper.setState({
-      isMenuOpen : false,
-      gameStarted : true,
-      gameWon : true
+      isMenuOpen: false,
+      gameStarted: true,
+      gameWon: true,
+      gameReport: {}
     });
 
     expect(wrapper.find('.modal-dialog').length).toBe(1);

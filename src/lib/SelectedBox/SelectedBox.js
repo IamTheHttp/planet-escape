@@ -1,3 +1,6 @@
+/**
+ * TODO what does this do exactly?
+ */
 class SelectedBox {
   constructor() {
     this.reset();

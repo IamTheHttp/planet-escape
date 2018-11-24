@@ -25,6 +25,8 @@ let fighterPool;
 let fighterImage = new Image();
 fighterImage.src = fighter;
 
+import gameTracker from 'gameEngine/GameTracker';
+
 class Fighter {
   constructor(planet) {
     let ent = new Entity(Fighter);
@@ -41,6 +43,7 @@ class Fighter {
     ent.addComponent(new PositionComponent(null, null, gameConfig[FIGHTER_RADIUS]));
 
     ent.remove = () => {
+      gameTracker.track('fightersDestroyed');
       // Whats the bear minimum we need to do to clean up a fighter?
       // Reset owner
       ent[OWNER_COMPONENT].player = null;
@@ -78,7 +81,9 @@ fighterPool = new ObjectPool(Fighter);
 
 function FighterFactory(planet) {
   // We take one from the pool but we reset some key parts in it
+  // this is what actually creates the fighter
   let ent = fighterPool.acquire();
+  gameTracker.track('fightersBuilt');
 
   ent[OWNER_COMPONENT].player = getOwner(planet);
   ent[POSITION].x = planet[POSITION].x;

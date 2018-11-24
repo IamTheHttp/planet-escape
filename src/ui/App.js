@@ -25,6 +25,7 @@ import Minimap from 'ui/components/Minimap/Minimap';
 import MainView from 'ui/components/MainView/MainView';
 import renderSystem from 'gameEngine/systems/renderSystem';
 import GameCanvas from 'lib/GameCanvas/GameCanvas';
+import i18n from 'ui/i18n';
 class App extends React.Component {
   constructor() {
     super();
@@ -158,18 +159,28 @@ class App extends React.Component {
     }
   }
 
+  // TODO if this is a system, why is it in the UI layer?
+  // this is "just like any other system", but it sits at the App level..
   updateGameState(systemArguments) {
     let gameEnt = systemArguments.Entity.getByComps([GAME_STATE])[0];
 
+    let gameTracker = systemArguments.gameTracker;
     if (gameEnt) {
       let gameWon = gameEnt[GAME_STATE].status === GAME_WON;
       let gameLost = gameEnt[GAME_STATE].status === GAME_LOST;
+
+
+      // allow to hack my way..
+      if (window.cheats_won) {
+        gameWon = true;
+      }
 
       if ((gameWon || gameLost) && !this.state.gameEnded) {
         this.stopGame();
         this.setState({
           gameEnded: true,
           isMenuOpen: false,
+          gameReport: gameTracker.getReport(),
           gameWon
         });
       }
@@ -182,11 +193,22 @@ class App extends React.Component {
     if (gameWon !== null) {
       return (
         <Modal
-          text={gameWon ? 'Game Won!' : 'Game lost!'}
+          text={gameWon ? i18n.gameWon : i18n.gameLost}
           onClick={() => {
             this.game = this.startGame(this.mapSize, this.difficulty);
           }}
-        ></Modal>);
+        >
+
+          <div className="gameStats">
+          <h4>{i18n.stats}</h4>
+          {Object.keys(this.state.gameReport).map((key) => {
+            return (<div key={key}>
+              <span className="key">{i18n[key]}</span>
+              <span className="value">{this.state.gameReport[key].count}</span>
+            </div>);
+          })}
+          </div>
+        </Modal>);
     } else {
       return null;
     }
@@ -202,6 +224,10 @@ class App extends React.Component {
     ></MainMenu>);
   }
 
+  /**
+   * "Pause Menu" is the menu shown to the player when the game is paused
+   * @return {*}
+   */
   pauseMenu() {
     if (!this.state.gamePaused) {
       return null;
@@ -258,7 +284,6 @@ class App extends React.Component {
                   canvasElm={this.state.map}
                 >
                 </MainView>
-
               </div>
             </div>
             {this.getGameEndModal()}
@@ -271,7 +296,3 @@ class App extends React.Component {
   }
 }
 export default App;
-/*
-
-
- */

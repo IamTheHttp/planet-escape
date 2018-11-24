@@ -149,3 +149,18 @@ ol {
 .tutorial {
   font-size:40px;
 }
+
+.gameStats {
+  span {
+    display:inline-block;
+  }
+
+  .key {
+    width:150px;
+  }
+
+  .value {
+    text-align:right;
+    width:50px;
+  }
+}

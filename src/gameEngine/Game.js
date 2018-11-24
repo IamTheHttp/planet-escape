@@ -19,9 +19,11 @@ import {
   IN_PROGRESS,
   GAME_STATE
 } from 'gameEngine/constants';
+import gameTracker from './GameTracker';
 
 class GameLoop {
   constructor({notificationSystem, renderSystem, mapSize, viewSize, difficulty, numPlayers}) {
+    gameTracker.track('newGameStarted');
     Entity.reset();
     fighterPool.generate(10000);
 
@@ -37,7 +39,8 @@ class GameLoop {
       difficulty,
       numPlayers,
       count,
-      Entity
+      Entity,
+      gameTracker
     };
     this.currentGame = currentGame;
 
@@ -79,6 +82,7 @@ class GameLoop {
    * @param action {obj} - contains, {entityID}
    */
   dispatchAction(action) {
+    gameTracker.track('actionDispatched');
     pushAction(action);
   }
 }
