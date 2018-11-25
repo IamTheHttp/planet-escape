@@ -141,11 +141,6 @@ function renderMiniMap(entity, canvasAPI) {
   });
 }
 
-
-
-
-
-
 function renderSystem(systemArguments, mapAPI, miniMapAPI, selectedBox) {
   mapAPI.clear();
   miniMapAPI.clear();

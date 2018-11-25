@@ -12,7 +12,9 @@ import {
   DIFFICULTY,
   EASY
 } from 'gameEngine/constants';
+
 import gameConfig from 'gameEngine/config';
+
 describe('Tests a component', () => {
   jest.useFakeTimers();
   beforeEach(() => {

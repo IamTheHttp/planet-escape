@@ -77,6 +77,7 @@ class App extends React.Component {
         this.selectedBox = dataObj.selectedBox;
       },
       onViewMapClick: (dataObj) => {
+        console.log(dataObj);
         this.game.dispatchAction({
           name: CLICK,
           x: dataObj.x,
@@ -91,11 +92,13 @@ class App extends React.Component {
 
     let {map, minimap} = gameCanvas.getNewCanvasPairs({
       getMapRef: (API, el) => {
+        console.log('Ref for map? API?', API);
         this.setState({
           viewMapCanvasAPI: API
         });
       },
       getMiniRef: (API, el) => {
+        console.log('Ref for minimap? API?', API);
         this.setState({
           miniMapCanvasAPI: API
         });
@@ -149,7 +152,7 @@ class App extends React.Component {
 
   renderOnCanvas(systemArguments) {
     /* istanbul ignore else  */
-    if (this.state.viewMapCaxnvasAPI) {
+    if (this.state.viewMapCanvasAPI) {
       renderSystem(
         systemArguments,
         this.state.viewMapCanvasAPI,
