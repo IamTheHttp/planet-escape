@@ -6,16 +6,31 @@
   <link rel="stylesheet" href="./bundle.css"/>
   <meta name="viewport" content="initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,width=device-width,viewport-fit=cover"/>
   <style>
+    body,
     #app {
-      position:absolute;
-      top:0;
-      left:0;
-      width:100%;
+      /* Break the flow */
+      position: absolute;
+      top: 0px;
+
+      /* Give them all the available space */
+      width: 100%;
+      height: 100%;
+
+      /* Remove the margins if any */
+      margin: 0;
+
+      /* Allow them to scroll down the document */
+      overflow-y: hidden;
     }
 
-    body, html {
-      overscroll-behavior: contain !important;
-      overflow:hidden;
+    body {
+      /* Sending body at the bottom of the stack */
+      z-index: 1;
+    }
+
+    #app {
+      /* Making the wrapper stack above the body */
+      z-index: 2;
     }
   </style>
 </head>
