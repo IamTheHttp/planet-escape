@@ -33,7 +33,7 @@
     "bootstrap": "^3.3.7",
     "canvas-prebuilt": "^1.6.5-prerelease.1",
     "memoizee": "^0.4.12",
-    "game-platform" : "^0.0.4"
+    "game-platform" : "^0.0.5"
   },
   "jsnext:main": "src",
   "module": "src"
