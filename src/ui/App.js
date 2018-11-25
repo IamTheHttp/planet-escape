@@ -149,7 +149,7 @@ class App extends React.Component {
 
   renderOnCanvas(systemArguments) {
     /* istanbul ignore else  */
-    if (this.state.viewMapCanvasAPI) {
+    if (this.state.viewMapCaxnvasAPI) {
       renderSystem(
         systemArguments,
         this.state.viewMapCanvasAPI,
