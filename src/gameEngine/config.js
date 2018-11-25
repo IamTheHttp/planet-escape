@@ -35,7 +35,7 @@ import {
 
 export default {
   [SELECT_WIDTH] : 3,
-  [PLANET_RADIUS] : 30,
+  [PLANET_RADIUS] : 40,
   [NUM_PLAYERS] : 2,
   [AI_MIN_FIGHTERS] : 5,
   [DEFAULT_FIGHTER_COUNT] : 10,
@@ -68,25 +68,25 @@ export default {
   [MAIN_VIEW_SIZE_Y] : 1080 / 2,
   [MAP_SIZE] : {
     [TINY] : {
-      [PLANETS_IN_MAP] : 14,
+      [PLANETS_IN_MAP] : 10,
       [CANVAS_X] : 1920 / 2,
       [CANVAS_Y] : 1080 / 2,
       [PLANET_BUFFER] : 2
     },
     [SMALL] : {
-      [PLANETS_IN_MAP] : 28,
+      [PLANETS_IN_MAP] : 20,
       [CANVAS_X] : 1920 * 3 / 4,
       [CANVAS_Y] : 1080 * 3 / 4,
       [PLANET_BUFFER] : 2
     },
     [MEDIUM] : {
-      [PLANETS_IN_MAP] : 56,
+      [PLANETS_IN_MAP] : 40,
       [CANVAS_X] : 1920,
       [CANVAS_Y] : 1080,
       [PLANET_BUFFER] : 2
     },
     [LARGE] : {
-      [PLANETS_IN_MAP] : 82,
+      [PLANETS_IN_MAP] : 80,
       [CANVAS_X] : 1920 * 2,
       [CANVAS_Y] : 1080 * 2,
       [PLANET_BUFFER] : 2

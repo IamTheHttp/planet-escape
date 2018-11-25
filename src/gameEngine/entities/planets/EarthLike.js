@@ -36,8 +36,8 @@ class EarthLike {
       {
         name: SHIELD_IMAGE,
         pos: {
-          x: 35,
-          y: 35,
+          x: planetRadius,
+          y: planetRadius,
           heightRatio: 0.6,
           widthRatio: 0.6
         }

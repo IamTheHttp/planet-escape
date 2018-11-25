@@ -73,8 +73,8 @@ function renderMap(entity, canvasAPI) {
             canvasAPI.write({
               id: `${entity.id}-fighterCount`,
               text: padNum(getDefendingFighters(entity)),
-              x: radius + x - radius / 4 - 8,
-              y: radius + y - radius / 4 - 12,
+              x: radius + x - radius / (radius / 10) - (radius / 10) * 3, // TODO - magic numbers?
+              y: radius + y - radius / (radius / 10) - (radius / 10) * 5,
               font: `${fontSize}px serif`,
               textBaseline: 'top',
               fillStyle: 'black'
@@ -117,6 +117,7 @@ function renderMap(entity, canvasAPI) {
       });
     });
 
+    // this needs to be on top of the shield
     drawFighterCount();
   }
 }
