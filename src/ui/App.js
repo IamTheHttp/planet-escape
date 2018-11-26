@@ -43,7 +43,9 @@ class App extends React.Component {
 
     window.stressTest = () => {
       gameConfig[FIGHTER_BUILD_RATE] = 10;
-      this.game = this.startGame(gameConfig[MAP_SIZE][LARGE], gameConfig[DIFFICULTY][STRESS_TEST]);
+      this.startGame(gameConfig[MAP_SIZE][LARGE], gameConfig[DIFFICULTY][STRESS_TEST]).then((game) => {
+        this.game = game;
+      });
     };
   }
 
@@ -68,62 +70,74 @@ class App extends React.Component {
   }
 
   startGame(mapSize, difficulty) {
-    let gameCanvas = new GameCanvas({
-      mapHeight: mapSize[CANVAS_Y],
-      mapWidth: mapSize[CANVAS_X],
-      viewHeight: gameConfig[MAIN_VIEW_SIZE_Y],
-      viewWidth: gameConfig[MAIN_VIEW_SIZE_X],
-      onViewMapMove: (dataObj) => {
-        this.selectedBox = dataObj.selectedBox;
-      },
-      onViewMapClick: (dataObj) => {
-        this.game.dispatchAction({
-          hits: dataObj.hits,
-          name: CLICK,
-          x: dataObj.x,
-          y: dataObj.y,
-          isMouseDown: dataObj.isMouseDown,
-          dbClick: dataObj.dbClick,
-          selectedBox: dataObj.selectedBox
-        });
-        this.selectedBox = null;
-      }
-    });
-
-    let {map, minimap} = gameCanvas.getNewCanvasPairs({
-      getMapRef: (API, el) => {
-        this.setState({
-          viewMapCanvasAPI: API
-        });
-      },
-      getMiniRef: (API, el) => {
-        this.setState({
-          miniMapCanvasAPI: API
-        });
-      }
-    });
-
-    this.setState({
-      gameCount: this.state.gameCount++,
-      isMenuOpen: false,
-      gamePaused: false,
-      gameEnded: false,
-      gameWon: null, // null means the game was not yet decided
-      map,
-      minimap
-    });
-
-    // at this point, no canvas exists yet.. crap
-    return new GameLoop({
-      notificationSystem: this.updateGameState,
-      mapSize,
-      viewSize : {
+    return new Promise((resolve, reject) => {
+      let gameCanvas = new GameCanvas({
+        mapHeight: mapSize[CANVAS_Y],
+        mapWidth: mapSize[CANVAS_X],
         viewHeight: gameConfig[MAIN_VIEW_SIZE_Y],
-        viewWidth: gameConfig[MAIN_VIEW_SIZE_X]
-      },
-      difficulty,
-      numPlayers: gameConfig[NUM_PLAYERS],
-      renderSystem: this.renderOnCanvas
+        viewWidth: gameConfig[MAIN_VIEW_SIZE_X],
+        onViewMapMove: (dataObj) => {
+          this.selectedBox = dataObj.selectedBox;
+        },
+        onViewMapClick: (dataObj) => {
+          this.game.dispatchAction({
+            hits: dataObj.hits,
+            name: CLICK,
+            x: dataObj.x,
+            y: dataObj.y,
+            isMouseDown: dataObj.isMouseDown,
+            dbClick: dataObj.dbClick,
+            selectedBox: dataObj.selectedBox
+          });
+          this.selectedBox = null;
+        }
+      });
+
+      let {map, minimap} = gameCanvas.getNewCanvasPairs({
+        getMapRef: (API, el) => {
+          this.setState({
+            viewMapCanvasAPI: API
+          });
+        },
+        getMiniRef: (API, el) => {
+          this.setState({
+            miniMapCanvasAPI: API
+          });
+        }
+      });
+
+      this.setState({
+        gameCount: this.state.gameCount++,
+        isMenuOpen: false,
+        gamePaused: false,
+        gameEnded: false,
+        gameWon: null,
+        map,
+        minimap
+      });
+
+
+      let div = document.createElement('div');
+      div.className = 'loadingOverlay';
+      div.innerHTML = i18n.loadingGameMsg;
+      document.body.appendChild(div);
+
+      setTimeout(() => {
+        let game = new GameLoop({
+          notificationSystem: this.updateGameState,
+          mapSize,
+          viewSize: {
+            viewHeight: gameConfig[MAIN_VIEW_SIZE_Y],
+            viewWidth: gameConfig[MAIN_VIEW_SIZE_X]
+          },
+          difficulty,
+          numPlayers: gameConfig[NUM_PLAYERS],
+          renderSystem: this.renderOnCanvas
+        });
+
+        document.body.removeChild(div);
+        resolve(game);
+      }, 0);
     });
   }
 
@@ -196,7 +210,9 @@ class App extends React.Component {
         <Modal
           text={gameWon ? i18n.gameWon : i18n.gameLost}
           onClick={() => {
-            this.game = this.startGame(this.mapSize, this.difficulty);
+            this.startGame(this.mapSize, this.difficulty).then((game) => {
+              this.game = game;
+            });
           }}
         >
 
@@ -220,7 +236,9 @@ class App extends React.Component {
       onQuickStart={(menuSelection) => {
         this.mapSize = gameConfig[MAP_SIZE][menuSelection.mapSize];
         this.difficulty = gameConfig[DIFFICULTY][menuSelection.difficulty];
-        this.game = this.startGame(this.mapSize, this.difficulty);
+        this.startGame(this.mapSize, this.difficulty).then((game) => {
+          this.game = game;
+        });
       }}
     ></MainMenu>);
   }

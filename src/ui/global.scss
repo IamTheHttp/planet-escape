@@ -171,8 +171,19 @@ ol {
   }
 }
 
-
-
+.loadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding-top: 100px;
+  z-index: 999999;
+  background-color: black;
+  color: white;
+  font-size: 40px;
+}
 
 
 /** START HACK **/
