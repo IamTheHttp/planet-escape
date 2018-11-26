@@ -1,7 +1,7 @@
 {
   "name": "planet-escape",
   "private": true,
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "Planet escape! a game like no other",
   "scripts": {
     "init": "npm install && jarb init",
