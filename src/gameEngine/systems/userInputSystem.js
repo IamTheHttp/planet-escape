@@ -27,7 +27,6 @@ function userInputSystem() {
       });
     } else {
       if (action.name === CLICK) {
-
         let clickedEntities = action.hits.map((id) => {
           return Entity.entities[id];
         });
