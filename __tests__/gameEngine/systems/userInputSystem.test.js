@@ -71,9 +71,13 @@ describe('Tests the user input system', () => {
   it('Tests that an entity can be selected', () => {
     let planet = new EarthLike(100, 100, PLAYER_1);
 
+
+    // hits is provided by the game-platform library
+    // it will contain the IDs of the hit items
     pushAction({
+      hits: [],
       name:CLICK,
-      x : 500,
+      x : 500, // these don't really matter, as the hits are calculated internally by game-platform
       y : 500,
       selectedBox : getSelectedBox(500, 500)
     });
@@ -81,8 +85,9 @@ describe('Tests the user input system', () => {
     expect(planet[PLAYER_CONTROLLED].selected).toBe(false);
 
     pushAction({
+      hits: [planet.id],
       name:CLICK,
-      x : 100,
+      x : 100, // these don't really matter, as the hits are calculated internally by game-platform
       y : 104.99,
       selectedBox : getSelectedBox(100, 104.99)
     });
@@ -90,9 +95,10 @@ describe('Tests the user input system', () => {
     expect(planet[PLAYER_CONTROLLED].selected).toBe(true);
 
     pushAction({
+      hits: [planet.id],
       name: CLICK,
-      x : 104.99,
-      y : 100,
+      x : 99999999999, // these don't really matter, as the hits are calculated internally by game-platform
+      y : 5000000,
       selectedBox : getSelectedBox(104.99, 100)
     });
     userInputSystem();
@@ -110,6 +116,7 @@ describe('Tests the user input system', () => {
     expect(getFighters(attackingPlanet).length).toBeGreaterThan(0);
 
     pushAction({
+      hits: [defendingPlanet.id],
       name:CLICK,
       x : 100,
       y : 100

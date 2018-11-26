@@ -26,18 +26,6 @@ export function getSelectedEntities() {
   });
 }
 
-export function getClickedEntitiy(action) {
-  let entities = Entity.getByComps([POSITION, PLAYER_CONTROLLED, OWNER_COMPONENT]);
-  let results = entityLoop(entities, (ent) => {
-    let centerX = ent[POSITION].x;
-    let centerY = ent[POSITION].y;
-    let radius = ent[POSITION].radius;
-    // this is what stops us from selecting an entity that does not belong to us
-    return isPosInsideCircle(action.x, action.y, centerX, centerY, radius);
-  });
-  return results;
-}
-
 export function setEntityDest(entity, action) {
   entity[POSITION].destX = action.x;
   entity[POSITION].destY = action.y;

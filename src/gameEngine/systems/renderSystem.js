@@ -33,8 +33,22 @@ function renderMap(entity, canvasAPI) {
 
   let drawFighterCount = () => {
   };
+
+
+  // TODO - Why are we only rendering on the canvas if we have a Sprite?
   if (entity.hasComponents(SPRITE)) {
     entity[UI_COMP].sections.forEach((section) => {
+      if (section.shape === CIRCLE) {
+        canvasAPI.addCircle({
+          id: entity.id,
+          x,
+          y,
+          radius,
+          strokeStyle: 'rgba(0,0,0,0)',
+          lineWidth:0
+        });
+      }
+
       if (section.shape === CIRCLE && isSelected(entity)) {
         canvasAPI.addCircle({
           id: entity.id,

@@ -77,8 +77,8 @@ class App extends React.Component {
         this.selectedBox = dataObj.selectedBox;
       },
       onViewMapClick: (dataObj) => {
-        console.log(dataObj);
         this.game.dispatchAction({
+          hits: dataObj.hits,
           name: CLICK,
           x: dataObj.x,
           y: dataObj.y,
@@ -92,13 +92,11 @@ class App extends React.Component {
 
     let {map, minimap} = gameCanvas.getNewCanvasPairs({
       getMapRef: (API, el) => {
-        console.log('Ref for map? API?', API);
         this.setState({
           viewMapCanvasAPI: API
         });
       },
       getMiniRef: (API, el) => {
-        console.log('Ref for minimap? API?', API);
         this.setState({
           miniMapCanvasAPI: API
         });

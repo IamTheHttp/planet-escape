@@ -1,1 +1,1 @@
-Readme file - Required - even if empty.
+[ ] Delegate "Selection box selection" to game-platform (this is historically still calculated in game code

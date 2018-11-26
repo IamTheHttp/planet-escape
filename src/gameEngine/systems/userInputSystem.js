@@ -1,4 +1,6 @@
 import entityLoop from 'lib/ECS/util/entityLoop';
+import Entity from 'lib/ECS/Entity';
+
 
 import {
   CLICK,
@@ -12,8 +14,7 @@ import {getOwner} from 'gameEngine/components/OwnerComponent';
 let actions = [];
 
 import {
-  selectAllEntities,
-  getClickedEntitiy
+  selectAllEntities
 } from 'gameEngine/systems/utils/userInput.util';
 
 function userInputSystem() {
@@ -26,22 +27,25 @@ function userInputSystem() {
       });
     } else {
       if (action.name === CLICK) {
-        let clickedEntities = getClickedEntitiy(action);
 
-        // if i clicked on nothing, we might have a selection box.
+        let clickedEntities = action.hits.map((id) => {
+          return Entity.entities[id];
+        });
+
         if (clickedEntities.length === 0) {
           select(action);
-          // select(action); // this will also unselect first..
         }
 
-        // if i clicked on a friendly, select it
+        // get all friendly entities clicked (for player 1)
         let friendlies = clickedEntities.filter((ent) => {
           return getOwner(ent) === PLAYER_1;
         });
 
+        // if we clicked on friendlies, then what?
         if (friendlies.length > 0) {
-          // if i double clicked, and clicked on a friendly, select ALL.
+          // if double click, select all
           action.dbClick && selectAllEntities(PLAYER_1);
+          // if not, just select
           !action.dbClick && select(action);
         }
 

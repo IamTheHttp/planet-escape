@@ -27,7 +27,6 @@ class GameLoop {
     Entity.reset();
     fighterPool.generate(10000);
 
-    console.log(renderSystem);
     this.dispatchAction = this.dispatchAction.bind(this);
     // setup some planets
     generateMap(mapSize);
