@@ -21,20 +21,20 @@ import {
 } from 'gameEngine/constants';
 import gameTracker from './GameTracker';
 
+
 class GameLoop {
-  constructor({notificationSystem, renderSystem, mapSize, viewSize, difficulty, numPlayers}) {
+  constructor({notificationSystem, renderSystem, levelData, viewSize, difficulty, numPlayers}) {
     gameTracker.track('newGameStarted');
     Entity.reset();
-    fighterPool.generate(10000);
+    fighterPool.generate(10000); // for performance reasons
 
-    this.dispatchAction = this.dispatchAction.bind(this);
-    // setup some planets
-    generateMap(mapSize);
+    generateMap(levelData);
+
     let currentGame = new CurrentGame(IN_PROGRESS, numPlayers);
 
     let count = 0;
     let systemArguments = {
-      mapSize,
+      levelData,
       viewSize,
       difficulty,
       numPlayers,
@@ -43,7 +43,6 @@ class GameLoop {
       gameTracker
     };
     this.currentGame = currentGame;
-
 
     this.loop = () => {
       // between initiations, it seems that the loop can run without
@@ -67,6 +66,7 @@ class GameLoop {
       }
     };
 
+    this.dispatchAction = this.dispatchAction.bind(this);
     this.resume();
   }
 

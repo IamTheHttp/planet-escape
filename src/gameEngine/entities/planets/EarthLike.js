@@ -16,8 +16,10 @@ import {
   PLANETS,
   CIRCLE,
   FIGHTER_COUNT,
-  SHIELD_IMAGE
+  SHIELD_IMAGE,
+  POSITION
 } from 'gameEngine/constants';
+
 
 class EarthLike {
   constructor(xPos = 50, yPos = 50, player = NEUTRAL) {

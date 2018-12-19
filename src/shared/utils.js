@@ -25,37 +25,72 @@ export function randFromArray(array) {
 }
 
 // we manually add planets at the end of the drawing, for the player positions
+// TODO this feels strange here
 const MANUALLY_ADDED_PLANETS = 2;
-export function generateMap(mapSize) {
-  let planetsToGenerate = mapSize[PLANETS_IN_MAP] - MANUALLY_ADDED_PLANETS;
-  let buffer = mapSize[PLANET_BUFFER];
+
+
+// This method manipulates global variables
+// (it creates entities and gives them positions)
+// since entities are global, this is a problem
+export function generateMap(levelData) {
+  let buffer = levelData.buffer;
+  let planetsToGenerate; // by default, we don't need to generate anything
+
+  if (levelData.planets) {
+
+  } else {
+    planetsToGenerate = levelData.planetsInMap - MANUALLY_ADDED_PLANETS;
+  }
+
+
   new Player(PLAYER_1);
 
+  // generate planets
   let count = 0;
   let planets = {};
-  while (count < planetsToGenerate) {
-    let planet = new EarthLike(null, null, NEUTRAL);
-    planets[planet.id] = planet;
-    while (getFighters(planet).length < gameConfig[DEFAULT_FIGHTER_COUNT]) {
-      new Fighter(planet);
-    }
 
-    count++;
+
+  if (levelData.planets) {
+    levelData.planets.forEach((planetData) => {
+      let planet = new EarthLike(planetData.position.x, planetData.position.y, planetData.player);
+      planets[planet.id] = planet;
+
+      while (getFighters(planet).length < planetData.fighters) {
+        new Fighter(planet);
+      }
+    });
+  } else {
+    while (count < planetsToGenerate) {
+      let planet = new EarthLike(null, null, NEUTRAL);
+      planets[planet.id] = planet;
+      while (getFighters(planet).length < gameConfig[DEFAULT_FIGHTER_COUNT]) {
+        new Fighter(planet);
+      }
+      count++;
+    }
   }
 
   let area = {
     topLeftAreaX : 0,
     topLeftAreaY : 0,
-    bottomRightAreaX : mapSize[CANVAS_X],
-    bottomRightAreaY : mapSize[CANVAS_Y]
+    bottomRightAreaX : levelData.width,
+    bottomRightAreaY : levelData.height
   };
 
   // TODO - Possible planet overlapping as we assign planet location manually
-  let gutter = gameConfig[PLAYER_PLANET_GUTTER_DISTANCE];
-  let p1 = new EarthLike(gutter, gutter, PLAYER_1);
-  let p2 = new EarthLike(mapSize[CANVAS_X] - gutter, mapSize[CANVAS_Y] - gutter, PLAYER_2);
-  planets[p1.id] = p1;
-  planets[p2.id] = p2;
+
+  if (levelData.planets) {
+
+  } else {
+    let gutter = gameConfig[PLAYER_PLANET_GUTTER_DISTANCE];
+    let p1 = new EarthLike(gutter, gutter, PLAYER_1);
+    let p2 = new EarthLike(levelData.width - gutter, levelData.height - gutter, PLAYER_2);
+    planets[p1.id] = p1;
+    planets[p2.id] = p2;
+  }
+
+  // placeEntities can accept a situation where entities are already placed..
+  // maybe..
   placeEntities(planets, area, buffer);
 }
 

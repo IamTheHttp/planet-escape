@@ -1,0 +1,86 @@
+{
+  "random": {
+    "mapScale": 0.5,
+    "buffer" : 2,
+    "planetsInMap": 10
+  },
+  "A simple plan" : {
+    "order" : 1,
+    "mapScale": 0.5,
+    "buffer" : 2,
+    "planetsInMap": 0,
+    "planets": [
+      {
+        "type" : "earthLike",
+        "player" : "1",
+        "position" : {
+          "x": 100,
+          "y": 100
+        },
+        "fighters": 100
+      },
+      {
+        "type" : "earthLike",
+        "player" : "1",
+        "position" : {
+          "x": 80,
+          "y": 250
+        },
+        "fighters": 100
+      },
+      {
+        "type" : "earthLike",
+        "player" : "1",
+        "position" : {
+          "x": 150,
+          "y": 420
+        },
+        "fighters": 100
+      },
+      {
+        "type" : "earthLike",
+        "player" : "2",
+        "position" : {
+          "x": 900,
+          "y": 400
+        },
+        "fighters": 50
+      }
+    ]
+  },
+  "Easy Conquest" : {
+    "order" : 2,
+    "mapScale": 0.75,
+    "buffer" : 2,
+    "planetsInMap": 0,
+    "planets": [
+      {
+        "type" : "earthLike",
+        "player" : 1,
+        "position" : {
+          "x": 100,
+          "y": 100
+        },
+        "fighters": 100
+      },
+      {
+        "type" : "earthLike",
+        "player" : 0,
+        "position" : {
+          "x": 200,
+          "y": 200
+        },
+        "fighters": 100
+      },
+      {
+        "type" : "earthLike",
+        "player" : 2,
+        "position" : {
+          "x": 900,
+          "y": 400
+        },
+        "fighters": 50
+      }
+    ]
+  }
+}

@@ -12,7 +12,8 @@ import {
   MAIN_VIEW_SIZE_Y,
   LARGE,
   STRESS_TEST,
-  FIGHTER_BUILD_RATE
+  FIGHTER_BUILD_RATE,
+  PLANETS_IN_MAP
 } from 'gameEngine/constants';
 import React from 'react';
 import './global.scss';
@@ -26,6 +27,10 @@ import MainView from 'ui/components/MainView/MainView';
 import renderSystem from 'gameEngine/systems/renderSystem';
 import GameCanvas from 'lib/GameCanvas/GameCanvas';
 import i18n from 'ui/i18n';
+
+import levels from 'levels/levels.json';
+
+
 class App extends React.Component {
   constructor() {
     super();
@@ -51,7 +56,7 @@ class App extends React.Component {
 
   componentDidMount() {
     let resizeGame = () => {
-      let widthToHeight = 960 / 540;
+      let widthToHeight = 960 / 540; // TODO is this magical ?
       let newWidth = window.innerWidth;
       let newHeight = window.innerHeight;
       let newWidthToHeight = newWidth / newHeight;
@@ -69,11 +74,16 @@ class App extends React.Component {
     resizeGame();
   }
 
-  startGame(mapSize, difficulty) {
+  startGame(levelData = levels['A simple plan'], difficulty) {
+    levelData.width = 1980 * levelData.mapScale;
+    levelData.height = 1080 * levelData.mapScale;
+
+    console.log(levelData);
+
     return new Promise((resolve, reject) => {
       let gameCanvas = new GameCanvas({
-        mapHeight: mapSize[CANVAS_Y],
-        mapWidth: mapSize[CANVAS_X],
+        mapHeight: levelData.height,
+        mapWidth: levelData.width,
         viewHeight: gameConfig[MAIN_VIEW_SIZE_Y],
         viewWidth: gameConfig[MAIN_VIEW_SIZE_X],
         onViewMapMove: (dataObj) => {
@@ -117,21 +127,23 @@ class App extends React.Component {
       });
 
 
+      // the loading overlay
       let div = document.createElement('div');
       div.className = 'loadingOverlay';
       div.innerHTML = i18n.loadingGameMsg;
       document.body.appendChild(div);
 
+      // delay to next tick!
       setTimeout(() => {
         let game = new GameLoop({
           notificationSystem: this.updateGameState,
-          mapSize,
+          levelData,
           viewSize: {
             viewHeight: gameConfig[MAIN_VIEW_SIZE_Y],
             viewWidth: gameConfig[MAIN_VIEW_SIZE_X]
           },
           difficulty,
-          numPlayers: gameConfig[NUM_PLAYERS],
+          numPlayers: gameConfig[NUM_PLAYERS], // TODO, do we really need it here?
           renderSystem: this.renderOnCanvas
         });
 
@@ -210,7 +222,7 @@ class App extends React.Component {
         <Modal
           text={gameWon ? i18n.gameWon : i18n.gameLost}
           onClick={() => {
-            this.startGame(this.mapSize, this.difficulty).then((game) => {
+            this.startGame(this.currentLevel, this.difficulty).then((game) => {
               this.game = game;
             });
           }}
@@ -234,9 +246,9 @@ class App extends React.Component {
   mainMenu() {
     return (<MainMenu
       onQuickStart={(menuSelection) => {
-        this.mapSize = gameConfig[MAP_SIZE][menuSelection.mapSize];
+        this.currentLevel = levels['A simple plan'];
         this.difficulty = gameConfig[DIFFICULTY][menuSelection.difficulty];
-        this.startGame(this.mapSize, this.difficulty).then((game) => {
+        this.startGame(this.currentLevel, this.difficulty).then((game) => {
           this.game = game;
         });
       }}
