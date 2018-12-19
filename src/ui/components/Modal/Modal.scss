@@ -1,0 +1,14 @@
+.endModal {
+  .gameWon {
+    color:green;
+    font-weight:bold;
+  }
+  .gameLost {
+    color:red;
+    font-weight:bold;
+  }
+
+  button {
+    margin-right:15px;
+  }
+}

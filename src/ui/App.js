@@ -27,7 +27,21 @@ import MainView from 'ui/components/MainView/MainView';
 import renderSystem from 'gameEngine/systems/renderSystem';
 import GameCanvas from 'lib/GameCanvas/GameCanvas';
 import i18n from 'ui/i18n';
-import levels from 'levels/levels.json';
+import levelsData from 'levels/levels.json';
+
+let levels = [];
+Object.keys(levelsData).forEach((levelKey) => {
+  let levelData = {...levelsData[levelKey]};
+  levelData.key = levelKey;
+
+  if (levelData.order >= 0) {
+    levels.push(levelData);
+  }
+});
+
+levels.sort((a, b) => {
+  return a.order - b.order;
+});
 
 class App extends React.Component {
   constructor() {
@@ -43,7 +57,7 @@ class App extends React.Component {
     this.updateGameState = this.updateGameState.bind(this);
     this.renderOnCanvas = this.renderOnCanvas.bind(this);
     this.startGame = this.startGame.bind(this);
-
+    this.levels = levels;
     window.stressTest = () => {
       gameConfig[FIGHTER_BUILD_RATE] = 10;
       this.startGame(gameConfig[MAP_SIZE][LARGE], gameConfig[DIFFICULTY][STRESS_TEST]).then((game) => {
@@ -212,15 +226,30 @@ class App extends React.Component {
 
   getGameEndModal() {
     let gameWon = this.state.gameWon;
+    let nextLevel;
+
+    let currentLevelIdx = this.levels.indexOf(this.currentLevel);
+    nextLevel = this.levels[currentLevelIdx + 1];
 
     if (gameWon !== null) {
       return (
         <Modal
+          gameWon={gameWon}
           text={gameWon ? i18n.gameWon : i18n.gameLost}
+          nextLevel={nextLevel}
           onClick={() => {
             this.startGame(this.currentLevel, this.difficulty).then((game) => {
               this.game = game;
             });
+          }}
+          onNextLevel={() => {
+            this.startGame(nextLevel, this.difficulty).then((game) => {
+              this.game = game;
+            });
+          }}
+          backToMainMenu={() => {
+            this.setState({gamePaused: false});
+            this.stopGame();
           }}
         >
 
@@ -242,11 +271,11 @@ class App extends React.Component {
   mainMenu() {
     return (<MainMenu
       levels={levels}
-      onLevelSelect={(level) => {
+      onLevelSelect={(level, levels) => {
         this.currentLevel = level;
+        this.levels = levels;
         this.difficulty = gameConfig[DIFFICULTY].EASY;
 
-        console.log(this.currentLevel);
         this.startGame(this.currentLevel, this.difficulty).then((game) => {
           this.game = game;
         });
@@ -257,7 +286,6 @@ class App extends React.Component {
           planetsInMap: levels.random.planetsInMap * menuSelection.mapScale
         });
 
-        console.log(this.currentLevel);
         this.difficulty = gameConfig[DIFFICULTY][menuSelection.difficulty];
         this.startGame(this.currentLevel, this.difficulty).then((game) => {
           this.game = game;

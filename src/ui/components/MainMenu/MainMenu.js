@@ -115,31 +115,15 @@ class MainMenu extends React.Component {
       return null;
     }
 
-    // lets gets an array
-
-    let levels = [];
-    Object.keys(this.props.levels).forEach((levelKey) => {
-      let levelData = {...this.props.levels[levelKey]};
-      levelData.key = levelKey;
-
-      if (levelData.order >= 0) {
-        levels.push(levelData);
-      }
-    });
-
-    levels.sort((a, b) => {
-      return a.order - b.order;
-    });
-
     return (
       <div className="campaignScreen">
-        {levels.map((level) => {
+        {this.props.levels.map((level) => {
           return (
             <div
               className="level"
               key={level.key}
               onClick={() => {
-                this.props.onLevelSelect(level);
+                this.props.onLevelSelect(level, this.props.levels);
               }}
             >
               <div className="level-image">

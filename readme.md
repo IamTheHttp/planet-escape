@@ -11,11 +11,11 @@
   - [V] Change mapSize to "mapScale" for quickStart menu change
   - [V] Change translations of 0.5 etc. to
   - [V] Add some planet Multiplier
-2. [ ] Get to 85% code coverage before moving on
-3. [ ] Create 5 levels
-4. [ ] When game ends, offer more options
-  - [ ] Next level
-  - [ ] Repeat/Restart
-  - [ ] Back to campaign(if coming from campaign)
-  - [ ] Show better indication if game was lost or not(Colors?)
+2. [V] Get to 85% code coverage before moving on
+3. [V] Create 5 levels
+4. [V] When game ends, offer more options
+  - [V] Next level
+  - [V] Repeat/Restart
+  - [V] Back to campaign(if coming from campaign)
+  - [V] Show better indication if game was lost or not(Colors?)
 5. Deploy to staging and test

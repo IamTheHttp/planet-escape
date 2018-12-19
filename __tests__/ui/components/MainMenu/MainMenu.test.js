@@ -6,7 +6,22 @@ import {mount, shallow} from 'enzyme';
 import React from 'react';
 import MainMenu from 'ui/components/MainMenu/MainMenu';
 
-import levels from 'levels/levels.json';
+import levelsData from 'levels/levels.json';
+
+let levels = [];
+Object.keys(levelsData).forEach((levelKey) => {
+  let levelData = {...levelsData[levelKey]};
+  levelData.key = levelKey;
+
+  if (levelData.order >= 0) {
+    levels.push(levelData);
+  }
+});
+
+levels.sort((a, b) => {
+  return a.order - b.order;
+});
+
 describe('Tests a component', () => {
   it('renders', () => {
     let wrapper = shallow(<MainMenu

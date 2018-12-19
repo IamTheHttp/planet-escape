@@ -21,7 +21,9 @@ let i18n = {
   tiny:'Tiny',
   small:'Small',
   medium:'Medium',
-  large:'Large'
+  large:'Large',
+  nextLevel : 'Next level',
+  mainMenu: 'Back to main menu'
 };
 
 export default i18n;

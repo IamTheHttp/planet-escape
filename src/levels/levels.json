@@ -44,7 +44,7 @@
           "x": 900,
           "y": 400
         },
-        "fighters": 50
+        "fighters": 0
       }
     ]
   },
@@ -65,21 +65,12 @@
       },
       {
         "type" : "earthLike",
-        "player" : "1",
+        "player" : "0",
         "position" : {
-          "x": 80,
-          "y": 250
+          "x": 200,
+          "y": 200
         },
-        "fighters": 100
-      },
-      {
-        "type" : "earthLike",
-        "player" : "1",
-        "position" : {
-          "x": 150,
-          "y": 420
-        },
-        "fighters": 100
+        "fighters": 0
       },
       {
         "type" : "earthLike",
@@ -88,7 +79,7 @@
           "x": 900,
           "y": 400
         },
-        "fighters": 50
+        "fighters": 0
       }
     ]
   },
@@ -102,8 +93,8 @@
         "type" : "earthLike",
         "player" : "1",
         "position" : {
-          "x": 100,
-          "y": 100
+          "x": 50,
+          "y": 50
         },
         "fighters": 100
       },
@@ -113,6 +104,15 @@
         "position" : {
           "x": 200,
           "y": 200
+        },
+        "fighters": 100
+      },
+      {
+        "type" : "earthLike",
+        "player" : "0",
+        "position" : {
+          "x": 400,
+          "y": 400
         },
         "fighters": 100
       },
@@ -128,7 +128,7 @@
     ]
   },
   "Dreams" : {
-    "order" : 3,
+    "order" : 4,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
@@ -140,16 +140,16 @@
           "x": 100,
           "y": 100
         },
-        "fighters": 1000
+        "fighters": 10
       },
       {
         "type" : "earthLike",
         "player" : "0",
         "position" : {
-          "x": 200,
+          "x": 400,
           "y": 200
         },
-        "fighters": 100
+        "fighters": 20
       },
       {
         "type" : "earthLike",
@@ -158,12 +158,12 @@
           "x": 900,
           "y": 400
         },
-        "fighters": 50
+        "fighters": 10
       }
     ]
   },
   "Impossible" : {
-    "order" : 3,
+    "order" : 5,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
@@ -173,9 +173,9 @@
         "player" : "1",
         "position" : {
           "x": 100,
-          "y": 100
+          "y": 400
         },
-        "fighters": 1000
+        "fighters": 5
       },
       {
         "type" : "earthLike",
@@ -184,21 +184,29 @@
           "x": 200,
           "y": 200
         },
+        "fighters": 15
+      },
+      {
+        "type" : "earthLike",
+        "player" : "0",
+        "position" : {
+          "x": 700,
+          "y": 200
+        },
         "fighters": 100
       },
       {
         "type" : "earthLike",
         "player" : "2",
         "position" : {
-          "x": 900,
-          "y": 400
+          "x": 800,
+          "y": 800
         },
         "fighters": 50
       }
     ]
   },
   "Impossible11" : {
-    "order" : 3,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
@@ -233,7 +241,6 @@
     ]
   },
   "Impossible17" : {
-    "order" : 3,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
@@ -268,7 +275,6 @@
     ]
   },
   "Impossible15" : {
-    "order" : 3,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
@@ -303,7 +309,6 @@
     ]
   },
   "Impossible16" : {
-    "order" : 3,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
@@ -338,7 +343,6 @@
     ]
   },
   "Impossible6" : {
-    "order" : 3,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
@@ -373,7 +377,6 @@
     ]
   },
   "Impossible3" : {
-    "order" : 3,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
@@ -408,7 +411,6 @@
     ]
   },
   "Impossible4" : {
-    "order" : 3,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
@@ -443,7 +445,6 @@
     ]
   },
   "Impossible2" : {
-    "order" : 3,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
@@ -478,7 +479,6 @@
     ]
   },
   "Impossible1" : {
-    "order" : 3,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,

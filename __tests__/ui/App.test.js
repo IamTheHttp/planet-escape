@@ -18,8 +18,8 @@ import levels from 'levels/levels.json';
 
 describe('Tests a component', () => {
   jest.useFakeTimers();
+
   beforeEach(() => {
-        // setup the test
     jest.clearAllTimers();
   });
 
