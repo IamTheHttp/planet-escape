@@ -44,3 +44,24 @@
     }
   }
 }
+
+.campaignScreen {
+  overflow: scroll;
+  height: 90vh;
+  .level {
+    float:left;
+    margin:30px;
+    color:black;
+    width:70px;
+    height:70px;
+    &-image{
+      img {
+        width:100%;
+      }
+    }
+    &-title {
+      color:white;
+      text-align:center;
+    }
+  }
+}

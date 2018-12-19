@@ -14,6 +14,7 @@ import {
 } from 'gameEngine/constants';
 
 import gameConfig from 'gameEngine/config';
+import levels from 'levels/levels.json';
 
 describe('Tests a component', () => {
   jest.useFakeTimers();
@@ -24,13 +25,13 @@ describe('Tests a component', () => {
 
   it('Expects to run without issues', (done) => {
     let wrapper = mount(<App></App>);
-    wrapper.instance().mapSize = gameConfig[MAP_SIZE][TINY];
+    wrapper.instance().currentLevel = levels.random;
     wrapper.instance().difficulty = gameConfig[DIFFICULTY][EASY];
     wrapper.setState({
       isMenuOpen : false,
       gameStarted : true
     }, () => {
-      wrapper.instance().startGame(gameConfig[MAP_SIZE][TINY], gameConfig[DIFFICULTY][EASY]);
+      wrapper.instance().startGame(levels.random, gameConfig[DIFFICULTY][EASY]);
       jest.runOnlyPendingTimers();
       jest.runOnlyPendingTimers();
       done();

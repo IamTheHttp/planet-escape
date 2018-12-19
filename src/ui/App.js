@@ -27,9 +27,7 @@ import MainView from 'ui/components/MainView/MainView';
 import renderSystem from 'gameEngine/systems/renderSystem';
 import GameCanvas from 'lib/GameCanvas/GameCanvas';
 import i18n from 'ui/i18n';
-
 import levels from 'levels/levels.json';
-
 
 class App extends React.Component {
   constructor() {
@@ -74,11 +72,9 @@ class App extends React.Component {
     resizeGame();
   }
 
-  startGame(levelData = levels['A simple plan'], difficulty) {
+  startGame(levelData, difficulty) {
     levelData.width = 1980 * levelData.mapScale;
     levelData.height = 1080 * levelData.mapScale;
-
-    console.log(levelData);
 
     return new Promise((resolve, reject) => {
       let gameCanvas = new GameCanvas({
@@ -245,6 +241,16 @@ class App extends React.Component {
 
   mainMenu() {
     return (<MainMenu
+      levels={levels}
+      onLevelSelect={(level) => {
+        this.currentLevel = level;
+        this.difficulty = gameConfig[DIFFICULTY].EASY;
+
+        console.log(this.currentLevel);
+        this.startGame(this.currentLevel, this.difficulty).then((game) => {
+          this.game = game;
+        });
+      }}
       onQuickStart={(menuSelection) => {
         this.currentLevel = levels['A simple plan'];
         this.difficulty = gameConfig[DIFFICULTY][menuSelection.difficulty];

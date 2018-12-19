@@ -5,6 +5,7 @@ import './mainMenu.scss';
 import Help from './Help';
 import {version} from '../../../../package.json';
 import earthImage from 'assets/player1.png';
+import alienImage from 'assets/player2.png';
 import {
   TINY,
   MEDIUM,
@@ -18,8 +19,8 @@ let mapSizes = [TINY, SMALL, MEDIUM, LARGE];
 let difficulties = [EASY, CHALLENGING, HARD];
 
 class MainMenu extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       selection: false,
       mapSize: TINY,
@@ -35,6 +36,11 @@ class MainMenu extends React.Component {
 
     return (
       <div className="menuButtons">
+        <button className="btnItem" onClick={() => {
+          this.setState({selection: 'campaign'});
+        }}>
+          {i18n.campaign}
+        </button>
         <button className="btnItem" onClick={() => {
           this.setState({selection: 'quickStart'});
         }}>
@@ -83,6 +89,51 @@ class MainMenu extends React.Component {
     }
     return (
       <Help></Help>
+    );
+  }
+
+  levelSelection() {
+    if (this.state.selection !== 'campaign') {
+      return null;
+    }
+
+    // lets gets an array
+
+    let levels = [];
+    Object.keys(this.props.levels).forEach((levelKey) => {
+      let levelData = {...this.props.levels[levelKey]};
+      levelData.key = levelKey;
+
+      if (levelData.order >= 0) {
+        levels.push(levelData);
+      }
+    });
+
+    levels.sort((a, b) => {
+      return a.order - b.order;
+    });
+
+    return (
+      <div className="campaignScreen">
+        {levels.map((level) => {
+          return (
+            <div
+              className="level"
+              key={level.key}
+              onClick={() => {
+                this.props.onLevelSelect(level);
+              }}
+            >
+              <div className="level-image">
+                <img src={earthImage}/>
+              </div>
+              <div className="level-title">
+                {level.key}
+              </div>
+            </div>
+          );
+        })}
+      </div>
     );
   }
 
@@ -168,6 +219,7 @@ class MainMenu extends React.Component {
         <div>
           {this.topMenu()}
           {this.quickStartSelection()}
+          {this.levelSelection()}
           {this.help()}
           {this.tutorial()}
           {this.about()}

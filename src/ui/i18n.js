@@ -16,7 +16,8 @@ let config = {
   fightersDestroyed: 'Fighters destroyed:',
   actionDispatched: 'Clicks:',
   newGameStarted : 'Games started:',
-  loadingGameMsg: 'Loading game objects...'
+  loadingGameMsg: 'Loading game objects...',
+  campaign : 'Campaign'
 };
 
 export default config;
