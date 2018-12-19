@@ -1,4 +1,4 @@
-let config = {
+let i18n = {
   quickStart: 'Quick Start',
   tutorial: 'Tutorial',
   help: 'Help',
@@ -17,7 +17,11 @@ let config = {
   actionDispatched: 'Clicks:',
   newGameStarted : 'Games started:',
   loadingGameMsg: 'Loading game objects...',
-  campaign : 'Campaign'
+  campaign : 'Campaign',
+  tiny:'Tiny',
+  small:'Small',
+  medium:'Medium',
+  large:'Large'
 };
 
-export default config;
+export default i18n;

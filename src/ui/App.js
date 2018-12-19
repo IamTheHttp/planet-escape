@@ -253,8 +253,8 @@ class App extends React.Component {
       }}
       onQuickStart={(menuSelection) => {
         this.currentLevel = Object.assign({...levels.random}, {
-          mapScale: menuSelection.mapSize,
-          planetsInMap: levels.random.planetsInMap * menuSelection.mapSize
+          mapScale: menuSelection.mapScale,
+          planetsInMap: levels.random.planetsInMap * menuSelection.mapScale
         });
 
         console.log(this.currentLevel);

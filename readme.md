@@ -8,14 +8,14 @@
 // TODO for now..
 
 1. Support 'Quick start' for campaign'
-  - Change mapSize to "mapScale" for quickStart menu change
-  - Change translations of 0.5 etc. to
-  - Done - Add some planet Multiplier
-2. Get to 85% code coverage before moving on
-3. Create 5 levels
-4. When game ends, offer more options
-  - Next level
-  - Repeat
-  - Back to campaign(if coming from campaign)
-  - Show better indication if game was lost or not
-5. deploy to staging and test
+  - [V] Change mapSize to "mapScale" for quickStart menu change
+  - [V] Change translations of 0.5 etc. to
+  - [V] Add some planet Multiplier
+2. [ ] Get to 85% code coverage before moving on
+3. [ ] Create 5 levels
+4. [ ] When game ends, offer more options
+  - [ ] Next level
+  - [ ] Repeat/Restart
+  - [ ] Back to campaign(if coming from campaign)
+  - [ ] Show better indication if game was lost or not(Colors?)
+5. Deploy to staging and test
