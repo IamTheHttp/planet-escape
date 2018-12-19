@@ -15,7 +15,7 @@ import {
   CHALLENGING,
   HARD
 } from 'gameEngine/constants';
-let mapSizes = [TINY, SMALL, MEDIUM, LARGE];
+let mapScales = [TINY, SMALL, MEDIUM, LARGE];
 let difficulties = [EASY, CHALLENGING, HARD];
 
 class MainMenu extends React.Component {
@@ -161,17 +161,17 @@ class MainMenu extends React.Component {
               })}
             </div>
           </div>
-          <div className="mapSizeSelector col-xs-4">
+          <div className="mapScaleselector col-xs-4">
             <div className="menuButtons">
               <h4 className="title">
                 {i18n.selectMapSize}
               </h4>
-              {mapSizes.map((size) => {
+              {mapScales.map((size) => {
                 return (<button
                   key={size}
                   className={`btnItem ${this.state.mapSize === size && 'active'}`}
                   onClick={() => {
-                    this.setState({mapSize: size});
+                    this.setState({mapScale: size});
                   }}
                 >{size.toLowerCase()}</button>);
               })}

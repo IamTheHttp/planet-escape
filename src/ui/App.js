@@ -73,7 +73,7 @@ class App extends React.Component {
   }
 
   startGame(levelData, difficulty) {
-    levelData.width = 1980 * levelData.mapScale;
+    levelData.width = 1920 * levelData.mapScale;
     levelData.height = 1080 * levelData.mapScale;
 
     return new Promise((resolve, reject) => {
@@ -252,7 +252,12 @@ class App extends React.Component {
         });
       }}
       onQuickStart={(menuSelection) => {
-        this.currentLevel = levels['A simple plan'];
+        this.currentLevel = Object.assign({...levels.random}, {
+          mapScale: menuSelection.mapSize,
+          planetsInMap: levels.random.planetsInMap * menuSelection.mapSize
+        });
+
+        console.log(this.currentLevel);
         this.difficulty = gameConfig[DIFFICULTY][menuSelection.difficulty];
         this.startGame(this.currentLevel, this.difficulty).then((game) => {
           this.game = game;
