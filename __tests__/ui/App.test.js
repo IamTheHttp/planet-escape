@@ -54,7 +54,7 @@ describe('Tests a component', () => {
       gameReport : {}
     });
 
-    expect(wrapper.find('.modal-dialog').length).toBe(1);
+    expect(wrapper.find('.endGame').length).toBe(1);
   });
 
   it('Expects the popup to open as the game is won..', () => {
@@ -73,6 +73,6 @@ describe('Tests a component', () => {
       gameReport: {}
     });
 
-    expect(wrapper.find('.modal-dialog').length).toBe(1);
+    expect(wrapper.find('.endGame').length).toBe(1);
   });
 });
