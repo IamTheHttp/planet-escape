@@ -16,7 +16,7 @@ let entityPlacer = (entities, grid, buffer) => {
 
   // place all the entities with a POS first. as these come from the initialization!
   let entsWithPos = entityLoop(entities, (ent) => {
-    return ent[POSITION].x > 0;
+    return ent[POSITION] && ent[POSITION].x > 0 && ent[POSITION].y > 0;
   });
 
   entsWithPos.forEach((ent) => {

@@ -65,11 +65,6 @@ class MainMenu extends React.Component {
           {i18n.quickStart}
         </button>
         <button className="btnItem" onClick={() => {
-          this.setState({selection: 'tutorial'});
-        }}>
-          {i18n.tutorial}
-        </button>
-        <button className="btnItem" onClick={() => {
           this.setState({selection: 'help'});
         }}>
           {i18n.help}
@@ -89,15 +84,6 @@ class MainMenu extends React.Component {
     }
     return (
       <div className="about col-xs-offset-3 col-xs-6">Created by Patrick Tolosa</div>
-    );
-  }
-
-  tutorial() {
-    if (this.state.selection !== 'tutorial') {
-      return null;
-    }
-    return (
-      <div className="tutorial col-xs-offset-3 col-xs-6">Coming soon</div>
     );
   }
 
@@ -225,7 +211,6 @@ class MainMenu extends React.Component {
           {this.quickStartSelection()}
           {this.levelSelection()}
           {this.help()}
-          {this.tutorial()}
           {this.about()}
         </div>
       </div>

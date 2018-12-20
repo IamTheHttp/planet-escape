@@ -42,7 +42,6 @@ describe('Tests a component', () => {
     let wrapper = mount(<App></App>);
     let inst = wrapper.instance();
 
-    inst.mapSize = gameConfig[MAP_SIZE][TINY];
     inst.difficulty = gameConfig[DIFFICULTY][EASY];
     inst.game = {
       stop : () => {}
@@ -62,7 +61,6 @@ describe('Tests a component', () => {
     let wrapper = mount(<App></App>);
     let inst = wrapper.instance();
 
-    inst.mapSize = gameConfig[MAP_SIZE][TINY];
     inst.difficulty = gameConfig[DIFFICULTY][EASY];
     inst.game = {
       stop : () => {}

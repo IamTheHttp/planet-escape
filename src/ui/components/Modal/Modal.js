@@ -13,7 +13,10 @@ class Modal extends React.Component {
           </div>
           <div className="modal-body">
             <button onClick={this.props.onClick} className="btn btn-primary restart">{i18n.restart}</button>
-            {this.props.nextLevel && <button onClick={this.props.onNextLevel} className="btn btn-primary nextLevel">{i18n.nextLevel}</button>}
+            {
+              this.props.nextLevel &&
+              <button onClick={this.props.onNextLevel} className="btn btn-primary nextLevel">{i18n.nextLevel}</button>
+            }
             <button onClick={this.props.backToMainMenu} className="btn btn-primary mainMenu">{i18n.mainMenu}</button>
           </div>
         </div>

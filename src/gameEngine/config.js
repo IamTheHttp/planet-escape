@@ -65,33 +65,7 @@ export default {
   },
   [PLAYER_PLANET_GUTTER_DISTANCE] : 50,
   [MAIN_VIEW_SIZE_X] : 1920 / 2,
-  [MAIN_VIEW_SIZE_Y] : 1080 / 2,
-  [MAP_SIZE] : {
-    [TINY] : {
-      [PLANETS_IN_MAP] : 10,
-      [CANVAS_X] : 1920 / 2,
-      [CANVAS_Y] : 1080 / 2,
-      [PLANET_BUFFER] : 2
-    },
-    [SMALL] : {
-      [PLANETS_IN_MAP] : 20,
-      [CANVAS_X] : 1920 * 3 / 4,
-      [CANVAS_Y] : 1080 * 3 / 4,
-      [PLANET_BUFFER] : 2
-    },
-    [MEDIUM] : {
-      [PLANETS_IN_MAP] : 40,
-      [CANVAS_X] : 1920,
-      [CANVAS_Y] : 1080,
-      [PLANET_BUFFER] : 2
-    },
-    [LARGE] : {
-      [PLANETS_IN_MAP] : 80,
-      [CANVAS_X] : 1920 * 2,
-      [CANVAS_Y] : 1080 * 2,
-      [PLANET_BUFFER] : 2
-    }
-  }
+  [MAIN_VIEW_SIZE_Y] : 1080 / 2
 };
 
 

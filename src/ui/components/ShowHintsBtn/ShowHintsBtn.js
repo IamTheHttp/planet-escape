@@ -1,6 +1,7 @@
 import React from 'react';
 import i18n from 'ui/i18n';
-class MainMenuBtn extends React.Component {
+
+class ShowHintsBtn extends React.Component {
   render() {
     return (
       <button
@@ -8,10 +9,10 @@ class MainMenuBtn extends React.Component {
         className="inGameBtn"
         type="button"
       >
-        <span className="">{i18n.menu}</span>
+        <span className="">{i18n.inGameHelp}</span>
       </button>
     );
   }
 }
 
-export default MainMenuBtn;
+export default ShowHintsBtn;

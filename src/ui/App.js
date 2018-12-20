@@ -5,15 +5,12 @@ import {
   MAP_SIZE,
   DIFFICULTY,
   NUM_PLAYERS,
-  CANVAS_X,
-  CANVAS_Y,
   CLICK,
   MAIN_VIEW_SIZE_X,
   MAIN_VIEW_SIZE_Y,
   LARGE,
   STRESS_TEST,
-  FIGHTER_BUILD_RATE,
-  PLANETS_IN_MAP
+  FIGHTER_BUILD_RATE
 } from 'gameEngine/constants';
 import React from 'react';
 import './global.scss';
@@ -22,26 +19,14 @@ import Modal from 'ui/components/Modal/Modal';
 import MainMenu from 'ui/components/MainMenu/MainMenu';
 import gameConfig from 'gameEngine/config';
 import MainMenuBtn from 'ui/components/MainMenuBtn/MainMenuBtn';
+import ShowHintsBtn from 'ui/components/ShowHintsBtn/ShowHintsBtn';
 import Minimap from 'ui/components/Minimap/Minimap';
 import MainView from 'ui/components/MainView/MainView';
 import renderSystem from 'gameEngine/systems/renderSystem';
 import GameCanvas from 'lib/GameCanvas/GameCanvas';
 import i18n from 'ui/i18n';
-import levelsData from 'levels/levels.json';
-
-let levels = [];
-Object.keys(levelsData).forEach((levelKey) => {
-  let levelData = {...levelsData[levelKey]};
-  levelData.key = levelKey;
-
-  if (levelData.order >= 0) {
-    levels.push(levelData);
-  }
-});
-
-levels.sort((a, b) => {
-  return a.order - b.order;
-});
+import levels from './levels';
+import Help from 'ui/components/MainMenu/Help';
 
 class App extends React.Component {
   constructor() {
@@ -49,6 +34,7 @@ class App extends React.Component {
     this.game = {};
     this.state = {
       gameCount: 0,
+      showHints:false,
       isMenuOpen: true,
       gamePaused: false,
       gameEnded: true,
@@ -284,10 +270,11 @@ class App extends React.Component {
         });
       }}
       onQuickStart={(menuSelection) => {
-        this.currentLevel = Object.assign({...levels.random}, {
+        this.currentLevel = {
+          buffer : 2,
           mapScale: menuSelection.mapScale,
-          planetsInMap: levels.random.planetsInMap * menuSelection.mapScale
-        });
+          planetsInMap: 20 * menuSelection.mapScale
+        };
 
         this.difficulty = gameConfig[DIFFICULTY][menuSelection.difficulty];
         this.startGame(this.currentLevel, this.difficulty).then((game) => {
@@ -329,20 +316,68 @@ class App extends React.Component {
     }
   }
 
+  showHints() {
+    if (!this.state.showHints) {
+      return null;
+    } else {
+      return (
+        <div className="splashMenu gamePaused showHints">
+          <div className="menuHeader">
+            {i18n.gamePaused}
+          </div>
+          <div className="row">
+            <Help></Help>
+          </div>
+          <div className="row">
+            <div className="col-xs-offset-3 col-xs-6">
+              <div className="menuButtons">
+                <button className="btnItem" onClick={() => {
+                  this.setState({
+                    gamePaused: false,
+                    showHints: false
+                  });
+                  this.resumeGame();
+                }}>
+                  {i18n.resumeGame}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
+
+
   render() {
+    if (this.state.showHints) {
+      return this.showHints();
+    }
+
     if (!this.state.isMenuOpen) {
       if (this.state.gamePaused) {
         return this.pauseMenu();
       } else {
         return (
           <div>
-            <MainMenuBtn
-              onClick={() => {
-                this.setState({gamePaused: true});
-                this.pauseGame();
-              }}
-            >
-            </MainMenuBtn>
+            <div className="inGameBtns">
+              <ShowHintsBtn
+                onClick={() => {
+                  this.pauseGame();
+                  // show the hints?
+                  this.setState({
+                    showHints:true
+                  });
+                }}
+              >
+              </ShowHintsBtn>
+              <MainMenuBtn
+                onClick={() => {
+                  this.pauseGame();
+                }}
+              >
+              </MainMenuBtn>
+            </div>
             <Minimap
               canvasReactElement={this.state.minimap}
             />

@@ -40,7 +40,6 @@ describe('Tests a the fighter attacks system', () => {
     attackerFighter.removeComponent(DEFENDING);
     attackerFighter.addComponent(new InPlaceToAttack());
 
-    // console.log(attackerFighter);
     let defCount = getFighters(defendingPlanet).length;
     let attackCount = getFighters(attackingPlanet).length;
     fighterAttacks();

@@ -101,18 +101,7 @@ ol {
   height:100vh;
 }
 
-#backToMainMenu {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: 9999;
-  font-size: 25px;
-  color: white;
-  background-color: black;
-  border: none;
-  border-top:1px solid $borderColor;
-  border-left:1px solid $borderColor;
-}
+
 
 .menuButtons {
   .title {
@@ -141,7 +130,7 @@ ol {
 
 .helpSection, .tutorial, .about{
   background-color:black;
-  border:1px solid #ffffff91;
+  border:1px solid $borderColor;
 }
 
 .tutorial {
@@ -177,3 +166,25 @@ ol {
   font-size: 40px;
 }
 
+
+
+.inGameBtns {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 9999;
+
+  .inGameBtn {
+    font-size: 25px;
+    color: white;
+    background-color: black;
+    border:1px solid $borderColor;
+    margin-left:10px;
+  }
+}
+
+.showHints {
+  .menuHeader {
+    margin-bottom:15px;
+  }
+}

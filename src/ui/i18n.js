@@ -2,6 +2,7 @@ let i18n = {
   quickStart: 'Quick Start',
   tutorial: 'Tutorial',
   help: 'Help',
+  inGameHelp: '?',
   about: 'About',
   selectMapSize: 'Select map size',
   back: '<',
@@ -24,7 +25,9 @@ let i18n = {
   large:'Large',
   nextLevel : 'Next level',
   mainMenu: 'Back to main menu',
-  menu: 'Menu'
+  menu: 'Menu',
+  resumeGame: 'Resume Game',
+  gamePaused: 'Game Paused'
 };
 
 export default i18n;
