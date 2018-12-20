@@ -4,7 +4,7 @@ let i18n = {
   help: 'Help',
   about: 'About',
   selectMapSize: 'Select map size',
-  back: '&#x25C0;',
+  back: '<',
   welcome: 'Welcome to Planet Escape. Version:',
   start: 'Start',
   gameTitle: 'Planet Escape',
@@ -23,7 +23,8 @@ let i18n = {
   medium:'Medium',
   large:'Large',
   nextLevel : 'Next level',
-  mainMenu: 'Back to main menu'
+  mainMenu: 'Back to main menu',
+  menu: 'Menu'
 };
 
 export default i18n;

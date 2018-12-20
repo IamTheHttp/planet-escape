@@ -81,8 +81,11 @@ class App extends React.Component {
       });
     };
 
-    window.addEventListener('resize', resizeGame, false);
-    window.addEventListener('orientationchange', resizeGame, false);
+    setInterval(() => {
+      if (this.state.newHeight !== window.innerHeight) {
+        resizeGame();
+      }
+    }, 500);
     resizeGame();
   }
 
@@ -344,7 +347,7 @@ class App extends React.Component {
               canvasReactElement={this.state.minimap}
             />
             <div className="container-fluid app">
-              <div className="row">
+              <div className="">
                 <MainView
                   widthToHeight={this.state.widthToHeight}
                   newWidthToHeight={this.state.newWidthToHeight}

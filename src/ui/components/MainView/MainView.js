@@ -25,16 +25,14 @@ class MainView extends React.Component {
   render() {
     return (
       <div
-        className="col-xs-12 main"
+        className="main"
         ref={(el) => {
           if (el) {
             this.el = el;
           }
         }}
       >
-        <div className="row">
-          {this.props.canvasElm}
-        </div>
+        {this.props.canvasElm}
       </div>
     );
   }

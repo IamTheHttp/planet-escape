@@ -5,17 +5,9 @@
 
 
 
-// TODO for now..
-
-1. Support 'Quick start' for campaign'
-  - [V] Change mapSize to "mapScale" for quickStart menu change
-  - [V] Change translations of 0.5 etc. to
-  - [V] Add some planet Multiplier
-2. [V] Get to 85% code coverage before moving on
-3. [V] Create 5 levels
-4. [V] When game ends, offer more options
-  - [V] Next level
-  - [V] Repeat/Restart
-  - [V] Back to campaign(if coming from campaign)
-  - [V] Show better indication if game was lost or not(Colors?)
-5. Deploy to staging and test
+[V] Investigate manifest.json - needs to actually be installed on the home page to make a difference
+[ ] Remove address bar from the game, or at least remove the rubberband effect
+[V] prevent swipe-up from occurring, the Menu/Back from the top needs to be moved down
+[X] Make game installable to home page - Not possible, needs https on top of other things
+[V] Fix the Icon of the minimize/maximize, it looks bad
+[V] Quick start UI is broken, needs to be fixed.

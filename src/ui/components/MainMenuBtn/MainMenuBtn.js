@@ -1,5 +1,5 @@
 import React from 'react';
-
+import i18n from 'ui/i18n';
 class MainMenuBtn extends React.Component {
   render() {
     return (
@@ -8,7 +8,7 @@ class MainMenuBtn extends React.Component {
         id="backToMainMenu"
         type="button"
       >
-        <span className="glyphicon glyphicon-menu-hamburger"></span>
+        <span className="">{i18n.menu}</span>
       </button>
     );
   }

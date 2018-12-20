@@ -17,7 +17,7 @@ class Sidebar extends React.Component {
               this.setState({isOpen : false});
             }}
           >
-            <span className="glyphicon glyphicon-resize-small"></span>
+            <div className="">-</div>
           </button>
           {this.props.canvasReactElement}
         </div>
@@ -30,7 +30,7 @@ class Sidebar extends React.Component {
               this.setState({isOpen : true});
             }}
           >
-            <span className="glyphicon glyphicon-resize-full"></span>
+            <div className="">+</div>
           </button>
         </div>
       );

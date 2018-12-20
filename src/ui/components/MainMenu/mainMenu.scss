@@ -1,3 +1,4 @@
+@import './../../variables';
 
 .splashMenu {
   height: 100vh;
@@ -25,14 +26,16 @@
 
   .btnBack {
     border-radius: 0;
-    background-color: #651616;
-    border: 1px solid black;
-    border-left: 1px solid #ffffff91;
-    border-bottom: 1px solid #ffffff91;
+    margin-top: 40vh;
+    height: 20vh;
+    background-color: black;
+    color: white;
+    border: 1px solid $borderColor;
+    width: 40px;
   }
 
   .startGame {
-    border:1px solid white;
+    border:1px solid $borderColor;
     background-color:black;
     width:175px;
     max-width:100%;

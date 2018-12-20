@@ -21,7 +21,7 @@ meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-s
 meta.name = 'viewport';
 document.head.appendChild(meta);
 
-import './pageSetup';
+// library imports
 import React from 'react';
 import {render} from 'react-dom';
 import App from './ui/App';
