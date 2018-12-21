@@ -29,6 +29,8 @@ import levels from './levels';
 import Help from 'ui/components/MainMenu/Help';
 import PlayerSelection from 'ui/components/PlayerSelection/PlayerSelection';
 
+import playerService from 'services/PlayerService';
+
 class App extends React.Component {
   constructor() {
     super();
@@ -40,7 +42,7 @@ class App extends React.Component {
       gamePaused: false,
       gameEnded: true, // TODO - Why do we need a "gameEnded" AND a won/lost state?
       gameWon: null, // null means the game was not yet decided
-      selectedPlayer: false,
+      selectedPlayer: playerService.getSelectedPlayer(),
       showPlayerManagement: false
     };
     this.updateGameState = this.updateGameState.bind(this);
