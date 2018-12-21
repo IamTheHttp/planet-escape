@@ -44,6 +44,8 @@ class App extends React.Component {
     this.renderOnCanvas = this.renderOnCanvas.bind(this);
     this.startGame = this.startGame.bind(this);
     this.levels = levels;
+
+    /* istanbul ignore next */
     window.stressTest = () => {
       gameConfig[FIGHTER_BUILD_RATE] = 10;
       this.startGame(gameConfig[MAP_SIZE][LARGE], gameConfig[DIFFICULTY][STRESS_TEST]).then((game) => {
