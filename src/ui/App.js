@@ -27,6 +27,7 @@ import GameCanvas from 'lib/GameCanvas/GameCanvas';
 import i18n from 'ui/i18n';
 import levels from './levels';
 import Help from 'ui/components/MainMenu/Help';
+import PlayerSelection from 'ui/components/PlayerSelection/PlayerSelection';
 
 class App extends React.Component {
   constructor() {
@@ -37,8 +38,10 @@ class App extends React.Component {
       showHints:false,
       isMenuOpen: true,
       gamePaused: false,
-      gameEnded: true,
-      gameWon: null // null means the game was not yet decided
+      gameEnded: true, // TODO - Why do we need a "gameEnded" AND a won/lost state?
+      gameWon: null, // null means the game was not yet decided
+      selectedPlayer: false,
+      showPlayerManagement: false
     };
     this.updateGameState = this.updateGameState.bind(this);
     this.renderOnCanvas = this.renderOnCanvas.bind(this);
@@ -165,9 +168,11 @@ class App extends React.Component {
   stopGame() {
     this.game.stop();
     this.setState({
+      gameWon: null,
       isMenuOpen: true,
       gamePaused: false,
-      gameEnded: true
+      gameEnded: true,
+      showHints: false
     });
   }
 
@@ -228,13 +233,14 @@ class App extends React.Component {
           gameWon={gameWon}
           text={gameWon ? i18n.gameWon : i18n.gameLost}
           nextLevel={nextLevel}
-          onClick={() => {
+          onRestart={() => {
             this.startGame(this.currentLevel, this.difficulty).then((game) => {
               this.game = game;
             });
           }}
           onNextLevel={() => {
-            this.startGame(nextLevel, this.difficulty).then((game) => {
+            this.currentLevel = nextLevel;
+            this.startGame(this.currentLevel, this.difficulty).then((game) => {
               this.game = game;
             });
           }}
@@ -350,59 +356,71 @@ class App extends React.Component {
     }
   }
 
-
   render() {
+    if (!this.state.selectedPlayer || this.state.showPlayerManagement) {
+      return (<PlayerSelection
+        onPlayerSelect={(selectedPlayer) => {
+          this.setState({
+            selectedPlayer
+          });
+        }}
+      ></PlayerSelection>);
+    }
+
+    if (this.state.gameWon !== null) {
+      return this.getGameEndModal();
+    }
+
     if (this.state.showHints) {
       return this.showHints();
     }
 
-    if (!this.state.isMenuOpen) {
-      if (this.state.gamePaused) {
-        return this.pauseMenu();
-      } else {
-        return (
-          <div>
-            <div className="inGameBtns">
-              <ShowHintsBtn
-                onClick={() => {
-                  this.pauseGame();
-                  // show the hints?
-                  this.setState({
-                    showHints:true
-                  });
-                }}
-              >
-              </ShowHintsBtn>
-              <MainMenuBtn
-                onClick={() => {
-                  this.pauseGame();
-                }}
-              >
-              </MainMenuBtn>
-            </div>
-            <Minimap
-              canvasReactElement={this.state.minimap}
-            />
-            <div className="container-fluid app">
-              <div className="">
-                <MainView
-                  widthToHeight={this.state.widthToHeight}
-                  newWidthToHeight={this.state.newWidthToHeight}
-                  newWidth={this.state.newWidth}
-                  newHeight={this.state.newHeight}
-                  viewMapCanvasAPI={this.state.viewMapCanvasAPI}
-                  canvasElm={this.state.map}
-                >
-                </MainView>
-              </div>
-            </div>
-            {this.getGameEndModal()}
-          </div>
-        );
-      }
-    } else {
+    if (this.state.isMenuOpen) {
       return this.mainMenu();
     }
+
+    if (this.state.gamePaused) {
+      return this.pauseMenu();
+    }
+
+    return (
+      <div>
+        <div className="inGameBtns">
+          <ShowHintsBtn
+            onClick={() => {
+              this.pauseGame();
+              // show the hints?
+              this.setState({
+                showHints:true
+              });
+            }}
+          >
+          </ShowHintsBtn>
+          <MainMenuBtn
+            onClick={() => {
+              this.pauseGame();
+            }}
+          >
+          </MainMenuBtn>
+        </div>
+        <Minimap
+          canvasReactElement={this.state.minimap}
+        />
+        <div className="container-fluid app">
+          <div className="">
+            <MainView
+              widthToHeight={this.state.widthToHeight}
+              newWidthToHeight={this.state.newWidthToHeight}
+              newWidth={this.state.newWidth}
+              newHeight={this.state.newHeight}
+              viewMapCanvasAPI={this.state.viewMapCanvasAPI}
+              canvasElm={this.state.map}
+            >
+            </MainView>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 export default App;

@@ -29,7 +29,8 @@ describe('Tests a component', () => {
     wrapper.instance().difficulty = gameConfig[DIFFICULTY][EASY];
     wrapper.setState({
       isMenuOpen : false,
-      gameStarted : true
+      gameStarted : true,
+      selectedPlayer: true
     }, () => {
       wrapper.instance().startGame(levels.random, gameConfig[DIFFICULTY][EASY]);
       jest.runOnlyPendingTimers();
@@ -51,6 +52,7 @@ describe('Tests a component', () => {
       isMenuOpen : false,
       gameStarted : true,
       gameWon : false,
+      selectedPlayer: true,
       gameReport : {}
     });
 
@@ -70,6 +72,7 @@ describe('Tests a component', () => {
       isMenuOpen: false,
       gameStarted: true,
       gameWon: true,
+      selectedPlayer: true,
       gameReport: {}
     });
 

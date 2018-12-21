@@ -24,13 +24,22 @@
     padding: 10px;
   }
 
-  .gameWon {
-    color:green;
-    font-weight:bold;
+  &.gameWon {
+    .title {
+      color:green;
+      font-weight:bold;
+    }
   }
-  .gameLost {
-    color:red;
-    font-weight:bold;
+
+  &.gameLost {
+    .title {
+      color:red;
+      font-weight:bold;
+    }
+
+    .nextLevel {
+      display:none;
+    }
   }
 
   button {

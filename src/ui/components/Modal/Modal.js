@@ -4,16 +4,18 @@ import './Modal.scss';
 
 class Modal extends React.Component {
   render() {
+    let cls = `endGame ${this.props.gameWon ? 'gameWon' : 'gameLost'}`;
+
     return (
-      <div className="endGame">
+      <div className={cls}>
         <div className="content">
           <div className="stats pull-left">
-            <span className={this.props.gameWon ? 'gameWon' : 'gameLost'}>{this.props.text}</span>
+            <span className="title">{this.props.text}</span>
             {this.props.children}
           </div>
           <div className="menuButtons pull-right">
             <button
-              onClick={this.props.onClick}
+              onClick={this.props.onRestart}
               className="btnItem restart">{i18n.restart}
             </button>
             {

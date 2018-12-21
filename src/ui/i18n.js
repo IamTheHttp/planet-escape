@@ -27,7 +27,11 @@ let i18n = {
   mainMenu: 'Back to main menu',
   menu: 'Menu',
   resumeGame: 'Resume Game',
-  gamePaused: 'Game Paused'
+  gamePaused: 'Game Paused',
+  selectUser : 'Select User',
+  createNewUser: 'Create new user',
+  create: 'Create',
+  enterUsername: 'Enter your username'
 };
 
 export default i18n;

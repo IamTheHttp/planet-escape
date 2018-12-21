@@ -1,26 +1,60 @@
+class MemoryLocalStorage {
+  constructor() {
+    this.store = {};
+  }
+
+  clear() {
+    this.store = {};
+  }
+
+  getItem(key) {
+    return this.store[key] || null;
+  }
+
+  setItem(key, value) {
+    this.store[key] = value;
+  }
+
+  removeItem(key) {
+    delete this.store[key];
+  }
+}
+
+if (!window.localStorage) {
+  window.localStorage = new MemoryLocalStorage();
+}
+
+
 class LocalStorage {
+  clear() {
+    window.localStorage.clear();
+  }
   setItem(...args) {
-    if (window.localStorage && localStorage.setItem) {
-      window.localStorage.setItem.apply(window.localStorage, args);
-    }
+    window.localStorage.setItem.apply(window.localStorage, args);
   }
   getItem(...args) {
-    if (window.localStorage && localStorage.getItem) {
-      return window.localStorage.getItem.apply(window.localStorage, args);
-    } else {
-      return '';
-    }
+    return window.localStorage.getItem.apply(window.localStorage, args);
   }
 
   setJSON(key, obj) {
-    this.setItem(key, JSON.stringify(obj));
+    try {
+      this.setItem(key, JSON.stringify(obj));
+      return true;
+    } catch (e) {
+      // nothing
+      return false;
+    }
   }
 
   getJSON(args) {
-    return JSON.parse(this.getItem(args));
+    try {
+      return JSON.parse(this.getItem(args));
+    } catch (e) {
+      return null;
+    }
   }
 }
 
 
 
-export default LocalStorage;
+export default new LocalStorage();
