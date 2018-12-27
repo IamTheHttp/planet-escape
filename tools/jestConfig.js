@@ -15,7 +15,7 @@ module.exports = function (jestConfig) {
 
   jestConfig.bail = true;
   jestConfig.coverageThreshold.global = {
-    "branches": 85,
+    "branches": 80,
     "functions": 80,
     "lines": 85,
     "statements": 85
