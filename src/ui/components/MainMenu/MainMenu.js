@@ -126,12 +126,8 @@ class MainMenu extends React.Component {
             }
           }
 
-
           let lvlIsNextCls = lastLevelDone ? 'nextLevel' : '';
           let lvlIsDoneCls = levelIsDone ? 'levelIsDone' : '';
-
-
-
 
           return (
             <div

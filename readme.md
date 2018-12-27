@@ -20,6 +20,7 @@
 [V] Selected user goes to the campaign, he should see the levels with indication if he finished them or not
 [V] Selected user goes to the campaign, He should be able to pick the next level in line
 [V] Selected user goes to the campaign, he cannot pick a campaign level that he's not eligible for
+[V] Upgraded game-platform package, which is now not bundled with react, saving KB size
 
 ### 21/12/2018
 [V] Fix - Restart in the game-end screen restarts level 1 was always restarting the first level.
