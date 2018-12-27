@@ -3,7 +3,7 @@ import i18n from 'ui/i18n';
 import playerService from 'services/PlayerService';
 import './createNewPlayer.scss';
 
-class CreateNewUser extends React.Component {
+class createNewPlayer extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -17,7 +17,7 @@ class CreateNewUser extends React.Component {
     return (
       <div className="splashMenu gamePaused createNewPlayer">
         <div className="menuHeader">
-          {playerService.getRegisteredPlayers().length ? i18n.createNewUser : i18n.createPlayerIntro}
+          {playerService.getRegisteredPlayers().length ? i18n.createNewPlayer : i18n.createPlayerIntro}
         </div>
         <div className="menuButtons">
           <input
@@ -45,4 +45,4 @@ class CreateNewUser extends React.Component {
   }
 }
 
-export default CreateNewUser;
+export default createNewPlayer;

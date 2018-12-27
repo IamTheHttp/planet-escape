@@ -5,7 +5,6 @@
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import PlayerSelection from 'ui/components/PlayerSelection/PlayerSelection';
-import CreateNewPlayer from 'ui/components/PlayerSelection/CreateNewPlayer';
 import playerService from 'services/PlayerService';
 
 describe('Tests a component', () => {
@@ -17,7 +16,7 @@ describe('Tests a component', () => {
     ></PlayerSelection>);
   });
 
-  it('Shows the create user dialog', () => {
+  it('Shows the create player dialog', () => {
     expect(wrapper.find('input').length).toBe(1);
 
     playerService.createPlayer('Foo');

@@ -1,6 +1,6 @@
 import React from 'react';
 import i18n from 'ui/i18n';
-import CreateNewUser from './CreateNewPlayer';
+import CreateNewPlayer from './CreateNewPlayer';
 import playerService from 'services/PlayerService';
 import './playerSelection.scss';
 
@@ -19,7 +19,7 @@ class PlayerSelection extends React.Component {
     let players = playerService.getRegisteredPlayers();
 
     if (this.state.createUser) {
-      return <CreateNewUser
+      return <CreateNewPlayer
         onSubmit={(userName) => {
           playerService.createPlayer(userName);
           playerService.selectPlayer(userName);
@@ -32,7 +32,7 @@ class PlayerSelection extends React.Component {
             selectedPlayer : playerService.getSelectedPlayer() || {}
           });
         }}
-      ></CreateNewUser>;
+      ></CreateNewPlayer>;
     } else {
       return (
         <div className="splashMenu gamePaused playerSelection">
@@ -70,7 +70,7 @@ class PlayerSelection extends React.Component {
                 createUser: true
               });
             }}>
-              {i18n.createNewUser}
+              {i18n.createNewPlayer}
             </button>
           </div>
         </div>
