@@ -5,7 +5,9 @@
 import Entity from 'lib/ECS/Entity';
 import {mount, shallow} from 'enzyme';
 import React from 'react';
-import playerService from 'services/PlayerService';
+import playerService, {PlayerService} from 'services/PlayerService';
+import ls from 'lib/Storage/LocalStorage';
+
 
 describe('Tests the playerService', () => {
   beforeEach(() => {
@@ -14,9 +16,14 @@ describe('Tests the playerService', () => {
 
   it('Adds a player', () => {
     playerService.createPlayer('patrick');
-    let player = playerService.getPlayer('patrick');
+    playerService.createPlayer('patrick2');
+    playerService.createPlayer('patrick3');
+    let player;
 
-    expect(player).not.toBeFalsy();
+    player = playerService.getPlayer('patrick3');
+    expect(player.userName).toBe('patrick3');
+
+    expect(playerService.data.players[0].userName).toBe('patrick');
     expect(Object.keys(player.levelsPassed).length).toBe(0);
   });
 
@@ -37,5 +44,36 @@ describe('Tests the playerService', () => {
     playerService.finishLevel('first_level');
 
     expect(Object.keys(playerService.getSelectedPlayer().levelsPassed).length).toBe(1);
+  });
+
+  it('Deletes a user, and also even when selected', () => {
+    playerService.createPlayer('patrick');
+
+    playerService.deletePlayer('patrick');
+    expect(playerService.getPlayer('patrick')).toBeFalsy();
+
+    playerService.createPlayer('patrick');
+    playerService.createPlayer('patrick2');
+    playerService.selectPlayer('patrick');
+    playerService.deletePlayer('patrick');
+    expect(playerService.getPlayer('patrick')).toBeFalsy();
+    expect(playerService.getSelectedPlayer()).toBeFalsy();
+
+    expect(playerService.getPlayer('patrick2')).not.toBeFalsy();
+  });
+
+  it('loads correctly from localStorage', () => {
+    let user = {
+      userName : 'patrick',
+      levelsPassed : []
+    };
+
+    ls.setJSON('PE', {
+      selectedPlayer : user,
+      players : [user]
+    });
+
+    let playerService = new PlayerService();
+    expect(playerService.getSelectedPlayer().userName).toBe('patrick');
   });
 });

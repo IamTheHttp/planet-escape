@@ -2,16 +2,22 @@ import React from 'react';
 import i18n from 'ui/i18n';
 import CreateNewUser from './CreateNewPlayer';
 import playerService from 'services/PlayerService';
+import './playerSelection.scss';
 
-class UserSelection extends React.Component {
+class PlayerSelection extends React.Component {
   constructor() {
     super();
     this.state = {
-      createUser: false
+      createUser: playerService.getRegisteredPlayers().length === 0,
+      players : playerService.getRegisteredPlayers().length,
+      selectedPlayer : playerService.getSelectedPlayer() || {}
     };
   }
 
   render() {
+    let selectedPlayer = this.state.selectedPlayer;
+    let players = playerService.getRegisteredPlayers();
+
     if (this.state.createUser) {
       return <CreateNewUser
         onSubmit={(userName) => {
@@ -22,16 +28,44 @@ class UserSelection extends React.Component {
           });
 
           this.props.onPlayerSelect(playerService.getSelectedPlayer());
+          this.setState({
+            selectedPlayer : playerService.getSelectedPlayer() || {}
+          });
         }}
       ></CreateNewUser>;
     } else {
       return (
-        <div className="splashMenu gamePaused">
+        <div className="splashMenu gamePaused playerSelection">
           <div className="menuHeader">
-            {i18n.selectUser}
+            {i18n.switchPlayer}
           </div>
-          <div className="menuButtons">
-            <button className="btnItem createUserBtn" onClick={() => {
+          <div className="menuButtons ">
+            {players.map((player, i) => {
+              let className = selectedPlayer.userName === player.userName ? 'selectedUser btnItem' : 'btnItem';
+              return (
+              <div key={i}>
+                <button className={className} onClick={() => {
+                  playerService.selectPlayer(player.userName);
+                  this.setState({
+                    selectedPlayer : playerService.getSelectedPlayer() || {}
+                  });
+                }}>
+                    {player.userName} <span className="isActive"> - {i18n.selected}</span>
+                  </button>
+                <button className="btnItem delete"
+                  onClick={() => {
+                    // delete the selected user?
+                    playerService.deletePlayer(player.userName);
+                    this.setState({
+                      players : playerService.getRegisteredPlayers().length
+                    });
+                    this.props.onPlayerDelete(player.userName);
+                  }}
+                >{i18n.del}</button>
+              </div>
+              );
+            })}
+            <button className="btnItem" onClick={() => {
               this.setState({
                 createUser: true
               });
@@ -45,4 +79,4 @@ class UserSelection extends React.Component {
   }
 }
 
-export default UserSelection;
+export default PlayerSelection;

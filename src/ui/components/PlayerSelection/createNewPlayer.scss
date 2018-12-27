@@ -1,0 +1,10 @@
+.createNewPlayer {
+  .lenHelper {
+    display:none;
+    &.tooShort {
+      font-size:1rem;
+      color:gray;
+      display:inline-block;
+    }
+  }
+}

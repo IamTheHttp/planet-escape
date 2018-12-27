@@ -29,9 +29,15 @@ let i18n = {
   resumeGame: 'Resume Game',
   gamePaused: 'Game Paused',
   selectUser : 'Select User',
-  createNewUser: 'Create new user',
+  createPlayerIntro: 'Oh, you\'re new here.. How should we call you?',
+  createNewUser: 'Create new player',
+  switchPlayer : 'Switch Player',
+  changeActivePlayer: 'Change active player',
   create: 'Create',
-  enterUsername: 'Enter your username'
+  enterUsername: 'username',
+  del : 'Delete',
+  selected : 'Selected',
+  aFewMoreLetters : 'A few more letters..'
 };
 
 export default i18n;

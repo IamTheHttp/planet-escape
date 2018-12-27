@@ -1,5 +1,5 @@
 // let LS = {
-//   selectedPlayer
+//   selectedPlayer, // playerObject
 //   users: [
 //     {
 //       userName: 'Patrick',
@@ -8,7 +8,6 @@
 //     }
 //   ]
 // }
-
 
 
 import ls from 'lib/Storage/LocalStorage';
@@ -25,8 +24,6 @@ class PlayerService {
     } else {
       this.data = ls.getJSON('PE');
     }
-
-    this.players = this.data.players;
   }
 
   persistState() {
@@ -44,8 +41,12 @@ class PlayerService {
 
   getPlayer(userName) {
     return this.data.players.find((player) => {
-      return player.userName = userName;
+      return player.userName === userName;
     });
+  }
+
+  getRegisteredPlayers() {
+    return this.data.players;
   }
 
   createPlayer(userName) {
@@ -67,7 +68,13 @@ class PlayerService {
   }
 
   deletePlayer(userName) {
-
+    if (this.data.selectedPlayer && this.data.selectedPlayer.userName === userName) {
+      this.data.selectedPlayer = null;
+    }
+    this.data.players = this.data.players.filter((player) => {
+      return player.userName !== userName;
+    });
+    this.persistState();
   }
 
   getSelectedPlayer() {
@@ -87,8 +94,12 @@ class PlayerService {
   }
 
   validateUsername(userName) {
-    return userName && userName.length > 3;
+    let isAvailable = !this.getPlayer(userName);
+    let isLongEnough = userName && userName.length > 3;
+
+    return isAvailable && isLongEnough;
   }
 }
 
 export default new PlayerService();
+export {PlayerService};

@@ -1,0 +1,26 @@
+.playerSelection {
+  .isActive {
+    display:none;
+  }
+
+  .selectedUser {
+    .isActive {
+      display:inline-block;
+      color:lime;
+    }
+  }
+
+  .menuButtons {
+    width:350px !important;
+    .btnItem {
+      width:60%;
+      display:inline-block;
+
+      &.delete {
+        display: inline-block;
+        width: 80px;
+        margin-left: 30px;
+      }
+    }
+  }
+}

@@ -6,6 +6,8 @@ import Help from './Help';
 import {version} from '../../../../package.json';
 import earthImage from 'assets/player1.png';
 import alienImage from 'assets/player2.png';
+import PlayerSelection from '../PlayerSelection/PlayerSelection';
+
 import {
   TINY,
   MEDIUM,
@@ -70,6 +72,11 @@ class MainMenu extends React.Component {
           {i18n.help}
         </button>
         <button className="btnItem" onClick={() => {
+          this.setState({selection: 'playerSelection'});
+        }}>
+          {i18n.changeActivePlayer}
+        </button>
+        <button className="btnItem" onClick={() => {
           this.setState({selection: 'about'});
         }}>
           {i18n.about}
@@ -125,6 +132,20 @@ class MainMenu extends React.Component {
     );
   }
 
+  playerSelection() {
+    if (this.state.selection !== 'playerSelection') {
+      return null;
+    }
+
+    return (
+      <PlayerSelection
+        onPlayerSelect={this.props.onPlayerSelect}
+        onPlayerDelete={this.props.onPlayerDelete}
+      >
+      </PlayerSelection>
+    );
+  }
+
   quickStartSelection() {
     if (this.state.selection !== 'quickStart') {
       return null;
@@ -174,7 +195,7 @@ class MainMenu extends React.Component {
                    }}
               >
                 <img src={earthImage}/>
-            </div>
+              </div>
             </div>
           </div>
         </div>
@@ -211,6 +232,7 @@ class MainMenu extends React.Component {
           {this.quickStartSelection()}
           {this.levelSelection()}
           {this.help()}
+          {this.playerSelection()}
           {this.about()}
         </div>
       </div>

@@ -6,21 +6,24 @@ import {mount, shallow} from 'enzyme';
 import React from 'react';
 import PlayerSelection from 'ui/components/PlayerSelection/PlayerSelection';
 import CreateNewPlayer from 'ui/components/PlayerSelection/CreateNewPlayer';
-
+import playerService from 'services/PlayerService';
 
 describe('Tests a component', () => {
   let wrapper;
 
   beforeEach(() => {
+    playerService.reset();
     wrapper = mount(<PlayerSelection
     ></PlayerSelection>);
   });
 
-  it('Shows the selection option', () => {
-    expect(wrapper.find('.createUserBtn').length).toBe(1);
-    expect(wrapper.find(CreateNewPlayer).length).toBe(0);
+  it('Shows the create user dialog', () => {
+    expect(wrapper.find('input').length).toBe(1);
 
-    wrapper.find('.createUserBtn').simulate('click');
-    expect(wrapper.find(CreateNewPlayer).length).toBe(1);
+    playerService.createPlayer('Foo');
+
+    wrapper = mount(<PlayerSelection
+    ></PlayerSelection>);
+    expect(wrapper.find('input').length).toBe(0);
   });
 });

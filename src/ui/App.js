@@ -48,6 +48,8 @@ class App extends React.Component {
     this.updateGameState = this.updateGameState.bind(this);
     this.renderOnCanvas = this.renderOnCanvas.bind(this);
     this.startGame = this.startGame.bind(this);
+    this.handlePlayerSelect = this.handlePlayerSelect.bind(this);
+    this.handlePlayerDelete = this.handlePlayerDelete.bind(this);
     this.levels = levels;
 
     /* istanbul ignore next */
@@ -269,6 +271,8 @@ class App extends React.Component {
 
   mainMenu() {
     return (<MainMenu
+      onPlayerSelect={this.handlePlayerSelect}
+      onPlayerDelete={this.handlePlayerDelete}
       levels={levels}
       onLevelSelect={(level, levels) => {
         this.currentLevel = level;
@@ -358,14 +362,23 @@ class App extends React.Component {
     }
   }
 
+  handlePlayerSelect(selectedPlayer) {
+    this.setState({
+      selectedPlayer
+    });
+  }
+
+  handlePlayerDelete() {
+    this.setState({
+      selectedPlayer: playerService.getSelectedPlayer()
+    });
+  }
+
   render() {
     if (!this.state.selectedPlayer || this.state.showPlayerManagement) {
       return (<PlayerSelection
-        onPlayerSelect={(selectedPlayer) => {
-          this.setState({
-            selectedPlayer
-          });
-        }}
+        onPlayerSelect={this.handlePlayerSelect}
+        onPlayerDelete={this.handlePlayerDelete}
       ></PlayerSelection>);
     }
 
@@ -425,4 +438,5 @@ class App extends React.Component {
     );
   }
 }
+
 export default App;

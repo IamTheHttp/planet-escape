@@ -1,26 +1,25 @@
 ##Current
 [ ] Add player progress - https://iamhttp.myjetbrains.com/youtrack/issue/PE-91
 
-[ ] On first load to the website, Prompt the user to enter his username.
-[ ] In the main menu, allow users to add more users(Change player), change active player, and delete players
-[ ] Limit to 5 users per device
+### Added flows
+[V] New user in the game -> Show add user -> submit -> move to main menu
+[V] Selected user -> go to change user from the main menu -> delete selected user -> user goes back to menu, he should see the create user dialog
+[V] Selected user -> go to change user from the main menu -> delete other user -> list should refresh
+[V] Create user dialog -> User enters less than 3 characters, he should see a prompt to put in more chars
+[V] Any user -> Go to create new user -> tries to create a user that already exists -> sees that he needs to put in more characters
+[ ] Selected user goes to the campaign, he should see the levels with indication if he finished them or not
+[ ] Selected user goes to the campaign, He should be able to pick the next level in line
+[ ] Selected user goes to the campaign, he cannot pick a campaign level that he's not eligible for
 
-Next steps, once we have an 'active user':
 
-[ ] When a level is complete, add that information to the user object we have saved.
-[ ] Support incognito mode, which should just save to memory instead of localStorage
-[ ] Modify the UI of the levels to indicate if the level was already done by this user
-[ ] Block users from selecting levels they're not eligible for
-[ ] Provide back door(magic user) with access to everything
-
-what was done so far
+### what was done so far
 [V] Created a localStorage service to persist stuff
 [V] Created a a playerService to handle player interactions
 [V] Created UI to create new players
-[ ] Extend "Create Player" UI to include players in localStorage
-[ ] Prompt the "player management" screen from the main menu (showPlayerManagement state)
-[ ] Assumption - The only time we'll have a state withou a selected player is on first load
-
+[V] Extend "Create Player" UI to include players in localStorage
+[V] Prompt the "player management" screen from the main menu (showPlayerManagement state)
+[V] Add a button to delete a user + Actually delete it, including selected player
+[V] Allow changing the selected user
 
 
 ##Known Issues
