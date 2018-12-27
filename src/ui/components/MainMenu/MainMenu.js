@@ -55,7 +55,7 @@ class MainMenu extends React.Component {
     }
 
     return (
-      <div className="menuButtons">
+      <div className="menuButtons mainMenu">
         <button className="btnItem" onClick={() => {
           this.setState({selection: 'campaign'});
         }}>
@@ -71,7 +71,7 @@ class MainMenu extends React.Component {
         }}>
           {i18n.help}
         </button>
-        <button className="btnItem" onClick={() => {
+        <button className="btnItem goToPlayerSelection" onClick={() => {
           this.setState({selection: 'playerSelection'});
         }}>
           {i18n.changeActivePlayer}

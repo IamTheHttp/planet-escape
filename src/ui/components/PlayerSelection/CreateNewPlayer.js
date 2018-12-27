@@ -21,7 +21,7 @@ class createNewPlayer extends React.Component {
         </div>
         <div className="menuButtons">
           <input
-            className="btnItem"
+            className="btnItem playerUserName"
             type="text"
             placeholder={i18n.enterUsername}
             onChange={(event) => {
@@ -32,7 +32,7 @@ class createNewPlayer extends React.Component {
           <div className={isInputValid ? 'lenHelper' : 'tooShort lenHelper' }>
             {i18n.aFewMoreLetters}
           </div>
-          <button className="btnItem" onClick={() => {
+          <button className="btnItem createPLayerBtn" onClick={() => {
             if (isInputValid) {
               this.props.onSubmit(this.state.inputValue);
             }

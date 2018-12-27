@@ -5,30 +5,69 @@
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import CreateNewPlayer from 'ui/components/PlayerSelection/CreateNewPlayer';
+import playerService from 'services/PlayerService';
+
 describe('Tests a component', () => {
   let wrapper;
 
   beforeEach(() => {
+    playerService.reset();
     wrapper = mount(<CreateNewPlayer
-    ></CreateNewPlayer>
+      ></CreateNewPlayer>
     );
   });
 
   it('Changes the input and submits the form', (done) => {
     wrapper = mount(<CreateNewPlayer
-      onSubmit={(userName) => {
-        expect(userName).toBe('abcdefg');
-        done();
-      }}
+        onSubmit={(userName) => {
+          expect(userName).toBe('abcdefg');
+          done();
+        }}
       ></CreateNewPlayer>
     );
 
     wrapper.find('input').simulate('change', {
-      target : {
+      target: {
         value: 'abcdefg'
       }
     });
 
     wrapper.find('button').simulate('click');
+  });
+
+  it('Shows proper errors if validation does not work', () => {
+    wrapper = mount(<CreateNewPlayer
+      ></CreateNewPlayer>
+    );
+
+    // short input
+    wrapper.find('input').simulate('change', {
+      target: {
+        value: 'a'
+      }
+    });
+
+    // we expect to get the error
+    expect(wrapper.find('.tooShort').length).toBe(1);
+
+    // better input
+    wrapper.find('input').simulate('change', {
+      target: {
+        value: 'aaaa'
+      }
+    });
+    expect(wrapper.find('.tooShort').length).toBe(0);
+  });
+
+  it('fails when the player name is already taken', () => {
+    playerService.createPlayer('patrick');
+
+    wrapper.find('input').simulate('change', {
+      target: {
+        value: 'patrick'
+      }
+    });
+
+    expect(wrapper.find('.tooShort').length).toBe(1);
   });
 });

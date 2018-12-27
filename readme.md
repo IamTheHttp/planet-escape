@@ -1,12 +1,13 @@
 ##Current
 [ ] Add player progress - https://iamhttp.myjetbrains.com/youtrack/issue/PE-91
 
-### Added flows
-[V] New user in the game -> Show add user -> submit -> move to main menu
+### Added user journeys
+[VT] New user in the game -> Show add user -> submit -> move to main menu
 [V] Selected user -> go to change user from the main menu -> delete selected user -> user goes back to menu, he should see the create user dialog
 [V] Selected user -> go to change user from the main menu -> delete other user -> list should refresh
-[V] Create user dialog -> User enters less than 3 characters, he should see a prompt to put in more chars
-[V] Any user -> Go to create new user -> tries to create a user that already exists -> sees that he needs to put in more characters
+[VT] Selected user -> go to player list -> sees the right user selected
+[VT] Create user dialog -> User enters less than 3 characters, he should see a prompt to put in more chars
+[VT] Any user -> Go to create new user -> tries to create a user that already exists -> sees that he needs to put in more characters
 [ ] Selected user goes to the campaign, he should see the levels with indication if he finished them or not
 [ ] Selected user goes to the campaign, He should be able to pick the next level in line
 [ ] Selected user goes to the campaign, he cannot pick a campaign level that he's not eligible for
