@@ -120,8 +120,9 @@ class MainMenu extends React.Component {
 
           /* istanbul ignore next */
           if (process.env.NODE_ENV === 'dev') {
-            if (this.props.selectedPlayer.userName === 'iamhttp') {
+            if (this.props.selectedPlayer.userName.toLowerCase() === 'iamhttp') {
               lastLevelDone = true;
+              levelIsDone = true;
             }
           }
 
