@@ -41,7 +41,7 @@ class PlayerSelection extends React.Component {
           </div>
           <div className="menuButtons ">
             {players.map((player, i) => {
-              let className = selectedPlayer.userName === player.userName ? 'selectedUser btnItem' : 'btnItem';
+              let className = selectedPlayer.userName === player.userName ? 'selectedUser btnItem' : 'btnItem nonSelectedUser';
               return (
               <div key={i}>
                 <button className={className} onClick={() => {
@@ -49,6 +49,7 @@ class PlayerSelection extends React.Component {
                   this.setState({
                     selectedPlayer : playerService.getSelectedPlayer() || {}
                   });
+                  this.props.onPlayerSelect(playerService.getSelectedPlayer());
                 }}>
                     {player.userName} <span className="isActive"> - {i18n.selected}</span>
                   </button>

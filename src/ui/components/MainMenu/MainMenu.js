@@ -108,6 +108,7 @@ class MainMenu extends React.Component {
       return null;
     }
 
+
     let levelsPassed = this.props.selectedPlayer.levelsPassed;
 
     // Done planets are earthy

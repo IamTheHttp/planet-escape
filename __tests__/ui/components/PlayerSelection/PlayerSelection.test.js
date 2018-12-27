@@ -25,4 +25,18 @@ describe('Tests a component', () => {
     ></PlayerSelection>);
     expect(wrapper.find('input').length).toBe(0);
   });
+
+  it('call the right callback when selecting a user', (done) => {
+    playerService.createPlayer('foo');
+    playerService.createPlayer('bar');
+
+    wrapper = mount(<PlayerSelection
+      onPlayerSelect={(player) => {
+        expect(player.userName).toBe('foo');
+        done();
+      }}
+    ></PlayerSelection>);
+
+    wrapper.find('.nonSelectedUser').first().simulate('click');
+  });
 });
