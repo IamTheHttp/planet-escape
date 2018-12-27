@@ -20,6 +20,7 @@ class MemoryLocalStorage {
   }
 }
 
+/* istanbul ignore else  */
 if (!window.localStorage) {
   window.localStorage = new MemoryLocalStorage();
 }
@@ -34,6 +35,9 @@ class LocalStorage {
   }
   getItem(...args) {
     return window.localStorage.getItem.apply(window.localStorage, args);
+  }
+  removeItem(...args) {
+    delete window.localStorage.removeItem.apply(window.localStorage, args);
   }
 
   setJSON(key, obj) {

@@ -35,10 +35,11 @@ describe('Tests the playerService', () => {
   });
 
   it('Allows a user to finish a level, but only once, obviously', () => {
+    expect(playerService.finishLevel('first_level')).toBe(false);
     playerService.createPlayer('patrick');
     playerService.selectPlayer('patrick');
 
-    playerService.finishLevel('first_level');
+    expect(playerService.finishLevel('first_level')).toBe(true);
     playerService.finishLevel('first_level');
     playerService.finishLevel('first_level');
     playerService.finishLevel('first_level');
@@ -61,6 +62,11 @@ describe('Tests the playerService', () => {
 
     expect(playerService.getPlayer('patrick2')).not.toBeFalsy();
   });
+
+  it('Does not select a user that does not exist', () => {
+    expect(playerService.selectPlayer('patrick')).toBe(false);
+  });
+
 
   it('loads correctly from localStorage', () => {
     let user = {
