@@ -57,6 +57,14 @@
     color:black;
     width:70px;
     height:70px;
+    position:relative;
+    opacity: 0.4;
+
+    &.levelIsDone,
+    &.nextLevel{
+      opacity:1;
+    }
+
     &-image{
       img {
         width:100%;

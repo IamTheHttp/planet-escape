@@ -62,7 +62,10 @@ class PlayerService {
     if (!this.getSelectedPlayer()) {
       return false;
     } else {
-      this.data.selectedPlayer.levelsPassed[levelKey] = 1;
+      let selectedPlayer = this.getSelectedPlayer();
+      selectedPlayer.levelsPassed[levelKey] = 1;
+
+      this.persistState();
       return true;
     }
   }

@@ -45,6 +45,7 @@ describe('Tests the playerService', () => {
     playerService.finishLevel('first_level');
 
     expect(Object.keys(playerService.getSelectedPlayer().levelsPassed).length).toBe(1);
+    expect(Object.keys(playerService.getPlayer('patrick').levelsPassed).length).toBe(1);
   });
 
   it('Deletes a user, and also even when selected', () => {

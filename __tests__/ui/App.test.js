@@ -82,6 +82,13 @@ describe('Tests a component', () => {
     expect(wrapper.find('.endGame').length).toBe(1);
   });
 
+  it('Expected game modal without proper state to return null', () => {
+    let wrapper = mount(<App></App>);
+    let inst = wrapper.instance();
+
+    expect(inst.getGameEndModal()).toBe(null);
+  });
+
 
   it('Expect the full create new player journey to work', () => {
     // app loads into the create user journey.

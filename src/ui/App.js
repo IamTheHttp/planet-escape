@@ -207,6 +207,13 @@ class App extends React.Component {
       let gameLost = gameEnt[GAME_STATE].status === GAME_LOST;
 
 
+      if (gameWon) {
+        // selectedPlayer
+        if (this.currentLevel) {
+          playerService.finishLevel(this.currentLevel.key);
+        }
+      }
+
       // allow to hack my way..
       if (window.cheats_won) {
         gameWon = true;
@@ -271,6 +278,7 @@ class App extends React.Component {
 
   mainMenu() {
     return (<MainMenu
+      selectedPlayer={this.state.selectedPlayer}
       onPlayerSelect={this.handlePlayerSelect}
       onPlayerDelete={this.handlePlayerDelete}
       levels={levels}

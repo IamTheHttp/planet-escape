@@ -108,19 +108,32 @@ class MainMenu extends React.Component {
       return null;
     }
 
+    let levelsPassed = this.props.selectedPlayer.levelsPassed;
+
+    // Done planets are earthy
     return (
       <div className="campaignScreen">
-        {this.props.levels.map((level) => {
+        {this.props.levels.map((level, i) => {
+          let levelIsDone = !!levelsPassed[level.key];
+
+          let lastLevelDone = i === 0 || !levelIsDone && i > 0 && levelsPassed[this.props.levels[i - 1].key];
+
+
+          let lvlIsNextCls = lastLevelDone ? 'nextLevel' : '';
+          let lvlIsDoneCls = levelIsDone ? 'levelIsDone' : '';
+
           return (
             <div
-              className="level"
+              className={`level ${lvlIsNextCls} ${lvlIsDoneCls}`}
               key={level.key}
               onClick={() => {
-                this.props.onLevelSelect(level, this.props.levels);
+                if (lastLevelDone) {
+                  this.props.onLevelSelect(level, this.props.levels);
+                }
               }}
             >
               <div className="level-image">
-                <img src={earthImage}/>
+                <img src={levelIsDone ? earthImage : alienImage}/>
               </div>
               <div className="level-title">
                 {level.key}

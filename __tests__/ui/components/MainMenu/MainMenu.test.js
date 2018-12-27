@@ -7,6 +7,7 @@ import React from 'react';
 import MainMenu from 'ui/components/MainMenu/MainMenu';
 
 import levelsData from 'levels/levels.json';
+import playerService from 'services/PlayerService';
 
 let levels = [];
 Object.keys(levelsData).forEach((levelKey) => {
@@ -23,9 +24,17 @@ levels.sort((a, b) => {
 });
 
 describe('Tests a component', () => {
+  beforeEach(() => {
+    playerService.reset();
+  });
+
   it('renders', () => {
+    playerService.createPlayer('foo');
+    playerService.selectPlayer('foo');
+
     let wrapper = shallow(<MainMenu
       levels={levels}
+      selectedPlayer={playerService.getSelectedPlayer()}
     ></MainMenu>);
 
     wrapper.find('.btnItem').forEach((el) => {
