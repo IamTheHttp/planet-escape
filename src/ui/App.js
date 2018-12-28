@@ -37,7 +37,7 @@ class App extends React.Component {
     this.game = {};
     this.state = {
       gameCount: 0,
-      showHints:false,
+      showHints: false,
       isMenuOpen: true,
       gamePaused: false,
       gameEnded: true, // TODO - Why do we need a "gameEnded" AND a won/lost state?
@@ -262,13 +262,13 @@ class App extends React.Component {
         >
 
           <div className="gameStats">
-          <h4>{i18n.stats}</h4>
-          {Object.keys(this.state.gameReport).map((key) => {
-            return (<div key={key}>
-              <span className="key">{i18n[key]}</span>
-              <span className="value">{this.state.gameReport[key].count}</span>
-            </div>);
-          })}
+            <h4>{i18n.stats}</h4>
+            {Object.keys(this.state.gameReport).map((key) => {
+              return (<div key={key}>
+                <span className="key">{i18n[key]}</span>
+                <span className="value">{this.state.gameReport[key].count}</span>
+              </div>);
+            })}
           </div>
         </Modal>);
     } else {
@@ -293,7 +293,7 @@ class App extends React.Component {
       }}
       onQuickStart={(menuSelection) => {
         this.currentLevel = {
-          buffer : 2,
+          buffer: 2,
           mapScale: menuSelection.mapScale,
           planetsInMap: 20 * menuSelection.mapScale
         };
@@ -315,11 +315,11 @@ class App extends React.Component {
       return null;
     } else {
       return (
-        <div className="splashMenu gamePaused">
+        <div className="centered md">
           <div className="menuHeader">
             Game paused
           </div>
-          <div className="menuButtons">
+          <div className="btnList">
             <button className="btnItem" onClick={() => {
               this.setState({gamePaused: false});
               this.resumeGame();
@@ -343,7 +343,7 @@ class App extends React.Component {
       return null;
     } else {
       return (
-        <div className="splashMenu gamePaused showHints">
+        <div className="showHints centered md">
           <div className="menuHeader">
             {i18n.gamePaused}
           </div>
@@ -351,8 +351,8 @@ class App extends React.Component {
             <Help></Help>
           </div>
           <div className="row">
-            <div className="col-xs-offset-3 col-xs-6">
-              <div className="menuButtons">
+            <div className="centered fl">
+              <div className="btnList">
                 <button className="btnItem" onClick={() => {
                   this.setState({
                     gamePaused: false,
@@ -383,64 +383,68 @@ class App extends React.Component {
   }
 
   render() {
+    let content = null;
+
     if (!this.state.selectedPlayer || this.state.showPlayerManagement) {
-      return (<PlayerSelection
-        onPlayerSelect={this.handlePlayerSelect}
-        onPlayerDelete={this.handlePlayerDelete}
-      ></PlayerSelection>);
-    }
-
-    if (this.state.gameWon !== null) {
-      return this.getGameEndModal();
-    }
-
-    if (this.state.showHints) {
-      return this.showHints();
-    }
-
-    if (this.state.isMenuOpen) {
-      return this.mainMenu();
-    }
-
-    if (this.state.gamePaused) {
-      return this.pauseMenu();
+      content = (
+        <PlayerSelection
+          onPlayerSelect={this.handlePlayerSelect}
+          onPlayerDelete={this.handlePlayerDelete}
+        ></PlayerSelection>
+      );
+    } else if (this.state.gameWon !== null) {
+      content = this.getGameEndModal();
+    } else if (this.state.showHints) {
+      content = this.showHints();
+    } else if (this.state.isMenuOpen) {
+      content = this.mainMenu();
+    } else if (this.state.gamePaused) {
+      content = this.pauseMenu();
+    } else {
+      content = (
+        <div>
+          <div className="inGameBtns">
+            <ShowHintsBtn
+              onClick={() => {
+                this.pauseGame();
+                // show the hints?
+                this.setState({
+                  showHints: true
+                });
+              }}
+            >
+            </ShowHintsBtn>
+            <MainMenuBtn
+              onClick={() => {
+                this.pauseGame();
+              }}
+            >
+            </MainMenuBtn>
+          </div>
+          <Minimap
+            canvasReactElement={this.state.minimap}
+          />
+          <div className="container-fluid app">
+            <div className="">
+              <MainView
+                widthToHeight={this.state.widthToHeight}
+                newWidthToHeight={this.state.newWidthToHeight}
+                newWidth={this.state.newWidth}
+                newHeight={this.state.newHeight}
+                viewMapCanvasAPI={this.state.viewMapCanvasAPI}
+                canvasElm={this.state.map}
+              >
+              </MainView>
+            </div>
+          </div>
+        </div>
+      );
     }
 
     return (
-      <div>
-        <div className="inGameBtns">
-          <ShowHintsBtn
-            onClick={() => {
-              this.pauseGame();
-              // show the hints?
-              this.setState({
-                showHints:true
-              });
-            }}
-          >
-          </ShowHintsBtn>
-          <MainMenuBtn
-            onClick={() => {
-              this.pauseGame();
-            }}
-          >
-          </MainMenuBtn>
-        </div>
-        <Minimap
-          canvasReactElement={this.state.minimap}
-        />
-        <div className="container-fluid app">
-          <div className="">
-            <MainView
-              widthToHeight={this.state.widthToHeight}
-              newWidthToHeight={this.state.newWidthToHeight}
-              newWidth={this.state.newWidth}
-              newHeight={this.state.newHeight}
-              viewMapCanvasAPI={this.state.viewMapCanvasAPI}
-              canvasElm={this.state.map}
-            >
-            </MainView>
-          </div>
+      <div className="page">
+        <div className="pageContent">
+          {content}
         </div>
       </div>
     );

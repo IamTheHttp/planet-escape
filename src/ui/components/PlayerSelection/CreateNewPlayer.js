@@ -15,11 +15,11 @@ class createNewPlayer extends React.Component {
     let isInputValid = playerService.validateUsername(this.state.inputValue);
 
     return (
-      <div className="splashMenu gamePaused createNewPlayer">
+      <div className="createNewPlayer centered md">
         <div className="menuHeader">
           {playerService.getRegisteredPlayers().length ? i18n.createNewPlayer : i18n.createPlayerIntro}
         </div>
-        <div className="menuButtons">
+        <div className="btnList">
           <input
             className="btnItem playerUserName"
             type="text"

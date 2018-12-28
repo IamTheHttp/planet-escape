@@ -55,7 +55,7 @@ class MainMenu extends React.Component {
     }
 
     return (
-      <div className="menuButtons mainMenu">
+      <div className="btnList mainMenu">
         <button className="btnItem" onClick={() => {
           this.setState({selection: 'campaign'});
         }}>
@@ -90,7 +90,7 @@ class MainMenu extends React.Component {
       return null;
     }
     return (
-      <div className="about bordered col-xs-offset-3 col-xs-6">Created by Patrick Tolosa</div>
+      <div className="about bordered centered md">Created by Patrick Tolosa</div>
     );
   }
 
@@ -99,7 +99,9 @@ class MainMenu extends React.Component {
       return null;
     }
     return (
-      <Help></Help>
+      <div className="centered md">
+        <Help></Help>
+      </div>
     );
   }
 
@@ -173,10 +175,10 @@ class MainMenu extends React.Component {
     }
 
     return (
-      <div>
+      <div className="quickStartGame">
         <div className="row">
           <div className="difficultySelector col-xs-4">
-            <div className="menuButtons">
+            <div className="btnList">
               <h4 className="title">
                 Select difficulty
               </h4>
@@ -192,7 +194,7 @@ class MainMenu extends React.Component {
             </div>
           </div>
           <div className="mapScaleselector col-xs-4">
-            <div className="menuButtons">
+            <div className="btnList">
               <h4 className="title">
                 {i18n.selectMapSize}
               </h4>
@@ -207,8 +209,8 @@ class MainMenu extends React.Component {
               })}
             </div>
           </div>
-          <div className="col-xs-3">
-            <div className="menuButtons">
+          <div className="col-xs-4">
+            <div className="btnList">
               <h4 className="title">{i18n.start}</h4>
               <div className="startGame"
                    onClick={() => {
@@ -243,9 +245,9 @@ class MainMenu extends React.Component {
 
   render() {
     return (
-      <div className="splashMenu">
+      <div>
         {this.backButton()}
-        <div className="menuHeader">
+        <div className="">
           {`${i18n.welcome}${version}`}
         </div>
         <div>

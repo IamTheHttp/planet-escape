@@ -1,22 +1,27 @@
-##Current
-[ ] CSS Refactoring, it's a messy mess out here!
+##Current task
+
+## Refactoring needed
 [ ] Component refactoring, App and MainMenu are doing too many things..
-[ ] Refactor to support "tracking",
-[ ] - Track how many game loads we have
-[ ] - Track how many new players are created
-[ ] - Track "game won" and "game lost", with the gameKey
-[ ] - Track "player selected"
 
 ##Known Issues
 [ ] IOS Address bar swiping can cause the display to look improper
 [ ] The Enemy Planet in the most bottom right is a bit hidden behind the Menu/Help UI
+[ ] In Mobile, the "Loading level assets" splash screen does not appear
 
+
+
+
+
+---------------
 ##ChangeLog
 [V] - Done
 [VT] - Done and has automated tests
 
+### 28/12/2018
+[V] CSS Refactoring, it's a messy mess out here!
+
 ### 27/12/2018
-### Added player progress stored locally on the device
+#### Added player progress stored locally on the device
 [V] Add player progress - https://iamhttp.myjetbrains.com/youtrack/issue/PE-91
 [VT] New user in the game -> Show add user -> submit -> move to main menu
 [V] Selected user -> go to change user from the main menu -> delete selected user -> user goes back to menu, he should see the create user dialog

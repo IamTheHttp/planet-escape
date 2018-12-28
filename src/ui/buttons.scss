@@ -3,7 +3,7 @@
 .btnItem {
   width:100%;
   display: inline-block;
-  margin-top: 15px;
+  margin-bottom: 15px;
   border: 1px solid $borderColor;
   background-color: black;
   border-radius: 3px;
@@ -14,4 +14,15 @@
     background-color:white;
     color:black;
   }
+  &:focus {
+    outline:none;
+  }
+}
+
+.inGameBtn {
+  font-size: 2.5rem;
+  color: white;
+  background-color: black;
+  border:1px solid $borderColor;
+  margin-left:10px;
 }

@@ -4,7 +4,7 @@ import alienImage from 'assets/player2.png';
 class Help extends React.Component {
   render() {
     return (
-      <div className="helpSection bordered col-xs-offset-3 col-xs-6">
+      <div className="helpSection bordered">
         <div>Hints:</div>
         <ul>
           <li>Tap one of your planets <img className="inlineImage" src={earthImage}/> to select.</li>

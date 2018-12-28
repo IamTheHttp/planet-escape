@@ -35,11 +35,11 @@ class PlayerSelection extends React.Component {
       ></CreateNewPlayer>;
     } else {
       return (
-        <div className="splashMenu gamePaused playerSelection">
+        <div className="playerSelection centered md">
           <div className="menuHeader">
             {i18n.switchPlayer}
           </div>
-          <div className="menuButtons ">
+          <div className="btnList ">
             {players.map((player, i) => {
               let className = selectedPlayer.userName === player.userName ? 'selectedUser btnItem' : 'btnItem nonSelectedUser';
               return (

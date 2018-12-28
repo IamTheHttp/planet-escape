@@ -4,14 +4,9 @@
 @import './resets';
 @import './buttons';
 @import './game-platform.ext';
+@import './mixins';
 
 #app{
-  -webkit-user-select: none;  /* Chrome all / Safari all */
-  -moz-user-select: none;     /* Firefox all */
-  -ms-user-select: none;      /* IE 10+ */
-  user-select: none;          /* Likely future */
-  height:100vh;
-
   &.loading {
     font-size: 50px;
     text-align: center;
@@ -24,59 +19,79 @@
   }
 }
 
+.centered {
+  @include centered();
+  &.sm {
+    width:224px;
+  }
+  &.md {
+    width:500px;
+  }
+  &.lg {
+    width:1000px;
+  }
+  &.fl {
+    width:100%;
+  }
+}
 
-.menuButtons {
-  width: 200px;
+.page {
+  height: 100vh;
+  color: $fontPrimary;
+}
+
+.btnBack {
+  border-radius: 0;
+  margin-top: 40vh;
+  height: 20vh;
+  background-color: black;
+  color: white;
+  border: 1px solid $borderColor;
+  width: 40px;
+  position:absolute;
+  left:0;
+}
+
+.startGame {
+  text-align: right;
+  border:1px solid $borderColor;
+  background-color:black;
+  max-width:100%;
+  .title {
+    text-align:center;
+  }
+  img {
+    width:100%;
+  }
+}
+
+
+
+
+
+// base btnList
+.btnList {
   .title {
     text-align:center;
   }
 }
 
+// show an image as the size of the text
 .inlineImage {
-  height:20px;
+  height:1em;
 }
 
+// provide borders
 .bordered {
     background-color:black;
     border:1px solid $borderColor;
+    padding:5px;
 }
 
-.tutorial {
-  font-size:40px;
-}
-
-.gameStats {
-  span {
-    display:inline-block;
-  }
-
-  .key {
-    width:150px;
-  }
-
-  .value {
-    text-align:right;
-    width:50px;
-  }
-}
-
+// TBD where to put this :)
 .inGameBtns {
   position: absolute;
   bottom: 0;
   right: 0;
   z-index: 10;
-
-  .inGameBtn {
-    font-size: 25px;
-    color: white;
-    background-color: black;
-    border:1px solid $borderColor;
-    margin-left:10px;
-  }
-}
-
-.showHints {
-  .menuHeader {
-    margin-bottom:15px;
-  }
 }

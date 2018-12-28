@@ -10,7 +10,22 @@
   background-color:black;
   color:white;
 
-  .menuButtons {
+  .gameStats {
+    span {
+      display:inline-block;
+    }
+
+    .key {
+      width:150px;
+    }
+
+    .value {
+      text-align:right;
+      width:50px;
+    }
+  }
+
+  .btnList {
     width:150px;
   }
 
@@ -18,9 +33,7 @@
     max-width:100vw;
     width: 500px;
     height: 180px;
-    margin: auto;
-    margin-top: 10%;
-    border: 1px solid $borderColor;
+    margin: 10% auto auto;
     padding: 10px;
   }
 

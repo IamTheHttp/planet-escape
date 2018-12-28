@@ -8,12 +8,12 @@ class Modal extends React.Component {
 
     return (
       <div className={cls}>
-        <div className="content">
+        <div className="content bordered">
           <div className="stats pull-left">
             <span className="title">{this.props.text}</span>
             {this.props.children}
           </div>
-          <div className="menuButtons pull-right">
+          <div className="btnList pull-right">
             <button
               onClick={this.props.onRestart}
               className="btnItem restart">{i18n.restart}
