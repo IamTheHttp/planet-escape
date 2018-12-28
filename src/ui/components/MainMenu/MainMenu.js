@@ -137,7 +137,7 @@ class MainMenu extends React.Component {
               className={`level ${lvlIsNextCls} ${lvlIsDoneCls}`}
               key={level.key}
               onClick={() => {
-                if (lastLevelDone) {
+                if (lastLevelDone || levelIsDone) {
                   this.props.onLevelSelect(level, this.props.levels);
                 }
               }}

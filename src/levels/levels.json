@@ -42,7 +42,7 @@
         "player" : "2",
         "position" : {
           "x": 850,
-          "y": 450
+          "y": 400
         },
         "fighters": 0
       }
@@ -85,7 +85,7 @@
   },
   "Explosions" : {
     "order" : 3,
-    "mapScale": 1,
+    "mapScale": 0.5,
     "buffer" : 2,
     "planetsInMap": 0,
     "planets": [
@@ -94,7 +94,7 @@
         "player" : "1",
         "position" : {
           "x": 50,
-          "y": 50
+          "y": 250
         },
         "fighters": 100
       },
@@ -121,7 +121,7 @@
         "player" : "2",
         "position" : {
           "x": 900,
-          "y": 400
+          "y": 200
         },
         "fighters": 50
       }
@@ -129,7 +129,7 @@
   },
   "Dreams" : {
     "order" : 4,
-    "mapScale": 1,
+    "mapScale": 0.5,
     "buffer" : 2,
     "planetsInMap": 0,
     "planets": [
@@ -164,7 +164,7 @@
   },
   "Impossible" : {
     "order" : 5,
-    "mapScale": 1,
+    "mapScale": 0.5,
     "buffer" : 2,
     "planetsInMap": 0,
     "planets": [
@@ -199,14 +199,15 @@
         "type" : "earthLike",
         "player" : "2",
         "position" : {
-          "x": 800,
-          "y": 800
+          "x": 400,
+          "y": 400
         },
         "fighters": 500
       }
     ]
   },
-  "Impossible11" : {
+  "Expansion" : {
+    "order" : 6,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
@@ -218,7 +219,7 @@
           "x": 100,
           "y": 100
         },
-        "fighters": 1000
+        "fighters": 10
       },
       {
         "type" : "earthLike",
@@ -227,20 +228,39 @@
           "x": 200,
           "y": 200
         },
-        "fighters": 100
+        "fighters": 10
+      },
+      {
+        "type" : "earthLike",
+        "player" : "0",
+        "position" : {
+          "x": 220,
+          "y": 400
+        },
+        "fighters": 10
       },
       {
         "type" : "earthLike",
         "player" : "2",
         "position" : {
-          "x": 900,
+          "x": 800,
+          "y": 200
+        },
+        "fighters": 10
+      },
+      {
+        "type" : "earthLike",
+        "player" : "2",
+        "position" : {
+          "x": 780,
           "y": 400
         },
-        "fighters": 50
+        "fighters": 10
       }
     ]
   },
-  "Impossible17" : {
+  "Bigger & Better" : {
+    "order" : 7,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
@@ -252,7 +272,16 @@
           "x": 100,
           "y": 100
         },
-        "fighters": 1000
+        "fighters": 10
+      },
+      {
+        "type" : "earthLike",
+        "player" : "1",
+        "position" : {
+          "x": 500,
+          "y": 100
+        },
+        "fighters": 10
       },
       {
         "type" : "earthLike",
@@ -261,20 +290,30 @@
           "x": 200,
           "y": 200
         },
-        "fighters": 100
+        "fighters": 10
+      },
+      {
+        "type" : "earthLike",
+        "player" : "0",
+        "position" : {
+          "x": 600,
+          "y": 600
+        },
+        "fighters": 10
       },
       {
         "type" : "earthLike",
         "player" : "2",
         "position" : {
           "x": 900,
-          "y": 400
+          "y": 750
         },
-        "fighters": 50
+        "fighters": 10
       }
     ]
   },
-  "Impossible15" : {
+  "Far Far Away" : {
+    "order" : 8,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
@@ -286,7 +325,7 @@
           "x": 100,
           "y": 100
         },
-        "fighters": 1000
+        "fighters": 10
       },
       {
         "type" : "earthLike",
@@ -295,16 +334,34 @@
           "x": 200,
           "y": 200
         },
-        "fighters": 100
+        "fighters": 10
+      },
+      {
+        "type" : "earthLike",
+        "player" : "0",
+        "position" : {
+          "x": 900,
+          "y": 900
+        },
+        "fighters": 10
+      },
+      {
+        "type" : "earthLike",
+        "player" : "0",
+        "position" : {
+          "x": 1300,
+          "y": 100
+        },
+        "fighters": 10
       },
       {
         "type" : "earthLike",
         "player" : "2",
         "position" : {
-          "x": 900,
-          "y": 400
+          "x": 1700,
+          "y": 900
         },
-        "fighters": 50
+        "fighters": 10
       }
     ]
   },

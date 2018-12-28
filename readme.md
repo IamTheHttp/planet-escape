@@ -1,4 +1,6 @@
 ##Current task
+[ ] Create 10 levels for the game - https://iamhttp.myjetbrains.com/youtrack/issue/PE-98
+[V] Bug - Cannot click to reply maps in the middle
 
 ## Refactoring needed
 [ ] Component refactoring, App and MainMenu are doing too many things..
@@ -7,10 +9,6 @@
 [ ] IOS Address bar swiping can cause the display to look improper
 [ ] The Enemy Planet in the most bottom right is a bit hidden behind the Menu/Help UI
 [ ] In Mobile, the "Loading level assets" splash screen does not appear
-
-
-
-
 
 ---------------
 ##ChangeLog
