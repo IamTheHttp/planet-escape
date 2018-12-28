@@ -90,7 +90,7 @@ class MainMenu extends React.Component {
       return null;
     }
     return (
-      <div className="about col-xs-offset-3 col-xs-6">Created by Patrick Tolosa</div>
+      <div className="about bordered col-xs-offset-3 col-xs-6">Created by Patrick Tolosa</div>
     );
   }
 

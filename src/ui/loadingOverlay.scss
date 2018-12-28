@@ -1,0 +1,27 @@
+@import './keyframes';
+
+/**
+  File used for CSS in all loading screens
+ */
+
+.loadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding-top: 100px;
+  z-index: 9999999999999;
+  background-color: black;
+  color: white;
+  font-size: 40px;
+}
+
+#progress {
+  background-color: #00FF11;
+  height:10px;
+  animation: grow 20s linear infinite;
+  position:absolute;
+  bottom:0;
+}

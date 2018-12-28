@@ -1,0 +1,17 @@
+@import './variables';
+
+.btnItem {
+  width:100%;
+  display: inline-block;
+  margin-top: 15px;
+  border: 1px solid $borderColor;
+  background-color: black;
+  border-radius: 3px;
+  padding: 5px;
+  text-transform: capitalize;
+  max-width: 100%;
+  &.active {
+    background-color:white;
+    color:black;
+  }
+}

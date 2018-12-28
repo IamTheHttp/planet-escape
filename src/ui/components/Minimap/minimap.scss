@@ -1,0 +1,42 @@
+@import '../../variables';
+
+.minimapSection {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 25vw;
+  height:14.06vw;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  button {
+    background-color: black;
+    color: white;
+    border-radius: 3px;
+    width: 100%;
+    height: 100%;
+    padding:0;
+    border:1px solid $borderColor;
+  }
+
+  &.minimized {
+    width:5vw;
+    height:5vw;
+  }
+
+  .contractMinimap {
+    position: absolute;
+    top: -2.5vw;
+    right: -2.5vw;
+    z-index: 1000;
+    width: 5vw;
+    height: 5vw;
+  }
+
+  .minimap {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+}

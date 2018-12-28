@@ -1,8 +1,9 @@
 @import './variables';
-
-html {
-  overflow:hidden;
-}
+@import './loadingOverlay';
+@import './keyframes';
+@import './resets';
+@import './buttons';
+@import './game-platform.ext';
 
 #app{
   -webkit-user-select: none;  /* Chrome all / Safari all */
@@ -23,106 +24,11 @@ html {
   }
 }
 
-@keyframes grow {
-  0% {
-    width:0;
-  }
-  100% {
-    width:100%;
-  }
-}
-
-#progress {
-  background-color: #00FF11;
-  height:10px;
-  animation: grow 20s linear infinite;
-  position:absolute;
-  bottom:0;
-}
-
-ol {
-  padding:5px;
-}
-
-.main {
-  position: absolute;
-  left:     50%;
-  top:      50%;
-}
-
-.viewMap {
-  width: 100%;
-  height: 100%;
-  background-color:rgba(0, 0, 0, 0.5490196078431373);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.minimapSection {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 25vw;
-  height:14.06vw;
-  z-index: 100;
-  background-color: rgba(0, 0, 0, 0.5);
-
-  button {
-    background-color: black;
-    color: white;
-    border-radius: 3px;
-    width: 100%;
-    height: 100%;
-    padding:0;
-    border:1px solid $borderColor;
-  }
-
-  &.minimized {
-    width:5vw;
-    height:5vw;
-  }
-
-  .contractMinimap {
-    position: absolute;
-    top: -2.5vw;
-    right: -2.5vw;
-    z-index: 1000;
-    width: 5vw;
-    height: 5vw;
-  }
-
-  .minimap {
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-  }
-}
-
-.sidebar {
-  height:100vh;
-}
-
-
 
 .menuButtons {
   width: 200px;
   .title {
     text-align:center;
-  }
-  .btnItem {
-    width:100%;
-    display: block;
-    margin-top: 15px;
-    border: 1px solid $borderColor;
-    background-color: black;
-    border-radius: 3px;
-    padding: 5px;
-    text-transform: capitalize;
-    max-width: 100%;
-    &.active {
-      background-color:white;
-      color:black;
-    }
   }
 }
 
@@ -130,9 +36,9 @@ ol {
   height:20px;
 }
 
-.helpSection, .tutorial, .about{
-  background-color:black;
-  border:1px solid $borderColor;
+.bordered {
+    background-color:black;
+    border:1px solid $borderColor;
 }
 
 .tutorial {
@@ -153,22 +59,6 @@ ol {
     width:50px;
   }
 }
-
-.loadingOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  padding-top: 100px;
-  z-index: 9999999999999;
-  background-color: black;
-  color: white;
-  font-size: 40px;
-}
-
-
 
 .inGameBtns {
   position: absolute;

@@ -1,6 +1,7 @@
+import './minimap.scss';
 import React from 'react';
 
-class Sidebar extends React.Component {
+class Minimap extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -38,4 +39,4 @@ class Sidebar extends React.Component {
   }
 }
 
-export default Sidebar;
+export default Minimap;

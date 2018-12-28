@@ -1,3 +1,4 @@
+import './mainView.scss';
 import React from 'react';
 
 class MainView extends React.Component {
@@ -25,7 +26,7 @@ class MainView extends React.Component {
   render() {
     return (
       <div
-        className="main"
+        className="canvasContainer"
         ref={(el) => {
           if (el) {
             this.el = el;
