@@ -90,6 +90,67 @@ describe('Tests a component', () => {
   });
 
 
+  it('Shows the help module when the state is right', () => {
+    playerService.createPlayer('Foo');
+    let wrapper = mount(<App></App>);
+    let inst = wrapper.instance();
+
+    inst.setState({
+      showHelp: true,
+      selectedPlayer: true,
+      currentLevel: {}
+    });
+
+    expect(wrapper.find('.showHelp').length).toBe(1);
+  });
+
+  it('Show the paused menu with the right state', () => {
+    playerService.createPlayer('Foo');
+    let wrapper = mount(<App></App>);
+    let inst = wrapper.instance();
+
+    inst.setState({
+      gamePaused: true,
+      selectedPlayer: true,
+      currentLevel: {},
+      isMenuOpen: false
+    });
+
+    expect(wrapper.find('.gamePausedMenu').length).toBe(1);
+  });
+
+  it('Can stop and resume a game', (done) => {
+    playerService.createPlayer('Foo');
+    let wrapper = mount(<App></App>);
+    let inst = wrapper.instance();
+
+    inst.setState({
+      gamePaused: true,
+      selectedPlayer: true,
+      currentLevel: {},
+      isMenuOpen: false
+    });
+
+
+    inst.startGame(levels.random, gameConfig[DIFFICULTY][EASY]).then((game) => {
+      inst.game = game; // this is usually done from the modal
+      inst.pauseGame();
+
+      expect(inst.state.gamePaused).toBe(true);
+      expect(inst.state.showLevelHints).toBe(false);
+      expect(inst.state.isMenuOpen).toBe(false);
+
+      inst.stopGame();
+      expect(inst.state.gameWon).toBe(null);
+      expect(inst.state.isMenuOpen).toBe(true);
+      expect(inst.state.gamePaused).toBe(false);
+      expect(inst.state.gameEnded).toBe(true);
+      expect(inst.state.showHelp).toBe(false);
+      done();
+    });
+    jest.runOnlyPendingTimers();
+  });
+
   it('Expect the full create new player journey to work', () => {
     // app loads into the create user journey.
     // after user is created, we reidrect to home page.

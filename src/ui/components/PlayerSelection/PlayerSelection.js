@@ -29,7 +29,7 @@ class PlayerSelection extends React.Component {
 
           this.props.onPlayerSelect(playerService.getSelectedPlayer());
           this.setState({
-            selectedPlayer : playerService.getSelectedPlayer() || {}
+            selectedPlayer : playerService.getSelectedPlayer()
           });
         }}
       ></CreateNewPlayer>;
@@ -47,7 +47,7 @@ class PlayerSelection extends React.Component {
                 <button className={className} onClick={() => {
                   playerService.selectPlayer(player.userName);
                   this.setState({
-                    selectedPlayer : playerService.getSelectedPlayer() || {}
+                    selectedPlayer : playerService.getSelectedPlayer()
                   });
                   this.props.onPlayerSelect(playerService.getSelectedPlayer());
                 }}>
@@ -66,7 +66,7 @@ class PlayerSelection extends React.Component {
               </div>
               );
             })}
-            <button className="btnItem" onClick={() => {
+            <button className="btnItem createPlayerBtn" onClick={() => {
               this.setState({
                 createUser: true
               });

@@ -323,7 +323,7 @@ class App extends React.Component {
       return null;
     } else {
       return (
-        <div className="centered md">
+        <div className="centered md gamePausedMenu">
           <div className="menuHeader">
             Game paused
           </div>

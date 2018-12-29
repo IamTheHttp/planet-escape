@@ -10,7 +10,7 @@ class GameTracker {
   track(action) {
     if (!this.actions[action]) {
       this.actions[action] = {
-        count:0
+        count: 0
       };
     }
 
@@ -26,4 +26,5 @@ class GameTracker {
   }
 }
 
+export {GameTracker};
 export default (new GameTracker());
