@@ -1,7 +1,7 @@
 import React from 'react';
 import i18n from 'ui/i18n';
 
-class ShowHintsBtn extends React.Component {
+class ShowHelpBtn extends React.Component {
   render() {
     return (
       <button
@@ -15,4 +15,4 @@ class ShowHintsBtn extends React.Component {
   }
 }
 
-export default ShowHintsBtn;
+export default ShowHelpBtn;

@@ -1,6 +1,5 @@
 import Entity from '../../../lib/ECS/Entity';
 import UIComponent from 'gameEngine/components/UIComponent';
-import BuildingsComponent from 'gameEngine/components/BuildingsComponent';
 import PositionComponent from 'gameEngine/components/PositionComponent';
 import PlayerControlledComponent from 'gameEngine/components/PlayerControlledComponent';
 import OwnerComponent from 'gameEngine/components/OwnerComponent';
@@ -19,7 +18,6 @@ import {
   SHIELD_IMAGE,
   POSITION
 } from 'gameEngine/constants';
-
 
 class EarthLike {
   constructor(xPos = 50, yPos = 50, player = NEUTRAL) {

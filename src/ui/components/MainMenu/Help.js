@@ -1,16 +1,52 @@
 import React from 'react';
 import earthImage from 'assets/player1.png';
 import alienImage from 'assets/player2.png';
+
+import i18n from 'ui/i18n';
+
 class Help extends React.Component {
-  render() {
+  renderHelp() {
     return (
-      <div className="helpSection bordered">
-        <div>Hints:</div>
+      <div className="helpSection">
+        <div>General help:</div>
         <ul>
-          <li>Tap one of your planets <img className="inlineImage" src={earthImage}/> to select.</li>
+          <li>Tap one of your planets <img className="inlineImage" src={earthImage}/> to select.
+          </li>
           <li>Tap enemy planet <img className="inlineImage" src={alienImage}/> to attack.</li>
           <li>Double tap on one of your planets to selects all.</li>
         </ul>
+      </div>
+    );
+  }
+
+  renderLevelHelp() {
+    if (this.props.levelHints) {
+      return (
+        <div>
+          <div>Level hints:</div>
+          <ul>
+            {
+              this.props.levelHints.map((item, i) => {
+                return (<li key={i}>{item}</li>);
+              })
+            }
+          </ul>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  render() {
+    return (
+      <div className="showHelp centered md bordered">
+        <div className="menuHeader">{i18n.gamePaused}</div>
+        {this.renderHelp()}
+        {this.renderLevelHelp()}
+        <button className="btnItem" onClick={this.props.onClick}>
+          {i18n.resumeGame}
+        </button>
       </div>
     );
   }

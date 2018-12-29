@@ -12,6 +12,7 @@ import {mount, shallow} from 'enzyme';
 import React from 'react';
 import renderSystem from 'gameEngine/systems/renderSystem';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
+import Fighter from 'gameEngine/entities/Ships/Fighter';
 
 describe('Tests the render system', () => {
   let mapAPI;
@@ -24,6 +25,7 @@ describe('Tests the render system', () => {
 
   beforeEach(() => {
     mapAPI = {
+      write: jest.fn(),
       clear: jest.fn(),
       addRect: jest.fn(),
       draw: jest.fn(),
@@ -37,6 +39,7 @@ describe('Tests the render system', () => {
       }
     };
     miniMapAPI = {
+      write: jest.fn(),
       clear: jest.fn(),
       addRect: jest.fn(),
       draw: jest.fn(),
@@ -89,7 +92,7 @@ describe('Tests the render system', () => {
     expect(miniMapAPI.addRect.mock.calls[0][0].id).toBe('currentMap');
   });
 
-  it('renderSystemwith entities', () => {
+  it('renderSystem with entities', () => {
     let ent = new EarthLike(200, 200, PLAYER_1);
     renderSystem({
       Entity,
@@ -98,5 +101,17 @@ describe('Tests the render system', () => {
 
     expect(miniMapAPI.addRect.mock.calls[0][0].id).toBe('currentMap');
     expect(miniMapAPI.addCircle.mock.calls[0][0].id).toBe(ent.id);
+  });
+
+  it('draws the fighter count in space', () => {
+    let planet = new EarthLike(100, 200, PLAYER_1);
+
+    new Fighter(planet);
+    renderSystem({
+      Entity,
+      viewSize
+    }, mapAPI, miniMapAPI, selectedBox);
+
+    expect(mapAPI.write.mock.calls[0][0].text.indexOf(1)).toBeGreaterThan(-1);
   });
 });

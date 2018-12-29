@@ -8,6 +8,15 @@
     "order" : 1,
     "mapScale": 0.5,
     "buffer" : 2,
+    "hints" : [
+      "Welcome to Planet Escape, your task is to completely conquer the sector!",
+      "Tap on a friendly planet to select it",
+      "Selected planets have a green border",
+      "Tap on an Enemy planet to attack it",
+      "Double tap on a friendly planet to select all planets",
+      "Tap any where in space to cancel the current selection",
+      "Planets are conquered when they're out of defending fighters"
+    ],
     "planetsInMap": 0,
     "planets": [
       {
@@ -262,6 +271,10 @@
   "Bigger & Better" : {
     "order" : 7,
     "mapScale": 1,
+    "hints" : [
+      "This sector is so large, you have a minimap to help you navigate around!",
+      "Tap anywhere on the minimap to quickly move around the sector"
+    ],
     "buffer" : 2,
     "planetsInMap": 0,
     "planets": [

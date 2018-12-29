@@ -2,6 +2,14 @@ import './mainView.scss';
 import React from 'react';
 
 class MainView extends React.Component {
+  constructor(props) {
+    super();
+
+    this.state = {
+      showLevelHints: props.showLevelHints
+    };
+  }
+
   componentWillReceiveProps(props) {
     let {newWidthToHeight, widthToHeight, newWidth, newHeight} = props;
 
@@ -23,6 +31,33 @@ class MainView extends React.Component {
       gameArea.style.marginLeft = `${(-newWidth / 2)}px`;
     }
   }
+
+  renderLevelHints() {
+    if (this.state.showLevelHints) {
+      return (
+        <div className="hintsContainer bordered">
+          <ul>
+            {
+              this.props.levelHints.map((item, i) => {
+                return (<li key={i}>{item}</li>);
+              })
+            }
+          </ul>
+          <button className="btnItem"
+            onClick={() => {
+              this.setState({
+                showLevelHints: false
+              });
+              this.props.onLevelHintsApproved();
+            }}
+          >Got it</button>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
+
   render() {
     return (
       <div
@@ -33,6 +68,7 @@ class MainView extends React.Component {
           }
         }}
       >
+        {this.renderLevelHints()}
         {this.props.canvasElm}
       </div>
     );

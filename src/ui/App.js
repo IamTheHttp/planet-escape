@@ -19,7 +19,7 @@ import Modal from 'ui/components/Modal/Modal';
 import MainMenu from 'ui/components/MainMenu/MainMenu';
 import gameConfig from 'gameEngine/config';
 import MainMenuBtn from 'ui/components/MainMenuBtn/MainMenuBtn';
-import ShowHintsBtn from 'ui/components/ShowHintsBtn/ShowHintsBtn';
+import ShowHelpBtn from 'ui/components/ShowHelpBtn/ShowHelpBtn';
 import Minimap from 'ui/components/Minimap/Minimap';
 import MainView from 'ui/components/MainView/MainView';
 import renderSystem from 'gameEngine/systems/renderSystem';
@@ -37,7 +37,7 @@ class App extends React.Component {
     this.game = {};
     this.state = {
       gameCount: 0,
-      showHints: false,
+      showHelp: false,
       isMenuOpen: true,
       gamePaused: false,
       gameEnded: true, // TODO - Why do we need a "gameEnded" AND a won/lost state?
@@ -124,24 +124,14 @@ class App extends React.Component {
         }
       });
 
-      this.setState({
-        gameCount: this.state.gameCount++,
-        isMenuOpen: false,
-        gamePaused: false,
-        gameEnded: false,
-        gameWon: null,
-        map,
-        minimap
-      });
-
-
       // the loading overlay
-      let div = document.createElement('div');
-      div.className = 'loadingOverlay';
-      div.innerHTML = i18n.loadingGameMsg;
-      document.body.appendChild(div);
+      let loadingScreen = document.createElement('div');
+      loadingScreen.className = 'loadingOverlay';
+      loadingScreen.innerHTML = `\n<div>"${levelData.key}"</div>\n<div>${i18n.loadingGameMsg}</div>`;
+      document.body.appendChild(loadingScreen);
 
-      // delay to next tick!
+
+      // this tick delay ensures that that the loading screen is visible
       setTimeout(() => {
         let game = new GameLoop({
           notificationSystem: this.updateGameState,
@@ -155,7 +145,26 @@ class App extends React.Component {
           renderSystem: this.renderOnCanvas
         });
 
-        document.body.removeChild(div);
+        if (levelData.hints) {
+          setTimeout(() => {
+            game.stop(); // game starts paused but rendered on canvas
+          }, 4);
+        }
+
+        document.body.removeChild(loadingScreen);
+
+        this.setState({
+          gameCount: this.state.gameCount++,
+          isMenuOpen: false,
+          gamePaused: false,
+          gameEnded: false,
+          gameWon: null,
+          showLevelHints: !!levelData.hints,
+          levelHints: levelData.hints,
+          currentLevel : levelData,
+          map,
+          minimap
+        });
         resolve(game);
       }, 50);
     });
@@ -165,7 +174,8 @@ class App extends React.Component {
     this.game.stop();
     this.setState({
       isMenuOpen: false,
-      gamePaused: true
+      gamePaused: true,
+      showLevelHints: false // don't show the levelHints when coming back from the hints or menu
     });
   }
 
@@ -176,7 +186,7 @@ class App extends React.Component {
       isMenuOpen: true,
       gamePaused: false,
       gameEnded: true,
-      showHints: false
+      showHelp: false
     });
   }
 
@@ -209,8 +219,8 @@ class App extends React.Component {
 
       if (gameWon) {
         // selectedPlayer
-        if (this.currentLevel) {
-          playerService.finishLevel(this.currentLevel.key);
+        if (this.state.currentLevel) {
+          playerService.finishLevel(this.state.currentLevel.key);
         }
       }
 
@@ -235,7 +245,7 @@ class App extends React.Component {
     let gameWon = this.state.gameWon;
     let nextLevel;
 
-    let currentLevelIdx = this.levels.indexOf(this.currentLevel);
+    let currentLevelIdx = this.levels.indexOf(this.state.currentLevel);
     nextLevel = this.levels[currentLevelIdx + 1];
 
     if (gameWon !== null) {
@@ -245,13 +255,12 @@ class App extends React.Component {
           text={gameWon ? i18n.gameWon : i18n.gameLost}
           nextLevel={nextLevel}
           onRestart={() => {
-            this.startGame(this.currentLevel, this.difficulty).then((game) => {
+            this.startGame(this.state.currentLevel, this.difficulty).then((game) => {
               this.game = game;
             });
           }}
           onNextLevel={() => {
-            this.currentLevel = nextLevel;
-            this.startGame(this.currentLevel, this.difficulty).then((game) => {
+            this.startGame(nextLevel, this.difficulty).then((game) => {
               this.game = game;
             });
           }}
@@ -283,23 +292,22 @@ class App extends React.Component {
       onPlayerDelete={this.handlePlayerDelete}
       levels={levels}
       onLevelSelect={(level, levels) => {
-        this.currentLevel = level;
-        this.levels = levels;
+        this.levels = levels; // TODO why do we need it here?
         this.difficulty = gameConfig[DIFFICULTY].EASY;
 
-        this.startGame(this.currentLevel, this.difficulty).then((game) => {
+        this.startGame(level, this.difficulty).then((game) => {
           this.game = game;
         });
       }}
       onQuickStart={(menuSelection) => {
-        this.currentLevel = {
+        let randLevel = {
           buffer: 2,
           mapScale: menuSelection.mapScale,
           planetsInMap: 20 * menuSelection.mapScale
         };
 
         this.difficulty = gameConfig[DIFFICULTY][menuSelection.difficulty];
-        this.startGame(this.currentLevel, this.difficulty).then((game) => {
+        this.startGame(randLevel, this.difficulty).then((game) => {
           this.game = game;
         });
       }}
@@ -338,34 +346,21 @@ class App extends React.Component {
     }
   }
 
-  showHints() {
-    if (!this.state.showHints) {
+  showHelp() {
+    if (!this.state.showHelp) {
       return null;
     } else {
       return (
-        <div className="showHints centered md">
-          <div className="menuHeader">
-            {i18n.gamePaused}
-          </div>
-          <div className="row">
-            <Help></Help>
-          </div>
-          <div className="row">
-            <div className="centered fl">
-              <div className="btnList">
-                <button className="btnItem" onClick={() => {
-                  this.setState({
-                    gamePaused: false,
-                    showHints: false
-                  });
-                  this.resumeGame();
-                }}>
-                  {i18n.resumeGame}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Help
+          levelHints={this.state.currentLevel.hints}
+          onClick={() => {
+            this.setState({
+              gamePaused: false,
+              showHelp: false
+            });
+            this.resumeGame();
+          }}
+        ></Help>
       );
     }
   }
@@ -394,8 +389,8 @@ class App extends React.Component {
       );
     } else if (this.state.gameWon !== null) {
       content = this.getGameEndModal();
-    } else if (this.state.showHints) {
-      content = this.showHints();
+    } else if (this.state.showHelp) {
+      content = this.showHelp();
     } else if (this.state.isMenuOpen) {
       content = this.mainMenu();
     } else if (this.state.gamePaused) {
@@ -404,30 +399,38 @@ class App extends React.Component {
       content = (
         <div>
           <div className="inGameBtns">
-            <ShowHintsBtn
+            {!this.state.showLevelHints && <ShowHelpBtn
               onClick={() => {
                 this.pauseGame();
                 // show the hints?
                 this.setState({
-                  showHints: true
+                  showHelp: true
                 });
               }}
             >
-            </ShowHintsBtn>
-            <MainMenuBtn
+            </ShowHelpBtn>}
+            {!this.state.showLevelHints && <MainMenuBtn
               onClick={() => {
                 this.pauseGame();
               }}
             >
-            </MainMenuBtn>
+            </MainMenuBtn>}
           </div>
           <Minimap
             canvasReactElement={this.state.minimap}
-            currentLevelData={this.currentLevel}
+            currentLevelData={this.state.currentLevel}
           />
           <div className="container-fluid app">
             <div className="">
               <MainView
+                levelHints={this.state.levelHints}
+                showLevelHints={this.state.showLevelHints}
+                onLevelHintsApproved={() => {
+                  this.setState({
+                    showLevelHints: false
+                  });
+                  this.resumeGame();
+                }}
                 widthToHeight={this.state.widthToHeight}
                 newWidthToHeight={this.state.newWidthToHeight}
                 newWidth={this.state.newWidth}

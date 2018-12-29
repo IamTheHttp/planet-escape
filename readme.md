@@ -1,6 +1,3 @@
-##Current task
-
-
 ## Refactoring needed
 [ ] Component refactoring, App and MainMenu are doing too many things..
 
@@ -14,12 +11,13 @@
 [V] - Done
 [VT] - Done and has automated tests
 
-
 ###
 29/12/2018
 [V] GamePlay - Create 10 levels for the game - https://iamhttp.myjetbrains.com/youtrack/issue/PE-98
 [V] Bug - Cannot click to reply maps in the middle of the campaign (say I'm in level 3, I can't play level 2)
 [V] UI - Changed the order of the buttons in the end game modal, "New Game" is now the first item
+[V] Feature - https://iamhttp.myjetbrains.com/youtrack/issue/PE-99 - Added "level hints" to be shown when the level starts
+[ ] Tests - Increased test coverage to 90% across everything
 
 ### 28/12/2018
 [V] CSS Refactoring, it's a messy mess out here!
