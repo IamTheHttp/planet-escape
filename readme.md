@@ -17,7 +17,7 @@
 [V] Bug - Cannot click to reply maps in the middle of the campaign (say I'm in level 3, I can't play level 2)
 [V] UI - Changed the order of the buttons in the end game modal, "New Game" is now the first item
 [V] Feature - https://iamhttp.myjetbrains.com/youtrack/issue/PE-99 - Added "level hints" to be shown when the level starts
-[ ] Tests - Increased test coverage to 90% across everything
+[V] Tests - Increased test coverage to (almost)90% across everything
 
 ### 28/12/2018
 [V] CSS Refactoring, it's a messy mess out here!
