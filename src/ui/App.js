@@ -157,7 +157,7 @@ class App extends React.Component {
 
         document.body.removeChild(div);
         resolve(game);
-      }, 0);
+      }, 50);
     });
   }
 
