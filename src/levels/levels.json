@@ -365,7 +365,8 @@
       }
     ]
   },
-  "Impossible16" : {
+  "Conundrum" : {
+    "order" : 9,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
@@ -377,29 +378,66 @@
           "x": 100,
           "y": 100
         },
-        "fighters": 1000
+        "fighters": 10
+      },
+      {
+        "type" : "earthLike",
+        "player" : "0",
+        "position" : {
+          "x": 100,
+          "y": 200
+        },
+        "fighters": 0
       },
       {
         "type" : "earthLike",
         "player" : "0",
         "position" : {
           "x": 200,
-          "y": 200
+          "y": 100
         },
-        "fighters": 100
+        "fighters": 0
+      },
+      {
+        "type" : "earthLike",
+        "player" : "0",
+        "position" : {
+          "x": 500,
+          "y": 500
+        },
+        "fighters": 25
       },
       {
         "type" : "earthLike",
         "player" : "2",
         "position" : {
-          "x": 900,
-          "y": 400
+          "x": 1500,
+          "y": 200
         },
-        "fighters": 50
+        "fighters": 10
+      },
+      {
+        "type" : "earthLike",
+        "player" : "2",
+        "position" : {
+          "x": 1500,
+          "y": 850
+        },
+        "fighters": 10
+      },
+      {
+        "type" : "earthLike",
+        "player" : "2",
+        "position" : {
+          "x": 200,
+          "y": 850
+        },
+        "fighters": 10
       }
     ]
   },
-  "Impossible6" : {
+  "Boss Man" : {
+    "order": 10,
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
@@ -411,25 +449,79 @@
           "x": 100,
           "y": 100
         },
-        "fighters": 1000
+        "fighters": 0
       },
       {
         "type" : "earthLike",
         "player" : "0",
         "position" : {
           "x": 200,
+          "y": 250
+        },
+        "fighters": 0
+      },
+      {
+        "type" : "earthLike",
+        "player" : "0",
+        "position" : {
+          "x": 120,
+          "y": 350
+        },
+        "fighters": 0
+      },
+      {
+        "type" : "earthLike",
+        "player" : "0",
+        "position" : {
+          "x": 500,
+          "y": 650
+        },
+        "fighters": 0
+      },
+      {
+        "type" : "earthLike",
+        "player" : "0",
+        "position" : {
+          "x": 1500,
           "y": 200
         },
-        "fighters": 100
+        "fighters": 0
+      },
+      {
+        "type" : "earthLike",
+        "player" : "0",
+        "position" : {
+          "x": 1550,
+          "y": 325
+        },
+        "fighters": 0
+      },
+      {
+        "type" : "earthLike",
+        "player" : "0",
+        "position" : {
+          "x": 1350,
+          "y": 520
+        },
+        "fighters": 0
+      },
+      {
+        "type" : "earthLike",
+        "player" : "0",
+        "position" : {
+          "x": 150,
+          "y": 620
+        },
+        "fighters": 0
       },
       {
         "type" : "earthLike",
         "player" : "2",
         "position" : {
-          "x": 900,
-          "y": 400
+          "x": 1600,
+          "y": 900
         },
-        "fighters": 50
+        "fighters": 0
       }
     ]
   },
