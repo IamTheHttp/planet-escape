@@ -8,10 +8,20 @@ class Minimap extends React.Component {
       isOpen: true
     };
   }
+
+  isHidden() {
+    return this.props.currentLevelData && this.props.currentLevelData.mapScale === 0.5;
+  }
+
   render() {
+    let cls = '';
+    if (this.isHidden()) {
+      cls = 'hidden';
+    }
+
     if (this.state.isOpen) {
       return (
-        <div className="minimapSection">
+        <div className={`minimapSection ${cls}`}>
           <button
             className="contractMinimap"
             onClick={() => {
@@ -25,7 +35,7 @@ class Minimap extends React.Component {
       );
     } else {
       return (
-        <div className="minimapSection minimized">
+        <div className={`minimapSection minimized ${cls}`}>
           <button
             onClick={() => {
               this.setState({isOpen : true});

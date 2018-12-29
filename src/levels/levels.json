@@ -208,7 +208,7 @@
   },
   "Expansion" : {
     "order" : 6,
-    "mapScale": 1,
+    "mapScale": 0.5,
     "buffer" : 2,
     "planetsInMap": 0,
     "planets": [

@@ -14,10 +14,6 @@ class Modal extends React.Component {
             {this.props.children}
           </div>
           <div className="btnList pull-right">
-            <button
-              onClick={this.props.onRestart}
-              className="btnItem restart">{i18n.restart}
-            </button>
             {
               this.props.nextLevel &&
               <button
@@ -25,6 +21,10 @@ class Modal extends React.Component {
                 className="btnItem nextLevel">{i18n.nextLevel}
               </button>
             }
+            <button
+              onClick={this.props.onRestart}
+              className="btnItem restart">{i18n.restart}
+            </button>
             <button
               onClick={this.props.backToMainMenu}
               className="btnItem mainMenu">{i18n.mainMenu}

@@ -423,6 +423,7 @@ class App extends React.Component {
           </div>
           <Minimap
             canvasReactElement={this.state.minimap}
+            currentLevelData={this.currentLevel}
           />
           <div className="container-fluid app">
             <div className="">
