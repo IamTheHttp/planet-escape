@@ -31,15 +31,27 @@ import neutral from 'assets/neutral.png';
 import fighter from 'assets/fighter.png';
 import mainMenuBackground from 'assets/background.jpg';
 import {loadImages} from 'shared/utils';
+import globalTracker from 'services/globalTracker';
+import googleTracking from 'services/googleTracking';
 
-
+import {EVENTS} from 'gameEngine/constants';
 let appDiv = document.getElementById('app') || document.createElement('div');
 
 appDiv.innerHTML = 'Loading game assets...';
 
 
+// assign tracking!
+
+if (window.ga) {
+  globalTracker.subscribe(googleTracking.track);
+}
+
+globalTracker.dispatch(EVENTS.APP_LOADING);
+
 loadImages([mainMenuBackground, neutral, player1, player2, fighter], () => {
   appDiv.className = 'loaded';
   document.body.removeChild(document.getElementById('progress'));
   render(<App></App>, document.getElementById('app'));
+
+  globalTracker.dispatch(EVENTS.APP_LOADED);
 });

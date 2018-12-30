@@ -10,7 +10,8 @@ import {
   MAIN_VIEW_SIZE_Y,
   LARGE,
   STRESS_TEST,
-  FIGHTER_BUILD_RATE
+  FIGHTER_BUILD_RATE,
+  EVENTS
 } from 'gameEngine/constants';
 import React from 'react';
 import './global.scss';
@@ -30,6 +31,7 @@ import Help from 'ui/components/MainMenu/Help';
 import PlayerSelection from 'ui/components/PlayerSelection/PlayerSelection';
 
 import playerService from 'services/PlayerService';
+import globalTracker from 'services/globalTracker';
 
 class App extends React.Component {
   constructor() {
@@ -165,6 +167,12 @@ class App extends React.Component {
           map,
           minimap
         });
+
+        globalTracker.dispatch(EVENTS.LEVEL_STARTED, {
+          levelKey: levelData.key,
+          levelOrder: levelData.order
+        });
+
         resolve(game);
       }, 50);
     });
@@ -227,6 +235,18 @@ class App extends React.Component {
       // allow to hack my way..
       if (window.cheats_won) {
         gameWon = true;
+      }
+
+      if (gameWon) {
+        globalTracker.dispatch(EVENTS.LEVEL_COMPLETE, {
+          levelKey: this.state.currentLevel.key,
+          levelOrder: this.state.currentLevel.order
+        });
+      } else if (gameLost) {
+        globalTracker.dispatch(EVENTS.LEVEL_FAILED, {
+          levelKey: this.state.currentLevel.key,
+          levelOrder: this.state.currentLevel.order
+        });
       }
 
       if ((gameWon || gameLost) && !this.state.gameEnded) {
@@ -301,6 +321,7 @@ class App extends React.Component {
       }}
       onQuickStart={(menuSelection) => {
         let randLevel = {
+          key : 'unknown',
           buffer: 2,
           mapScale: menuSelection.mapScale,
           planetsInMap: 20 * menuSelection.mapScale

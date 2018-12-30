@@ -2,7 +2,9 @@ import React from 'react';
 import i18n from 'ui/i18n';
 import CreateNewPlayer from './CreateNewPlayer';
 import playerService from 'services/PlayerService';
+import globalTracker from 'services/globalTracker';
 import './playerSelection.scss';
+import {EVENTS} from 'gameEngine/constants';
 
 class PlayerSelection extends React.Component {
   constructor() {
@@ -28,6 +30,11 @@ class PlayerSelection extends React.Component {
           });
 
           this.props.onPlayerSelect(playerService.getSelectedPlayer());
+
+          globalTracker.dispatch(EVENTS.PLAYER_CREATED, {
+            uNameLen: userName.length
+          });
+
           this.setState({
             selectedPlayer: playerService.getSelectedPlayer()
           });

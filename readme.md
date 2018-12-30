@@ -1,5 +1,26 @@
 ###Current
 [ ] Add Google Tag
+[ ] Add a cookie policy tag
+
+// TODO...
+[ ] Allow jarb to accept a custom html file
+[V] Fire some events to GTM
+[ ] Create a report based on these events
+[ ] Tests for the various tracking events (get all the app back to ~90% coverage
+
+Events:
+[V] How many times the game was started
+[V] How many times the game finished loading
+[v] Level started
+[V] Level ended
+[V] Player created
+
+Reports:
+[ ] Game load done %
+[ ] Success % of a level
+
+Funnels:
+[ ] Game launch - > start a level
 
 
 
