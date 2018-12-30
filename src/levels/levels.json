@@ -2,7 +2,7 @@
   "random": {
     "mapScale": 0.5,
     "buffer" : 2,
-    "planetsInMap": 10
+    "planetsInMap": 8
   },
   "A simple plan" : {
     "order" : 1,
