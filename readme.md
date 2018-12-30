@@ -1,4 +1,7 @@
 ###Current
+[ ] Add Google Tag
+
+
 
 ## Refactoring needed
 [ ] Component refactoring, App and MainMenu are doing too many things..
