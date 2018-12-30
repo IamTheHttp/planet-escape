@@ -98,7 +98,7 @@ function renderMap(entity, canvasAPI) {
       }
     });
 
-    entity[SPRITE].images.forEach((imageToRender) => {
+    entity[SPRITE].images.forEach((imageToRender, i) => {
       // REFACTOR this is ugly, create a fn that gets all this from the entity.
       let data = imageBuffer[imageToRender.name][entity[OWNER_COMPONENT].player];
       if (!data) {
@@ -122,7 +122,7 @@ function renderMap(entity, canvasAPI) {
       }
 
       canvasAPI.addImage({
-        id: `${entity.id}-image-${imageToRender.name}`,
+        id: `${entity.id}-${i}-image-${imageToRender.name}`,
         image,
         x: baseImageX, y: baseImageY,
         height: baseHeight, width: baseWidth,

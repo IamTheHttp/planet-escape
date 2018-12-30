@@ -19,8 +19,8 @@ Object.keys(levelsData).forEach((levelKey) => {
   }
 });
 
-levels.sort((a, b) => {
-  return a.order - b.order;
+levels.sort((aItem, bItem) => {
+  return aItem.order - bItem.order;
 });
 
 describe('Tests a component', () => {

@@ -36,11 +36,11 @@ import {
 export default {
   [SELECT_WIDTH] : 3,
   [PLANET_RADIUS] : 40,
+  [FIGHTER_RADIUS] : 10,
   [NUM_PLAYERS] : 2,
   [AI_MIN_FIGHTERS] : 5,
   [DEFAULT_FIGHTER_COUNT] : 10,
   [FIGHTER_BUILD_RATE] : 60,
-  [FIGHTER_RADIUS] : 5,
   [FIGHTER_SPEED] : 2,
   [COLORS]:{
     [NEUTRAL] : 'rgba(128, 128, 128, 1)',

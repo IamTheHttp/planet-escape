@@ -9,8 +9,8 @@ class PlayerSelection extends React.Component {
     super();
     this.state = {
       createUser: playerService.getRegisteredPlayers().length === 0,
-      players : playerService.getRegisteredPlayers().length,
-      selectedPlayer : playerService.getSelectedPlayer() || {}
+      players: playerService.getRegisteredPlayers().length,
+      selectedPlayer: playerService.getSelectedPlayer() || {}
     };
   }
 
@@ -29,11 +29,14 @@ class PlayerSelection extends React.Component {
 
           this.props.onPlayerSelect(playerService.getSelectedPlayer());
           this.setState({
-            selectedPlayer : playerService.getSelectedPlayer()
+            selectedPlayer: playerService.getSelectedPlayer()
           });
         }}
       ></CreateNewPlayer>;
     } else {
+      let selected = 'selectedUser btnItem';
+      let nonSelected = 'btnItem nonSelectedUser';
+
       return (
         <div className="playerSelection centered md">
           <div className="menuHeader">
@@ -41,29 +44,29 @@ class PlayerSelection extends React.Component {
           </div>
           <div className="btnList ">
             {players.map((player, i) => {
-              let className = selectedPlayer.userName === player.userName ? 'selectedUser btnItem' : 'btnItem nonSelectedUser';
+              let className = selectedPlayer.userName === player.userName ? selected : nonSelected;
               return (
-              <div key={i}>
-                <button className={className} onClick={() => {
-                  playerService.selectPlayer(player.userName);
-                  this.setState({
-                    selectedPlayer : playerService.getSelectedPlayer()
-                  });
-                  this.props.onPlayerSelect(playerService.getSelectedPlayer());
-                }}>
+                <div key={i}>
+                  <button className={className} onClick={() => {
+                    playerService.selectPlayer(player.userName);
+                    this.setState({
+                      selectedPlayer: playerService.getSelectedPlayer()
+                    });
+                    this.props.onPlayerSelect(playerService.getSelectedPlayer());
+                  }}>
                     {player.userName} <span className="isActive"> - {i18n.selected}</span>
                   </button>
-                <button className="btnItem delete"
-                  onClick={() => {
-                    // delete the selected user?
-                    playerService.deletePlayer(player.userName);
-                    this.setState({
-                      players : playerService.getRegisteredPlayers().length
-                    });
-                    this.props.onPlayerDelete(player.userName);
-                  }}
-                >{i18n.del}</button>
-              </div>
+                  <button className="btnItem delete"
+                          onClick={() => {
+                            // delete the selected user?
+                            playerService.deletePlayer(player.userName);
+                            this.setState({
+                              players: playerService.getRegisteredPlayers().length
+                            });
+                            this.props.onPlayerDelete(player.userName);
+                          }}
+                  >{i18n.del}</button>
+                </div>
               );
             })}
             <button className="btnItem createPlayerBtn" onClick={() => {

@@ -1,3 +1,5 @@
+###Current
+
 ## Refactoring needed
 [ ] Component refactoring, App and MainMenu are doing too many things..
 
@@ -10,6 +12,11 @@
 ##ChangeLog
 [V] - Done
 [VT] - Done and has automated tests
+
+
+30/12/2018
+[V] https://iamhttp.myjetbrains.com/youtrack/issue/PE-38 - Show better representation of fighters in space
+[V] Fix issue with quick start showing as "undefined"
 
 ###
 29/12/2018

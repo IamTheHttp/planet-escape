@@ -7,13 +7,16 @@ import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import Fighter, {fighterPool} from 'gameEngine/entities/Ships/Fighter';
 import PositionComponent, {hasDest, setDest} from 'gameEngine/components/PositionComponent';
 import Entity from '../../../../src/lib/ECS/Entity';
+import gameConfig from 'gameEngine/config';
+
 
 import {
   NEUTRAL,
   PLAYER_1,
   PLAYER_2,
   PLAYER_CONTROLLED,
-  POSITION
+  POSITION,
+  FIGHTER_RADIUS
 } from 'gameEngine/constants';
 
 
@@ -68,12 +71,12 @@ describe('Tests the attack action', () => {
     expect(attack({x:300, y:300})).toBe(9);
 
     // why 14? 9 + base(5)
-    expect(firstFighter[POSITION].radius).toBe(14);
+    expect(firstFighter[POSITION].radius).toBe(gameConfig[FIGHTER_RADIUS]);
 
     // now let's destroy this fighter and nesure radius changes back
 
     firstFighter.remove();
 
-    expect(firstFighter[POSITION].radius).toBe(5);
+    expect(firstFighter[POSITION].radius).toBe(gameConfig[FIGHTER_RADIUS]);
   });
 });

@@ -36,7 +36,8 @@ let i18n = {
   enterUsername: 'username',
   del : 'Delete',
   selected : 'Selected',
-  aFewMoreLetters : 'A few more letters..'
+  aFewMoreLetters : 'A few more letters..',
+  unknown : 'Unknown Space'
 };
 
 export default i18n;

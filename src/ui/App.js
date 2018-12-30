@@ -127,7 +127,7 @@ class App extends React.Component {
       // the loading overlay
       let loadingScreen = document.createElement('div');
       loadingScreen.className = 'loadingOverlay';
-      loadingScreen.innerHTML = `\n<div>"${levelData.key}"</div>\n<div>${i18n.loadingGameMsg}</div>`;
+      loadingScreen.innerHTML = `\n<div>"${levelData.key || i18n.unknown}"</div>\n<div>${i18n.loadingGameMsg}</div>`;
       document.body.appendChild(loadingScreen);
 
 
