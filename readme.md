@@ -9,6 +9,8 @@
 [ ] The Enemy Planet in the most bottom right is a bit hidden behind the Menu/Help UI
 [ ] In Mobile, the "Loading level assets" splash screen does not appear
 [ ] The new user journey looks a bit strange, and the text is cut
+[ ] End of game report -  fighters built/destroyed are incorrect
+    This is due to the fact that we count new fighters, which are sometimes created in bulk
 
 ---------------
 ##ChangeLog
