@@ -1,5 +1,5 @@
 ###Current
-
+[ ] Fix the 'first visit' flow
 
 ## Refactoring needed
 [ ] Component refactoring, App and MainMenu are doing too many things..
@@ -16,6 +16,7 @@
 [VT] - Done and has automated tests
 
 05/01/2018
+[V] Resized all images with online image optimizer
 [V] Updated JARB to 1.0.6 to support src/dist.html
 [V] https://iamhttp.myjetbrains.com/youtrack/issue/PE-86 - Added Google Analytics
     Events:

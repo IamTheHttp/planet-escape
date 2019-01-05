@@ -33,6 +33,7 @@ class CookiePolicy extends React.Component {
           <div>Analytics - We track how players interact with the game</div>
           <div>Functional - We store your in-game progress on your device</div>
           <div>By playing you agree to allow the website to collect this information</div>
+          <div><a target="_blank" href="https://cookiesandyou.com/">Learn more</a></div>
           <button
             className="btnItem"
             onClick={this.handleClick}
