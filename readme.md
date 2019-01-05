@@ -1,26 +1,19 @@
 ###Current
-[ ] Add Google Tag
-[ ] Add a cookie policy tag
+[V] Add Google Tag
+[V] Add a cookie policy tag
 
 // TODO...
-[ ] Allow jarb to accept a custom html file
+[V] Allow jarb to accept a custom html file
 [V] Fire some events to GTM
-[ ] Create a report based on these events
+[V] Create a report based on these events
 [ ] Tests for the various tracking events (get all the app back to ~90% coverage
 
 Events:
-[V] How many times the game was started
-[V] How many times the game finished loading
-[v] Level started
-[V] Level ended
-[V] Player created
-
-Reports:
-[ ] Game load done %
-[ ] Success % of a level
-
-Funnels:
-[ ] Game launch - > start a level
+[V] How many times the game was started APP->load_start
+[V] How many times the game finished loading APP->load_end
+[v] Level started LVL->lvl_started
+[V] Level ended LVL->lvl_won; LVL->lvl_failed
+[V] Player created APP->player_created
 
 
 
@@ -31,11 +24,16 @@ Funnels:
 [ ] IOS Address bar swiping can cause the display to look improper
 [ ] The Enemy Planet in the most bottom right is a bit hidden behind the Menu/Help UI
 [ ] In Mobile, the "Loading level assets" splash screen does not appear
+[ ] The new user journey looks a bit strange, and the text is cut
 
 ---------------
 ##ChangeLog
 [V] - Done
 [VT] - Done and has automated tests
+
+
+05/01/2018
+[V] Updated JARB to 1.0.6 to support src/dist.html
 
 30/12/2018
 [V] https://iamhttp.myjetbrains.com/youtrack/issue/PE-38 - Show better representation of fighters in space

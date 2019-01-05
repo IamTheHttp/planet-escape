@@ -29,6 +29,7 @@ import i18n from 'ui/i18n';
 import levels from './levels';
 import Help from 'ui/components/MainMenu/Help';
 import PlayerSelection from 'ui/components/PlayerSelection/PlayerSelection';
+import CookiePolicy from 'ui/components/CookiePolicy/CookiePolicy';
 
 import playerService from 'services/PlayerService';
 import globalTracker from 'services/globalTracker';
@@ -471,6 +472,7 @@ class App extends React.Component {
         <div className="pageContent">
           {content}
         </div>
+        <CookiePolicy></CookiePolicy>
       </div>
     );
   }

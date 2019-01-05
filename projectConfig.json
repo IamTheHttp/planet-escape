@@ -1,5 +1,4 @@
 {
   "assetsPath":"./",
-  "projectType":"application",
-  "bodyHTML": "<div id='app' class='loading'></div><div id='progress'></div>"
+  "projectType":"application"
 }
