@@ -1,7 +1,5 @@
 import {EVENTS} from 'gameEngine/constants';
 
-let ga = window.ga;
-
 let APP = 'APP';
 let NAV = 'NAV';
 let LVL = 'LVL';
@@ -16,8 +14,8 @@ let LVL = 'LVL';
 // - Level complete
 // - Level failed
 
-function event({eventCategory, eventAction, eventLabel = null, eventValue}) {
-  ga('send', {
+function event({eventCategory, eventAction, eventLabel = null, eventValue = null}) {
+  window.ga('send', {
     hitType: 'event',
     eventCategory,
     eventAction,

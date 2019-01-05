@@ -114,4 +114,14 @@ describe('Tests the render system', () => {
 
     expect(mapAPI.write.mock.calls[0][0].text.indexOf(1)).toBeGreaterThan(-1);
   });
+
+  it('Does not draw entities far outside of the map', () => {
+    new EarthLike(-500, -500, PLAYER_1);
+    renderSystem({
+      Entity,
+      viewSize
+    }, mapAPI, miniMapAPI, selectedBox);
+
+    expect(mapAPI.addCircle.mock.calls.length).toBe(2);
+  });
 });

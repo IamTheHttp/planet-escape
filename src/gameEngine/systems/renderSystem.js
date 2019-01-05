@@ -169,8 +169,10 @@ function renderSystem(systemArguments, mapAPI, miniMapAPI, selectedBox) {
     let loopHandler = (entity) => {
       let {x, y, radius} = entity[POSITION];
       let entWidth = radius * 2;
+      let entHeight = radius * 2;
+
       let xOutOfBound = x + entWidth < -panX || x - entWidth > -panX + viewWidth;
-      let yOutOfBound = y + entWidth < -panY || y - entWidth > -panY + viewHeight;
+      let yOutOfBound = y + entHeight < -panY || y - entHeight > -panY + viewHeight;
 
       // out of screen? do nothing
       if (xOutOfBound || yOutOfBound) {

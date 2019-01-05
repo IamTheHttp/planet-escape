@@ -1,20 +1,4 @@
 ###Current
-[V] Add Google Tag
-[V] Add a cookie policy tag
-
-// TODO...
-[V] Allow jarb to accept a custom html file
-[V] Fire some events to GTM
-[V] Create a report based on these events
-[ ] Tests for the various tracking events (get all the app back to ~90% coverage
-
-Events:
-[V] How many times the game was started APP->load_start
-[V] How many times the game finished loading APP->load_end
-[v] Level started LVL->lvl_started
-[V] Level ended LVL->lvl_won; LVL->lvl_failed
-[V] Player created APP->player_created
-
 
 
 ## Refactoring needed
@@ -31,9 +15,16 @@ Events:
 [V] - Done
 [VT] - Done and has automated tests
 
-
 05/01/2018
 [V] Updated JARB to 1.0.6 to support src/dist.html
+[V] https://iamhttp.myjetbrains.com/youtrack/issue/PE-86 - Added Google Analytics
+    Events:
+    [V] How many times the game was started APP->load_start
+    [V] How many times the game finished loading APP->load_end
+    [v] Level started LVL->lvl_started
+    [V] Level ended LVL->lvl_won; LVL->lvl_failed
+    [V] Player created APP->player_created
+[V] Cookie policy popup was added to the website
 
 30/12/2018
 [V] https://iamhttp.myjetbrains.com/youtrack/issue/PE-38 - Show better representation of fighters in space

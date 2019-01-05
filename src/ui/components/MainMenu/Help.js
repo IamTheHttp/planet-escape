@@ -27,7 +27,7 @@ class Help extends React.Component {
           <ul>
             {
               this.props.levelHints.map((item, i) => {
-                return (<li key={i}>{item}</li>);
+                return (<li className="hint" key={i}>{item}</li>);
               })
             }
           </ul>

@@ -70,4 +70,31 @@ describe('Tests a component', () => {
 
     expect(wrapper.find('.tooShort').length).toBe(1);
   });
+
+  it('Does not submit when input is too short', () => {
+    let onSubmit = jest.fn();
+
+    wrapper = mount(<CreateNewPlayer
+      onSubmit={onSubmit}
+      ></CreateNewPlayer>
+    );
+
+    wrapper.find('input').simulate('change', {
+      target: {
+        value: 'a'
+      }
+    });
+
+    wrapper.find('.createPLayerBtn').simulate('click');
+    expect(onSubmit.mock.calls.length).toBe(0);
+
+    wrapper.find('input').simulate('change', {
+      target: {
+        value: 'aaaaa'
+      }
+    });
+
+    wrapper.find('.createPLayerBtn').simulate('click');
+    expect(onSubmit.mock.calls.length).toBe(1);
+  });
 });

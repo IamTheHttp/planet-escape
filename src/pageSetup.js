@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 // Load RAF polyfill
 import 'polyfill/rAF.js';
 import i18n from './ui/i18n';
@@ -41,7 +43,6 @@ appDiv.innerHTML = 'Loading game assets...';
 
 
 // assign tracking!
-
 if (window.ga) {
   globalTracker.subscribe(googleTracking.track);
 }
