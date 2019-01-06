@@ -20,10 +20,14 @@ import {
   IN_PLACE_TO_ATTACK
 } from 'gameEngine/constants';
 
-describe('Tests the fighter attacks system', () => {
+import gameTracker from 'gameEngine/GameTracker';
+
+
+  describe('Tests the fighter attacks system', () => {
   beforeEach(() => {
     Entity.reset();
     fighterPool.reset();
+    gameTracker.reset();
   });
 
   it('Attack/Defense are removed from the Entity hash as well from the planets', () => {
@@ -77,7 +81,7 @@ describe('Tests the fighter attacks system', () => {
   /**
    * This situation can happen when there's a fighter in route when the ownership already changed
    */
-  it('A fighter attacking a friendly planet with no defenders', () => {
+  it('A fighter "attacking" a friendly planet with no defenders', () => {
     let attackingPlanet = new EarthLike(200, 200, PLAYER_1);
     let defendingPlanet = new EarthLike(500, 500, PLAYER_1);
 
@@ -90,8 +94,17 @@ describe('Tests the fighter attacks system', () => {
     let attackCount = getFighters(attackingPlanet).length;
     fighterAttacks();
 
-    // We expect the fighter to simply move to the next planet
-    expect(Entity.entities[attackerFighter.id][POSITION].x).toBe(500);
+    // Fighter should still exist
+    // Position - Should be of the planet we reassigned to
+    // Not in place to attack
+    // isDefending
+    expect(Entity.entities[attackerFighter.id]).not.toBe(null);
+    expect(attackerFighter[POSITION].x).toBe(500);
+    expect(attackerFighter[IN_PLACE_TO_ATTACK]).toBeFalsy();
+    expect(attackerFighter[DEFENDING]).toBeTruthy();
+
+    expect(gameTracker.actions.fightersBuilt.count).toBe(1);
+    expect(gameTracker.actions.fightersDestroyed).toBeFalsy();
 
     // The sending planet should have one less fighter
     expect(getFighters(attackingPlanet).length).toBe(attackCount - 1);

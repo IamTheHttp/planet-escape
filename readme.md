@@ -1,27 +1,29 @@
 ###Current
-[V] Fix the 'first visit' flow
-[V] Create a new player should work with the "Enter" key
-[V] Refactoring - Stopped the creation of new fighters when reaching a friendly planet
-[ ] Test that a figher can't be added to the same planet twice.
-[ ] Test that a fighter that reaches a friendly planet is not destroyed.
-[ ] Test that a fighter that reaches a friendly planet has his state set correctly
-[ ] Test that game tracking is correct when fighters attack
 
 ## Refactoring needed
 [ ] Component refactoring, App and MainMenu are doing too many things..
+[ ] Delegate "Selection box selection" to game-platform (this is historically still calculated in game code)
 
 ##Known Issues
 [ ] IOS Address bar swiping can cause the display to look improper
 [ ] The Enemy Planet in the most bottom right is a bit hidden behind the Menu/Help UI
 [ ] In Mobile, the "Loading level assets" splash screen does not appear
-[ ] The new user journey looks a bit strange, and the text is cut
-[ ] End of game report -  fighters built/destroyed are incorrect
-    This is due to the fact that we count new fighters, which are sometimes created in bulk
 
 ---------------
 ##ChangeLog
 [V] - Done
 [VT] - Done and has automated tests
+
+06/01/2018 VERSION 1.2.0 RELEASE
+[V] Fix the 'first visit' flow
+[V] Create a new player should work with the "Enter" key
+[V] Refactoring - Stopped the creation of new fighters when reaching a friendly planet
+[VT] Test that a fighter can't be added to the same planet twice.
+[VT] Test that a fighter that reaches a friendly planet is not destroyed.
+[VT] Test that a fighter that reaches a friendly planet has his state set correctly
+[VT] Test that game tracking is correct when fighters attack
+[V] Bug -  fighters built/destroyed are incorrect
+
 
 05/01/2018
 [V] Resized all images with online image optimizer
@@ -77,5 +79,3 @@
 [V] Added direct tests to GenerateMap
 [V] Improved UI for 'game-ending' notification, to look like the theme
 
-##Meta
-[ ] Delegate "Selection box selection" to game-platform (this is historically still calculated in game code
