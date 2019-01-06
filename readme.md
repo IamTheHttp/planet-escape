@@ -14,7 +14,12 @@
 [V] - Done
 [VT] - Done and has automated tests
 
-06/01/2018 VERSION 1.2.0 RELEASE
+
+
+06/01/2018
+[V] Updated Jarb to 1.0.7 to fix the readme.md overwrite on init
+
+VERSION 1.2.0 RELEASE
 [V] Fix the 'first visit' flow
 [V] Create a new player should work with the "Enter" key
 [V] Refactoring - Stopped the creation of new fighters when reaching a friendly planet
