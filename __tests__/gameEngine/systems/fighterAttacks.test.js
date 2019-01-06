@@ -23,7 +23,7 @@ import {
 import gameTracker from 'gameEngine/GameTracker';
 
 
-  describe('Tests the fighter attacks system', () => {
+describe('Tests the fighter attacks system', () => {
   beforeEach(() => {
     Entity.reset();
     fighterPool.reset();
