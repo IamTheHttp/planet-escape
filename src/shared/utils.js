@@ -75,7 +75,7 @@ export function generateMap(levelData) {
       planets[planet.id] = planet;
 
       while (getFighters(planet).length < planetData.fighters) {
-        new Fighter(planet);
+        new Fighter(planet, false);
       }
     });
   } else {
@@ -83,7 +83,7 @@ export function generateMap(levelData) {
       let planet = new EarthLike(null, null, NEUTRAL);
       planets[planet.id] = planet;
       while (getFighters(planet).length < gameConfig[DEFAULT_FIGHTER_COUNT]) {
-        new Fighter(planet);
+        new Fighter(planet, false);
       }
       count++;
     }

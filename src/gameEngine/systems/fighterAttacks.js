@@ -4,13 +4,13 @@ import {
   getFighters,
   destroyFighter,
   getDefendingFighters,
-  detachFighterFromPlanet
+  detachFighterFromPlanet,
+  reassignFighter
 } from 'gameEngine/components/HasFighters';
 import {unSelect} from 'gameEngine/components/PlayerControlledComponent';
 import Explosion from 'gameEngine/components/Explosion';
 import {hasDest, isSamePos, destReached} from 'gameEngine/components/PositionComponent';
 import {diffPlayers, getOwner} from 'gameEngine/components/OwnerComponent';
-import Fighter from 'gameEngine/entities/Ships/Fighter';
 
 import {
   OWNER_COMPONENT,
@@ -33,14 +33,8 @@ function fighterAttacks() {
       return isSamePos(planet, attacker) && !diffPlayers(planet, attacker);
     });
 
-    // if we reached a friendly planet
-    // let's join that planet!
     if (friendlyPlanet) {
-      // destroy this fighter, and create a new one..
-      // this prevents us from needing to remove the fighter from it's current list..
-      // though it might be 'better', this is much easier.
-      new Fighter(friendlyPlanet);
-      destroyFighter(attacker);
+      reassignFighter(friendlyPlanet, attacker);
     } else {
       let foundPlanet = planets.find((planet) => {
         return isSamePos(planet, attacker) && diffPlayers(planet, attacker) ;

@@ -28,8 +28,8 @@ fighterImage.src = fighter;
 
 import gameTracker from 'gameEngine/GameTracker';
 
-class Fighter {
-  constructor(planet) {
+class FighterEntitiy {
+  constructor() {
     let ent = new Entity(Fighter);
 
     ent.addComponent(new MoveComponent(gameConfig[FIGHTER_SPEED]));
@@ -45,6 +45,14 @@ class Fighter {
     ent.addComponent(new OwnerComponent(null));
     ent.addComponent(new PositionComponent(null, null, gameConfig[FIGHTER_RADIUS]));
 
+    ent.reset = () => {
+      // Remove the 'in place to attack';
+      ent.removeComponent(IN_PLACE_TO_ATTACK);
+
+      // reset the defending state
+      ent.addComponent(new Defending);
+    };
+
     ent.remove = () => {
       gameTracker.track('fightersDestroyed');
       // Whats the bear minimum we need to do to clean up a fighter?
@@ -53,14 +61,9 @@ class Fighter {
       // Reset position
       ent[POSITION].x = null;
       ent[POSITION].y = null;
-      // Remove the 'in place to attack';
-      ent.removeComponent(IN_PLACE_TO_ATTACK);
-      // okay, we also need to reset the radius, since we change it for some reason!
-      ent[POSITION].radius = gameConfig[FIGHTER_RADIUS];
 
-      // reset the defending state
+      ent.reset();
       fighterPool.release(ent);
-      ent.addComponent(new Defending);
     };
 
     return ent;
@@ -128,13 +131,14 @@ export function addFighterUiComp(fighter) {
   }));
 }
 
-fighterPool = new ObjectPool(Fighter);
+fighterPool = new ObjectPool(FighterEntitiy);
 
-function FighterFactory(planet) {
+function Fighter(planet, createdDuringPlay = true) {
   // We take one from the pool but we reset some key parts in it
   // this is what actually creates the fighter
   let ent = fighterPool.acquire();
-  gameTracker.track('fightersBuilt');
+
+  createdDuringPlay && gameTracker.track('fightersBuilt');
 
   ent[OWNER_COMPONENT].player = getOwner(planet);
   ent[POSITION].x = planet[POSITION].x;
@@ -145,4 +149,4 @@ function FighterFactory(planet) {
 }
 
 export {fighterPool};
-export default FighterFactory;
+export default Fighter;

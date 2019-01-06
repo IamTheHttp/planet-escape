@@ -20,7 +20,7 @@ import {
   IN_PLACE_TO_ATTACK
 } from 'gameEngine/constants';
 
-describe('Tests a the fighter attacks system', () => {
+describe('Tests the fighter attacks system', () => {
   beforeEach(() => {
     Entity.reset();
     fighterPool.reset();
@@ -89,10 +89,14 @@ describe('Tests a the fighter attacks system', () => {
 
     let attackCount = getFighters(attackingPlanet).length;
     fighterAttacks();
-    // expect the attackerFighter entity to be removed from the entity list...
-    expect(Entity.entities[attackerFighter.id][POSITION].x).toBe(null);
-    // the planets should lose one fighter
+
+    // We expect the fighter to simply move to the next planet
+    expect(Entity.entities[attackerFighter.id][POSITION].x).toBe(500);
+
+    // The sending planet should have one less fighter
     expect(getFighters(attackingPlanet).length).toBe(attackCount - 1);
+
+    // the player should still be player_1 after this
     expect(getOwner(defendingPlanet)).toBe(PLAYER_1);
   });
 

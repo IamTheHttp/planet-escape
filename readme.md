@@ -1,5 +1,11 @@
 ###Current
-[ ] Fix the 'first visit' flow
+[V] Fix the 'first visit' flow
+[V] Create a new player should work with the "Enter" key
+[V] Refactoring - Stopped the creation of new fighters when reaching a friendly planet
+[ ] Test that a figher can't be added to the same planet twice.
+[ ] Test that a fighter that reaches a friendly planet is not destroyed.
+[ ] Test that a fighter that reaches a friendly planet has his state set correctly
+[ ] Test that game tracking is correct when fighters attack
 
 ## Refactoring needed
 [ ] Component refactoring, App and MainMenu are doing too many things..

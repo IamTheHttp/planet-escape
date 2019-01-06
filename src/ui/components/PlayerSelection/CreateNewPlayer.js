@@ -6,9 +6,17 @@ import './createNewPlayer.scss';
 class createNewPlayer extends React.Component {
   constructor() {
     super();
+    this.submitForm = this.submitForm.bind(this);
     this.state = {
-      inputValue:''
+      inputValue: ''
     };
+  }
+
+  submitForm() {
+    let isInputValid = playerService.validateUsername(this.state.inputValue);
+    if (isInputValid) {
+      this.props.onSubmit(this.state.inputValue);
+    }
   }
 
   render() {
@@ -19,26 +27,32 @@ class createNewPlayer extends React.Component {
         <div className="menuHeader">
           {playerService.getRegisteredPlayers().length ? i18n.createNewPlayer : i18n.createPlayerIntro}
         </div>
-        <div className="btnList">
-          <input
-            className="btnItem playerUserName"
-            type="text"
-            placeholder={i18n.enterUsername}
-            onChange={(event) => {
-              this.setState({inputValue: event.target.value});
-            }}
-          >
-          </input>
-          <div className={isInputValid ? 'lenHelper' : 'tooShort lenHelper' }>
-            {i18n.aFewMoreLetters}
+        <div className="">
+          <div className="inputSection">
+            <input
+              className="btnItem playerUserName"
+              type="text"
+              placeholder={i18n.enterUsername}
+              onChange={(event) => {
+                this.setState({inputValue: event.target.value});
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  this.submitForm();
+                }
+              }}
+            >
+            </input>
+            <div className={isInputValid ? 'lenHelper' : 'tooShort lenHelper' }>
+              {i18n.aFewMoreLetters}
+            </div>
           </div>
-          <button className="btnItem createPLayerBtn" onClick={() => {
-            if (isInputValid) {
-              this.props.onSubmit(this.state.inputValue);
-            }
-          }}>
-            {i18n.create}
-          </button>
+          <div className="createPLayerSection">
+            <button className="btnItem createPLayerBtn" onClick={this.submitForm}>
+              {i18n.create}
+            </button>
+          </div>
+
         </div>
       </div>
     );

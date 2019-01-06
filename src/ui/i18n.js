@@ -28,7 +28,7 @@ let i18n = {
   menu: 'Menu',
   resumeGame: 'Resume Game',
   gamePaused: 'Game Paused',
-  createPlayerIntro: 'Oh, you\'re new here.. How should we call you?',
+  createPlayerIntro: 'How should we call you?',
   createNewPlayer: 'Create new player',
   switchPlayer : 'Switch Player',
   changeActivePlayer: 'Change active player',
