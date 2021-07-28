@@ -5,7 +5,7 @@ import React from 'react';
 import entityPlacer from 'shared/mapPlacement/entityPlacer';
 import createGrid from 'shared/mapPlacement/grid';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import logger from 'shared/logger';
+import {logger} from 'shared/logger';
 describe('Tests a component', () => {
   beforeEach(() => {
     Entity.reset();

@@ -22,13 +22,13 @@ describe('Tests a component', () => {
 
   it('neutral planets do not build fighters', () => {
     let earth = new EarthLike(200, 200, NEUTRAL);
-    buildFighters(systemArguments);
+    buildFighters(systemArguments: ISystemArguments);
     expect(getFighters(earth).length).toBe(0);
   });
 
   it('player owned planets produce fighters', () => {
     let earth = new EarthLike(200, 200, PLAYER_1);
-    buildFighters(systemArguments);
+    buildFighters(systemArguments: ISystemArguments);
     expect(getFighters(earth).length).toBe(1);
   });
 });

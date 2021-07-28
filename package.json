@@ -32,6 +32,8 @@
   },
   "main": "dist",
   "dependencies": {
+    "@types/react": "^17.0.15",
+    "@types/react-dom": "^17.0.9",
     "bootstrap": "^3.3.7",
     "canvas": "^2.8.0",
     "core-js": "3.6.4",

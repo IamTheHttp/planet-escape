@@ -3,7 +3,6 @@ import Entity from 'lib/ECS/Entity';
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 
-import {GameTracker} from 'gameEngine/GameTracker';
 
 describe('Tests a component', () => {
   let gameTracker;

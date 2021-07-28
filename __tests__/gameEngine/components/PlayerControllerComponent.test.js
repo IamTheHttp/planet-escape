@@ -11,13 +11,13 @@ describe('Tests a component', () => {
   });
 
   it('renders', () => {
-    let ent = new Entity();
+    let ent = new BaseEntity();
     ent.addComponent(new PlayerControlledComponent());
 
     expect(isSelected({})).toBe(false);
-    expect(isSelected(ent)).toBe(false);
+    expect(isSelected(ent:BaseEntity)).toBe(false);
 
     ent[PLAYER_CONTROLLED].selected = true;
-    expect(isSelected(ent)).toBe(true);
+    expect(isSelected(ent:BaseEntity)).toBe(true);
   });
 });

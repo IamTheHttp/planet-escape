@@ -35,7 +35,7 @@ describe('Tests a component', () => {
       levels={levels}
       selectedPlayer={playerService.getSelectedPlayer()}
       onLevelSelect={onLevelSelect}
-    ></MainMenu>);
+    />);
 
     // Click on every button...
     wrapper.find('.btnItem').forEach((el) => {
@@ -70,7 +70,7 @@ describe('Tests a component', () => {
       levels={levels}
       selectedPlayer={playerService.getSelectedPlayer()}
       onLevelSelect={onLevelSelect}
-    ></MainMenu>);
+    />);
 
     wrapper.setState({
       selection: 'campaign'

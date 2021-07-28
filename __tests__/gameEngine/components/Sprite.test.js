@@ -23,7 +23,7 @@ describe('Tests a component', () => {
     let compDefault = new Sprite([{
       name : PLANETS
     }]);
-    let ent = new Entity();
+    let ent = new BaseEntity();
     ent.addComponent(compDefault);
     expect(ent[SPRITE].images.length).toBe(1);
   });

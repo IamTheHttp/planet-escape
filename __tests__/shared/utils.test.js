@@ -56,7 +56,7 @@ describe('Tests a component', () => {
 
     generateMap(levelData);
 
-    let entsWithPos = entityLoop(Entity.entities, (ent) => {
+    let entsWithPos = entityLoop(Entity.entities, (ent:BaseEntity) => {
       return ent[POSITION] && ent[POSITION].x > 0;
     });
 
@@ -74,7 +74,7 @@ describe('Tests a component', () => {
 
     generateMap(levelData);
 
-    let entsWithPos = entityLoop(Entity.entities, (ent) => {
+    let entsWithPos = entityLoop(Entity.entities, (ent:BaseEntity) => {
       return ent[POSITION] && ent[POSITION].x > 0;
     });
 
