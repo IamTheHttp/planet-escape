@@ -1,8 +1,3 @@
-/* global describe */
-/* global it */
-/* global expect */
-/* global beforeEach */
-/* global global */
 import Entity from '../src/lib/ECS/Entity';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import {mount, shallow} from 'enzyme';

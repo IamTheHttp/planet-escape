@@ -21,7 +21,7 @@
       let id = window.setTimeout(() => {
         callback(currTime + timeToCall); 
       },
-        timeToCall);
+      timeToCall);
       lastTime = currTime + timeToCall;
       return id;
     };

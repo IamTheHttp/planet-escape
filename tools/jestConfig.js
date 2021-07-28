@@ -10,7 +10,9 @@ module.exports = function (jestConfig) {
   jestConfig.collectCoverageFrom.push("!src/index.js");
 
   jestConfig.setupFiles = [
-    "<rootDir>/src/polyfill/rAF.js"
+    "<rootDir>/node_modules/jarb/lib/testSetup.js",
+    "<rootDir>/src/polyfill/rAF.js",
+    "jest-canvas-mock"
   ];
 
   jestConfig.bail = true;

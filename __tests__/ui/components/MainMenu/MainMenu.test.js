@@ -1,7 +1,4 @@
-/* global describe */
-/* global it */
-/* global expect */
-/* global beforeEach */
+
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import MainMenu from 'ui/components/MainMenu/MainMenu';

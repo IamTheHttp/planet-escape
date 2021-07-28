@@ -1,7 +1,4 @@
-/* global describe */
-/* global it */
-/* global expect */
-/* global beforeEach */
+
 import Entity from '../../../src/lib/ECS/Entity';;
 import {mount, shallow} from 'enzyme';
 import React from 'react';
@@ -23,7 +20,7 @@ describe('Tests a component', () => {
     fighterPool.reset();
     ship = new Fighter(new EarthLike(1234, 1234));
     ship.addComponent(new Moving(true));
-      // setup the test
+    // setup the test
   });
 
   it('moves entities to bigger x,y', () => {

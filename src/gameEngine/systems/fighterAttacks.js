@@ -25,7 +25,7 @@ import {
 
 function fighterAttacks() {
   let hits = Entity.getByComps([OWNER_COMPONENT, CAN_ATTACK_PLANETS, IN_PLACE_TO_ATTACK]);
-  let planets = Entity.getByComps(HAS_FIGHTERS, 'array');
+  let planets = Entity.getByComps([HAS_FIGHTERS], 'array');
 
   hits.forEach((attacker) => {
     // first lets detect if we just 'hit' a friendly planet

@@ -1,14 +1,11 @@
-/* global describe */
-/* global it */
-/* global expect */
-/* global beforeEach */
+
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import UIComponent from 'gameEngine/components/UIComponent';
 
 describe('Tests a component', () => {
   beforeEach(() => {
-      // setup the test
+    // setup the test
   });
 
   it('inits the component - string', () => {

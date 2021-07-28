@@ -64,14 +64,14 @@ class PlayerSelection extends React.Component {
                     {player.userName} <span className="isActive"> - {i18n.selected}</span>
                   </button>
                   <button className="btnItem delete"
-                          onClick={() => {
-                            // delete the selected user?
-                            playerService.deletePlayer(player.userName);
-                            this.setState({
-                              players: playerService.getRegisteredPlayers().length
-                            });
-                            this.props.onPlayerDelete(player.userName);
-                          }}
+                    onClick={() => {
+                      // delete the selected user?
+                      playerService.deletePlayer(player.userName);
+                      this.setState({
+                        players: playerService.getRegisteredPlayers().length
+                      });
+                      this.props.onPlayerDelete(player.userName);
+                    }}
                   >{i18n.del}</button>
                 </div>
               );

@@ -1,7 +1,4 @@
-/* global describe */
-/* global it */
-/* global expect */
-/* global beforeEach */
+
 import {attack} from 'gameEngine/systems/userInputActions/attack';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import Fighter, {fighterPool} from 'gameEngine/entities/Ships/Fighter';

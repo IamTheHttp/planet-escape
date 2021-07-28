@@ -1,7 +1,4 @@
-/* global describe */
-/* global it */
-/* global expect */
-/* global beforeEach */
+
 import {
   PLAYER_1,
   MAIN_VIEW_SIZE_X,

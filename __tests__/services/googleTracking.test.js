@@ -1,7 +1,4 @@
-/* global describe */
-/* global it */
-/* global expect */
-/* global beforeEach */
+
 import googleTracking from 'services/googleTracking';
 
 import {EVENTS} from 'gameEngine/constants';

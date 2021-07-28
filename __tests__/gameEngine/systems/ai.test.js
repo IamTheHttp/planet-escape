@@ -1,7 +1,4 @@
-/* global describe */
-/* global it */
-/* global expect */
-/* global beforeEach */
+
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import Entity from '../../../src/lib/ECS/Entity';

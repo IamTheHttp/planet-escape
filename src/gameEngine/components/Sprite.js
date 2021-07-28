@@ -1,6 +1,6 @@
 import {SPRITE} from 'gameEngine/constants';
-class Sprite {
 
+class Sprite {
   constructor(images) {
     this.name = SPRITE;
     this.images = images;

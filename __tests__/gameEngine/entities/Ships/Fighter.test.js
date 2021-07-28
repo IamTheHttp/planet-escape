@@ -1,7 +1,4 @@
-/* global describe */
-/* global it */
-/* global expect */
-/* global beforeEach */
+
 import Entity from 'lib/ECS/Entity';
 import Fighter, {fighterPool} from 'gameEngine/entities/Ships/Fighter';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';

@@ -16,7 +16,7 @@ export function isPosInsideCircle(x, y, centerX, centerY, radius) {
 
 export function getSelectedEntities() {
   let entity = false;
-  let entities = Entity.getByComps(PLAYER_CONTROLLED);
+  let entities = Entity.getByComps([PLAYER_CONTROLLED]);
   return entityLoop(entities, (ent) => {
     // this assumes only one item can ever be selected.
     if (ent[PLAYER_CONTROLLED].selected) {
@@ -32,7 +32,7 @@ export function setEntityDest(entity, action) {
 }
 
 export function getEntitiesAtPos(x, y) {
-  let entities = Entity.getByComps(POSITION);
+  let entities = Entity.getByComps([POSITION]);
   return entityLoop(entities, (ent) => {
     let centerX = ent[POSITION].x;
     let centerY = ent[POSITION].y;
@@ -80,7 +80,8 @@ export function getEntitiesInSelectedBox(selectedBox) {
  * @returns {Array}
  */
 export function unSelectAllEntities() {
-  let entities = Entity.getByComps(PLAYER_CONTROLLED);
+  let entities = Entity.getByComps([PLAYER_CONTROLLED]);
+
   return entityLoop(entities, (ent) => {
     if (ent[PLAYER_CONTROLLED].selected) {
       ent[PLAYER_CONTROLLED].selected = false;

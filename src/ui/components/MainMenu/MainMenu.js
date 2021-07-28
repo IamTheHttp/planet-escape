@@ -212,9 +212,9 @@ class MainMenu extends React.Component {
             <div className="btnList">
               <h4 className="title">{i18n.start}</h4>
               <div className="startGame"
-                   onClick={() => {
-                     this.props.onQuickStart(this.state);
-                   }}
+                onClick={() => {
+                  this.props.onQuickStart(this.state);
+                }}
               >
                 <img src={earthImage}/>
               </div>

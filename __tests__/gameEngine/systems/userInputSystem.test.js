@@ -1,7 +1,4 @@
-/* global describe */
-/* global it */
-/* global expect */
-/* global beforeEach */
+
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import Entity from '../../../src/lib/ECS/Entity';
@@ -38,7 +35,7 @@ function getSelectedBox(x, y) {
 
 describe('Tests the user input system', () => {
   beforeEach(() => {
-      // setup the test
+    // setup the test
     Entity.reset();
   });
 
@@ -70,7 +67,6 @@ describe('Tests the user input system', () => {
 
   it('Tests that an entity can be selected', () => {
     let planet = new EarthLike(100, 100, PLAYER_1);
-
 
     // hits is provided by the game-platform library
     // it will contain the IDs of the hit items

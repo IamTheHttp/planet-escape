@@ -28,6 +28,21 @@ fighterImage.src = fighter;
 
 import gameTracker from 'gameEngine/GameTracker';
 
+function Fighter(planet, createdDuringPlay = true) {
+  // We take one from the pool but we reset some key parts in it
+  // this is what actually creates the fighter
+  let ent = fighterPool.acquire();
+
+  createdDuringPlay && gameTracker.track('fightersBuilt');
+
+  ent[OWNER_COMPONENT].player = getOwner(planet);
+  ent[POSITION].x = planet[POSITION].x;
+  ent[POSITION].y = planet[POSITION].y;
+
+  addFighter(planet, ent);
+  return ent;
+}
+
 class FighterEntitiy {
   constructor() {
     let ent = new Entity(Fighter);
@@ -132,21 +147,6 @@ export function addFighterUiComp(fighter) {
 }
 
 fighterPool = new ObjectPool(FighterEntitiy);
-
-function Fighter(planet, createdDuringPlay = true) {
-  // We take one from the pool but we reset some key parts in it
-  // this is what actually creates the fighter
-  let ent = fighterPool.acquire();
-
-  createdDuringPlay && gameTracker.track('fightersBuilt');
-
-  ent[OWNER_COMPONENT].player = getOwner(planet);
-  ent[POSITION].x = planet[POSITION].x;
-  ent[POSITION].y = planet[POSITION].y;
-
-  addFighter(planet, ent);
-  return ent;
-}
 
 export {fighterPool};
 export default Fighter;

@@ -1,7 +1,4 @@
-/* global describe */
-/* global it */
-/* global expect */
-/* global beforeEach */
+
 import React from 'react';
 import {GlobalTracker} from 'services/globalTracker';
 

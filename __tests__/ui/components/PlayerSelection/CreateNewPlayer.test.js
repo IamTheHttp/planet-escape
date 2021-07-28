@@ -1,7 +1,4 @@
-/* global describe */
-/* global it */
-/* global expect */
-/* global beforeEach */
+
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import CreateNewPlayer from 'ui/components/PlayerSelection/CreateNewPlayer';
@@ -13,17 +10,17 @@ describe('Tests a component', () => {
   beforeEach(() => {
     playerService.reset();
     wrapper = mount(<CreateNewPlayer
-      ></CreateNewPlayer>
+    ></CreateNewPlayer>
     );
   });
 
   it('Changes the input and submits the form', (done) => {
     wrapper = mount(<CreateNewPlayer
-        onSubmit={(userName) => {
-          expect(userName).toBe('abcdefg');
-          done();
-        }}
-      ></CreateNewPlayer>
+      onSubmit={(userName) => {
+        expect(userName).toBe('abcdefg');
+        done();
+      }}
+    ></CreateNewPlayer>
     );
 
     wrapper.find('input').simulate('change', {
@@ -37,7 +34,7 @@ describe('Tests a component', () => {
 
   it('Shows proper errors if validation does not work', () => {
     wrapper = mount(<CreateNewPlayer
-      ></CreateNewPlayer>
+    ></CreateNewPlayer>
     );
 
     // short input
@@ -76,7 +73,7 @@ describe('Tests a component', () => {
 
     wrapper = mount(<CreateNewPlayer
       onSubmit={onSubmit}
-      ></CreateNewPlayer>
+    ></CreateNewPlayer>
     );
 
     wrapper.find('input').simulate('change', {

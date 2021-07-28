@@ -27,8 +27,14 @@ function userInputSystem() {
       });
     } else {
       if (action.name === CLICK) {
-        let clickedEntities = action.hits.map((id) => {
-          return Entity.entities[id];
+        let clickedEntities = action.hits.map((hit) => {
+          if (Entity.entities[hit.id]) {
+            return Entity.entities[hit.id];
+          } else {
+            return false;
+          }
+        }).filter((entity) => {
+          return entity;
         });
 
         if (clickedEntities.length === 0) {
@@ -37,7 +43,7 @@ function userInputSystem() {
 
         // get all friendly entities clicked (for player 1)
         let friendlies = clickedEntities.filter((ent) => {
-          return getOwner(ent) === PLAYER_1;
+          return ent && getOwner(ent) === PLAYER_1;
         });
 
         // if we clicked on friendlies, then what?
@@ -50,7 +56,7 @@ function userInputSystem() {
 
         // if i clicked on an enemy or neutral, attack..
         let enemies = clickedEntities.filter((ent) => {
-          return getOwner(ent) !== PLAYER_1;
+          return ent && getOwner(ent) !== PLAYER_1;
         });
 
         if (enemies.length) {
