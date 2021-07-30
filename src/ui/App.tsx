@@ -191,7 +191,7 @@ class App extends React.Component<IProps, Partial<IState>> {
           renderSystem: this.renderOnCanvas
         });
 
-        if (levelData.hints) {
+        if (levelData.hints && levelData.hints.length > 0) {
           setTimeout(() => {
             game.stop(); // game starts paused but rendered on canvas
           }, 4);

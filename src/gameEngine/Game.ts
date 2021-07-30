@@ -46,6 +46,7 @@ class GameLoop {
   constructor({notificationSystem, renderSystem, levelData, viewSize, difficulty, numPlayers}: IConstructor) {
     gameTracker.track('newGameStarted');
     Entity.reset();
+    fighterPool.reset();
     fighterPool.generate(10000); // for performance reasons
 
     generateMap(levelData);
