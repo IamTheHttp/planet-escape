@@ -5,7 +5,8 @@
   "description": "Planet escape! a game like no other",
   "scripts": {
     "build": "rollup -c",
-    "test": "jest"
+    "test": "jest",
+    "start": "rollup -c -w & live-server ./dist"
   },
   "oldScripts": {
     "init": "npm install && jarb init",
@@ -58,6 +59,7 @@
     "enzyme-adapter-react-16": "^1.15.6",
     "game-platform": "^2.0.0",
     "jest": "^27.0.6",
+    "live-server": "^1.2.1",
     "memoizee": "^0.4.12",
     "react": "16.8.2",
     "react-dom": "16.8.2",

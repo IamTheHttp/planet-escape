@@ -1,177 +1,9 @@
 @charset "UTF-8";
-@keyframes grow {
-  0% {
-    width: 0;
-  }
-  100% {
-    width: 100%;
-  }
-}
-/**
-  File used for CSS in all loading screens
- */
-.loadingOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  padding-top: 100px;
-  z-index: 9999999999999;
-  background-color: black;
-  color: white;
-  font-size: 40px;
-}
-
-#progress {
-  background-color: #00FF11;
-  height: 10px;
-  animation: grow 20s linear infinite;
-  position: absolute;
-  bottom: 0;
-}
-
-@keyframes grow {
-  0% {
-    width: 0;
-  }
-  100% {
-    width: 100%;
-  }
-}
-#app {
-  -webkit-user-select: none;
-  /* Chrome all / Safari all */
-  -moz-user-select: none;
-  /* Firefox all */
-  -ms-user-select: none;
-  /* IE 10+ */
-  user-select: none;
-  /* Likely future */
-  height: 100vh;
-}
-
-.btnItem {
-  width: 100%;
-  display: inline-block;
-  margin-bottom: 15px;
-  border: 1px solid #ffffff4f;
-  background-color: black;
-  border-radius: 3px;
-  padding: 5px;
-  text-transform: capitalize;
-  max-width: 100%;
-}
-.btnItem.active {
-  background-color: white;
-  color: black;
-}
-.btnItem:focus {
-  outline: none;
-}
-.btnItem:last-of-type {
-  margin-bottom: 0px;
-}
-
-.inGameBtn {
-  font-size: 2.5rem;
-  color: white;
-  background-color: black;
-  border: 1px solid #ffffff4f;
-  margin-left: 10px;
-}
-
-.viewMap {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5490196078);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-#app.loading {
-  font-size: 50px;
-  text-align: center;
-  margin-top: 100px;
-}
-#app.loaded {
-  background: url("./background.jpg");
-  background-size: cover;
-}
-
-.centered {
-  margin-left: auto;
-  margin-right: auto;
-}
-.centered.sm {
-  width: 224px;
-}
-.centered.md {
-  width: 500px;
-}
-.centered.lg {
-  width: 1000px;
-}
-.centered.fl {
-  width: 100%;
-}
-
-.page {
-  height: 100vh;
-  color: white;
-}
-
-.btnBack {
-  border-radius: 0;
-  margin-top: 40vh;
-  height: 20vh;
-  background-color: black;
-  color: white;
-  border: 1px solid #ffffff4f;
-  width: 40px;
-  position: absolute;
-  left: 0;
-}
-
-.startGame {
-  text-align: right;
-  border: 1px solid #ffffff4f;
-  background-color: black;
-  max-width: 100%;
-}
-.startGame .title {
-  text-align: center;
-}
-.startGame img {
-  width: 100%;
-}
-
-.btnList .title {
-  text-align: center;
-}
-
-.inlineImage {
-  height: 1em;
-}
-
-.bordered {
-  background-color: black;
-  border: 1px solid #ffffff4f;
-  padding: 5px;
-}
-
-.inGameBtns {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: 10;
-}
-
 /*!
-* Bootstrap v3.4.1 (https://getbootstrap.com/)
-* Copyright 2011-2019 Twitter, Inc.
-* Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-*/
+ * Bootstrap v3.4.1 (https://getbootstrap.com/)
+ * Copyright 2011-2019 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
   font-family: sans-serif;
@@ -8364,6 +8196,235 @@ td.visible-print {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+@keyframes grow {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+/**
+  File used for CSS in all loading screens
+ */
+.loadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding-top: 100px;
+  z-index: 9999999999999;
+  background-color: black;
+  color: white;
+  font-size: 40px;
+}
+
+#progress {
+  background-color: #00FF11;
+  height: 10px;
+  animation: grow 20s linear infinite;
+  position: absolute;
+  bottom: 0;
+}
+
+@keyframes grow {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+#app {
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+  /* Likely future */
+  height: 100vh;
+}
+
+.btnItem {
+  width: 100%;
+  display: inline-block;
+  margin-bottom: 15px;
+  border: 1px solid #ffffff4f;
+  background-color: black;
+  border-radius: 3px;
+  padding: 5px;
+  text-transform: capitalize;
+  max-width: 100%;
+}
+.btnItem.active {
+  background-color: white;
+  color: black;
+}
+.btnItem:focus {
+  outline: none;
+}
+.btnItem:last-of-type {
+  margin-bottom: 0px;
+}
+
+.inGameBtn {
+  font-size: 2.5rem;
+  color: white;
+  background-color: black;
+  border: 1px solid #ffffff4f;
+  margin-left: 10px;
+}
+
+.viewMap {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5490196078);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#app.loading {
+  font-size: 50px;
+  text-align: center;
+  margin-top: 100px;
+}
+#app.loaded {
+  background: url("./background.jpg");
+  background-size: cover;
+}
+
+.centered {
+  margin-left: auto;
+  margin-right: auto;
+}
+.centered.sm {
+  width: 224px;
+}
+.centered.md {
+  width: 500px;
+}
+.centered.lg {
+  width: 1000px;
+}
+.centered.fl {
+  width: 100%;
+}
+
+.page {
+  height: 100vh;
+  color: white;
+}
+
+.btnBack {
+  border-radius: 0;
+  margin-top: 40vh;
+  height: 20vh;
+  background-color: black;
+  color: white;
+  border: 1px solid #ffffff4f;
+  width: 40px;
+  position: absolute;
+  left: 0;
+}
+
+.startGame {
+  text-align: right;
+  border: 1px solid #ffffff4f;
+  background-color: black;
+  max-width: 100%;
+}
+.startGame .title {
+  text-align: center;
+}
+.startGame img {
+  width: 100%;
+}
+
+.btnList .title {
+  text-align: center;
+}
+
+.inlineImage {
+  height: 1em;
+}
+
+.bordered {
+  background-color: black;
+  border: 1px solid #ffffff4f;
+  padding: 5px;
+}
+
+.inGameBtns {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.menuHeader {
+  font-size: 30px;
+  height: 35px;
+  margin-bottom: 15px;
+}
+
+.quickStartGame {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.mainMenu.btnList {
+  width: 200px;
+}
+
+.gamePaused .btnList {
+  width: 224px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.campaignScreen {
+  overflow: scroll;
+  height: 90vh;
+  padding: 30px;
+}
+.campaignScreen .level {
+  float: left;
+  margin: 30px;
+  color: black;
+  width: 70px;
+  height: 70px;
+  position: relative;
+  opacity: 0.4;
+}
+.campaignScreen .level.levelIsDone, .campaignScreen .level.nextLevel {
+  opacity: 1;
+}
+.campaignScreen .level-image img {
+  width: 100%;
+}
+.campaignScreen .level-title {
+  color: white;
+  text-align: center;
+}
+
+.canvasContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.hintsContainer {
+  width: 400px;
+  position: absolute;
+  margin-left: -200px;
+  left: 50%;
+  top: 5%;
+}
+
 .endGame {
   z-index: 10000;
   position: absolute;
@@ -8425,67 +8486,6 @@ td.visible-print {
 .playerSelection .btnList .btnItem.delete {
   width: 20%;
   margin-left: 5%;
-}
-
-.canvasContainer {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-}
-
-.hintsContainer {
-  width: 400px;
-  position: absolute;
-  margin-left: -200px;
-  left: 50%;
-  top: 5%;
-}
-
-.menuHeader {
-  font-size: 30px;
-  height: 35px;
-  margin-bottom: 15px;
-}
-
-.quickStartGame {
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
-}
-
-.mainMenu.btnList {
-  width: 200px;
-}
-
-.gamePaused .btnList {
-  width: 224px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.campaignScreen {
-  overflow: scroll;
-  height: 90vh;
-  padding: 30px;
-}
-.campaignScreen .level {
-  float: left;
-  margin: 30px;
-  color: black;
-  width: 70px;
-  height: 70px;
-  position: relative;
-  opacity: 0.4;
-}
-.campaignScreen .level.levelIsDone, .campaignScreen .level.nextLevel {
-  opacity: 1;
-}
-.campaignScreen .level-image img {
-  width: 100%;
-}
-.campaignScreen .level-title {
-  color: white;
-  text-align: center;
 }
 
 .minimapSection {

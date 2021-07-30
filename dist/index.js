@@ -704,6 +704,7 @@
   function isSamePos(ent1, ent2) {
       return getPos(ent1).x === getPos(ent2).x && getPos(ent1).y === getPos(ent2).y;
   }
+  // TODO Add memoize to calcDistance
   var calcDistance = function (ent1, ent2) {
       var pos1 = getPos(ent1);
       var pos2 = getPos(ent2);
