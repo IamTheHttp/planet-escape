@@ -2,7 +2,8 @@
   "random": {
     "mapScale": 0.5,
     "buffer" : 2,
-    "planetsInMap": 8
+    "planetsInMap": 8,
+    "hints": []
   },
   "A simple plan" : {
     "order" : 1,
@@ -62,6 +63,7 @@
     "mapScale": 0.5,
     "buffer" : 2,
     "planetsInMap": 0,
+    "hints": [],
     "planets": [
       {
         "type" : "earthLike",
@@ -97,6 +99,7 @@
     "mapScale": 0.5,
     "buffer" : 2,
     "planetsInMap": 0,
+    "hints": [],
     "planets": [
       {
         "type" : "earthLike",
@@ -141,6 +144,7 @@
     "mapScale": 0.5,
     "buffer" : 2,
     "planetsInMap": 0,
+    "hints": [],
     "planets": [
       {
         "type" : "earthLike",
@@ -176,6 +180,7 @@
     "mapScale": 0.5,
     "buffer" : 2,
     "planetsInMap": 0,
+    "hints": [],
     "planets": [
       {
         "type" : "earthLike",
@@ -220,6 +225,7 @@
     "mapScale": 0.5,
     "buffer" : 2,
     "planetsInMap": 0,
+    "hints": [],
     "planets": [
       {
         "type" : "earthLike",
@@ -329,6 +335,7 @@
     "order" : 8,
     "mapScale": 1,
     "buffer" : 2,
+    "hints": [],
     "planetsInMap": 0,
     "planets": [
       {
@@ -382,6 +389,7 @@
     "order" : 9,
     "mapScale": 1,
     "buffer" : 2,
+    "hints": [],
     "planetsInMap": 0,
     "planets": [
       {
@@ -454,6 +462,7 @@
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
+    "hints": [],
     "planets": [
       {
         "type" : "earthLike",
@@ -542,6 +551,7 @@
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
+    "hints": [],
     "planets": [
       {
         "type" : "earthLike",
@@ -576,6 +586,7 @@
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
+    "hints": [],
     "planets": [
       {
         "type" : "earthLike",
@@ -610,6 +621,7 @@
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
+    "hints": [],
     "planets": [
       {
         "type" : "earthLike",
@@ -644,6 +656,7 @@
     "mapScale": 1,
     "buffer" : 2,
     "planetsInMap": 0,
+    "hints": [],
     "planets": [
       {
         "type" : "earthLike",
