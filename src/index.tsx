@@ -25,7 +25,8 @@ document.head.appendChild(meta);
 
 // library imports
 import React from 'react';
-import {render} from 'react-dom';
+import * as ReactDOM from 'react-dom';
+const {render} = ReactDOM;
 import App from './ui/App';
 import player1 from 'assets/player1.png';
 import player2 from 'assets/player2.png';
