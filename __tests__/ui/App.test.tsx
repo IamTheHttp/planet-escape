@@ -12,6 +12,7 @@ import levels from 'levels/levels.json';
 import {playerService} from 'services/PlayerService';
 import i18n from 'ui/i18n';
 import App from "../../src/ui/App";
+import {ILevelData} from "../../src/interfaces/interfaces";
 
 describe('Tests a component', () => {
   jest.useFakeTimers();
@@ -26,7 +27,7 @@ describe('Tests a component', () => {
     wrapper.instance().difficulty = gameConfig[DIFFICULTY][EASY];
     wrapper.setState({
       currentLevel: levels.random,
-      isMenuOpen : false,
+      isMenuOpen: false,
       selectedPlayer: null
     }, () => {
       wrapper.instance().startGame(levels.random, gameConfig[DIFFICULTY][EASY]);
@@ -36,23 +37,20 @@ describe('Tests a component', () => {
     });
   });
 
-  it('Expects the popup to open as the game is lost..', () => {
+  it('Expects the popup to open as the game is lost', () => {
     let wrapper = mount<App>(<App/>);
     let inst = wrapper.instance();
 
     inst.difficulty = gameConfig[DIFFICULTY][EASY];
-    inst.game = {
-      currentGame: null,
-      stop : () => {},
-      resume: () => {},
-      dispatchAction: () => {}
-    };
 
     wrapper.setState({
-      isMenuOpen : false,
-      gameWon : false,
-      selectedPlayer: null,
-      gameReport : {}
+      isMenuOpen: false,
+      gameWon: false,
+      selectedPlayer: {
+        userName: 'foo',
+        levelsPassed: {}
+      },
+      gameReport: {}
     });
 
     expect(wrapper.find('.endGame').length).toBe(1);
@@ -63,17 +61,14 @@ describe('Tests a component', () => {
     let inst = wrapper.instance();
 
     inst.difficulty = gameConfig[DIFFICULTY][EASY];
-    inst.game = {
-      currentGame: null,
-      stop : () => {},
-      resume: () => {},
-      dispatchAction: () => {}
-    };
 
     wrapper.setState({
       isMenuOpen: false,
       gameWon: true,
-      selectedPlayer: null,
+      selectedPlayer: {
+        userName: 'foo',
+        levelsPassed: {}
+      },
       gameReport: {}
     });
 
@@ -95,10 +90,16 @@ describe('Tests a component', () => {
 
     inst.setState({
       showHelp: true,
-      selectedPlayer: null,
-      currentLevel: null
+      currentLevel: {
+        hints: []
+      } as ILevelData,
+      selectedPlayer: {
+        userName: 'foo',
+        levelsPassed: {}
+      }
     });
 
+    wrapper.update();
     expect(wrapper.find('.showHelp').length).toBe(1);
   });
 
@@ -109,11 +110,15 @@ describe('Tests a component', () => {
 
     inst.setState({
       gamePaused: true,
-      selectedPlayer: null,
+      selectedPlayer: {
+        userName: 'foo',
+        levelsPassed: {}
+      },
       currentLevel: null,
       isMenuOpen: false
     });
 
+    wrapper.update();
     expect(wrapper.find('.gamePausedMenu').length).toBe(1);
   });
 

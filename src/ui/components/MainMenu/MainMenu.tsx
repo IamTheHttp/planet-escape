@@ -135,7 +135,7 @@ class MainMenu extends React.Component <IProps, IState> {
     return (
       <div className="campaignScreen">
         {this.props.levels.map((level, i) => {
-          let levelIsDone = !!levelsPassed[+level.key];
+          let levelIsDone = !!levelsPassed[level.key];
 
           let lastLevelDone = i === 0 || !levelIsDone && i > 0 && levelsPassed[+this.props.levels[i - 1].key];
 

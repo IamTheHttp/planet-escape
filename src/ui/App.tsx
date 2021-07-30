@@ -268,7 +268,6 @@ class App extends React.Component<IProps, Partial<IState>> {
       let gameWon = gameEnt[GAME_STATE].status === GAME_WON;
       let gameLost = gameEnt[GAME_STATE].status === GAME_LOST;
 
-
       if (gameWon) {
         // selectedPlayer
         if (this.state.currentLevel) {

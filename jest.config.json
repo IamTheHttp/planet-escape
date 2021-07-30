@@ -1,6 +1,6 @@
 {
   "testEnvironment": "jsdom",
-  "testRegex": "test.js$|test.ts$",
+  "testRegex": "test.ts|test.tsx",
   "transformIgnorePatterns": [
     "/node_modules/"
   ],
@@ -26,7 +26,7 @@
     "\\.(css|less|scss)$": "<rootDir>/__mocks__/styleMock.ts"
   },
   "setupFiles": [
-    "<rootDir>/__tests__/testSetup.ts",
+    "<rootDir>/__tests__/setup.ts",
     "<rootDir>/src/polyfill/rAF.ts",
     "jest-canvas-mock"
   ],

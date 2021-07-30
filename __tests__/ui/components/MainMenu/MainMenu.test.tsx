@@ -66,6 +66,9 @@ describe('Tests a component', () => {
 
     // Finish first level
     playerService.finishLevel(levels[0].key);
+    playerService.finishLevel(levels[1].key);
+    playerService.finishLevel(levels[2].key);
+    playerService.finishLevel(levels[3].key);
 
 
     // Re-render the entire thing with new player preferences
@@ -83,8 +86,9 @@ describe('Tests a component', () => {
       selection: 'campaign'
     });
 
-    levelSelection = mount(wrapper.instance().levelSelection());
+    wrapper.update();
 
+    levelSelection = mount(wrapper.instance().levelSelection());
 
     // first level is accessible even after completion
     levelSelection.find('.level').at(0).simulate('click');
