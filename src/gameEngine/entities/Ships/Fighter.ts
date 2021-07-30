@@ -17,7 +17,7 @@ import {
   FIGHTER_IMAGE,
   OWNER_COMPONENT,
   IN_PLACE_TO_ATTACK, MOVING
-} from 'gameEngine/constants.js';
+} from 'gameEngine/constants';
 
 import fighter from 'assets/fighter.png';
 import EarthLike from "../planets/EarthLike";

@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
 // Load RAF polyfill
-import 'polyfill/rAF.js';
+import 'polyfill/rAF';
 import i18n from './ui/i18n';
 // Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.css';

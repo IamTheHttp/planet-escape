@@ -45,6 +45,13 @@ describe('Tests the user input system', () => {
   it('Tests an action without entities', () => {
     // pushing an action with no entities
     pushAction({
+      hits: [],
+      y: null,
+      x: null,
+      selectedBox: null,
+      dbClick: null,
+      isMouseDown: null,
+      entities: null,
       name : 'addPop'
     });
     // the system doesn't even process it's input if there are no valid actions
@@ -57,6 +64,13 @@ describe('Tests the user input system', () => {
   it('Tests an invalid action(no name)', () => {
     // pushing an action with no entities
     pushAction({
+      hits: [],
+      name: null,
+      y: null,
+      x: null,
+      selectedBox: null,
+      dbClick: null,
+      isMouseDown: null,
       entities : {}
     });
     // @ts-ignore
@@ -72,6 +86,9 @@ describe('Tests the user input system', () => {
     // hits is provided by the game-platform library
     // it will contain the IDs of the hit items
     pushAction({
+      entities: null,
+      isMouseDown: null,
+      dbClick: null,
       hits: [],
       name:CLICK,
       x : 500, // these don't really matter, as the hits are calculated internally by game-platform
@@ -82,6 +99,9 @@ describe('Tests the user input system', () => {
     expect(planet[PLAYER_CONTROLLED].selected).toBe(false);
 
     pushAction({
+      entities: null,
+      isMouseDown: null,
+      dbClick: null,
       hits: [{ id:planet.id.toString(), layerName: 'initial'}],
       name:CLICK,
       x : 100, // these don't really matter, as the hits are calculated internally by game-platform
@@ -92,6 +112,9 @@ describe('Tests the user input system', () => {
     expect(planet[PLAYER_CONTROLLED].selected).toBe(true);
 
     pushAction({
+      entities: null,
+      isMouseDown: null,
+      dbClick: null,
       hits: [{ id:planet.id.toString(), layerName: 'initial'}],
       name: CLICK,
       x : 99999999999, // these don't really matter, as the hits are calculated internally by game-platform
@@ -113,13 +136,17 @@ describe('Tests the user input system', () => {
     expect(getFighters(attackingPlanet).length).toBeGreaterThan(0);
 
     pushAction({
+      selectedBox: null,
+      entities: null,
+      isMouseDown: null,
+      dbClick: null,
       hits: [{ id:defendingPlanet.id.toString(), layerName: 'initial'}],
       name:CLICK,
       x : 100,
       y : 100
     });
 
-    // this sets the attack, but does not execute it
+    // // this sets the attack, but does not execute it
     userInputSystem(null);
     expect(attackFighter[POSITION].destX).toBe(100);
     expect(attackFighter[POSITION].destY).toBe(100);

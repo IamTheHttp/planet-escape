@@ -58,7 +58,7 @@ interface IState {
   levelHints: string[]
   gamePaused: boolean;
   gameEnded: boolean;
-  gameWon: boolean;
+  gameWon: boolean | null;
   selectedPlayer: IPlayer;
   currentLevel: ILevelData;
   showPlayerManagement:boolean;
@@ -144,6 +144,7 @@ class App extends React.Component<IProps, Partial<IState>> {
         },
         onViewMapClick: (dataObj) => {
           this.game.dispatchAction({
+            entities: null,
             hits: dataObj.hits,
             name: CLICK,
             x: dataObj.x,

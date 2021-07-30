@@ -13,7 +13,7 @@ export class GameState {
 
   constructor(val: unknown = IN_PROGRESS, numPlayers: number) {
     this.name = GAME_STATE;
-    this.status = val;
+    this.status = val || IN_PROGRESS;
     this.frameID = null;
     this.players = numPlayers;
   }

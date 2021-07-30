@@ -7,7 +7,7 @@ import attack from 'gameEngine/systems/userInputActions/attack';
 import select from 'gameEngine/systems/userInputActions/select';
 import {getOwner} from 'gameEngine/components/OwnerComponent';
 // store our actions, singleton
-let actions:Partial<IDispatchAction>[] = [];
+let actions: IDispatchAction[] = [];
 
 
 import {
@@ -27,9 +27,10 @@ function userInputSystem(systemArguments: ISystemArguments) {
       });
     } else {
       if (action.name === CLICK) {
+
         let clickedEntities = action.hits.map((hit) => {
-          if ((Entity.entities as Record<string, BaseEntity>)[hit.toString()]) {
-            return (Entity.entities as Record<string, BaseEntity>)[hit.toString()];
+          if ((Entity.entities as Record<string, BaseEntity>)[hit.id]) {
+            return (Entity.entities as Record<string, BaseEntity>)[hit.id];
           } else {
             return false;
           }
@@ -71,7 +72,7 @@ function userInputSystem(systemArguments: ISystemArguments) {
 
 export default userInputSystem;
 
-function pushAction(action: Partial<IDispatchAction>) {
+function pushAction(action: IDispatchAction) {
   actions.push(action);
 }
 export {pushAction};

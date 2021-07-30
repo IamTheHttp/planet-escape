@@ -3,7 +3,7 @@ import fighter from '../../src/assets/fighter.png';
 import planets from '../../src/assets/planets.png';
 import {
   POSITION
-} from 'gameEngine/constants.js';
+} from 'gameEngine/constants';
 import {Entity, entityLoop} from "game-platform";
 import {BaseEntity} from "../../src/gameEngine/BaseEntity";
 import {ILevelData} from "../../src/interfaces/interfaces";
@@ -19,6 +19,10 @@ describe('Tests a component', () => {
   it('loads images and runs callback after images are loaded..', (done) => {
     loadImages([fighter, planets], () => {
       done();
+    }).forEach((img) => {
+      // Manually set all images to 'loaded' to mimic the browser behaviour
+      // @ts-ignore
+      img.onload();
     });
   });
 

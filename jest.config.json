@@ -1,4 +1,5 @@
 {
+  "testEnvironment": "jsdom",
   "testRegex": "test.js$|test.ts$",
   "transformIgnorePatterns": [
     "/node_modules/"
@@ -25,7 +26,7 @@
     "\\.(css|less|scss)$": "<rootDir>/__mocks__/styleMock.ts"
   },
   "setupFiles": [
-    "<rootDir>/node_modules/jarb/lib/testSetup.js",
+    "<rootDir>/__tests__/testSetup.ts",
     "<rootDir>/src/polyfill/rAF.ts",
     "jest-canvas-mock"
   ],
@@ -33,5 +34,5 @@
   "modulePaths": [
     "<rootDir>/src"
   ],
-  "bail": true
+  "bail": false
 }

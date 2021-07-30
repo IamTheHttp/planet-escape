@@ -101,7 +101,7 @@ class GameLoop {
   /**
    * @param action {obj} - contains, {entityID}
    */
-  dispatchAction(action: Partial<IDispatchAction>) {
+  dispatchAction(action: IDispatchAction) {
     gameTracker.track('actionDispatched');
     pushAction(action);
   }

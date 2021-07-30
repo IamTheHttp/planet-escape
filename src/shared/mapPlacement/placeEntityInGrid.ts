@@ -1,4 +1,4 @@
-import {POSITION} from 'gameEngine/constants.js';
+import {POSITION} from 'gameEngine/constants';
 import getBlocksFromPos from 'shared/mapPlacement/getBlocksFromPos';
 import getBlocks from 'shared/mapPlacement/getBlocks';
 import {BaseEntity} from "../../gameEngine/BaseEntity";

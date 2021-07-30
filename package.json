@@ -4,6 +4,9 @@
   "version": "1.2.0",
   "description": "Planet escape! a game like no other",
   "scripts": {
+    "test": "jest"
+  },
+  "oldScripts": {
     "init": "npm install && jarb init",
     "start": "jarb devServer --mode=development",
     "build": "jarb build",
@@ -26,12 +29,13 @@
     "release": "jarb release"
   },
   "devDependencies": {
-    "jarb": "4.0.0-beta.4",
     "webpack-bundle-analyzer": "^2.11.1",
     "jest-canvas-mock": "2.1.1"
   },
   "main": "dist",
   "dependencies": {
+    "@babel/preset-env": "^7.14.8",
+    "@babel/preset-react": "^7.14.5",
     "@types/enzyme": "^3.10.9",
     "@types/jest": "^26.0.24",
     "@types/react": "^17.0.15",
@@ -39,10 +43,15 @@
     "bootstrap": "^3.3.7",
     "canvas": "^2.8.0",
     "core-js": "3.6.4",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "game-platform": "^1.0.1",
+    "jest": "^27.0.6",
     "memoizee": "^0.4.12",
     "react": "16.8.2",
-    "react-dom": "16.8.2"
+    "react-dom": "16.8.2",
+    "ts-jest": "^27.0.4",
+    "ts-node": "^10.1.0"
   },
   "jsnext:main": "src",
   "module": "src"

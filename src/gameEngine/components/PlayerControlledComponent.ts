@@ -1,7 +1,7 @@
 import {PLAYER_CONTROLLED} from 'gameEngine/constants';
 import {BaseEntity} from "../BaseEntity";
 class PlayerControlledComponent {
-  public name;
+  public name: string;
   public selected:boolean;
   constructor() {
     this.name = PLAYER_CONTROLLED;
@@ -12,7 +12,7 @@ class PlayerControlledComponent {
 export default PlayerControlledComponent;
 
 export function isSelected(entity: BaseEntity) {
-  if (entity[PLAYER_CONTROLLED]) {
+  if (entity && entity[PLAYER_CONTROLLED]) {
     return entity[PLAYER_CONTROLLED].selected;
   } else {
     return false;

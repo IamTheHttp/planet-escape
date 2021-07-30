@@ -4,7 +4,7 @@ global.Math.random = () => {
   return 0;
 };
 
-import {POSITION, MAP_SIZE, PLAYER_1, CANVAS_X, CANVAS_Y, PLAYER_2, PLANET_BUFFER} from 'gameEngine/constants.js';
+import {POSITION, MAP_SIZE, PLAYER_1, CANVAS_X, CANVAS_Y, PLAYER_2, PLANET_BUFFER} from 'gameEngine/constants';
 import {createGrid} from 'shared/mapPlacement/grid';
 import getGridBlockFromPos from 'shared/mapPlacement/getGridBlockFromPos';
 import canCircleBePlacedInPos from 'shared/mapPlacement/canCircleBePlacedInPos';
@@ -71,9 +71,10 @@ describe('Tests position', () => {
   it('places an entity in pos', () => {
     let grid = createGrid(area, squaresInLine);
     let ent = new EarthLike(null, null);
-    placeEntityInGrid(ent, 30, 30, ent[POSITION].radius, grid);
-    expect(ent[POSITION].x).toBe(30);
-    expect(ent[POSITION].y).toBe(30);
+    placeEntityInGrid(ent, 100, 100, ent[POSITION].radius, grid);
+
+    expect(ent[POSITION].x).toBe(100);
+    expect(ent[POSITION].y).toBe(100);
   });
 
   it('Starting the entityPlacer with entities that have X/Y occupies grid correctly', () => {

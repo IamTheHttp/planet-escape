@@ -2,7 +2,7 @@ import {randFromRange} from 'shared/utils';
 import {logger} from 'shared/logger';
 import {
   POSITION
-} from 'gameEngine/constants.js';
+} from 'gameEngine/constants';
 import canCircleBePlacedInPos from 'shared/mapPlacement/canCircleBePlacedInPos';
 import placeEntityInGrid from 'shared/mapPlacement/placeEntityInGrid';
 import {BaseEntity} from "../../gameEngine/BaseEntity";

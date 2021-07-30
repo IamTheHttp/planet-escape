@@ -22,7 +22,7 @@ import {
   PLAYER_PLANET_GUTTER_DISTANCE,
   SELECT_WIDTH,
   STRESS_TEST
-} from './constants.js';
+} from './constants';
 
 export const gameConfig = {
   [SELECT_WIDTH] : 3,

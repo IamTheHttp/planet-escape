@@ -117,7 +117,7 @@ describe('Tests the render system', () => {
     }, mapAPI as CanvasAPI, miniMapAPI as CanvasAPI, selectedBox);
 
     expect((miniMapAPI.addRect as jest.Mock).mock.calls[0][0].id).toBe('currentMap');
-    expect((miniMapAPI.addCircle as jest.Mock).mock.calls[0][0].id).toBe(ent.id);
+    expect((miniMapAPI.addCircle as jest.Mock).mock.calls[0][0].id).toBe(ent.id.toString());
   });
 
   it('draws the fighter count in space', () => {

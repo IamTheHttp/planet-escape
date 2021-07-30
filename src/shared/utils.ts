@@ -137,13 +137,14 @@ export function loadImages(imagePaths: string[], callback: () => void) {
     }
   }
 
-  imagesToLoad.forEach((imagePath: string) => {
+  return imagesToLoad.map((imagePath: string) => {
     let img = new Image();
     img.onload = () => {
       imagesLoaded++;
       renderOnReady();
     };
     img.src = imagePath;
+    return img;
   });
 }
 
