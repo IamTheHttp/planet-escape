@@ -1,7 +1,3 @@
-import entityLoop from 'lib/ECS/util/entityLoop';
-import Entity from 'lib/ECS/Entity';
-
-
 import {
   CLICK,
   PLAYER_1
@@ -11,13 +7,15 @@ import attack from 'gameEngine/systems/userInputActions/attack';
 import select from 'gameEngine/systems/userInputActions/select';
 import {getOwner} from 'gameEngine/components/OwnerComponent';
 // store our actions, singleton
-let actions = [];
+let actions:Partial<IDispatchAction>[] = [];
+
 
 import {
   selectAllEntities
 } from 'gameEngine/systems/utils/userInput.util';
-import {ISystemArguments} from "../../d.ts/interfaces";
 import {BaseEntity} from "../BaseEntity";
+import {Entity, entityLoop} from "game-platform";
+import {IDispatchAction, ISystemArguments} from "../../interfaces/interfaces";
 
 function userInputSystem(systemArguments: ISystemArguments) {
   // loop over all actions
@@ -30,8 +28,8 @@ function userInputSystem(systemArguments: ISystemArguments) {
     } else {
       if (action.name === CLICK) {
         let clickedEntities = action.hits.map((hit) => {
-          if (Entity.entities[hit.id]) {
-            return Entity.entities[hit.id];
+          if ((Entity.entities as Record<string, BaseEntity>)[hit.toString()]) {
+            return (Entity.entities as Record<string, BaseEntity>)[hit.toString()];
           } else {
             return false;
           }
@@ -45,7 +43,7 @@ function userInputSystem(systemArguments: ISystemArguments) {
 
         // get all friendly entities clicked (for player 1)
         let friendlies = clickedEntities.filter((ent:BaseEntity) => {
-          return ent && getOwner(ent:BaseEntity) === PLAYER_1;
+          return ent && getOwner(ent) === PLAYER_1;
         });
 
         // if we clicked on friendlies, then what?
@@ -58,7 +56,7 @@ function userInputSystem(systemArguments: ISystemArguments) {
 
         // if i clicked on an enemy or neutral, attack..
         let enemies = clickedEntities.filter((ent:BaseEntity) => {
-          return ent && getOwner(ent:BaseEntity) !== PLAYER_1;
+          return ent && getOwner(ent) !== PLAYER_1;
         });
 
         if (enemies.length) {
@@ -73,7 +71,7 @@ function userInputSystem(systemArguments: ISystemArguments) {
 
 export default userInputSystem;
 
-function pushAction(action) {
+function pushAction(action: Partial<IDispatchAction>) {
   actions.push(action);
 }
 export {pushAction};

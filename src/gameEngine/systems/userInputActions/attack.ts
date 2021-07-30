@@ -1,4 +1,3 @@
-import Entity from '../../../lib/ECS/Entity';
 import {
   HAS_FIGHTERS,
   OWNER_COMPONENT,
@@ -20,16 +19,18 @@ import {
   getEntitiesAtPos
 } from 'gameEngine/systems/utils/userInput.util';
 import {BaseEntity} from "../../BaseEntity";
+import {IDispatchAction} from "../../../interfaces/interfaces";
+
 
 /**
  * Returns the number of successful hits
  * @param action {} {x , y}
  * @param entities Array list of entities that are attacking
  */
-export function attack(action, entities:BaseEntity[] = getSelectedEntities()) {
+export function attack(action: Partial<IDispatchAction>, entities:BaseEntity[] = getSelectedEntities()) {
   let directedFighters = 0;
   let launchedFighters ;
-  let fightersInFleet: unknown[];
+  let fightersInFleet: FighterEntity[];
 
   let attackingPlanets = entities.filter((attackingPlanet) => {
     return attackingPlanet.hasComponents([HAS_FIGHTERS, OWNER_COMPONENT]);

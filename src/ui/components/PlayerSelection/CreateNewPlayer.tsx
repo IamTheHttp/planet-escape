@@ -1,6 +1,6 @@
 import React from 'react';
 import i18n from 'ui/i18n';
-import playerService from 'services/PlayerService';
+import {playerService} from 'services/PlayerService';
 import './createNewPlayer.scss';
 
 interface IProps {

@@ -1,8 +1,3 @@
-import Entity from '../../../../src/lib/ECS/Entity';
-
-
-import {mount, shallow} from 'enzyme';
-import React from 'react';
 import {
   selectEntity,
   getSelectedEntities,
@@ -18,6 +13,8 @@ import {
   PLAYER_1,
   PLAYER_2
 } from 'gameEngine/constants';
+import {Entity} from "game-platform";
+import {ISelectedBoxData} from "game-platform/types/lib/interfaces";
 
 describe('Tests the user input utils', () => {
   beforeEach(() => {
@@ -34,11 +31,11 @@ describe('Tests the user input utils', () => {
     };
 
     planetA[PLAYER_CONTROLLED].selected = true;
-    let ents = getSelectedEntities(entities);
+    let ents = getSelectedEntities();
     expect(ents[0]).toBe(planetA);
 
     planetA[PLAYER_CONTROLLED].selected = false;
-    ents = getSelectedEntities(entities);
+    ents = getSelectedEntities();
     expect(ents.length).toBe(0);
   });
 
@@ -67,7 +64,7 @@ describe('Tests the user input utils', () => {
       [planetA.id] : planetA
     };
 
-    let ents = getEntitiesAtPos(entities, 110, 110);
+    let ents = getEntitiesAtPos(110, 110);
     expect(ents.length).toBe(0);
   });
 
@@ -89,7 +86,9 @@ describe('Tests the user input utils', () => {
     let planetA = new EarthLike(100, 100, PLAYER_1);
     expect(planetA[PLAYER_CONTROLLED].selected).toBe(false);
 
-    let selectBox = {
+    let selectBox: ISelectedBoxData = {
+      height: null,
+      width: null,
       start : {
         x: 0,
         y : 0

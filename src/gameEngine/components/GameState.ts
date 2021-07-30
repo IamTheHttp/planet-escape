@@ -4,7 +4,7 @@
 /** @namespace entity.components.gameStatus */
 import {GAME_STATE, IN_PROGRESS} from 'gameEngine/constants';
 
-class GameState {
+export class GameState {
   public name: string;
   public frameID: number;
   public status: unknown;
@@ -18,5 +18,3 @@ class GameState {
     this.players = numPlayers;
   }
 }
-
-export default GameState;

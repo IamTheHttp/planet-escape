@@ -34,7 +34,7 @@ import fighter from 'assets/fighter.png';
 import mainMenuBackground from 'assets/background.jpg';
 import {loadImages} from 'shared/utils';
 import globalTracker from 'services/globalTracker';
-import googleTracking from 'services/googleTracking';
+import {googleTracking} from 'services/googleTracking';
 
 import {EVENTS} from 'gameEngine/constants';
 let appDiv = document.getElementById('app') || document.createElement('div');

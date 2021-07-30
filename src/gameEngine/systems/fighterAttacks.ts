@@ -1,5 +1,3 @@
-import Entity from '../../lib/ECS/Entity';
-import entityLoop from '../../lib/ECS/util/entityLoop';
 import {
   getFighters,
   destroyFighter,
@@ -24,13 +22,15 @@ import {
 } from 'gameEngine/constants';
 import {BaseEntity} from "../BaseEntity";
 import EarthLike from "../entities/planets/EarthLike";
-import {ISystemArguments} from "../../d.ts/interfaces";
+import {ISystemArguments} from "../../interfaces/interfaces";
+import {Entity} from "game-platform";
+import {FighterEntity} from "../entities/Ships/Fighter";
 
 function fighterAttacks(systemArguments: ISystemArguments) {
   let hits = Entity.getByComps([OWNER_COMPONENT, CAN_ATTACK_PLANETS, IN_PLACE_TO_ATTACK]);
-  let planets = Entity.getByComps([HAS_FIGHTERS], 'array');
+  let planets = Entity.getByComps([HAS_FIGHTERS], 'array') as BaseEntity[];
 
-  hits.forEach((attacker: BaseEntity) => {
+  hits.forEach((attacker: FighterEntity) => {
     // first lets detect if we just 'hit' a friendly planet
     let friendlyPlanet = planets.find((planet) => {
       return isSamePos(planet, attacker) && !diffPlayers(planet, attacker);

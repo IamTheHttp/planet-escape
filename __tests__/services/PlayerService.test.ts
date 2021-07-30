@@ -1,9 +1,6 @@
-
-import Entity from 'lib/ECS/Entity';
-import {mount, shallow} from 'enzyme';
-import React from 'react';
-import playerService, {PlayerService} from 'services/PlayerService';
 import ls from 'lib/Storage/LocalStorage';
+import {PlayerService, playerService} from "../../src/services/PlayerService";
+import {IPlayer} from "../../src/interfaces/interfaces";
 
 
 describe('Tests the playerService', () => {
@@ -67,9 +64,9 @@ describe('Tests the playerService', () => {
 
 
   it('loads correctly from localStorage', () => {
-    let user = {
+    let user: IPlayer = {
       userName : 'patrick',
-      levelsPassed : []
+      levelsPassed : {}
     };
 
     ls.setJSON('PE', {

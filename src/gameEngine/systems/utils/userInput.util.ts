@@ -1,4 +1,4 @@
-import Entity from '../../../lib/ECS/Entity';
+import {Entity, entityLoop} from "game-platform";
 
 import {
   HAS_FIGHTERS,
@@ -8,14 +8,16 @@ import {
   POSITION
 } from 'gameEngine/constants';
 import {getOwner} from 'gameEngine/components/OwnerComponent';
-import entityLoop from '../../../lib/ECS/util/entityLoop';
+import {ISelectedBoxData} from "game-platform/types/lib/interfaces";
+import {BaseEntity} from "../../BaseEntity";
+import {IPlayer} from "../../../interfaces/interfaces";
 
-export function isPosInsideCircle(x, y, centerX, centerY, radius) {
+export function isPosInsideCircle(x: number, y: number, centerX: number, centerY: number, radius: number) {
   return Math.pow((x - centerX), 2) + Math.pow((y - centerY), 2) < Math.pow(radius, 2);
 }
 
 export function getSelectedEntities() {
-  let entity = false;
+  let entity:BaseEntity;
   let entities = Entity.getByComps([PLAYER_CONTROLLED]);
   return entityLoop(entities, (ent:BaseEntity) => {
     // this assumes only one item can ever be selected.
@@ -26,12 +28,12 @@ export function getSelectedEntities() {
   });
 }
 
-export function setEntityDest(entity, action) {
+export function setEntityDest(entity: BaseEntity, action: {x:number, y:number}) {
   entity[POSITION].destX = action.x;
   entity[POSITION].destY = action.y;
 }
 
-export function getEntitiesAtPos(x, y) {
+export function getEntitiesAtPos(x: number, y: number) {
   let entities = Entity.getByComps([POSITION]);
   return entityLoop(entities, (ent:BaseEntity) => {
     let centerX = ent[POSITION].x;
@@ -43,19 +45,19 @@ export function getEntitiesAtPos(x, y) {
   });
 }
 
-export function selectEntity({x, y}) {
+export function selectEntity({x, y}: {x:number, y: number}) {
   let entities = Entity.getByComps([POSITION, PLAYER_CONTROLLED, OWNER_COMPONENT]);
   entityLoop(entities, (ent:BaseEntity) => {
     let centerX = ent[POSITION].x;
     let centerY = ent[POSITION].y;
     let radius = ent[POSITION].radius;
     // this is what stops us from selecting an entity that does not belong to us
-    let ownedByPlayer = getOwner(ent:BaseEntity) === PLAYER_1;
+    let ownedByPlayer = getOwner(ent) === PLAYER_1;
     ent[PLAYER_CONTROLLED].selected = ownedByPlayer && isPosInsideCircle(x, y, centerX, centerY, radius);
   });
 }
 
-export function getEntitiesInSelectedBox(selectedBox) {
+export function getEntitiesInSelectedBox(selectedBox: ISelectedBoxData) {
   let entities = Entity.getByComps([POSITION, HAS_FIGHTERS, OWNER_COMPONENT, PLAYER_CONTROLLED]);
   // entity's X/Y needs to be within the rectangle
 
@@ -64,15 +66,15 @@ export function getEntitiesInSelectedBox(selectedBox) {
   let minY = Math.min(selectedBox.start.y, selectedBox.end.y);
   let maxY = Math.max(selectedBox.start.y, selectedBox.end.y);
 
-  return entityLoop(entities, (ent:BaseEntity) => {
+  return entityLoop(entities, (ent: BaseEntity) => {
     let centerX = ent[POSITION].x;
     let centerY = ent[POSITION].y;
 
-    let ownedByPlayer = getOwner(ent:BaseEntity) === PLAYER_1;
+    let ownedByPlayer = getOwner(ent) === PLAYER_1;
     if (ownedByPlayer && centerX >= minX && centerX <= maxX && centerY >= minY && centerY <= maxY) {
       return true;
     }
-  });
+  }) as BaseEntity[];
 }
 
 /**
@@ -94,18 +96,18 @@ export function unSelectAllEntities() {
  * Unselects all entities, returns an array of affected entities
  * @returns {Null}
  */
-export function selectAllEntities(player) {
+export function selectAllEntities(playerKey: string) {
   let entities = Entity.getByComps([PLAYER_CONTROLLED, OWNER_COMPONENT]);
   entityLoop(entities, (ent:BaseEntity) => {
-    if (getOwner(ent:BaseEntity) === player) {
+    if (getOwner(ent) === playerKey) {
       ent[PLAYER_CONTROLLED].selected = true;
     }
   });
 }
 
-export function selectEntitiesInSelectedBox(selectedBox) {
+export function selectEntitiesInSelectedBox(selectedBox: ISelectedBoxData) {
   let entities = getEntitiesInSelectedBox(selectedBox);
-  entities.forEach((ent:BaseEntity) => {
+  entities.forEach((ent) => {
     ent[PLAYER_CONTROLLED].selected = true;
   });
 

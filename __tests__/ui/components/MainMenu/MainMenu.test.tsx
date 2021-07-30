@@ -4,7 +4,7 @@ import React from 'react';
 import MainMenu from 'ui/components/MainMenu/MainMenu';
 
 import levelsData from 'levels/levels.json';
-import playerService from 'services/PlayerService';
+import {playerService} from 'services/PlayerService';
 import {ILevelData} from "../../../../src/interfaces/interfaces";
 
 let levels:ILevelData[] = [];
@@ -32,7 +32,10 @@ describe('Tests a component', () => {
 
     let onLevelSelect = jest.fn();
 
-    let wrapper = shallow(<MainMenu
+    let wrapper = shallow<MainMenu>(<MainMenu
+      onPlayerDelete={null}
+      onPlayerSelect={null}
+      onQuickStart={null}
       levels={levels}
       selectedPlayer={playerService.getSelectedPlayer()}
       onLevelSelect={onLevelSelect}
@@ -68,6 +71,9 @@ describe('Tests a component', () => {
     // Re-render the entire thing with new player preferences
 
     wrapper = shallow(<MainMenu
+      onPlayerDelete={null}
+      onPlayerSelect={null}
+      onQuickStart={null}
       levels={levels}
       selectedPlayer={playerService.getSelectedPlayer()}
       onLevelSelect={onLevelSelect}

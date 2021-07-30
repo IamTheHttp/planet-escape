@@ -11,7 +11,7 @@ import {FighterEntity} from "../entities/Ships/Fighter";
 
 export class HasFighters {
   public name: string;
-  public fighters: unknown[];
+  public fighters: FighterEntity[];
   public defenders: number;
 
   constructor() {
@@ -22,7 +22,7 @@ export class HasFighters {
 }
 
 
-export function getFighters(ent: BaseEntity) {
+export function getFighters(ent: BaseEntity): FighterEntity[] {
   return ent[HAS_FIGHTERS].fighters;
 }
 
@@ -83,7 +83,7 @@ export function destroyFighter(fighter: FighterEntity) {
  * @param fighter
  */
 export function reassignFighter(newPlanet: EarthLike, fighter: FighterEntity) {
-  let ownerPlanet = Entity.entities[fighter.planetID];
+  let ownerPlanet = Entity.entities[fighter.planetID] as BaseEntity;
   // if fighter has an owner..
   if (ownerPlanet) {
     // if fighter was defending, remove it from defender count

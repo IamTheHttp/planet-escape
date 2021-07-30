@@ -1,7 +1,7 @@
 import React from 'react';
 import i18n from 'ui/i18n';
 import './Modal.scss';
-import {ILevelData} from "../../../d.ts/interfaces";
+import {ILevelData} from "../../../interfaces/interfaces";
 
 interface IProps {
   gameWon: boolean;

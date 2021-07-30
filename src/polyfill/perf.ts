@@ -14,6 +14,7 @@
 
 (function() {
   if ('performance' in window === false) {
+    // @ts-ignore
     window.performance = {};
   }
 

@@ -3,7 +3,7 @@
  * The game tracker will currently only
  */
 class GameTracker {
-  private actions: Record<string, { count: number }>
+  public actions: Record<string, { count: number }>
   constructor() {
     this.actions = {};
   }

@@ -1,4 +1,5 @@
 class MemoryLocalStorage {
+  private store: Record<string, unknown>
   constructor() {
     this.store = {};
   }
@@ -7,21 +8,22 @@ class MemoryLocalStorage {
     this.store = {};
   }
 
-  getItem(key) {
+  getItem(key: string) {
     return this.store[key] || null;
   }
 
-  setItem(key, value) {
+  setItem(key: string, value: unknown) {
     this.store[key] = value;
   }
 
-  removeItem(key) {
+  removeItem(key: string) {
     delete this.store[key];
   }
 }
 
 /* istanbul ignore else  */
 if (!window.localStorage) {
+  // @ts-ignore
   window.localStorage = new MemoryLocalStorage();
 }
 
@@ -30,17 +32,17 @@ class LocalStorage {
   clear() {
     window.localStorage.clear();
   }
-  setItem(...args) {
+  setItem(...args: any[]) {
     window.localStorage.setItem.apply(window.localStorage, args);
   }
-  getItem(...args) {
+  getItem(...args: any[]) {
     return window.localStorage.getItem.apply(window.localStorage, args);
   }
-  removeItem(...args) {
-    delete window.localStorage.removeItem.apply(window.localStorage, args);
+  removeItem(...args: any[]) {
+    return window.localStorage.removeItem.apply(window.localStorage, args);
   }
 
-  setJSON(key, obj) {
+  setJSON(key: string, obj: Record<string, any>) {
     try {
       this.setItem(key, JSON.stringify(obj));
       return true;
@@ -50,7 +52,7 @@ class LocalStorage {
     }
   }
 
-  getJSON(args) {
+  getJSON(args: any) {
     try {
       return JSON.parse(this.getItem(args));
     } catch (e) {

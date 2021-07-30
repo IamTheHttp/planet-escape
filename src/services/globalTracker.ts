@@ -1,15 +1,16 @@
 class GlobalTracker {
+  public subs: ((name:string, payload: any) => void)[];
   constructor() {
     this.subs = [];
   }
 
-  dispatch(name, payload) {
+  dispatch(name: string, payload: any) {
     this.subs.forEach((fn) => {
       fn(name, payload);
     });
   }
 
-  subscribe(fn) {
+  subscribe(fn: (name:string, payload: any) => void) {
     this.subs.push(fn);
 
     return () => {

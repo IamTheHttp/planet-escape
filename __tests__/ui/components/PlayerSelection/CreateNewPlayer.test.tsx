@@ -1,26 +1,26 @@
-
-import {mount, shallow} from 'enzyme';
+import {mount, ReactWrapper, shallow} from 'enzyme';
 import React from 'react';
 import CreateNewPlayer from 'ui/components/PlayerSelection/CreateNewPlayer';
-import playerService from 'services/PlayerService';
+import {playerService} from 'services/PlayerService';
 
 describe('Tests a component', () => {
-  let wrapper;
+  let wrapper: ReactWrapper;
 
   beforeEach(() => {
     playerService.reset();
     wrapper = mount(<CreateNewPlayer
-    ></CreateNewPlayer>
+        onSubmit={null}
+      />
     );
   });
 
   it('Changes the input and submits the form', (done) => {
     wrapper = mount(<CreateNewPlayer
-      onSubmit={(userName) => {
-        expect(userName).toBe('abcdefg');
-        done();
-      }}
-    ></CreateNewPlayer>
+        onSubmit={(userName) => {
+          expect(userName).toBe('abcdefg');
+          done();
+        }}
+      />
     );
 
     wrapper.find('input').simulate('change', {
@@ -34,7 +34,8 @@ describe('Tests a component', () => {
 
   it('Shows proper errors if validation does not work', () => {
     wrapper = mount(<CreateNewPlayer
-    ></CreateNewPlayer>
+      onSubmit={null}
+      />
     );
 
     // short input
@@ -72,8 +73,8 @@ describe('Tests a component', () => {
     let onSubmit = jest.fn();
 
     wrapper = mount(<CreateNewPlayer
-      onSubmit={onSubmit}
-    ></CreateNewPlayer>
+        onSubmit={onSubmit}
+      />
     );
 
     wrapper.find('input').simulate('change', {

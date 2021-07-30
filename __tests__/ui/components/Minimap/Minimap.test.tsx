@@ -1,11 +1,13 @@
 
-import {mount, shallow} from 'enzyme';
+import {mount, ReactWrapper, shallow} from 'enzyme';
 import React from 'react';
 import Minimap from 'ui/components/Minimap/Minimap';
 describe('Tests a component', () => {
-  let wrapper;
+  let wrapper: ReactWrapper<Minimap>;
   beforeEach(() => {
     wrapper = mount(<Minimap
+      canvasReactElement={null}
+      currentLevelData={null}
     />);
   });
 

@@ -11,8 +11,14 @@
 
 
 import ls from 'lib/Storage/LocalStorage';
+import {IPlayer} from "../interfaces/interfaces";
 
 class PlayerService {
+  public data: {
+    selectedPlayer: IPlayer,
+    players: IPlayer[]
+  }
+
   constructor() {
     // Create the required LS schema..
     if (!ls.getJSON('PE') || !ls.getJSON('PE').players) {
@@ -33,13 +39,14 @@ class PlayerService {
   reset() {
     ls.clear();
     this.data = {
+      selectedPlayer: null,
       players: []
     };
     this.persistState();
     // resets the LS, useful for testing
   }
 
-  getPlayer(userName) {
+  getPlayer(userName: string) {
     return this.data.players.find((player) => {
       return player.userName === userName;
     });
@@ -49,7 +56,7 @@ class PlayerService {
     return this.data.players;
   }
 
-  createPlayer(userName) {
+  createPlayer(userName: string) {
     this.data.players.push({
       userName,
       levelsPassed: {}
@@ -58,7 +65,7 @@ class PlayerService {
     this.persistState();
   }
 
-  finishLevel(levelKey) {
+  finishLevel(levelKey: string) {
     if (!this.getSelectedPlayer()) {
       return false;
     } else {
@@ -70,7 +77,7 @@ class PlayerService {
     }
   }
 
-  deletePlayer(userName) {
+  deletePlayer(userName: string) {
     if (this.data.selectedPlayer && this.data.selectedPlayer.userName === userName) {
       this.data.selectedPlayer = null;
     }
@@ -84,7 +91,7 @@ class PlayerService {
     return this.data.selectedPlayer;
   }
 
-  selectPlayer(userName) {
+  selectPlayer(userName: string) {
     let player = this.getPlayer(userName);
 
     if (player) {
@@ -96,7 +103,7 @@ class PlayerService {
     }
   }
 
-  validateUsername(userName) {
+  validateUsername(userName: string) {
     let isAvailable = !this.getPlayer(userName);
     let isLongEnough = userName && userName.length > 3;
 
@@ -104,5 +111,5 @@ class PlayerService {
   }
 }
 
-export default new PlayerService();
-export {PlayerService};
+const playerService = new PlayerService();
+export {PlayerService, playerService};

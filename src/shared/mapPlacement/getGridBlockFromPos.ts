@@ -6,7 +6,9 @@
  * @param y
  * @returns {boolean}
  */
-function getGridBlockFromPos(grid, x, y) {
+import {IGrid, IGridBlock} from "../../interfaces/interfaces";
+
+function getGridBlockFromPos(grid:IGrid, x: number, y: number): IGridBlock | false{
   let topLeftAreaY = grid[0][0].topLeftY;
   let topLeftAreaX = grid[0][0].topLeftX;
 

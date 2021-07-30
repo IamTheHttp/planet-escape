@@ -5,8 +5,6 @@ import {getOwner} from 'gameEngine/components/OwnerComponent';
 import InPlaceToAttack from 'gameEngine/components/InPlaceToAttack';
 import fighterAttacks from 'gameEngine/systems/fighterAttacks';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Fighter, {fighterPool} from 'gameEngine/entities/Ships/Fighter';
-import Entity from '../../../src/lib/ECS/Entity';
 import {getFighters, stopDefending} from 'gameEngine/components/HasFighters';
 import {
   PLAYER_1,
@@ -17,7 +15,10 @@ import {
   IN_PLACE_TO_ATTACK
 } from 'gameEngine/constants';
 
-import gameTracker from 'gameEngine/GameTracker';
+import {Entity} from "game-platform";
+import {createFighterEntity, fighterPool} from "../../../src/gameEngine/entities/Ships/Fighter";
+import {gameTracker} from "../../../src/gameEngine/GameTracker";
+import {BaseEntity} from "../../../src/gameEngine/BaseEntity";
 
 
 describe('Tests the fighter attacks system', () => {
@@ -31,9 +32,9 @@ describe('Tests the fighter attacks system', () => {
     let attackingPlanet = new EarthLike(200, 200, PLAYER_1);
     let defendingPlanet = new EarthLike(500, 500, PLAYER_2);
 
-    let attackerFighter = new Fighter(attackingPlanet);
-    let defFighter = new Fighter(defendingPlanet);
-    let defFighter2 = new Fighter(defendingPlanet); // 2nd defender
+    let attackerFighter = createFighterEntity(attackingPlanet);
+    let defFighter = createFighterEntity(defendingPlanet);
+    let defFighter2 = createFighterEntity(defendingPlanet); // 2nd defender
 
     // set dest and position for fighter
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
@@ -43,12 +44,12 @@ describe('Tests the fighter attacks system', () => {
 
     let defCount = getFighters(defendingPlanet).length;
     let attackCount = getFighters(attackingPlanet).length;
-    fighterAttacks();
+    fighterAttacks(null);
 
     // expect the attackerFighter entity to be removed from the entity list...
     // well, not exactly removed - more like going a reset.
-    expect(Entity.entities[attackerFighter.id][POSITION].x).toBe(null);
-    expect(Entity.entities[defFighter.id][POSITION].x).toBe(null);
+    expect((Entity.entities[attackerFighter.id] as BaseEntity)[POSITION].x).toBe(null);
+    expect((Entity.entities[defFighter.id] as BaseEntity )[POSITION].x).toBe(null);
 
     // the planets should lose one fighter
     expect(getFighters(defendingPlanet).length).toBe(defCount - 1);
@@ -60,16 +61,16 @@ describe('Tests the fighter attacks system', () => {
     let attackingPlanet = new EarthLike(200, 200, PLAYER_1);
     let defendingPlanet = new EarthLike(500, 500, PLAYER_2);
 
-    let attackerFighter = new Fighter(attackingPlanet);
+    let attackerFighter = createFighterEntity(attackingPlanet);
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
     attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
     attackerFighter.removeComponent(DEFENDING);
     attackerFighter.addComponent(new InPlaceToAttack());
 
     let attackCount = getFighters(attackingPlanet).length;
-    fighterAttacks();
+    fighterAttacks(null);
     // expect the attackerFighter entity to be removed from the entity list...
-    expect(Entity.entities[attackerFighter.id][POSITION].x).toBe(null);
+    expect((Entity.entities[attackerFighter.id] as BaseEntity)[POSITION].x).toBe(null);
     // the planets should lose one fighter
     expect(getFighters(attackingPlanet).length).toBe(attackCount - 1);
     expect(getOwner(defendingPlanet)).toBe(getOwner(attackingPlanet));
@@ -82,14 +83,14 @@ describe('Tests the fighter attacks system', () => {
     let attackingPlanet = new EarthLike(200, 200, PLAYER_1);
     let defendingPlanet = new EarthLike(500, 500, PLAYER_1);
 
-    let attackerFighter = new Fighter(attackingPlanet);
+    let attackerFighter = createFighterEntity(attackingPlanet);
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
     attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
     attackerFighter.removeComponent(DEFENDING);
     attackerFighter.addComponent(new InPlaceToAttack());
 
     let attackCount = getFighters(attackingPlanet).length;
-    fighterAttacks();
+    fighterAttacks(null);
 
     // Fighter should still exist
     // Position - Should be of the planet we reassigned to
@@ -115,8 +116,8 @@ describe('Tests the fighter attacks system', () => {
     let defendingPlanet = new EarthLike(500, 500, PLAYER_2);
     let defendingFriendly = new EarthLike(5000, 5000, PLAYER_1);
 
-    let attackerFighter = new Fighter(attackingPlanet);
-    let fighterInSpace = new Fighter(defendingPlanet);
+    let attackerFighter = createFighterEntity(attackingPlanet);
+    let fighterInSpace = createFighterEntity(defendingPlanet);
 
     attackerFighter[POSITION].x = attackerFighter[POSITION].destX = 500;
     attackerFighter[POSITION].y = attackerFighter[POSITION].destY = 500;
@@ -131,15 +132,15 @@ describe('Tests the fighter attacks system', () => {
 
     // attacking...
     // let attackCount = getFighters(attackingPlanet).length;
-    fighterAttacks();
+    fighterAttacks(null);
 
     // // expect the fighterInSpace entity to still be alive, without a planet ID
-    expect(Entity.entities[attackerFighter.id][POSITION].x).toBe(null);
+    expect((Entity.entities[attackerFighter.id] as BaseEntity)[POSITION].x).toBe(null);
 
     // enemy fighters reach our defenseless planet
     fighterInSpace[POSITION].x = fighterInSpace[POSITION].destX = 5000;
     fighterInSpace[POSITION].y = fighterInSpace[POSITION].destY = 5000;
     fighterInSpace.addComponent(new InPlaceToAttack());
-    fighterAttacks();
+    fighterAttacks(null);
   });
 });

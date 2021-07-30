@@ -1,3 +1,5 @@
+import {IArea, IGrid, IPartialGrid} from "../../interfaces/interfaces";
+
 
 
 
@@ -9,9 +11,9 @@
  * @returns {Array} (A grid is array of rows with arrays of cols, with some extra attributes :
  * squareY, squareX, xLen, yLen
  */
-function createGrid(area, squaresInLine) {
+export function createGrid(area: IArea, squaresInLine: number): IGrid {
   let {topLeftAreaX, topLeftAreaY, bottomRightAreaX, bottomRightAreaY} = area;
-  let grid = [];
+  let grid: IPartialGrid = [];
 
   let xLen = bottomRightAreaX - topLeftAreaX; // 1920
   let yLen = bottomRightAreaY - topLeftAreaY; // 1080
@@ -46,7 +48,5 @@ function createGrid(area, squaresInLine) {
   grid.xLen = xLen;
   grid.yLen = yLen;
 
-  return grid;
+  return <IGrid>grid;
 }
-
-export default createGrid;

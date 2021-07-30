@@ -1,7 +1,4 @@
-
-import {mount, shallow} from 'enzyme';
-import React from 'react';
-import Owner, {hasOwner} from 'gameEngine/components/OwnerComponent';
+import Owner from 'gameEngine/components/OwnerComponent';
 
 describe('Tests a component', () => {
   beforeEach(() => {

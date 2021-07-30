@@ -1,12 +1,15 @@
 /** @namespace entity.components.ui */
 import {UI_COMP} from 'gameEngine/constants';
+import {ISection} from "../../interfaces/interfaces";
 
 class UIComponent {
   public name: string;
+  public sections: ISection[];
+  public shape: string;
   /**
    * @param sections mixed - String, Array of Strings, object, array of objects
    */
-  constructor(sections) {
+  constructor(sections: ISection[] | ISection) {
     this.name = UI_COMP;
 
     let sectionsArray = Array.isArray(sections) ? sections : [sections];

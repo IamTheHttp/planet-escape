@@ -9,12 +9,12 @@ describe('Tests a component', () => {
   });
 
   it('inits the component - string', () => {
-    let comp = new UIComponent('foo');
+    let comp = new UIComponent({ name: 'foo'});
     expect(comp.sections.length).toBe(1);
   });
 
   it('inits the component - array of strings', () => {
-    let comp = new UIComponent(['foo']);
+    let comp = new UIComponent([{ name: 'foo'}]);
     expect(comp.sections.length).toBe(1);
   });
 

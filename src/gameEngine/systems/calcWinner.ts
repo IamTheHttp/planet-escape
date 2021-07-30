@@ -1,13 +1,12 @@
-import Entity from '../../lib/ECS/Entity';
-import entityLoop from '../../lib/ECS/util/entityLoop';
 import {isAttackable} from 'gameEngine/components/Attackable';
 import {ATTACKABLE, OWNER_COMPONENT, PLAYER_1, NEUTRAL, GAME_WON, GAME_LOST} from 'gameEngine/constants';
 import {BaseEntity} from "../BaseEntity";
+import {Entity, entityLoop} from "game-platform";
 function calcWinner() {
   let entities = Entity.getByComps([ATTACKABLE, OWNER_COMPONENT]);
-
   let enemyEntitiesLeft = 0;
   let playerEntsLeft = 0;
+
   entityLoop(entities, (ent: BaseEntity) => {
     let owner = ent[OWNER_COMPONENT].player;
     let friendlies = [PLAYER_1, NEUTRAL];

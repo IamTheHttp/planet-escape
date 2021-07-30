@@ -1,4 +1,3 @@
-import Entity from '../../../lib/ECS/Entity';
 import UIComponent from 'gameEngine/components/UIComponent';
 import PositionComponent from 'gameEngine/components/PositionComponent';
 import PlayerControlledComponent from 'gameEngine/components/PlayerControlledComponent';
@@ -6,7 +5,7 @@ import OwnerComponent from 'gameEngine/components/OwnerComponent';
 import Attackable from 'gameEngine/components/Attackable';
 import Sprite from 'gameEngine/components/Sprite';
 
-import gameConfig from 'gameEngine/config';
+import {gameConfig} from 'gameEngine/config';
 import {
   NEUTRAL,
   PLANET_RADIUS,
@@ -19,6 +18,7 @@ import {
 } from 'gameEngine/constants';
 import {BaseEntity} from "../../BaseEntity";
 import {HasFighters} from "../../components/HasFighters";
+import {ISection} from "../../../interfaces/interfaces";
 
 class EarthLike extends BaseEntity {
   constructor(xPos = 50, yPos = 50, player = NEUTRAL) {
@@ -48,7 +48,7 @@ class EarthLike extends BaseEntity {
     ]));
 
     // REFACTOR this should be an interface somewhere, i don't like free forming objects
-    let shapes = [
+    let shapes: ISection[] = [
       {
         name: CANVAS,
         shape: CIRCLE

@@ -1,23 +1,23 @@
-
 import {
   PLAYER_1,
-  MAIN_VIEW_SIZE_X,
-  MAIN_VIEW_SIZE_Y
 } from 'gameEngine/constants';
-import Entity from 'lib/ECS/Entity';
-import {mount, shallow} from 'enzyme';
-import React from 'react';
 import renderSystem from 'gameEngine/systems/renderSystem';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Fighter from 'gameEngine/entities/Ships/Fighter';
+import {Entity} from "game-platform";
+import {createFighterEntity} from "../../../src/gameEngine/entities/Ships/Fighter";
+import CanvasAPI from "game-platform/types/lib/CanvasAPI/CanvasAPI";
+import {ISelectedBoxData} from "game-platform/types/lib/interfaces";
+import {IViewSize} from "../../../src/interfaces/interfaces";
 
 describe('Tests the render system', () => {
-  let mapAPI;
-  let miniMapAPI;
-  let selectedBox;
-  let viewSize = {
-    heightSize : 2000,
-    widthSize : 2000
+  let mapAPI: Partial<CanvasAPI>;
+  let miniMapAPI: Partial<CanvasAPI>;
+  let selectedBox: ISelectedBoxData;
+  let viewSize: IViewSize = {
+    mapHeight: null,
+    mapWidth:null,
+    viewHeight: 2000,
+    viewWidth: 2000,
   };
 
   beforeEach(() => {
@@ -26,8 +26,8 @@ describe('Tests the render system', () => {
       clear: jest.fn(),
       addRect: jest.fn(),
       draw: jest.fn(),
-      addCircle : jest.fn(),
-      addImage : jest.fn(),
+      addCircle: jest.fn(),
+      addImage: jest.fn(),
       getPan: () => {
         return {
           panX: 0,
@@ -40,8 +40,8 @@ describe('Tests the render system', () => {
       clear: jest.fn(),
       addRect: jest.fn(),
       draw: jest.fn(),
-      addCircle : jest.fn(),
-      addImage : jest.fn(),
+      addCircle: jest.fn(),
+      addImage: jest.fn(),
       getPan: () => {
         return {
           panX: 0,
@@ -66,59 +66,89 @@ describe('Tests the render system', () => {
   it('renderSystem, without selectedBox and no entities', () => {
     renderSystem({
       Entity,
-      viewSize
-    }, mapAPI, miniMapAPI, false);
+      viewSize,
+      difficulty: null,
+      gameTracker: null,
+      numPlayers: null,
+      levelData: null,
+      count: null
+    }, mapAPI as CanvasAPI, miniMapAPI as CanvasAPI, null);
 
-    expect(mapAPI.addRect.mock.calls.length).toBe(0);
+    expect((mapAPI.addRect as jest.Mock).mock.calls.length).toBe(0);
   });
 
   it('renderSystem, with selectedBox and no entities', () => {
     renderSystem({
       Entity,
-      viewSize
-    }, mapAPI, miniMapAPI, selectedBox);
-    expect(mapAPI.addRect.mock.calls.length).toBe(1);
+      viewSize,
+      difficulty: null,
+      gameTracker: null,
+      numPlayers: null,
+      levelData: null,
+      count: null
+    }, mapAPI as CanvasAPI, miniMapAPI as CanvasAPI, selectedBox);
+    expect((mapAPI.addRect as jest.Mock).mock.calls.length).toBe(1);
   });
 
   it('renderSystem, test minimap with no entities', () => {
     renderSystem({
       Entity,
-      viewSize
-    }, mapAPI, miniMapAPI, selectedBox);
+      viewSize,
+      difficulty: null,
+      gameTracker: null,
+      numPlayers: null,
+      levelData: null,
+      count: null
+    }, mapAPI as CanvasAPI, miniMapAPI as CanvasAPI, selectedBox);
 
-    expect(miniMapAPI.addRect.mock.calls[0][0].id).toBe('currentMap');
+    expect((miniMapAPI.addRect as jest.Mock).mock.calls[0][0].id).toBe('currentMap');
   });
 
   it('renderSystem with entities', () => {
     let ent = new EarthLike(200, 200, PLAYER_1);
     renderSystem({
       Entity,
-      viewSize
-    }, mapAPI, miniMapAPI, selectedBox);
+      viewSize,
+      difficulty: null,
+      gameTracker: null,
+      numPlayers: null,
+      levelData: null,
+      count: null
+    }, mapAPI as CanvasAPI, miniMapAPI as CanvasAPI, selectedBox);
 
-    expect(miniMapAPI.addRect.mock.calls[0][0].id).toBe('currentMap');
-    expect(miniMapAPI.addCircle.mock.calls[0][0].id).toBe(ent.id);
+    expect((miniMapAPI.addRect as jest.Mock).mock.calls[0][0].id).toBe('currentMap');
+    expect((miniMapAPI.addCircle as jest.Mock).mock.calls[0][0].id).toBe(ent.id);
   });
 
   it('draws the fighter count in space', () => {
     let planet = new EarthLike(100, 200, PLAYER_1);
 
-    new Fighter(planet);
+    createFighterEntity(planet);
     renderSystem({
       Entity,
-      viewSize
-    }, mapAPI, miniMapAPI, selectedBox);
+      viewSize,
+      difficulty: null,
+      gameTracker: null,
+      numPlayers: null,
+      levelData: null,
+      count: null
+    }, mapAPI as CanvasAPI, miniMapAPI as CanvasAPI, selectedBox);
 
-    expect(mapAPI.write.mock.calls[0][0].text.indexOf(1)).toBeGreaterThan(-1);
+    expect((mapAPI.write as jest.Mock).mock.calls[0][0].text.indexOf(1)).toBeGreaterThan(-1);
   });
 
   it('Does not draw entities far outside of the map', () => {
     new EarthLike(-500, -500, PLAYER_1);
     renderSystem({
       Entity,
-      viewSize
-    }, mapAPI, miniMapAPI, selectedBox);
+      viewSize,
+      difficulty: null,
+      gameTracker: null,
+      numPlayers: null,
+      levelData: null,
+      count: null
+    }, mapAPI as CanvasAPI, miniMapAPI as CanvasAPI, selectedBox);
 
-    expect(mapAPI.addCircle.mock.calls.length).toBe(2);
+    expect((mapAPI.addCircle as jest.Mock).mock.calls.length).toBe(2);
   });
 });

@@ -1,8 +1,8 @@
 
-import Entity from 'lib/ECS/Entity';
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import MainView from 'ui/components/MainView/MainView';
+import {Entity} from "game-platform";
 
 describe('Tests a component', () => {
   beforeEach(() => {
@@ -13,9 +13,16 @@ describe('Tests a component', () => {
     let onHintsApprvd = jest.fn();
 
     let wrapper = mount(<MainView
+      canvasElm={null}
+      newHeight={null}
+      newWidth={null}
+      newWidthToHeight={null}
+      showLevelHints={null}
+      viewMapCanvasAPI={null}
+      widthToHeight={null}
       levelHints={['Hint 1', 'Hint 2']}
       onLevelHintsApproved={onHintsApprvd}
-    ></MainView>);
+    />);
 
     wrapper.setState({
       showLevelHints: true

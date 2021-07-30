@@ -1,6 +1,8 @@
 import {POSITION} from 'gameEngine/constants.js';
 import getBlocksFromPos from 'shared/mapPlacement/getBlocksFromPos';
 import getBlocks from 'shared/mapPlacement/getBlocks';
+import {BaseEntity} from "../../gameEngine/BaseEntity";
+import {IGrid} from "../../interfaces/interfaces";
 
 /**
  * Places an entity in target X,Y, with a radius arg (we ignore the entity's radius)
@@ -12,14 +14,18 @@ import getBlocks from 'shared/mapPlacement/getBlocks';
  * @param radius
  * @param grid
  */
-export function placeEntityInGrid(ent, targetX, targetY, radius, grid) {
-  let {startGridBlock, endGridBlock} = getBlocksFromPos(targetX, targetY, radius, grid);
-  let blocks = getBlocks(startGridBlock, endGridBlock, grid);
-  blocks.forEach((block) => {
-    block.occupied = true;
-  });
-  ent[POSITION].x = targetX;
-  ent[POSITION].y = targetY;
+export function placeEntityInGrid(ent: BaseEntity, targetX: number, targetY: number, radius:number, grid: IGrid) {
+  const blocksFromPosition = getBlocksFromPos(targetX, targetY, radius, grid);;
+
+  if (blocksFromPosition) {
+    let {startGridBlock, endGridBlock} = blocksFromPosition;
+    let blocks = getBlocks(startGridBlock, endGridBlock, grid);
+    blocks.forEach((block) => {
+      block.occupied = true;
+    });
+    ent[POSITION].x = targetX;
+    ent[POSITION].y = targetY;
+  }
 }
 
 export default placeEntityInGrid;

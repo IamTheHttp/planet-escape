@@ -1,9 +1,6 @@
 import './minimap.scss';
 import React from 'react';
-import {ILevelData} from "../../../d.ts/interfaces";
-
-
-
+import {ILevelData} from "../../../interfaces/interfaces";
 
 interface IProps {
   currentLevelData: ILevelData;

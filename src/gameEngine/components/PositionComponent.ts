@@ -40,7 +40,7 @@ export function getDest(ent: BaseEntity) {
   };
 }
 
-export function setDest(ent, target) {
+export function setDest(ent: BaseEntity, target: BaseEntity) {
   ent[POSITION].destX = target[POSITION].x;
   ent[POSITION].destY = target[POSITION].y;
 
@@ -57,22 +57,22 @@ export function setDest(ent, target) {
 }
 
 export function destReached(ent:BaseEntity) {
-  let xReached = getPos(ent:BaseEntity).x === getDest(ent:BaseEntity).x;
-  let yReached = getPos(ent:BaseEntity).y === getDest(ent:BaseEntity).y;
+  let xReached = getPos(ent).x === getDest(ent).x;
+  let yReached = getPos(ent).y === getDest(ent).y;
   return xReached && yReached;
 }
 
 export function hasDest(ent:BaseEntity) {
   // it's enough to check X only
-  let x = getDest(ent:BaseEntity).x;
+  let x = getDest(ent).x;
   return typeof x === 'number';
 }
 
-export function isSamePos(ent1, ent2) {
+export function isSamePos(ent1: BaseEntity, ent2: BaseEntity) {
   return getPos(ent1).x === getPos(ent2).x && getPos(ent1).y === getPos(ent2).y;
 }
 
-let calcDistance = memoize((ent1, ent2) => {
+let calcDistance = memoize((ent1: BaseEntity, ent2: BaseEntity) => {
   let pos1 = getPos(ent1);
   let pos2 = getPos(ent2);
   let xDist = Math.pow(pos1.x - pos2.x, 2);

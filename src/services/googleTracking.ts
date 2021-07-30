@@ -14,7 +14,16 @@ let LVL = 'LVL';
 // - Level complete
 // - Level failed
 
-function event({eventCategory, eventAction, eventLabel = null, eventValue = null}) {
+export interface IGAEvent {
+  hitType: string,
+  eventCategory: string,
+  eventAction: string,
+  eventLabel: string,
+  eventValue: string
+}
+
+
+function event({eventCategory, eventAction, eventLabel = null, eventValue = null}: Partial<IGAEvent>) {
   window.ga('send', {
     hitType: 'event',
     eventCategory,
@@ -25,7 +34,7 @@ function event({eventCategory, eventAction, eventLabel = null, eventValue = null
 }
 
 class GoogleTracking {
-  track(eventName, payload) {
+  track(eventName: string, payload?: any) {
     if (eventName === EVENTS.APP_LOADING) {
       event({
         eventCategory: APP,
@@ -75,4 +84,5 @@ class GoogleTracking {
   }
 }
 
-export default new  GoogleTracking();
+const googleTracking = new  GoogleTracking();;
+export {GoogleTracking, googleTracking}

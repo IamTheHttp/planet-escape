@@ -30,10 +30,10 @@ import Help from 'ui/components/MainMenu/Help';
 import PlayerSelection from 'ui/components/PlayerSelection/PlayerSelection';
 import CookiePolicy from 'ui/components/CookiePolicy/CookiePolicy';
 
-import playerService from 'services/PlayerService';
+import {playerService} from 'services/PlayerService';
 import globalTracker from 'services/globalTracker';
 import Game from "gameEngine/Game";
-import {ILevelData, ISystemArguments} from "../d.ts/interfaces";
+import {ILevelData, IPlayer, ISystemArguments} from "../interfaces/interfaces";
 import CanvasAPI from "game-platform/types/lib/CanvasAPI/CanvasAPI";
 import SelectedBox from "game-platform/types/lib/GameCanvas/SelectedBox/SelectedBox";
 import {GameCanvas} from "game-platform";
@@ -59,7 +59,7 @@ interface IState {
   gamePaused: boolean;
   gameEnded: boolean;
   gameWon: boolean;
-  selectedPlayer: unknown;
+  selectedPlayer: IPlayer;
   currentLevel: ILevelData;
   showPlayerManagement:boolean;
   viewMapCanvasAPI: CanvasAPI;
@@ -71,10 +71,10 @@ interface IState {
 
 
 class App extends React.Component<IProps, Partial<IState>> {
-  private game: Game;
-  private levels: ILevelData[];
-  private selectedBox : ISelectedBoxData;
-  private difficulty: IDifficulty;
+  public game: Game;
+  public levels: ILevelData[];
+  public selectedBox : ISelectedBoxData;
+  public difficulty: IDifficulty;
 
 
   constructor(props: IProps) {
@@ -183,7 +183,9 @@ class App extends React.Component<IProps, Partial<IState>> {
           levelData,
           viewSize: {
             viewHeight: gameConfig[MAIN_VIEW_SIZE_Y],
-            viewWidth: gameConfig[MAIN_VIEW_SIZE_X]
+            viewWidth: gameConfig[MAIN_VIEW_SIZE_X],
+            mapWidth: null,
+            mapHeight: null
           },
           difficulty,
           numPlayers: gameConfig[NUM_PLAYERS], // TODO, do we really need it here?
@@ -371,8 +373,8 @@ class App extends React.Component<IProps, Partial<IState>> {
           planets: [],
           key: 'unknown',
           buffer: 2,
-          mapScale: menuSelection.mapScale,
-          planetsInMap: 20 * menuSelection.mapScale
+          mapScale: +menuSelection.mapScale,
+          planetsInMap: 20 * parseFloat(menuSelection.mapScale)
         };
 
         // @ts-ignore TODO improve types for gameConfig
@@ -436,7 +438,7 @@ class App extends React.Component<IProps, Partial<IState>> {
     }
   }
 
-  handlePlayerSelect(selectedPlayer: unknown) {
+  handlePlayerSelect(selectedPlayer: IPlayer) {
     this.setState({
       selectedPlayer
     });

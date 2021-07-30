@@ -22,7 +22,7 @@
 VERSION 1.2.0 RELEASE
 [V] Fix the 'first visit' flow
 [V] Create a new player should work with the "Enter" key
-[V] Refactoring - Stopped the creation of new fighters when reaching a friendly planet
+[V] Refactoring - Stopped the creation of createFighterEntitys when reaching a friendly planet
 [VT] Test that a fighter can't be added to the same planet twice.
 [VT] Test that a fighter that reaches a friendly planet is not destroyed.
 [VT] Test that a fighter that reaches a friendly planet has his state set correctly

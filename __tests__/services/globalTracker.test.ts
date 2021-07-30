@@ -4,7 +4,7 @@ import {GlobalTracker} from 'services/globalTracker';
 
 
 describe('Tests the playerService', () => {
-  let globalTracker;
+  let globalTracker: GlobalTracker;
   beforeEach(() => {
     globalTracker = new GlobalTracker();
   });

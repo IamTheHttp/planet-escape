@@ -13,16 +13,20 @@ import {
   EXPLOSION
 } from 'gameEngine/constants';
 import imageBuffer from 'assets/imageBuffer';
-import gameConfig from 'gameEngine/config';
+import {gameConfig} from 'gameEngine/config';
 import {isSelected} from 'gameEngine/components/PlayerControlledComponent';
 import {getDefendingFighters} from 'gameEngine/components/HasFighters';
+import {BaseEntity} from "../BaseEntity";
+import CanvasAPI from "game-platform/types/lib/CanvasAPI/CanvasAPI";
+import {ISystemArguments} from "../../interfaces/interfaces";
+import {ISelectedBoxData} from "game-platform/types/lib/interfaces";
 
 
-function renderMap(entity, canvasAPI) {
+function renderMap(entity: BaseEntity, canvasAPI: CanvasAPI) {
   let {x, y, radius, angle} = entity[POSITION];
-
-  let color = null;
+  let color:string = null;
   let lineWidth = 1;
+
   if (entity.hasComponents(OWNER_COMPONENT)) {
     color = gameConfig[COLORS][entity[OWNER_COMPONENT].player];
   }
@@ -40,33 +44,33 @@ function renderMap(entity, canvasAPI) {
     entity[UI_COMP].sections.forEach((section) => {
       if (section.shape === CIRCLE) {
         canvasAPI.addCircle({
-          id: entity.id,
+          id: entity.id.toString(),
           x,
           y,
           radius,
-          strokeStyle: 'rgba(0,0,0,0)',
+          // strokeStyle: 'rgba(0,0,0,0)', // TODO Looks like a bug in CanvasAPI!
           lineWidth:0
         });
       }
 
       if (section.shape === CIRCLE && isSelected(entity)) {
         canvasAPI.addCircle({
-          id: entity.id,
+          id: entity.id.toString(),
           x,
           y,
           radius: isSelected(entity) ? radius + 3 : radius,
-          strokeStyle: color,
+          // strokeStyle: color,
           lineWidth
         });
       }
 
       if (section.shape === CIRCLE && entity.hasComponents(EXPLOSION)) {
         canvasAPI.addCircle({
-          id: entity.id,
+          id: entity.id.toString(),
           x,
           y,
           radius: radius + entity.EXPLOSION.times * 2,
-          strokeStyle: color,
+          // strokeStyle: color,
           lineWidth
         });
         entity.EXPLOSION.times++;
@@ -75,7 +79,7 @@ function renderMap(entity, canvasAPI) {
         }
       }
 
-      let padNum = (num) => {
+      let padNum = (num: number) => {
         return num < 10 ? ` ${num}` : num;
       };
 
@@ -86,7 +90,7 @@ function renderMap(entity, canvasAPI) {
           drawFighterCount = () => {
             canvasAPI.write({
               id: `${entity.id}-fighterCount`,
-              text: padNum(getDefendingFighters(entity)),
+              text: padNum(getDefendingFighters(entity)).toString(),
               x: radius + x - radius / (radius / 10) - (radius / 10) * 3, // TODO - magic numbers?
               y: radius + y - radius / (radius / 10) - (radius / 10) * 5,
               font: `${fontSize}px serif`,
@@ -136,7 +140,7 @@ function renderMap(entity, canvasAPI) {
   }
 }
 
-function renderMiniMap(entity, canvasAPI) {
+function renderMiniMap(entity: BaseEntity, canvasAPI: CanvasAPI) {
   let {x, y, radius, angle} = entity[POSITION];
 
   let color;
@@ -146,17 +150,17 @@ function renderMiniMap(entity, canvasAPI) {
   }
 
   canvasAPI.addCircle({
-    id: entity.id,
+    id: entity.id. toString(),
     x,
     y,
     radius,
-    strokeStyle: color,
+    // strokeStyle: color, TODO looks like a bug in CanvasAPI
     lineWidth,
     fillColor: color
   });
 }
 
-function renderSystem(systemArguments, mapAPI, miniMapAPI, selectedBox) {
+function renderSystem(systemArguments: ISystemArguments, mapAPI: CanvasAPI, miniMapAPI: CanvasAPI, selectedBox:ISelectedBoxData) {
   mapAPI.clear();
   miniMapAPI.clear();
   let entsToDraw = systemArguments.Entity.getByComps([UI_COMP]);
@@ -166,7 +170,7 @@ function renderSystem(systemArguments, mapAPI, miniMapAPI, selectedBox) {
     let {panX, panY} = mapAPI.getPan();
     let {viewWidth, viewHeight} = systemArguments.viewSize;
 
-    let loopHandler = (entity) => {
+    let loopHandler = (entity: BaseEntity) => {
       let {x, y, radius} = entity[POSITION];
       let entWidth = radius * 2;
       let entHeight = radius * 2;

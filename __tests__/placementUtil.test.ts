@@ -1,23 +1,17 @@
-import Entity from '../src/lib/ECS/Entity';
-import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import {mount, shallow} from 'enzyme';
-import React from 'react';
+import {IGridBlock} from "../src/interfaces/interfaces";
 
-let rand = global.Math.random;
 global.Math.random = () => {
   return 0;
 };
 
 import {POSITION, MAP_SIZE, PLAYER_1, CANVAS_X, CANVAS_Y, PLAYER_2, PLANET_BUFFER} from 'gameEngine/constants.js';
-import placeEntities from 'shared/placementUtil';
-
-import createGrid from 'shared/mapPlacement/grid';
+import {createGrid} from 'shared/mapPlacement/grid';
 import getGridBlockFromPos from 'shared/mapPlacement/getGridBlockFromPos';
 import canCircleBePlacedInPos from 'shared/mapPlacement/canCircleBePlacedInPos';
 import isBlockRangeOccupied from 'shared/mapPlacement/isBlockRangeOccupied';
 import placeEntityInGrid from 'shared/mapPlacement/placeEntityInGrid';
-import {gameConfig} from 'gameEngine/config';
-let mapSize = gameConfig[MAP_SIZE];
+import {placeEntities} from "../src/shared/placementUtil";
+import EarthLike from "../src/gameEngine/entities/planets/EarthLike";
 
 describe('Tests position', () => {
   let area = {
@@ -44,11 +38,11 @@ describe('Tests position', () => {
   it('Gets back a gridBlock from a grid given a position', () => {
     // each block is 10x10 pixels in this example...
     let grid = createGrid(area, squaresInLine);
-    let block = getGridBlockFromPos(grid, 0, 0);
+    let block = getGridBlockFromPos(grid, 0, 0) as IGridBlock;
     expect(block.col).toBe(0);
     expect(block.row).toBe(0);
 
-    block = getGridBlockFromPos(grid, 980, 995);
+    block = getGridBlockFromPos(grid, 980, 995) as IGridBlock;
     expect(block.col).toBe(98);
     expect(block.row).toBe(99);
   });

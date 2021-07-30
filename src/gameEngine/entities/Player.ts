@@ -1,4 +1,3 @@
-import Entity from '../../lib/ECS/Entity';
 import {BaseEntity} from "../BaseEntity";
 
 class Player {

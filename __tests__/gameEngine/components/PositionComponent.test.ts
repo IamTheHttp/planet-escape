@@ -1,13 +1,10 @@
-
-import {mount, shallow} from 'enzyme';
-import React from 'react';
-import PositionComponent, {hasDest, setDest} from 'gameEngine/components/PositionComponent';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Entity from '../../../src/lib/ECS/Entity';
 import {
   PLAYER_1,
   POSITION
 } from 'gameEngine/constants';
+import {Entity} from "game-platform";
+import {hasDest, setDest} from "../../../src/gameEngine/components/PositionComponent";
 
 describe('Tests a component', () => {
   beforeEach(() => {

@@ -1,8 +1,5 @@
-
 import {mount, shallow} from 'enzyme';
-import React from 'react';
-
-import App from 'ui/App';
+import * as React from 'react';
 import {
   MAP_SIZE,
   TINY,
@@ -10,10 +7,11 @@ import {
   EASY
 } from 'gameEngine/constants';
 
-import gameConfig from 'gameEngine/config';
+import {gameConfig} from 'gameEngine/config';
 import levels from 'levels/levels.json';
-import playerService from 'services/PlayerService';
+import {playerService} from 'services/PlayerService';
 import i18n from 'ui/i18n';
+import App from "../../src/ui/App";
 
 describe('Tests a component', () => {
   jest.useFakeTimers();
@@ -24,13 +22,12 @@ describe('Tests a component', () => {
   });
 
   it('Expects to run without issues', (done) => {
-    let wrapper = mount(<App></App>);
-    wrapper.instance().currentLevel = levels.random;
+    let wrapper = mount<App>(<App/>);
     wrapper.instance().difficulty = gameConfig[DIFFICULTY][EASY];
     wrapper.setState({
+      currentLevel: levels.random,
       isMenuOpen : false,
-      gameStarted : true,
-      selectedPlayer: true
+      selectedPlayer: null
     }, () => {
       wrapper.instance().startGame(levels.random, gameConfig[DIFFICULTY][EASY]);
       jest.runOnlyPendingTimers();
@@ -40,19 +37,21 @@ describe('Tests a component', () => {
   });
 
   it('Expects the popup to open as the game is lost..', () => {
-    let wrapper = mount(<App></App>);
+    let wrapper = mount<App>(<App/>);
     let inst = wrapper.instance();
 
     inst.difficulty = gameConfig[DIFFICULTY][EASY];
     inst.game = {
-      stop : () => {}
+      currentGame: null,
+      stop : () => {},
+      resume: () => {},
+      dispatchAction: () => {}
     };
 
     wrapper.setState({
       isMenuOpen : false,
-      gameStarted : true,
       gameWon : false,
-      selectedPlayer: true,
+      selectedPlayer: null,
       gameReport : {}
     });
 
@@ -60,19 +59,21 @@ describe('Tests a component', () => {
   });
 
   it('Expects the popup to open as the game is won..', () => {
-    let wrapper = mount(<App></App>);
+    let wrapper = mount<App>(<App/>);
     let inst = wrapper.instance();
 
     inst.difficulty = gameConfig[DIFFICULTY][EASY];
     inst.game = {
-      stop : () => {}
+      currentGame: null,
+      stop : () => {},
+      resume: () => {},
+      dispatchAction: () => {}
     };
 
     wrapper.setState({
       isMenuOpen: false,
-      gameStarted: true,
       gameWon: true,
-      selectedPlayer: true,
+      selectedPlayer: null,
       gameReport: {}
     });
 
@@ -80,7 +81,7 @@ describe('Tests a component', () => {
   });
 
   it('Expected game modal without proper state to return null', () => {
-    let wrapper = mount(<App></App>);
+    let wrapper = mount<App>(<App/>);
     let inst = wrapper.instance();
 
     expect(inst.getGameEndModal()).toBe(null);
@@ -89,13 +90,13 @@ describe('Tests a component', () => {
 
   it('Shows the help module when the state is right', () => {
     playerService.createPlayer('Foo');
-    let wrapper = mount(<App></App>);
+    let wrapper = mount<App>(<App/>);
     let inst = wrapper.instance();
 
     inst.setState({
       showHelp: true,
-      selectedPlayer: true,
-      currentLevel: {}
+      selectedPlayer: null,
+      currentLevel: null
     });
 
     expect(wrapper.find('.showHelp').length).toBe(1);
@@ -103,13 +104,13 @@ describe('Tests a component', () => {
 
   it('Show the paused menu with the right state', () => {
     playerService.createPlayer('Foo');
-    let wrapper = mount(<App></App>);
+    let wrapper = mount<App>(<App/>);
     let inst = wrapper.instance();
 
     inst.setState({
       gamePaused: true,
-      selectedPlayer: true,
-      currentLevel: {},
+      selectedPlayer: null,
+      currentLevel: null,
       isMenuOpen: false
     });
 
@@ -118,13 +119,13 @@ describe('Tests a component', () => {
 
   it('Can stop and resume a game', (done) => {
     playerService.createPlayer('Foo');
-    let wrapper = mount(<App></App>);
+    let wrapper = mount<App>(<App/>);
     let inst = wrapper.instance();
 
     inst.setState({
       gamePaused: true,
-      selectedPlayer: true,
-      currentLevel: {},
+      selectedPlayer: null,
+      currentLevel: null,
       isMenuOpen: false
     });
 
@@ -153,7 +154,7 @@ describe('Tests a component', () => {
     // after user is created, we reidrect to home page.
     // user goes into the players list.
     // his name appears there as selected
-    let wrapper = mount(<App></App>);
+    let wrapper = mount<App>(<App/>);
 
     // automaticall show the create user flow
     expect(wrapper.find('.createNewPlayer').length).toBe(1);

@@ -1,19 +1,18 @@
-import Entity from '../../lib/ECS/Entity';
-import entityLoop from '../../lib/ECS/util/entityLoop';
-import Fighter, {FighterEntity} from 'gameEngine/entities/Ships/Fighter';
 import {notNeutral} from 'gameEngine/components/OwnerComponent';
 import {
   OWNER_COMPONENT,
   HAS_FIGHTERS,
   FIGHTER_BUILD_RATE
 } from 'gameEngine/constants';
-import gameConfig from 'gameEngine/config';
+import {gameConfig} from 'gameEngine/config';
 import EarthLike from "../entities/planets/EarthLike";
-import {ISystemArguments} from "../../d.ts/interfaces";
+import {ISystemArguments} from "../../interfaces/interfaces";
+import {Entity, entityLoop} from "game-platform";
+import {createFighterEntity} from "../entities/Ships/Fighter";
 
 function buildFighterLoop(ent: EarthLike) {
   if (notNeutral(ent)) {
-    const fighter = new Fighter(ent);
+    const fighter = createFighterEntity(ent);
   }
 }
 

@@ -1,6 +1,5 @@
 import Player from 'gameEngine/entities/Player';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Fighter from 'gameEngine/entities/Ships/Fighter';
 import {getFighters} from 'gameEngine/components/HasFighters';
 import {logger} from 'shared/logger';
 import {
@@ -15,14 +14,15 @@ import {
   DEFAULT_FIGHTER_COUNT
 } from 'gameEngine/constants';
 import {gameConfig} from 'gameEngine/config';
-import placeEntities from 'shared/placementUtil';
-import {ILevelData} from "../d.ts/interfaces";
+import {placeEntities} from 'shared/placementUtil';
+import {ILevelData} from "../interfaces/interfaces";
+import {createFighterEntity} from "../gameEngine/entities/Ships/Fighter";
 
 export function randFromRange(min: number, max:number) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-export function randFromArray(array: unknown[]) {
+export function randFromArray<T>(array: T[]):T {
   return array[Math.floor(Math.random() * array.length)];
 }
 
@@ -67,7 +67,7 @@ export function generateMap(levelData:ILevelData) {
 
   // generate planets
   let count = 0;
-  let planets = {};
+  let planets: Record<string, EarthLike> = {};
 
 
   if (levelData.planets) {
@@ -76,7 +76,7 @@ export function generateMap(levelData:ILevelData) {
       planets[planet.id] = planet;
 
       while (getFighters(planet).length < planetData.fighters) {
-        new Fighter(planet, false);
+        createFighterEntity(planet, false);
       }
     });
   } else {
@@ -84,7 +84,7 @@ export function generateMap(levelData:ILevelData) {
       let planet = new EarthLike(null, null, NEUTRAL);
       planets[planet.id] = planet;
       while (getFighters(planet).length < gameConfig[DEFAULT_FIGHTER_COUNT]) {
-        new Fighter(planet, false);
+        createFighterEntity(planet, false);
       }
       count++;
     }
@@ -117,7 +117,7 @@ export function generateMap(levelData:ILevelData) {
 /**
  * Runs the callback one out of X tries, this is a statistical function used in a loop
  */
-export function oneOutOf(chance, cb) {
+export function oneOutOf(chance: number, cb: () => void) {
   // the -1 here is because the max range will only happen if Math.random outputs 1 - very unlikely
   if (randFromRange(0, chance) === chance - 1) {
     cb();
@@ -127,7 +127,7 @@ export function oneOutOf(chance, cb) {
   }
 }
 
-export function loadImages(imagePaths, callback) {
+export function loadImages(imagePaths: string[], callback: () => void) {
   let imagesToLoad = imagePaths;
   let imagesLoaded = 0;
 
@@ -137,7 +137,7 @@ export function loadImages(imagePaths, callback) {
     }
   }
 
-  imagesToLoad.forEach((imagePath) => {
+  imagesToLoad.forEach((imagePath: string) => {
     let img = new Image();
     img.onload = () => {
       imagesLoaded++;

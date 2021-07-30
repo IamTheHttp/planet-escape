@@ -1,24 +1,19 @@
+import {Entity} from "game-platform";
+import {POSITION} from "../../../src/gameEngine/constants";
+import moveSystem from "../../../src/gameEngine/systems/moveSystem";
+import {createFighterEntity, FighterEntity, fighterPool} from "../../../src/gameEngine/entities/Ships/Fighter";
+import Moving from "../../../src/gameEngine/components/Moving";
+import EarthLike from "../../../src/gameEngine/entities/planets/EarthLike";
 
-import Entity from '../../../src/lib/ECS/Entity';;
-import {mount, shallow} from 'enzyme';
-import React from 'react';
-import moveSystem from 'gameEngine/systems/moveSystem';
-import Moving from 'gameEngine/components/Moving';
-import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Fighter, {fighterPool} from 'gameEngine/entities/Ships/Fighter';
-
-import {
-  POSITION,
-  MOVE
-} from 'gameEngine/constants';
 describe('Tests a component', () => {
-  let planet;
-  let ship;
+  let planet: EarthLike;
+  let ship: FighterEntity;
+
   beforeEach(() => {
     // TODO - Move to utility that resets the tests
     Entity.reset();
     fighterPool.reset();
-    ship = new Fighter(new EarthLike(1234, 1234));
+    ship = createFighterEntity(new EarthLike(1234, 1234));
     ship.addComponent(new Moving(true));
     // setup the test
   });
@@ -33,7 +28,7 @@ describe('Tests a component', () => {
     ship[POSITION].y = START_POS_Y;
     ship[POSITION].destX = DEST_POS_X;
     ship[POSITION].destY = DEST_POS_Y;
-    moveSystem();
+    moveSystem(null);
 
 
     expect(ship[POSITION].x).toBeGreaterThan(START_POS_X);
@@ -49,7 +44,7 @@ describe('Tests a component', () => {
     ship[POSITION].y = START_POS_Y;
     ship[POSITION].destX = DEST_POS_X;
     ship[POSITION].destY = DEST_POS_Y;
-    moveSystem();
+    moveSystem(null);
 
     expect(ship[POSITION].x).toBeLessThan(START_POS_X);
     expect(ship[POSITION].y).toBeLessThan(START_POS_Y);
@@ -65,7 +60,7 @@ describe('Tests a component', () => {
     ship[POSITION].y = START_POS_Y;
     ship[POSITION].destX = DEST_POS_X;
     ship[POSITION].destY = DEST_POS_Y;
-    moveSystem();
+    moveSystem(null);
 
     expect(ship[POSITION].x).toBe(START_POS_X);
     expect(ship[POSITION].y).toBe(START_POS_Y);
@@ -81,7 +76,7 @@ describe('Tests a component', () => {
     ship[POSITION].y = START_POS_Y;
     ship[POSITION].destX = DEST_POS_X;
     ship[POSITION].destY = DEST_POS_Y;
-    moveSystem();
+    moveSystem(null);
 
     expect(ship[POSITION].x).toBeGreaterThan(START_POS_X);
     expect(ship[POSITION].y).toBe(START_POS_Y);
@@ -97,7 +92,7 @@ describe('Tests a component', () => {
     ship[POSITION].y = START_POS_Y;
     ship[POSITION].destX = DEST_POS_X;
     ship[POSITION].destY = DEST_POS_Y;
-    moveSystem();
+    moveSystem(null);
 
     expect(ship[POSITION].x).toBe(START_POS_X);
     expect(ship[POSITION].y).toBeGreaterThan(START_POS_Y);
@@ -113,7 +108,7 @@ describe('Tests a component', () => {
     ship[POSITION].y = START_POS_Y;
     ship[POSITION].destX = DEST_POS_X;
     ship[POSITION].destY = DEST_POS_Y;
-    moveSystem();
+    moveSystem(null);
 
     expect(ship[POSITION].x).toBe(START_POS_X);
     expect(ship[POSITION].y).toBeLessThan(START_POS_Y);

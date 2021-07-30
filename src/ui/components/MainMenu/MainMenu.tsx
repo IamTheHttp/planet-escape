@@ -17,7 +17,7 @@ import {
   CHALLENGING,
   HARD
 } from 'gameEngine/constants';
-import {ILevelData} from "../../../d.ts/interfaces";
+import {ILevelData, IPlayer} from "../../../interfaces/interfaces";
 
 let mapScales = [{
   scale: TINY,
@@ -40,7 +40,7 @@ let mapScales = [{
 let difficulties = [EASY, CHALLENGING, HARD];
 
 interface IProps {
-  selectedPlayer: unknown;
+  selectedPlayer: IPlayer;
   onPlayerSelect: (selectedPlayer: unknown) => void;
   onPlayerDelete: () => void;
   levels: ILevelData[];
@@ -50,7 +50,7 @@ interface IProps {
 
 interface IState {
   selection: unknown;
-  mapScale: number;
+  mapScale: string;
   difficulty:string;
 }
 
@@ -116,7 +116,10 @@ class MainMenu extends React.Component <IProps, IState> {
     }
     return (
       <div className="centered md">
-        <Help></Help>
+        <Help
+          levelHints={null}
+          onClick={null}
+        />
       </div>
     );
   }
@@ -132,9 +135,9 @@ class MainMenu extends React.Component <IProps, IState> {
     return (
       <div className="campaignScreen">
         {this.props.levels.map((level, i) => {
-          let levelIsDone = !!levelsPassed[level.key];
+          let levelIsDone = !!levelsPassed[+level.key];
 
-          let lastLevelDone = i === 0 || !levelIsDone && i > 0 && levelsPassed[this.props.levels[i - 1].key];
+          let lastLevelDone = i === 0 || !levelIsDone && i > 0 && levelsPassed[+this.props.levels[i - 1].key];
 
           /* istanbul ignore next */
           if (process.env.NODE_ENV === 'dev') {

@@ -5,7 +5,9 @@
  * @param grid
  * @returns {Array}
  */
-function getBlocks(startGridBlock, endGridBlock, grid) {
+import {IGrid, IGridBlock} from "../../interfaces/interfaces";
+
+function getBlocks(startGridBlock: IGridBlock, endGridBlock: IGridBlock, grid: IGrid) {
   let blocks = [];
   let row = startGridBlock.row;
   while (row < endGridBlock.row) {

@@ -1,4 +1,3 @@
-import Entity from '../../../src/lib/ECS/Entity';
 
 import {
   NEUTRAL,
@@ -6,11 +5,12 @@ import {
   PLAYER_2,
   AI_DECISION_RATE
 } from 'gameEngine/constants';
-import {ISystemArguments} from "../../../src/d.ts/interfaces";
-import Fighter, {fighterPool} from "../../../src/gameEngine/entities/Ships/Fighter";
+import {ISystemArguments} from "../../../src/interfaces/interfaces";
+import {createFighterEntity, FighterEntity, fighterPool} from "../../../src/gameEngine/entities/Ships/Fighter";
 import {getDest} from "../../../src/gameEngine/components/PositionComponent";
 import ai from "../../../src/gameEngine/systems/ai";
 import EarthLike from "../../../src/gameEngine/entities/planets/EarthLike";
+import {Entity} from "game-platform";
 
 describe('Tests a component', () => {
   let systemArguments: ISystemArguments;
@@ -34,7 +34,7 @@ describe('Tests a component', () => {
 
   it('Tests that without enough fighters, the enemy planet does nothing', () => {
     let attacker = new EarthLike(80, 80, PLAYER_2);
-    new Fighter(attacker);
+    createFighterEntity(attacker);
     expect(ai(systemArguments)).toBe(false);
   });
 
@@ -43,12 +43,12 @@ describe('Tests a component', () => {
     new EarthLike(50, 50, PLAYER_1);
     let attacker = new EarthLike(80, 80, PLAYER_2);
 
-    let fighter1 = new Fighter(attacker);
-    let fighter2 = new Fighter(attacker);
-    let fighter3 = new Fighter(attacker);
-    let fighter4 = new Fighter(attacker);
-    let fighter5 = new Fighter(attacker);
-    let fighter6 = new Fighter(attacker);
+    let fighter1 = createFighterEntity(attacker);
+    let fighter2 = createFighterEntity(attacker);
+    let fighter3 = createFighterEntity(attacker);
+    let fighter4 = createFighterEntity(attacker);
+    let fighter5 = createFighterEntity(attacker);
+    let fighter6 = createFighterEntity(attacker);
 
     ai(systemArguments);
     expect(getDest(fighter1).x).toBe(100);
@@ -60,12 +60,12 @@ describe('Tests a component', () => {
     new EarthLike(50, 50, PLAYER_1);
     let attacker = new EarthLike(80, 80, PLAYER_2);
 
-    let fighter1 = new Fighter(attacker);
-    let fighter2 = new Fighter(attacker);
-    let fighter3 = new Fighter(attacker);
-    let fighter4 = new Fighter(attacker);
-    let fighter5 = new Fighter(attacker);
-    let fighter6 = new Fighter(attacker);
+    let fighter1 = createFighterEntity(attacker);
+    let fighter2 = createFighterEntity(attacker);
+    let fighter3 = createFighterEntity(attacker);
+    let fighter4 = createFighterEntity(attacker);
+    let fighter5 = createFighterEntity(attacker);
+    let fighter6 = createFighterEntity(attacker);
     ai(systemArguments);
     expect(getDest(fighter1).x).toBe(50);
     expect(getDest(fighter1).y).toBe(50);
@@ -79,12 +79,12 @@ describe('Tests a component', () => {
     new EarthLike(1000, 1000, NEUTRAL);
     let attacker = new EarthLike(80, 80, PLAYER_2);
 
-    let fighter1 = new Fighter(attacker);
-    let fighter2 = new Fighter(attacker);
-    let fighter3 = new Fighter(attacker);
-    let fighter4 = new Fighter(attacker);
-    let fighter5 = new Fighter(attacker);
-    let fighter6 = new Fighter(attacker);
+    let fighter1 = createFighterEntity(attacker);
+    let fighter2 = createFighterEntity(attacker);
+    let fighter3 = createFighterEntity(attacker);
+    let fighter4 = createFighterEntity(attacker);
+    let fighter5 = createFighterEntity(attacker);
+    let fighter6 = createFighterEntity(attacker);
     ai(systemArguments);
     expect(getDest(fighter1).x).toBe(100);
     expect(getDest(fighter1).y).toBe(100);

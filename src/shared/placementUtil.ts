@@ -1,8 +1,10 @@
-import entityPlacer from 'shared/mapPlacement/entityPlacer';
-import createGrid from 'shared/mapPlacement/grid';
-
+import {entityPlacer} from 'shared/mapPlacement/entityPlacer';
+import {createGrid} from 'shared/mapPlacement/grid';
+import {BaseEntity} from "../gameEngine/BaseEntity";
+import {IArea} from "../interfaces/interfaces";
 const PX_PER_SQUARE = 10;
-let placeEntities = (entities, area, buffer) => {
+
+export function placeEntities (entities: Record<string, BaseEntity> | BaseEntity[], area: IArea, buffer: number) {
   let {topLeftAreaX, topLeftAreaY, bottomRightAreaX, bottomRightAreaY} = area;
 
   let squaresInLine = Math.floor((bottomRightAreaX - topLeftAreaX) / PX_PER_SQUARE);
@@ -12,5 +14,3 @@ let placeEntities = (entities, area, buffer) => {
   return grid;
 };
 
-
-export default placeEntities;

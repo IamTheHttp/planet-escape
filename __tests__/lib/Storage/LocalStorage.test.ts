@@ -24,7 +24,7 @@ describe('testing localStorage facade', () => {
   });
 
   it('SET JSON fails gracefully', () => {
-    let obj = {};
+    let obj: Record<string, any> = {};
 
     obj.obj = obj;
     expect(ls.setJSON('json', obj)).toBeFalsy();

@@ -1,5 +1,3 @@
-import Entity from '../../lib/ECS/Entity';
-import entityLoop from '../../lib/ECS/util/entityLoop';
 import {randFromArray} from 'shared/utils';
 // import Fighter from 'gameEngine/entities/Ships/Fighter';
 import {notNeutral, getOwner} from 'gameEngine/components/OwnerComponent';
@@ -15,14 +13,15 @@ import {
   AI_DECISION_RATE
 } from 'gameEngine/constants';
 
-import gameConfig from 'gameEngine/config';
+import {gameConfig} from 'gameEngine/config';
 import {BaseEntity} from "../BaseEntity";
-import {ISystemArguments} from "../../d.ts/interfaces";
+import {ISystemArguments} from "../../interfaces/interfaces";
 import EarthLike from "../entities/planets/EarthLike";
+import {Entity, entityLoop} from "game-platform";
 
 function aiAttack(attacker: BaseEntity) {
   let entities = Entity.getByComps([OWNER_COMPONENT, HAS_FIGHTERS]) as BaseEntity[];
-  let defenders = entityLoop(entities, (ent: BaseEntity) => {
+  let defenders:BaseEntity[] = entityLoop(entities, (ent: BaseEntity) => {
     return getOwner(ent) === PLAYER_1;
   });
 

@@ -1,14 +1,15 @@
 import {randFromRange} from 'shared/utils';
 import {logger} from 'shared/logger';
-import entityLoop from '../../lib/ECS/util/entityLoop';
 import {
   POSITION
 } from 'gameEngine/constants.js';
 import canCircleBePlacedInPos from 'shared/mapPlacement/canCircleBePlacedInPos';
 import placeEntityInGrid from 'shared/mapPlacement/placeEntityInGrid';
 import {BaseEntity} from "../../gameEngine/BaseEntity";
+import {entityLoop} from "game-platform";
+import {IGrid} from "../../interfaces/interfaces";
 
-let entityPlacer = (entities: BaseEntity[], grid, buffer) => {
+export function entityPlacer(entities: Record<string, BaseEntity> | BaseEntity[], grid: IGrid, buffer:number) {
   let xMin = grid[0][0].topLeftX;
   let yMin = grid[0][0].topLeftY;
   let xMax = xMin + grid.xLen;
@@ -52,6 +53,4 @@ let entityPlacer = (entities: BaseEntity[], grid, buffer) => {
     }
   });
   return {grid, placedEntities};
-};
-
-export default entityPlacer;
+}

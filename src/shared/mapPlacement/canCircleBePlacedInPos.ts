@@ -1,5 +1,7 @@
 import getBlocksFromPos from 'shared/mapPlacement/getBlocksFromPos';
 import isBlockRangeOccupied from 'shared/mapPlacement/isBlockRangeOccupied';
+import {IGrid} from "../../interfaces/interfaces";
+
 
 /**
  * Checks if a circle can be placed in the grid in a specific coordinate.
@@ -10,14 +12,15 @@ import isBlockRangeOccupied from 'shared/mapPlacement/isBlockRangeOccupied';
  * @param grid
  * @returns {boolean}
  */
-function canCircleBePlacedInPos(x: number, y: number, radius: number, grid) {
-  let {startGridBlock, endGridBlock} = getBlocksFromPos(x, y, radius, grid);
+function canCircleBePlacedInPos(x: number, y: number, radius: number, grid: IGrid): boolean {
+  const blocks = getBlocksFromPos(x, y, radius, grid);
 
-  // if we're out of bounds,
-  if (!endGridBlock || !startGridBlock) {
+  if (blocks) {
+    let {startGridBlock, endGridBlock} = blocks;
+    return !isBlockRangeOccupied(startGridBlock, endGridBlock, grid);
+
+  } else {
     return false;
   }
-
-  return !isBlockRangeOccupied(startGridBlock, endGridBlock, grid);
 }
 export default canCircleBePlacedInPos;

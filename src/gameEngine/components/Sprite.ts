@@ -1,9 +1,10 @@
 import {SPRITE} from 'gameEngine/constants';
+import {IImageToRender} from "../../interfaces/interfaces";
 
 class Sprite {
   public name: string;
-  public images: unknown[];
-  constructor(images: unknown[]) {
+  public images: IImageToRender[];
+  constructor(images: IImageToRender[]) {
     this.name = SPRITE;
     this.images = images;
     // REFACTOR move this structure creation to a function, though it's not currently being used.

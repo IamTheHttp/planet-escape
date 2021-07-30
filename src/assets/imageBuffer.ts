@@ -31,7 +31,7 @@ player1Image.src = player1;
 player2Image.src = player2;
 shieldImage.src  = shield;
 
-let imageBuffer = {
+let imageBuffer: Record<string, Record<string, {img: HTMLImageElement, spriteArgs: [number, number, number, number]}>> = {
   [SHIELD_IMAGE] : {
     [NEUTRAL] : {
       img : shieldImage,

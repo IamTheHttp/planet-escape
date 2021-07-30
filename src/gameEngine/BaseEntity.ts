@@ -1,5 +1,6 @@
 import {Entity} from "game-platform";
 import {
+  EXPLOSION,
   GAME_STATE,
   HAS_FIGHTERS,
   MOVEMENT_COMP,
@@ -9,13 +10,14 @@ import {
   SPRITE, UI_COMP
 } from "./constants";
 import {HasFighters} from "./components/HasFighters";
-import GameState from "./components/GameState";
+import {GameState} from "./components/GameState";
 import PositionComponent from "./components/PositionComponent";
 import PlayerControlledComponent from "./components/PlayerControlledComponent";
 import OwnerComponent from "./components/OwnerComponent";
 import Sprite from "./components/Sprite";
 import MoveComponent from "./components/MoveComponent";
 import UIComponent from "./components/UIComponent";
+import Explosion from "./components/Explosion";
 
 
 export class BaseEntity extends Entity {
@@ -30,6 +32,7 @@ export class BaseEntity extends Entity {
   [SPRITE]: Sprite;
   [MOVEMENT_COMP]: MoveComponent
   [UI_COMP]: UIComponent;
+  [EXPLOSION]: Explosion
 
   constructor(entity?: any) {
     super(entity);

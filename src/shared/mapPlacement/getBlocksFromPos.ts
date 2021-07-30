@@ -1,4 +1,5 @@
 import getGridBlockFromPos from 'shared/mapPlacement/getGridBlockFromPos';
+import {IGrid, IGridBlock} from "../../interfaces/interfaces";
 
 /**
  * Given an X, Y and radius, we get he start and end block
@@ -9,7 +10,7 @@ import getGridBlockFromPos from 'shared/mapPlacement/getGridBlockFromPos';
  * @param grid
  * @returns {{startGridBlock: *, endGridBlock: *}}
  */
-function getBlocksFromPos(x, y, radius, grid) {
+function getBlocksFromPos(x:number, y:number, radius:number, grid:IGrid):{startGridBlock: IGridBlock, endGridBlock: IGridBlock} | false  {
   let topLeftX =  x - radius;
   let topLeftY =  y - radius;
 
@@ -19,7 +20,11 @@ function getBlocksFromPos(x, y, radius, grid) {
   let startGridBlock = getGridBlockFromPos(grid, topLeftX, topLeftY);
   let endGridBlock = getGridBlockFromPos(grid, bottomRightX, bottomRightY);
 
-  return {startGridBlock, endGridBlock};
+  if (startGridBlock && endGridBlock) {
+    return {startGridBlock, endGridBlock};
+  } else {
+    return false;
+  }
 }
 
 export default getBlocksFromPos;

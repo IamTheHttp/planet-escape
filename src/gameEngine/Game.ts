@@ -5,7 +5,6 @@
 // Entities created
 // Entities destroyed
 
-import Entity from 'lib/ECS/Entity';
 import userInputSystem, {pushAction} from './systems/userInputSystem';
 import moveSystem from './systems/moveSystem';
 import fighterAttacks from './systems/fighterAttacks';
@@ -13,20 +12,26 @@ import buildFighters from './systems/buildFighters';
 import ai from './systems/ai';
 import calcWinner from './systems/calcWinner';
 import {generateMap} from 'shared/utils';
-import Fighter, {fighterPool} from 'gameEngine/entities/Ships/Fighter';
 import {
   IN_PROGRESS,
-  GAME_STATE
+  GAME_STATE, CLICK
 } from 'gameEngine/constants';
-import {ILevelData, ISystemArguments, IViewSize} from "../d.ts/interfaces";
+import {
+  IDispatchAction,
+  ILevelData,
+  ISystemArguments,
+  IViewSize
+} from "../interfaces/interfaces";
 import {IDifficulty} from "./config";
 import {CurrentGame} from "./entities/CurrentGame";
 import {gameTracker} from "./GameTracker";
+import {Entity} from "game-platform";
+import {fighterPool} from "./entities/Ships/Fighter";
 
 
 
 interface IConstructor {
-  notificationSystem: () => void,
+  notificationSystem: (systemArguments: ISystemArguments) => void,
   renderSystem: (systemArguments: ISystemArguments) => void,
   levelData: ILevelData,
   viewSize: IViewSize,
@@ -36,6 +41,8 @@ interface IConstructor {
 
 
 class GameLoop {
+  public currentGame: CurrentGame;
+  public loop?: () => void;
   constructor({notificationSystem, renderSystem, levelData, viewSize, difficulty, numPlayers}: IConstructor) {
     gameTracker.track('newGameStarted');
     Entity.reset();
@@ -94,7 +101,7 @@ class GameLoop {
   /**
    * @param action {obj} - contains, {entityID}
    */
-  dispatchAction(action) {
+  dispatchAction(action: Partial<IDispatchAction>) {
     gameTracker.track('actionDispatched');
     pushAction(action);
   }

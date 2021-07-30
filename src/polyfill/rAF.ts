@@ -5,6 +5,9 @@
 
 // MIT license
 
+// @ts-nocheck // TODO , do we want to add types here?
+
+
 (function() {
   let lastTime = 0;
   let vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -19,7 +22,7 @@
       let currTime = new Date().getTime();
       let timeToCall = Math.max(0, 16 - (currTime - lastTime));
       let id = window.setTimeout(() => {
-        callback(currTime + timeToCall); 
+        callback(currTime + timeToCall);
       },
       timeToCall);
       lastTime = currTime + timeToCall;

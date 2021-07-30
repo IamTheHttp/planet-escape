@@ -2,7 +2,6 @@
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import calcWinner from 'gameEngine/systems/calcWinner';
-import Entity from '../../../src/lib/ECS/Entity';
 import {
   POSITION,
   PLAYER_1,
@@ -11,6 +10,7 @@ import {
   GAME_LOST
 } from 'gameEngine/constants';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
+import {Entity} from "game-platform";
 describe('Tests a component', () => {
   beforeEach(() => {
     Entity.reset();

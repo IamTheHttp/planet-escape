@@ -1,14 +1,13 @@
-
-import googleTracking from 'services/googleTracking';
+import {googleTracking} from 'services/googleTracking';
 
 import {EVENTS} from 'gameEngine/constants';
 
 describe('Tests google tracking', () => {
-  let ga;
+  let ga: jest.Mock;
 
   beforeEach(() => {
     window.ga = jest.fn();
-    ga = window.ga;
+    ga = window.ga as jest.Mock;
   });
 
   it('Tracks APP_LOADING', () => {

@@ -1,8 +1,8 @@
 
-import Entity from 'lib/ECS/Entity';
-import Fighter, {fighterPool} from 'gameEngine/entities/Ships/Fighter';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import {POSITION} from 'gameEngine/constants';
+import {Entity} from "game-platform";
+import {createFighterEntity, fighterPool} from "../../../../src/gameEngine/entities/Ships/Fighter";
 
 describe('Tests a component', () => {
   beforeEach(() => {
@@ -13,7 +13,7 @@ describe('Tests a component', () => {
 
   it('Ensures a fighter has position', () =>  {
     let planet = new EarthLike(200, 300);
-    let ship = new Fighter(planet);
+    let ship = createFighterEntity(planet);
     expect(ship[POSITION].x).toBe(200);
     expect(ship[POSITION].y).toBe(300);
   });

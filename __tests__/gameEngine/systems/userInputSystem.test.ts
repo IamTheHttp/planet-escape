@@ -1,13 +1,4 @@
-
-import {mount, shallow} from 'enzyme';
-import React from 'react';
-import Entity from '../../../src/lib/ECS/Entity';
-import userInputSystem, {pushAction, attack} from 'gameEngine/systems/userInputSystem';
-import {getFighters} from 'gameEngine/components/HasFighters';
-import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Fighter from 'gameEngine/entities/Ships/Fighter';
 import {
-  BUILDINGS_COMP,
   PLAYER_CONTROLLED,
   POSITION,
   OWNER_COMPONENT,
@@ -18,10 +9,18 @@ import {
   PLAYER_2,
   ATTACK
 } from 'gameEngine/constants';
+import {ISelectedBoxData} from "game-platform/types/lib/interfaces";
+import {Entity} from "game-platform";
+import userInputSystem, {pushAction} from "../../../src/gameEngine/systems/userInputSystem";
+import {createFighterEntity} from "../../../src/gameEngine/entities/Ships/Fighter";
+import EarthLike from "../../../src/gameEngine/entities/planets/EarthLike";
+import {getFighters} from "../../../src/gameEngine/components/HasFighters";
 
 
-function getSelectedBox(x, y) {
+function getSelectedBox(x: number, y: number): ISelectedBoxData {
   return {
+    width: null,
+    height:null,
     start : {
       x,
       y
@@ -49,6 +48,7 @@ describe('Tests the user input system', () => {
       name : 'addPop'
     });
     // the system doesn't even process it's input if there are no valid actions
+    // @ts-ignore
     userInputSystem('asdsdfs');
     // the success of this test is that nothing throws exceptions, function returns nothing
   });
@@ -57,8 +57,9 @@ describe('Tests the user input system', () => {
   it('Tests an invalid action(no name)', () => {
     // pushing an action with no entities
     pushAction({
-      entities : [1]
+      entities : {}
     });
+    // @ts-ignore
     userInputSystem('asdsdfs');
     // the system doesn't even process it's input if there are no valid actions
     // the success of this test is that nothing throws exceptions, function returns nothing
@@ -77,27 +78,27 @@ describe('Tests the user input system', () => {
       y : 500,
       selectedBox : getSelectedBox(500, 500)
     });
-    userInputSystem();
+    userInputSystem(null);
     expect(planet[PLAYER_CONTROLLED].selected).toBe(false);
 
     pushAction({
-      hits: [planet.id],
+      hits: [{ id:planet.id.toString(), layerName: 'initial'}],
       name:CLICK,
       x : 100, // these don't really matter, as the hits are calculated internally by game-platform
       y : 104.99,
       selectedBox : getSelectedBox(100, 104.99)
     });
-    userInputSystem();
+    userInputSystem(null);
     expect(planet[PLAYER_CONTROLLED].selected).toBe(true);
 
     pushAction({
-      hits: [planet.id],
+      hits: [{ id:planet.id.toString(), layerName: 'initial'}],
       name: CLICK,
       x : 99999999999, // these don't really matter, as the hits are calculated internally by game-platform
       y : 5000000,
       selectedBox : getSelectedBox(104.99, 100)
     });
-    userInputSystem();
+    userInputSystem(null);
     expect(planet[PLAYER_CONTROLLED].selected).toBe(true);
   });
 
@@ -105,20 +106,21 @@ describe('Tests the user input system', () => {
   it('Attacking action will set destination of fighters', () => {
     let attackingPlanet = new EarthLike(200, 200, PLAYER_1);
     let defendingPlanet = new EarthLike(100, 100, PLAYER_2);
-    let attackFighter = new Fighter(attackingPlanet);
+    let attackFighter = createFighterEntity(attackingPlanet);
 
     attackingPlanet[PLAYER_CONTROLLED].selected = true;
 
     expect(getFighters(attackingPlanet).length).toBeGreaterThan(0);
 
     pushAction({
-      hits: [defendingPlanet.id],
+      hits: [{ id:defendingPlanet.id.toString(), layerName: 'initial'}],
       name:CLICK,
       x : 100,
       y : 100
     });
 
-    userInputSystem(); // this sets the attack, but does not execute it
+    // this sets the attack, but does not execute it
+    userInputSystem(null);
     expect(attackFighter[POSITION].destX).toBe(100);
     expect(attackFighter[POSITION].destY).toBe(100);
   });

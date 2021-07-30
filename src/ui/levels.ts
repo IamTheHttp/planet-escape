@@ -1,5 +1,5 @@
 import levelsData from '../levels/levels.json';
-import {ILevelData} from "../d.ts/interfaces";
+import {ILevelData} from "../interfaces/interfaces";
 
 let levels:ILevelData[] = [];
 

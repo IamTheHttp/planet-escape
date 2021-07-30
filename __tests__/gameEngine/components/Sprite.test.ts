@@ -1,16 +1,10 @@
-
-import {mount, shallow} from 'enzyme';
-import React from 'react';
-import Sprite, {getSpriteArgs} from 'gameEngine/components/Sprite';
-import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Entity from '../../../src/lib/ECS/Entity';
 import {
-  PLAYER_1,
-  IN_PROGRESS,
-  GAME_WON,
   PLANETS,
   SPRITE
 } from 'gameEngine/constants';
+import {Entity} from "game-platform";
+import Sprite from "../../../src/gameEngine/components/Sprite";
+import {BaseEntity} from "../../../src/gameEngine/BaseEntity";
 
 describe('Tests a component', () => {
   beforeEach(() => {

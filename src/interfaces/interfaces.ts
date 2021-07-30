@@ -1,6 +1,10 @@
-import Entity from "../lib/ECS/Entity";
 import {GameTracker} from "../gameEngine/GameTracker";
 import {IDifficulty} from "../gameEngine/config";
+import {Entity} from "game-platform";
+import {ISelectedBoxData, IViewClickInfo} from "game-platform/types/lib/interfaces";
+import {BaseEntity} from "../gameEngine/BaseEntity";
+
+
 
 export interface ILevelData {
   planets: IPlanetData[];
@@ -15,9 +19,10 @@ export interface ILevelData {
 }
 
 export interface IPlanetData {
-  type: string
-  posData: IPosData
-  fighters: number
+  type: string;
+  position: IPosData;
+  fighters: number;
+  player: string;
 }
 
 export interface IPosData {
@@ -40,7 +45,7 @@ export interface ISystemArguments {
   gameTracker: GameTracker
 }
 
-interface IGridBlock {
+export interface IGridBlock {
   topLeftX: number;
   topLeftY: number;
   row: number;
@@ -48,11 +53,25 @@ interface IGridBlock {
   occupied: boolean;
 }
 
-export interface IGrid {
+export interface IPartialGrid extends Array<Array<IGridBlock>> {
+  squareX?: number;
+  squareY?: number;
+  xLen?: number;
+  yLen?: number;
+}
+
+export interface IGrid extends IPartialGrid {
   squareX: number;
   squareY: number;
   xLen: number;
   yLen: number;
+}
+
+export interface IArea {
+  topLeftAreaX : number;
+  topLeftAreaY : number;
+  bottomRightAreaX: number;
+  bottomRightAreaY : number;
 }
 
 export interface IViewSize {
@@ -60,4 +79,30 @@ export interface IViewSize {
   viewWidth: number
   mapHeight: number
   mapWidth: number
+}
+
+export interface IPlayer {
+  userName: string;
+  levelsPassed: Record<string, number>
+}
+
+export interface IDispatchAction extends IViewClickInfo {
+  name: string;
+  entities: Record<string, BaseEntity>
+}
+
+export interface ISection {
+  name?: string;
+  shape?: string;
+  data?: Record<string, unknown>
+}
+
+export interface IImageToRender {
+  name: string;
+  pos?: {
+    x: number,
+    y: number,
+    heightRatio: number,
+    widthRatio: number
+  }
 }

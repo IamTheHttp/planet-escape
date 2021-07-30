@@ -2,7 +2,7 @@ import {OWNER_COMPONENT, NEUTRAL} from 'gameEngine/constants';
 import {BaseEntity} from "../BaseEntity";
 class OwnerComponent {
   public name: string;
-  public player: unknown;
+  public player: string;
   constructor(player = NEUTRAL) {
     this.name = OWNER_COMPONENT;
     this.player = player;

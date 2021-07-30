@@ -1,14 +1,12 @@
-
-import Entity from '../../src/lib/ECS/Entity';
-import {mount, shallow} from 'enzyme';
-import React from 'react';
 import {loadImages, oneOutOf, generateMap} from 'shared/utils';
 import fighter from '../../src/assets/fighter.png';
 import planets from '../../src/assets/planets.png';
-import entityLoop from 'lib/ECS/util/entityLoop';
 import {
   POSITION
 } from 'gameEngine/constants.js';
+import {Entity, entityLoop} from "game-platform";
+import {BaseEntity} from "../../src/gameEngine/BaseEntity";
+import {ILevelData} from "../../src/interfaces/interfaces";
 
 describe('Tests a component', () => {
   let rand = global.Math.random;
@@ -37,15 +35,25 @@ describe('Tests a component', () => {
   });
 
   it ('generateMap works as expected with planets in levelData', () => {
-    let levelData = {
+    let levelData:ILevelData = {
+      order: null,
+      hints: null,
+      key: null,
+      mapScale:null,
+      planetsInMap: null,
       width : 100,
       height: 200,
       buffer : 2,
       planets: [
         {
+          player: 'guest',
           type : 'earthLike',
-          player : 1,
           position : {
+            angle:null,
+            name: null,
+            destX: null,
+            destY: null,
+            radius: null,
             x: 100,
             y: 100
           },
@@ -64,10 +72,14 @@ describe('Tests a component', () => {
   });
 
   it('generateMap works as expected with planetsInMap in levelData', () => {
-    let levelData = {
+    let levelData: ILevelData = {
+      order: null,
+      key: null,
+      planets: null,
+      hints: null,
       buffer: 2,
       height: 540,
-      mapScale: '0.5',
+      mapScale: 0.5,
       planetsInMap: 4,
       width: 960
     };
@@ -82,6 +94,7 @@ describe('Tests a component', () => {
   });
 
   it ('fails validation with invalid data levelData', () => {
+    // @ts-ignore
     expect(generateMap({})).toBe(false);
     expect(generateMap(null)).toBe(false);
   });

@@ -1,11 +1,10 @@
-import Entity from '../../../lib/ECS/Entity';
 import UIComponent from 'gameEngine/components/UIComponent';
 import PositionComponent from 'gameEngine/components/PositionComponent';
 import MoveComponent from 'gameEngine/components/MoveComponent';
 import OwnerComponent, {getOwner} from 'gameEngine/components/OwnerComponent';
 import {addFighter} from 'gameEngine/components/HasFighters';
 import Defending from 'gameEngine/components/Defending';
-import gameConfig from 'gameEngine/config';
+import {gameConfig} from 'gameEngine/config';
 import Sprite from 'gameEngine/components/Sprite';
 
 import {
@@ -26,12 +25,13 @@ import {BaseEntity} from "../../BaseEntity";
 import Moving from "../../components/Moving";
 import {ObjectPool} from "game-platform";
 import {gameTracker} from "../../GameTracker";
+import {IImageToRender} from "../../../interfaces/interfaces";
 
 let fighterPool: ObjectPool;
 let fighterImage = new Image();
 fighterImage.src = fighter;
 
-function createFighterEntity(planet: EarthLike, createdDuringPlay = true) {
+export function createFighterEntity(planet: EarthLike, createdDuringPlay = true) {
   // We take one from the pool but we reset some key parts in it
   // this is what actually creates the fighter
   let ent = fighterPool.acquire();
@@ -89,12 +89,12 @@ export class FighterEntity extends BaseEntity {
 }
 
 // TODO I think I really need a fleet entity
-export function setFighterAsFleet(fighter: FighterEntity, fleetCount: number) {
+export function setFighterAsFleet(fighter: FighterEntity, fleetCount: number): void {
   if (!fighter) {
     return null;
   }
 
-  let images = [];
+  let images:IImageToRender[] = [];
 
   let deltaFormationSpan = 0.75;
   let deltaFormationDistance = 0;
@@ -152,4 +152,3 @@ export function addFighterUiComp(fighter: FighterEntity): void {
 fighterPool = new ObjectPool(FighterEntity);
 
 export {fighterPool};
-export default Fighter;

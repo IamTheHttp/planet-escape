@@ -39,7 +39,7 @@ export const gameConfig = {
     [PLAYER_2] : 'rgba(255, 0, 0, 1)',
     [PLAYER_3] : 'rgba(0, 0, 255, 1)',
     [DEFAULT]  : 'black'
-  },
+  } as Record<string| number, string>,
   [DIFFICULTY] : {
     [EASY]: {
       [AI_DECISION_RATE] : 120

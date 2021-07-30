@@ -1,9 +1,7 @@
-
-import Entity from 'lib/ECS/Entity';
-import {mount, shallow} from 'enzyme';
-import React from 'react';
 import PlayerControlledComponent, {isSelected} from 'gameEngine/components/PlayerControlledComponent';
 import {PLAYER_CONTROLLED} from 'gameEngine/constants';
+import {Entity} from "game-platform";
+import {BaseEntity} from "../../../src/gameEngine/BaseEntity";
 
 describe('Tests a component', () => {
   beforeEach(() => {
@@ -14,10 +12,10 @@ describe('Tests a component', () => {
     let ent = new BaseEntity();
     ent.addComponent(new PlayerControlledComponent());
 
-    expect(isSelected({})).toBe(false);
-    expect(isSelected(ent:BaseEntity)).toBe(false);
+    expect(isSelected(null)).toBe(false);
+    expect(isSelected(ent)).toBe(false);
 
     ent[PLAYER_CONTROLLED].selected = true;
-    expect(isSelected(ent:BaseEntity)).toBe(true);
+    expect(isSelected(ent)).toBe(true);
   });
 });

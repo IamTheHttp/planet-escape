@@ -1,10 +1,8 @@
 
 import {attack} from 'gameEngine/systems/userInputActions/attack';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Fighter, {fighterPool} from 'gameEngine/entities/Ships/Fighter';
 import PositionComponent, {hasDest, setDest} from 'gameEngine/components/PositionComponent';
-import Entity from '../../../../src/lib/ECS/Entity';
-import gameConfig from 'gameEngine/config';
+import {gameConfig} from 'gameEngine/config';
 
 
 import {
@@ -15,6 +13,8 @@ import {
   POSITION,
   FIGHTER_RADIUS
 } from 'gameEngine/constants';
+import {Entity} from "game-platform";
+import {createFighterEntity, fighterPool} from "../../../../src/gameEngine/entities/Ships/Fighter";
 
 
 
@@ -44,7 +44,7 @@ describe('Tests the attack action', () => {
   it('Attack should direct fighters to target', () => {
     let attacker = new EarthLike(200, 200, PLAYER_1);
     attacker[PLAYER_CONTROLLED].selected = true;
-    new Fighter(attacker);
+    createFighterEntity(attacker);
     let defender = new EarthLike(300, 300, PLAYER_2);
 
     expect(attack({x:300, y:300})).toBe(1);
@@ -53,15 +53,15 @@ describe('Tests the attack action', () => {
   it('Should change fleet size ', () => {
     let attacker = new EarthLike(200, 200, PLAYER_1);
     attacker[PLAYER_CONTROLLED].selected = true;
-    let firstFighter = new Fighter(attacker);
-    new Fighter(attacker);
-    new Fighter(attacker);
-    new Fighter(attacker);
-    new Fighter(attacker);
-    new Fighter(attacker);
-    new Fighter(attacker);
-    new Fighter(attacker);
-    let lastFighter = new Fighter(attacker);
+    let firstFighter = createFighterEntity(attacker);
+    createFighterEntity(attacker);
+    createFighterEntity(attacker);
+    createFighterEntity(attacker);
+    createFighterEntity(attacker);
+    createFighterEntity(attacker);
+    createFighterEntity(attacker);
+    createFighterEntity(attacker);
+    let lastFighter = createFighterEntity(attacker);
 
     let defender = new EarthLike(300, 300, PLAYER_2);
 

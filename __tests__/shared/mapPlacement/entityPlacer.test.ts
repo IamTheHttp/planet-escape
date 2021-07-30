@@ -1,11 +1,8 @@
-
-import Entity from 'lib/ECS/Entity';
-import {mount, shallow} from 'enzyme';
-import React from 'react';
-import entityPlacer from 'shared/mapPlacement/entityPlacer';
-import createGrid from 'shared/mapPlacement/grid';
+import {createGrid} from 'shared/mapPlacement/grid';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import {logger} from 'shared/logger';
+import {Entity} from "game-platform";
+import {entityPlacer} from "../../../src/shared/mapPlacement/entityPlacer";
 describe('Tests a component', () => {
   beforeEach(() => {
     Entity.reset();

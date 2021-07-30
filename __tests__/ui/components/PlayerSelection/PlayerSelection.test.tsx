@@ -1,17 +1,19 @@
 
-import {mount, shallow} from 'enzyme';
+import {mount, ReactWrapper, shallow} from 'enzyme';
 import React from 'react';
 import PlayerSelection from 'ui/components/PlayerSelection/PlayerSelection';
 import CreateNewPlayer from 'ui/components/PlayerSelection/CreateNewPlayer';
-import playerService from 'services/PlayerService';
+import {playerService} from 'services/PlayerService';
 
 describe('Tests a component', () => {
-  let wrapper;
+  let wrapper: ReactWrapper<PlayerSelection>;
 
   beforeEach(() => {
     playerService.reset();
     wrapper = mount(<PlayerSelection
-    ></PlayerSelection>);
+      onPlayerDelete={null}
+      onPlayerSelect={null}
+    />);
   });
 
   it('Shows the create player dialog', () => {
@@ -20,7 +22,9 @@ describe('Tests a component', () => {
     playerService.createPlayer('Foo');
 
     wrapper = mount(<PlayerSelection
-    ></PlayerSelection>);
+      onPlayerDelete={null}
+      onPlayerSelect={null}
+    />);
     expect(wrapper.find('input').length).toBe(0);
   });
 
@@ -29,11 +33,12 @@ describe('Tests a component', () => {
     playerService.createPlayer('bar');
 
     wrapper = mount(<PlayerSelection
+      onPlayerDelete={null}
       onPlayerSelect={(player) => {
         expect(player.userName).toBe('foo');
         done();
       }}
-    ></PlayerSelection>);
+    />);
 
     wrapper.find('.nonSelectedUser').first().simulate('click');
   });
@@ -45,19 +50,23 @@ describe('Tests a component', () => {
 
     expect(playerService.getSelectedPlayer()).toBeFalsy();
     wrapper = mount(<PlayerSelection
+      onPlayerSelect={null}
       onPlayerDelete={() => {
         expect(playerService.getPlayer('foo')).toBeFalsy();
         done();
       }}
-    ></PlayerSelection>);
+    />);
 
     wrapper.find('.delete').first().simulate('click');
   });
 
   it('Rendering without a player selected allows and delete a player', () => {
     playerService.createPlayer('foo');
-    wrapper = mount(<PlayerSelection
-    ></PlayerSelection>);
+    const wrapper = mount<PlayerSelection>(<PlayerSelection
+
+      onPlayerDelete={null}
+      onPlayerSelect={null}
+    />);
 
     expect(wrapper.instance().state.createUser).toBe(false);
     wrapper.find('.createPlayerBtn').first().simulate('click');

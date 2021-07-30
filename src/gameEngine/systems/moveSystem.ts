@@ -1,5 +1,3 @@
-import entityLoop from '../../lib/ECS/util/entityLoop';
-import Entity from '../../lib/ECS/Entity';
 import {
   POSITION,
   MOVEMENT_COMP,
@@ -12,10 +10,11 @@ import {
 import {getPos, getDest, destReached} from 'gameEngine/components/PositionComponent';
 import InPlaceToAttack from 'gameEngine/components/InPlaceToAttack';
 import Defending from 'gameEngine/components/Defending';
-import {ISystemArguments} from "../../d.ts/interfaces";
+import {ISystemArguments} from "../../interfaces/interfaces";
 import {BaseEntity} from "../BaseEntity";
+import {Entity, entityLoop} from "game-platform";
 
-function moveEntity(entity) {
+function moveEntity(entity: BaseEntity) {
   if (destReached(entity)) {
     entity.removeComponent(MOVING);
     entity.addComponent(new InPlaceToAttack());
