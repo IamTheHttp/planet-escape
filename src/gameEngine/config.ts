@@ -5,15 +5,6 @@ import {
   PLAYER_2,
   PLAYER_3,
   DEFAULT,
-  MAP_SIZE,
-  TINY,
-  SMALL,
-  MEDIUM,
-  LARGE,
-  PLANETS_IN_MAP,
-  CANVAS_X,
-  CANVAS_Y,
-  PLANET_BUFFER,
   AI_MIN_FIGHTERS,
   DEFAULT_FIGHTER_COUNT,
   NUM_PLAYERS,
@@ -33,7 +24,7 @@ import {
   STRESS_TEST
 } from './constants.js';
 
-export default {
+export const gameConfig = {
   [SELECT_WIDTH] : 3,
   [PLANET_RADIUS] : 40,
   [FIGHTER_RADIUS] : 10,
@@ -67,6 +58,7 @@ export default {
   [MAIN_VIEW_SIZE_X] : 1920 / 2,
   [MAIN_VIEW_SIZE_Y] : 1080 / 2
 };
+
 
 export interface IDifficulty {
   [AI_DECISION_RATE] : number

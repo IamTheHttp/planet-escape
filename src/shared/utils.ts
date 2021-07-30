@@ -14,14 +14,15 @@ import {
   PLANET_BUFFER,
   DEFAULT_FIGHTER_COUNT
 } from 'gameEngine/constants';
-import gameConfig from 'gameEngine/config';
+import {gameConfig} from 'gameEngine/config';
 import placeEntities from 'shared/placementUtil';
+import {ILevelData} from "../d.ts/interfaces";
 
-export function randFromRange(min, max) {
+export function randFromRange(min: number, max:number) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-export function randFromArray(array) {
+export function randFromArray(array: unknown[]) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
@@ -31,7 +32,7 @@ const MANUALLY_ADDED_PLANETS = 2;
 
 
 
-export function validateLevelData(levelData) {
+export function validateLevelData(levelData:ILevelData) {
   try {
     let hasWidth = levelData.width > 0;
     let hasHeight = levelData.height > 0;
@@ -46,7 +47,7 @@ export function validateLevelData(levelData) {
 // This method manipulates global variables
 // (it creates entities and gives them positions)
 // since entities are global, this is a problem
-export function generateMap(levelData) {
+export function generateMap(levelData:ILevelData) {
   if (!validateLevelData(levelData)) {
     logger.error('Invalid level data!', levelData);
     return false;

@@ -18,7 +18,7 @@ import './global.scss';
 import GameLoop from 'gameEngine/Game';
 import Modal from 'ui/components/Modal/Modal';
 import MainMenu from 'ui/components/MainMenu/MainMenu';
-import gameConfig, {IDifficulty} from 'gameEngine/config';
+import {IDifficulty, gameConfig} from 'gameEngine/config';
 import MainMenuBtn from 'ui/components/MainMenuBtn/MainMenuBtn';
 import ShowHelpBtn from 'ui/components/ShowHelpBtn/ShowHelpBtn';
 import Minimap from 'ui/components/Minimap/Minimap';

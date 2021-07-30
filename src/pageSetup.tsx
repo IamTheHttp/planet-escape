@@ -6,8 +6,6 @@ import i18n from './ui/i18n';
 // Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.css';
 
-import './index.d';
-
 // Create title if it doesn't exist
 /* istanbul ignore next */
 if (!document.getElementsByTagName('title')[0]) {
@@ -55,7 +53,7 @@ globalTracker.dispatch(EVENTS.APP_LOADING);
 loadImages([mainMenuBackground, neutral, player1, player2, fighter], () => {
   appDiv.className = 'loaded';
   document.body.removeChild(document.getElementById('progress'));
-  render(<App></App>, document.getElementById('app'));
+  render(<App/>, document.getElementById('app'));
 
   // @ts-ignore TODO Update types
   globalTracker.dispatch(EVENTS.APP_LOADED);

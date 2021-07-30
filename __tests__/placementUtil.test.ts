@@ -16,7 +16,7 @@ import getGridBlockFromPos from 'shared/mapPlacement/getGridBlockFromPos';
 import canCircleBePlacedInPos from 'shared/mapPlacement/canCircleBePlacedInPos';
 import isBlockRangeOccupied from 'shared/mapPlacement/isBlockRangeOccupied';
 import placeEntityInGrid from 'shared/mapPlacement/placeEntityInGrid';
-import gameConfig from 'gameEngine/config';
+import {gameConfig} from 'gameEngine/config';
 let mapSize = gameConfig[MAP_SIZE];
 
 describe('Tests position', () => {

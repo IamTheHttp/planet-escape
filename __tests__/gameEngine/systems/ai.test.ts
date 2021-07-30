@@ -1,26 +1,30 @@
-
-import {mount, shallow} from 'enzyme';
-import React from 'react';
 import Entity from '../../../src/lib/ECS/Entity';
-import ai from 'gameEngine/systems/ai';
-import EarthLike from 'gameEngine/entities/planets/EarthLike';
-import Fighter, {fighterPool} from 'gameEngine/entities/Ships/Fighter';
-import {getDest} from 'gameEngine/components/PositionComponent';
+
 import {
   NEUTRAL,
   PLAYER_1,
   PLAYER_2,
   AI_DECISION_RATE
 } from 'gameEngine/constants';
+import {ISystemArguments} from "../../../src/d.ts/interfaces";
+import Fighter, {fighterPool} from "../../../src/gameEngine/entities/Ships/Fighter";
+import {getDest} from "../../../src/gameEngine/components/PositionComponent";
+import ai from "../../../src/gameEngine/systems/ai";
+import EarthLike from "../../../src/gameEngine/entities/planets/EarthLike";
 
 describe('Tests a component', () => {
-  let systemArguments;
+  let systemArguments: ISystemArguments;
 
   beforeEach(() => {
     // setup the test
     Entity.reset();
     fighterPool.reset();
     systemArguments = {
+      Entity: null,
+      levelData: null,
+      gameTracker: null,
+      numPlayers: 1,
+      viewSize: null,
       count : 0,
       difficulty : {
         [AI_DECISION_RATE] : 1

@@ -3,8 +3,8 @@ import Entity from '../../src/lib/ECS/Entity';
 import {mount, shallow} from 'enzyme';
 import React from 'react';
 import {loadImages, oneOutOf, generateMap} from 'shared/utils';
-import fighter from 'assets/fighter.png';
-import planets from 'assets/planets.png';
+import fighter from '../../src/assets/fighter.png';
+import planets from '../../src/assets/planets.png';
 import entityLoop from 'lib/ECS/util/entityLoop';
 import {
   POSITION

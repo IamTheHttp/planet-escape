@@ -31,27 +31,26 @@ let fighterPool: ObjectPool;
 let fighterImage = new Image();
 fighterImage.src = fighter;
 
-class Fighter {
-  constructor(planet: EarthLike, createdDuringPlay = true) {
-    // We take one from the pool but we reset some key parts in it
-    // this is what actually creates the fighter
-    let ent = fighterPool.acquire();
+function createFighterEntity(planet: EarthLike, createdDuringPlay = true) {
+  // We take one from the pool but we reset some key parts in it
+  // this is what actually creates the fighter
+  let ent = fighterPool.acquire();
 
-    createdDuringPlay && gameTracker.track('fightersBuilt');
+  createdDuringPlay && gameTracker.track('fightersBuilt');
 
-    ent[OWNER_COMPONENT].player = getOwner(planet);
-    ent[POSITION].x = planet[POSITION].x;
-    ent[POSITION].y = planet[POSITION].y;
+  ent[OWNER_COMPONENT].player = getOwner(planet);
+  ent[POSITION].x = planet[POSITION].x;
+  ent[POSITION].y = planet[POSITION].y;
 
-    addFighter(planet, ent);
-    return ent;
-  }
+  addFighter(planet, ent);
+  return ent;
 }
+
 
 export class FighterEntity extends BaseEntity {
   [MOVING]: Moving;
   constructor() {
-    super(Fighter);
+    super();
 
     this.addComponent(new MoveComponent(gameConfig[FIGHTER_SPEED]));
     this.addComponent({name: CAN_ATTACK_PLANETS});

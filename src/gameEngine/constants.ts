@@ -1,5 +1,3 @@
-import {IComponent} from "game-platform/types/lib/interfaces";
-
 export const MOVING = 'MOVING';
 export const IN_PLACE_TO_ATTACK = 'IN_PLACE_TO_ATTACK';
 export const OWNER_COMPONENT = 'OWNER';

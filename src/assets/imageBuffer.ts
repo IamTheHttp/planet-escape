@@ -13,11 +13,11 @@ import {
   SHIELD_IMAGE
 } from 'gameEngine/constants';
 
-import fighter from 'assets/fighter.png';
-import player1 from 'assets/player1.png';
-import player2 from 'assets/player2.png';
-import neutral from 'assets/neutral.png';
-import shield from 'assets/shield.png';
+import fighter from './fighter.png';
+import player1 from './player1.png';
+import player2 from './player2.png';
+import neutral from './neutral.png';
+import shield from './shield.png';
 
 let fighterImage = new Image();
 let neutralImage = new Image();

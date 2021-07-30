@@ -5,8 +5,9 @@ import MainMenu from 'ui/components/MainMenu/MainMenu';
 
 import levelsData from 'levels/levels.json';
 import playerService from 'services/PlayerService';
+import {ILevelData} from "../../../../src/interfaces/interfaces";
 
-let levels = [];
+let levels:ILevelData[] = [];
 Object.keys(levelsData).forEach((levelKey) => {
   let levelData = {...levelsData[levelKey]};
   levelData.key = levelKey;

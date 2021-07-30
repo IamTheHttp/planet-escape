@@ -6,7 +6,7 @@ describe('Tests a component', () => {
   let wrapper;
   beforeEach(() => {
     wrapper = mount(<Minimap
-    ></Minimap>);
+    />);
   });
 
   it('renders through the states', () => {
