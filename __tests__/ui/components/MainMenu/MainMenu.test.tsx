@@ -66,9 +66,6 @@ describe('Tests a component', () => {
 
     // Finish first level
     playerService.finishLevel(levels[0].key);
-    playerService.finishLevel(levels[1].key);
-    playerService.finishLevel(levels[2].key);
-    playerService.finishLevel(levels[3].key);
 
 
     // Re-render the entire thing with new player preferences
@@ -100,7 +97,7 @@ describe('Tests a component', () => {
     expect(onLevelSelect.mock.calls.length).toBe(1);
     onLevelSelect.mockClear();
 
-    // 3rd level should be accessible
+    // 3rd level should not be accessible
     levelSelection.find('.level').at(2).simulate('click');
     expect(onLevelSelect.mock.calls.length).toBe(0);
     onLevelSelect.mockClear();
