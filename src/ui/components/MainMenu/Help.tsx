@@ -1,6 +1,6 @@
 import React from 'react';
-import earthImage from 'assets/player1.png';
-import alienImage from 'assets/player2.png';
+import earthImage from '../../../../src/assets/player1.png';
+import alienImage from '../../../../src/assets/player2.png';
 
 import i18n from 'ui/i18n';
 

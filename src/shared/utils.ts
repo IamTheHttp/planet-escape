@@ -15,7 +15,7 @@ import {
 } from 'gameEngine/constants';
 import {gameConfig} from 'gameEngine/config';
 import {placeEntities} from 'shared/placementUtil';
-import {ILevelData} from "../interfaces/interfaces";
+import {IArea, ILevelData} from "../interfaces/interfaces";
 import {createFighterEntity} from "../gameEngine/entities/Ships/Fighter";
 
 export function randFromRange(min: number, max:number) {
@@ -90,7 +90,7 @@ export function generateMap(levelData:ILevelData) {
     }
   }
 
-  let area = {
+  let area:IArea = {
     topLeftAreaX : 0,
     topLeftAreaY : 0,
     bottomRightAreaX : levelData.width,

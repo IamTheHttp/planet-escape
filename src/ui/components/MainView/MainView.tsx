@@ -1,6 +1,6 @@
 import './mainView.scss';
 import React from 'react';
-import CanvasAPI from "game-platform/types/lib/CanvasAPI/CanvasAPI";
+import CanvasAPI from "game-platform/dist/lib/CanvasAPI/CanvasAPI";
 
 interface IProps {
   levelHints: string[];

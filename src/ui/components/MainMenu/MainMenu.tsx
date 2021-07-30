@@ -3,9 +3,9 @@ import i18n from 'ui/i18n';
 import React from 'react';
 import './mainMenu.scss';
 import Help from './Help';
-import {version} from '../../../../package.json';
-import earthImage from 'assets/player1.png';
-import alienImage from 'assets/player2.png';
+import {version} from  '../../../../package.json';
+import earthImage from '../../../../src/assets/player1.png';
+import alienImage from '../../../../src/assets/player2.png';
 import PlayerSelection from '../PlayerSelection/PlayerSelection';
 
 import {

@@ -14,7 +14,7 @@ import {
   PLAYER_2
 } from 'gameEngine/constants';
 import {Entity} from "game-platform";
-import {ISelectedBoxData} from "game-platform/types/lib/interfaces";
+import {ISelectedBoxData} from "game-platform/dist/lib/interfaces";
 
 describe('Tests the user input utils', () => {
   beforeEach(() => {

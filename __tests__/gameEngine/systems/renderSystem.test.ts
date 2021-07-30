@@ -5,8 +5,8 @@ import renderSystem from 'gameEngine/systems/renderSystem';
 import EarthLike from 'gameEngine/entities/planets/EarthLike';
 import {Entity} from "game-platform";
 import {createFighterEntity} from "../../../src/gameEngine/entities/Ships/Fighter";
-import CanvasAPI from "game-platform/types/lib/CanvasAPI/CanvasAPI";
-import {ISelectedBoxData} from "game-platform/types/lib/interfaces";
+import CanvasAPI from "game-platform/dist/lib/CanvasAPI/CanvasAPI";
+import {ISelectedBoxData} from "game-platform/dist/lib/interfaces";
 import {IViewSize} from "../../../src/interfaces/interfaces";
 
 describe('Tests the render system', () => {

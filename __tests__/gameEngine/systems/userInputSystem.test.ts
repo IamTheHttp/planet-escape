@@ -9,7 +9,7 @@ import {
   PLAYER_2,
   ATTACK
 } from 'gameEngine/constants';
-import {ISelectedBoxData} from "game-platform/types/lib/interfaces";
+import {ISelectedBoxData} from "game-platform/dist/lib/interfaces";
 import {Entity} from "game-platform";
 import userInputSystem, {pushAction} from "../../../src/gameEngine/systems/userInputSystem";
 import {createFighterEntity} from "../../../src/gameEngine/entities/Ships/Fighter";

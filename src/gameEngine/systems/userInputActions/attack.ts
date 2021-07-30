@@ -27,7 +27,7 @@ import {IDispatchAction} from "../../../interfaces/interfaces";
  * @param action {} {x , y}
  * @param entities Array list of entities that are attacking
  */
-export function attack(action: Partial<IDispatchAction>, entities:BaseEntity[] = getSelectedEntities()) {
+export function attack(action: IDispatchAction | {x:number, y:number}, entities:BaseEntity[] = getSelectedEntities()) {
   let directedFighters = 0;
   let launchedFighters ;
   let fightersInFleet: FighterEntity[];

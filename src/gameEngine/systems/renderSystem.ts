@@ -12,14 +12,14 @@ import {
   PLANETS,
   EXPLOSION
 } from 'gameEngine/constants';
-import imageBuffer from 'assets/imageBuffer';
+import imageBuffer from '../../assets/imageBuffer';
 import {gameConfig} from 'gameEngine/config';
 import {isSelected} from 'gameEngine/components/PlayerControlledComponent';
 import {getDefendingFighters} from 'gameEngine/components/HasFighters';
 import {BaseEntity} from "../BaseEntity";
-import CanvasAPI from "game-platform/types/lib/CanvasAPI/CanvasAPI";
+import CanvasAPI from "game-platform/dist/lib/CanvasAPI/CanvasAPI";
 import {ISystemArguments} from "../../interfaces/interfaces";
-import {ISelectedBoxData} from "game-platform/types/lib/interfaces";
+import {ISelectedBoxData} from "game-platform/dist/lib/interfaces";
 
 
 function renderMap(entity: BaseEntity, canvasAPI: CanvasAPI) {

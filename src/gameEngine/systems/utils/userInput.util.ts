@@ -8,9 +8,8 @@ import {
   POSITION
 } from 'gameEngine/constants';
 import {getOwner} from 'gameEngine/components/OwnerComponent';
-import {ISelectedBoxData} from "game-platform/types/lib/interfaces";
+import {ISelectedBoxData} from "game-platform/dist/lib/interfaces";
 import {BaseEntity} from "../../BaseEntity";
-import {IPlayer} from "../../../interfaces/interfaces";
 
 export function isPosInsideCircle(x: number, y: number, centerX: number, centerY: number, radius: number) {
   return Math.pow((x - centerX), 2) + Math.pow((y - centerY), 2) < Math.pow(radius, 2);

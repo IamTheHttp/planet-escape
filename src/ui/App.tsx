@@ -34,12 +34,10 @@ import {playerService} from 'services/PlayerService';
 import globalTracker from 'services/globalTracker';
 import Game from "gameEngine/Game";
 import {ILevelData, IPlayer, ISystemArguments} from "../interfaces/interfaces";
-import CanvasAPI from "game-platform/types/lib/CanvasAPI/CanvasAPI";
-import SelectedBox from "game-platform/types/lib/GameCanvas/SelectedBox/SelectedBox";
 import {GameCanvas} from "game-platform";
-import {ISelectedBoxData} from "game-platform/types/lib/interfaces";
-import {Canvas} from "canvas";
 import {BaseEntity} from "../gameEngine/BaseEntity";
+import CanvasAPI from "game-platform/dist/lib/CanvasAPI/CanvasAPI";
+import {ISelectedBoxData} from "game-platform/dist/lib/interfaces";
 
 
 interface IProps {

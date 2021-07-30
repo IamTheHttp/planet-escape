@@ -1,9 +1,8 @@
 import {GameTracker} from "../gameEngine/GameTracker";
 import {IDifficulty} from "../gameEngine/config";
-import {Entity} from "game-platform";
-import {ISelectedBoxData, IViewClickInfo} from "game-platform/types/lib/interfaces";
+import {IViewClickInfo} from "game-platform/dist/lib/interfaces";
 import {BaseEntity} from "../gameEngine/BaseEntity";
-
+import {Entity} from "game-platform";
 
 
 export interface ILevelData {

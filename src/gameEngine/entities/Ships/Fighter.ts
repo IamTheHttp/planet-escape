@@ -19,7 +19,7 @@ import {
   IN_PLACE_TO_ATTACK, MOVING
 } from 'gameEngine/constants';
 
-import fighter from 'assets/fighter.png';
+import fighter from '../../../../src/assets/fighter.png';
 import EarthLike from "../planets/EarthLike";
 import {BaseEntity} from "../../BaseEntity";
 import Moving from "../../components/Moving";

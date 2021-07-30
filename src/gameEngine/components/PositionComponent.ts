@@ -2,7 +2,7 @@
 import {POSITION} from 'gameEngine/constants';
 import {BaseEntity} from "../BaseEntity";
 
-let memoize = require('memoizee');
+
 
 class PositionComponent {
   public name: string;
@@ -71,14 +71,14 @@ export function hasDest(ent:BaseEntity) {
 export function isSamePos(ent1: BaseEntity, ent2: BaseEntity) {
   return getPos(ent1).x === getPos(ent2).x && getPos(ent1).y === getPos(ent2).y;
 }
-
-let calcDistance = memoize((ent1: BaseEntity, ent2: BaseEntity) => {
+// TODO Add memoize to calcDistance
+let calcDistance = (ent1: BaseEntity, ent2: BaseEntity) => {
   let pos1 = getPos(ent1);
   let pos2 = getPos(ent2);
   let xDist = Math.pow(pos1.x - pos2.x, 2);
   let yDist = Math.pow(pos1.y - pos2.y, 2);
   let squaredDist = xDist + yDist;
   return Math.sqrt(squaredDist);
-});
+};
 
 export {calcDistance};

@@ -23,16 +23,16 @@ import {ISection} from "../../../interfaces/interfaces";
 class EarthLike extends BaseEntity {
   constructor(xPos = 50, yPos = 50, player = NEUTRAL) {
     super();
-    let ent = new BaseEntity(EarthLike);
+    // let ent = new BaseEntity(EarthLike);
 
     let planetRadius = gameConfig[PLANET_RADIUS];
-    ent.addComponent(new PositionComponent(xPos, yPos, planetRadius));
-    ent.addComponent(new PlayerControlledComponent());
-    ent.addComponent(new OwnerComponent(player));
-    ent.addComponent(new HasFighters());
-    ent.addComponent(new Attackable(true));
+    this.addComponent(new PositionComponent(xPos, yPos, planetRadius));
+    this.addComponent(new PlayerControlledComponent());
+    this.addComponent(new OwnerComponent(player));
+    this.addComponent(new HasFighters());
+    this.addComponent(new Attackable(true));
 
-    ent.addComponent(new Sprite([
+    this.addComponent(new Sprite([
       {
         name: PLANETS
       },
@@ -59,9 +59,7 @@ class EarthLike extends BaseEntity {
       }
     ];
 
-    ent.addComponent(new UIComponent(shapes));
-
-    return ent;
+    this.addComponent(new UIComponent(shapes));
   }
 }
 
