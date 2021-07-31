@@ -4,10 +4,10 @@
   "version": "1.2.0",
   "description": "Planet escape! a game like no other",
   "scripts": {
-    "build": "rollup -c",
+    "build": "rm -rf ./dist && rollup -c && cp ./html/index.html ./dist/index.html",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "start": "rollup -c -w & live-server ./dist",
+    "start": "rm -rf ./dist && rollup -c -w & live-server ./dist",
     "releasePatch": "release-it",
     "releaseMinor": "release-it minor",
     "releaseMajor": "release-it major"
@@ -19,6 +19,7 @@
     "install": "^0.13.0",
     "jest-canvas-mock": "2.1.1",
     "npm": "^7.20.3",
+    "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-scss": "^3.0.0",
     "sass": "^1.36.0",
     "webpack-bundle-analyzer": "^2.11.1"

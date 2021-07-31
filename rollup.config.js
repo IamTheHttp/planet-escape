@@ -5,6 +5,7 @@ import scss from 'rollup-plugin-scss';
 import commonjs from 'rollup-plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 import url from '@rollup/plugin-url';
+import copy from 'rollup-plugin-copy'
 
 export default [{
   input: 'src/index.tsx',
@@ -18,14 +19,14 @@ export default [{
     }),
     json(),
     resolve(),
-    typescript({ target: "es5"}),
+    typescript({target: "es5"}),
     scss(), // will output compiled styles to output.css
     commonjs({
       namedExports: {
         // left-hand side can be an absolute path, a path
         // relative to the current directory, or the name
         // of a module in node_modules
-        'react-dom': [ 'render' ]
+        'react-dom': ['render']
       }
     }),
     url({
@@ -34,6 +35,11 @@ export default [{
       fileName: '[name][extname]',
       destDir: 'dist'
     }),
+    copy({
+      targets: [
+        { src: 'html/index.html', dest: 'dist' },
+      ]
+    })
   ]
 }];
 
