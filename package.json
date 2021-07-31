@@ -39,7 +39,7 @@
     "core-js": "3.6.4",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
-    "game-platform": "^2.0.0",
+    "game-platform": "^2.0.1",
     "jest": "^27.0.6",
     "live-server": "^1.2.1",
     "memoizee": "^0.4.12",
