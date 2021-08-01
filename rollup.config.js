@@ -19,7 +19,6 @@ export default [{
     }),
     json(),
     resolve(),
-    typescript({target: "es5"}),
     scss(), // will output compiled styles to output.css
     commonjs({
       namedExports: {
@@ -39,7 +38,8 @@ export default [{
       targets: [
         { src: 'html/index.html', dest: 'dist' },
       ]
-    })
+    }),
+    typescript({target: "es5"})
   ]
 }];
 
