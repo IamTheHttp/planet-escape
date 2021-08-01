@@ -43,13 +43,15 @@ function renderMap(entity: BaseEntity, canvasAPI: CanvasAPI) {
   if (entity.hasComponents(SPRITE)) {
     entity[UI_COMP].sections.forEach((section) => {
       if (section.shape === CIRCLE) {
+        // This is the representation of the Entity on the canvas, against it all hits are calculated!
+        // Without this, you can't detect a hit on click/tap
         canvasAPI.addCircle({
           id: entity.id.toString(),
           x,
           y,
           radius,
-          // strokeStyle: 'rgba(0,0,0,0)', // TODO Looks like a bug in CanvasAPI!
-          lineWidth:0
+          color: 'rgba(0,0,0,0)', // TODO Looks like a bug in CanvasAPI!
+          lineWidth
         });
       }
 

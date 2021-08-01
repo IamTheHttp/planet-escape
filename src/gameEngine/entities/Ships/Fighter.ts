@@ -94,7 +94,7 @@ export function setFighterAsFleet(fighter: FighterEntity, fleetCount: number): v
     return null;
   }
 
-  let images:IImageToRender[] = [];
+  let images: IImageToRender[] = [];
 
   let deltaFormationSpan = 0.75;
   let deltaFormationDistance = 0;
