@@ -27,7 +27,7 @@ import {ObjectPool} from "game-platform";
 import {gameTracker} from "../../GameTracker";
 import {IImageToRender} from "../../../interfaces/interfaces";
 
-let fighterPool: ObjectPool;
+let fighterPool: ObjectPool<FighterEntity>;
 let fighterImage = new Image();
 fighterImage.src = fighter;
 

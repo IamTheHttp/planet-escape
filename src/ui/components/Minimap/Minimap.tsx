@@ -1,10 +1,10 @@
 import './minimap.scss';
-import React from 'react';
+import React, {ReactElement} from 'react';
 import {ILevelData} from "../../../interfaces/interfaces";
 
 interface IProps {
   currentLevelData: ILevelData;
-  canvasReactElement: HTMLCanvasElement;
+  canvasReactElement: ReactElement<HTMLCanvasElement>;
 }
 
 interface IState {

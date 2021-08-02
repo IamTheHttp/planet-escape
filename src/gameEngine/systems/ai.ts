@@ -50,7 +50,7 @@ function ai(systemArguments: ISystemArguments) {
   if (systemArguments.count % systemArguments.difficulty[AI_DECISION_RATE] !== 0) {
     return;
   }
-  let entities = Entity.getByComps([OWNER_COMPONENT, HAS_FIGHTERS]);
+  let entities = Entity.getByComps<BaseEntity>([OWNER_COMPONENT, HAS_FIGHTERS]);
   // let targetCandidates = Entity.getByComps([OWNER_COMPONENT, HAS_FIGHTERS])
 
   // each enemy planet makes it's own decisions, detached from the others.

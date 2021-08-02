@@ -1,5 +1,5 @@
 import './mainView.scss';
-import React from 'react';
+import React, {ReactElement} from 'react';
 import CanvasAPI from "game-platform/dist/lib/CanvasAPI/CanvasAPI";
 
 interface IProps {
@@ -10,7 +10,7 @@ interface IProps {
   newWidth:number;
   newHeight:number;
   onLevelHintsApproved: () => void;
-  canvasElm: HTMLCanvasElement;
+  canvasElm: ReactElement<HTMLCanvasElement>;
   viewMapCanvasAPI: CanvasAPI;
 };
 

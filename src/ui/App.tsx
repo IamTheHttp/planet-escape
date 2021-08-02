@@ -13,7 +13,7 @@ import {
   FIGHTER_BUILD_RATE,
   EVENTS
 } from 'gameEngine/constants';
-import React from 'react';
+import React, {ReactElement} from 'react';
 import './global.scss';
 import GameLoop from 'gameEngine/Game';
 import Modal from 'ui/components/Modal/Modal';
@@ -62,8 +62,8 @@ interface IState {
   showPlayerManagement:boolean;
   viewMapCanvasAPI: CanvasAPI;
   miniMapCanvasAPI: CanvasAPI;
-  map: HTMLCanvasElement;
-  minimap: HTMLCanvasElement;
+  map: ReactElement<HTMLCanvasElement>;
+  minimap: ReactElement<HTMLCanvasElement>;
   gameReport: Record<string, { count: number }>;
 }
 
