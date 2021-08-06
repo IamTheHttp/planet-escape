@@ -1,7 +1,7 @@
 {
   "name": "planet-escape",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Planet escape! a game like no other",
   "scripts": {
     "build": "rm -rf ./dist && rollup -c && cp ./html/index.html ./dist/index.html",
