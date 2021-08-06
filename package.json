@@ -8,48 +8,39 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "start": "rm -rf ./dist && rollup -c -w & live-server ./dist",
-    "releasePatch": "release-it",
-    "releaseMinor": "release-it minor",
-    "releaseMajor": "release-it major"
+    "release": "release-it --no-npm"
   },
-  "devDependencies": {
+  "dependencies": {
     "@rollup/plugin-image": "^2.1.0",
     "@rollup/plugin-replace": "^3.0.0",
     "@rollup/plugin-url": "^6.1.0",
     "install": "^0.13.0",
     "jest-canvas-mock": "2.1.1",
-    "npm": "^7.20.3",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-scss": "^3.0.0",
-    "sass": "^1.36.0",
-    "webpack-bundle-analyzer": "^2.11.1"
-  },
-  "main": "dist",
-  "dependencies": {
-    "@babel/preset-env": "^7.14.8",
+    "sass": "^1.37.5",
+    "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "@types/enzyme": "^3.10.9",
     "@types/jest": "^26.0.24",
-    "@types/react": "^17.0.15",
+    "@types/react": "^17.0.16",
     "@types/react-dom": "^17.0.9",
     "bootstrap": "^3.3.7",
     "canvas": "^2.8.0",
     "core-js": "3.6.4",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
-    "game-platform": "^2.1.1",
+    "game-platform": "^2.1.2",
     "jest": "^27.0.6",
     "live-server": "^1.2.1",
     "react": "16.8.2",
     "react-dom": "16.8.2",
-    "rollup": "^2.55.1",
+    "rollup": "^2.56.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-typescript": "^1.0.1",
     "ts-jest": "^27.0.4",
     "ts-node": "^10.1.0"
-  },
-  "jsnext:main": "src",
-  "module": "src"
+  }
 }
